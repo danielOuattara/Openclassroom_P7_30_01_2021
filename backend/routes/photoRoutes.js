@@ -5,16 +5,20 @@ const photosControllers = require('../controllers/photosControllers.js');
 const multer           = require('../auth/multer-config.js');
 
 
-router.post('/',         auth, multer, photosControllers.addPhoto );
-router.post('/:id/like', auth,         photosControllers.userLikePhoto ) ;
-router.delete('/:id',    auth,         photosControllers.deleteOnePhoto );
-router.put('/:id',       auth, multer, photosControllers.updatePhoto );
-router.get('/:id',       auth,         photosControllers.getOnePhoto );
+router.post('/'         ,  auth, multer, photosControllers.addPhoto       );
+router.post('/:id/like' ,  auth,         photosControllers.userLikePhoto  );
+router.get('/'          ,  auth,         photosControllers.getAllPhoto    );
+router.get('/:id'       ,  auth,         photosControllers.getOnePhoto    );
+router.put('/:id'       ,  auth, multer, photosControllers.updatePhoto    );
+router.delete('/:id'    ,  auth,         photosControllers.deleteOnePhoto );
 
+// ---------------------------------------------------------------------------------
 
-
-
-router.get('/',          auth,         photosControllers.getAllPhoto );
+router.post('/:id/comments'       ,    auth, photosControllers.addComment       );
+router.get('/:id/comments'        ,    auth, photosControllers.getAllComments   );
+router.get('/:id/comments/:id'    ,    auth, photosControllers.getOneComment    );
+router.put('/:id/comments/:id'    ,    auth, multer, photosControllers.updateOneComment );
+router.delete('/:id/commnets/:id' ,    auth, photosControllers.deleteOneComment );
 
 
 module.exports = router;
