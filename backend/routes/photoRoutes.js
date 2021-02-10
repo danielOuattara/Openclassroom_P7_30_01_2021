@@ -10,6 +10,10 @@ router.post('/:id/like', auth,         photosControllers.userLikePhoto ) ;
 router.delete('/:id',    auth,         photosControllers.deleteOnePhoto );
 router.put('/:id',       auth, multer, photosControllers.updatePhoto );
 router.get('/:id',       auth,         photosControllers.getOnePhoto );
+
+
+
+
 router.get('/',          auth,         photosControllers.getAllPhoto );
 
 
