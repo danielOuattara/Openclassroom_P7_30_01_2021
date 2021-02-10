@@ -53,7 +53,7 @@ app.use(limiter ({
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/photos', photoRoutes )
-app.use('/api/auth', userRoutes )
+app.use('/api/auth'  , userRoutes  )
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
 

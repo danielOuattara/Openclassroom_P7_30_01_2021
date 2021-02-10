@@ -1,20 +1,20 @@
 
-const Sauce = require('../dataStructure/SauceModel.js');
+const Photo = require('../dataStructure/PhotoModel.js');
 const fs    = require('fs');
 
 //-----------------------------------------------------------------------------------------------------------
 
-exports.addSauce = (req, res, next) => { 
+exports.addPhoto = (req, res, next) => { 
 
-    const sauceObject = JSON.parse(req.body.sauce); 
+    const photoObject = JSON.parse(req.body.photo); 
     
     // do not trust user input !
     const pattern     =  /[\[\]<>=0]+/gi;
 
-    if ( pattern.test(sauceObject.name)         ||
-         pattern.test(sauceObject.manufacturer) || 
-         pattern.test(sauceObject.description)  || 
-         pattern.test(sauceObject.mainPepper ) ) 
+    if ( pattern.test(photoObject.name)         ||
+         pattern.test(photoObject.manufacturer) || 
+         pattern.test(photoObject.description)  || 
+         pattern.test(photoObject.mainPepper ) ) 
     {
       fs.unlink( `images/${req.file.filename}`, function (err) {
           if (err) throw err;
@@ -23,12 +23,12 @@ exports.addSauce = (req, res, next) => {
     } 
 
     // check for duplicate entry in database !
-    Sauce.findOne(   
+    Photo.findOne(   
          {$and: [ 
-                  { name:         sauceObject.name},
-                  { manufacturer: sauceObject.manufacturer },
-                  { mainPepper:   sauceObject.mainPepper },
-                  { heat:         sauceObject.heat }
+                  { name:         photoObject.name},
+                  { manufacturer: photoObject.manufacturer },
+                  { mainPepper:   photoObject.mainPepper },
+                  { heat:         photoObject.heat }
                 ]
         }
     )
@@ -37,16 +37,16 @@ exports.addSauce = (req, res, next) => {
             fs.unlink( `images/${req.file.filename}`, function (err) {
               if (err) throw err;
             })
-            return res.status(401).json( {error: "Duplicate Sauce Found !"});  // Duplicate found in database
+            return res.status(401).json( {error: "Duplicate Photo Found !"});  // Duplicate found in database
         }
         
-        const sauce = new Sauce(
+        const photo = new Photo(
               {
-                ...sauceObject,
+                ...photoObject,
                 imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
               }
             );
-        sauce.save()
+        photo.save()
         .then( ()     => res.status(201).json({message: 'Item Registered !'}))
         .catch( error => res.status(400).json( {error} ));
     })
@@ -55,11 +55,11 @@ exports.addSauce = (req, res, next) => {
 
 //-----------------------------------------------------------------------------------------------------------
 
-exports.userLikeSauce = (req, res, next) => {
+exports.userLikePhoto = (req, res, next) => {
     switch (req.body.like) {
 
         case 1:
-            Sauce.updateOne(
+            Photo.updateOne(
                 {_id: req.params.id},
                 {
                   $inc:  { likes: +1 },
@@ -72,7 +72,7 @@ exports.userLikeSauce = (req, res, next) => {
             break;
 
         case -1:
-            Sauce.updateOne(
+            Photo.updateOne(
                 {_id: req.params.id},
                 {
                   $inc:  { dislikes: +1 },
@@ -86,10 +86,10 @@ exports.userLikeSauce = (req, res, next) => {
 
 
         case 0:
-            Sauce.findOne( { _id: req.params.id } )
-            .then((sauce) => {
-                if (sauce.usersLiked.find( userVote => userVote === req.body.userId)) {
-                  Sauce.updateOne(
+            Photo.findOne( { _id: req.params.id } )
+            .then((photo) => {
+                if (photo.usersLiked.find( userVote => userVote === req.body.userId)) {
+                  Photo.updateOne(
                     { _id: req.params.id }, 
                     {
                       $inc: { likes: -1 },
@@ -101,8 +101,8 @@ exports.userLikeSauce = (req, res, next) => {
                     .catch((error) =>  res.status(400).json( { error} ));  
                 } 
             
-                if (sauce.usersDisliked.find( userVote => userVote === req.body.userId)) {
-                  Sauce.updateOne(
+                if (photo.usersDisliked.find( userVote => userVote === req.body.userId)) {
+                  Photo.updateOne(
                     { _id: req.params.id }, {
                       $inc: { dislikes: -1 },
                       $pull: { usersDisliked: req.body.userId },
@@ -120,12 +120,12 @@ exports.userLikeSauce = (req, res, next) => {
 
 //-----------------------------------------------------------------------------------------------------------
 
-exports.deleteOneSauce = (req, res, next) => { 
-    Sauce.findOne({ _id: req.params.id })
-    .then( sauce => {
-        const filename = sauce.imageUrl.split('/images/')[1];
+exports.deleteOnePhoto = (req, res, next) => { 
+    Photo.findOne({ _id: req.params.id })
+    .then( photo => {
+        const filename = photo.imageUrl.split('/images/')[1];
         fs.unlink( `images/${filename}`, () => {
-            Sauce.deleteOne( { _id: req.params.id } )
+            Photo.deleteOne( { _id: req.params.id } )
             .then( ()     => res.status(200).json( { message: 'Item deleted succesfully !'}) )
             .catch( error => {console.log(error); res.status(400).json({error}) })
             })
@@ -135,11 +135,11 @@ exports.deleteOneSauce = (req, res, next) => {
 
 //-----------------------------------------------------------------------------------------------------------
 
-exports.updateSauce =  (req, res, next) => {  
+exports.updatePhoto =  (req, res, next) => {  
 
-    const sauceObject = req.file ? 
+    const photoObject = req.file ? 
     {
-      ...JSON.parse(req.body.sauce),  //si update d'image 
+      ...JSON.parse(req.body.photo),  //si update d'image 
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
     }
     :  
@@ -149,23 +149,23 @@ exports.updateSauce =  (req, res, next) => {
 
     // do not trust user input, even on update !
     const regex =  /[\[\]<>=0]+/gi;
-    if ( regex.test(sauceObject.name)  ||
-         regex.test(sauceObject.manufacturer) || 
-         regex.test(sauceObject.description) || 
-         regex.test(sauceObject.mainPepper ) 
+    if ( regex.test(photoObject.name)  ||
+         regex.test(photoObject.manufacturer) || 
+         regex.test(photoObject.description) || 
+         regex.test(photoObject.mainPepper ) 
        ) {
       return res.status(401).json( { error: ' Fill in text Invalid !' });
     } 
 
     if (req.file) {
-        Sauce.findOne({ _id: req.params.id })
-        .then( sauce => {
-            const filename = sauce.imageUrl.split('/images/')[1];
+        Photo.findOne({ _id: req.params.id })
+        .then( photo => {
+            const filename = photo.imageUrl.split('/images/')[1];
             fs.unlink( `images/${filename}`, () => {
 
-              Sauce.updateOne( 
+              Photo.updateOne( 
                 { _id: req.params.id }, 
-                { ...sauceObject, _id:req.params.id } )
+                { ...photoObject, _id:req.params.id } )
               .then( ()     => res.status(200).json({ message: 'Update successfully for item : ' + req.params.id}))
               .catch( error =>  res.status(400).json({error}))
                 })
@@ -174,7 +174,7 @@ exports.updateSauce =  (req, res, next) => {
 
     } else {
 
-    Sauce.updateOne( { _id: req.params.id }, { ...sauceObject, _id:req.params.id } )
+    Photo.updateOne( { _id: req.params.id }, { ...photoObject, _id:req.params.id } )
     .then( ()     => res.status(200).json({ message: 'Update successfully for item : ' + req.params.id}))
     .catch( error =>  res.status(400).json({error}))
 
@@ -184,17 +184,17 @@ exports.updateSauce =  (req, res, next) => {
 
 //-----------------------------------------------------------------------------------------------------------
 
-exports.getOneSauce = (req, res, next) => {  // renvoie la sauce spécifique avec son ID au client;   
-    Sauce.findOne( { _id: req.params.id } )
-    .then( sauce  => res.status(200).json(sauce))
+exports.getOnePhoto = (req, res, next) => {  // renvoie la photo spécifique avec son ID au client;   
+    Photo.findOne( { _id: req.params.id } )
+    .then( photo  => res.status(200).json(photo))
     .catch( error => res.status(404).json( {error} ))
 }
 
 //-----------------------------------------------------------------------------------------------------------
 
-exports.getAllSauce = (req, res, next) => {   // renvoie tableau de toutes les sauces de la BD à l'utilisateur
-Sauce.find()
-.then( sauces => res.status(200).json(sauces))
+exports.getAllPhoto = (req, res, next) => {   // renvoie tableau de toutes les photos de la BD à l'utilisateur
+Photo.find()
+.then( photos => res.status(200).json(photos))
 .catch( error => res.status(400).json( {error} ));
 }
 
