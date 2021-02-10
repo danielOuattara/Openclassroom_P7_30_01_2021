@@ -1,0 +1,34 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend for Groupomania web, web-mobile application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielOuattara/Openclassroom_P7_30_01_2021.git"
+  },
+  "keywords": [
+    "HTML",
+    "CSS",
+    "Sass-Scss",
+    "Javascript",
+    "VueJS-2.x",
+    "NodeJS",
+    "Express",
+    "SQL",
+    "MySQL",
+    "WCAG"
+  ],
+  "author": "daniel.ouattara@gmx.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielOuattara/Openclassroom_P7_30_01_2021/issues"
+  },
+  "homepage": "https://github.com/danielOuattara/Openclassroom_P7_30_01_2021#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
