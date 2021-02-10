@@ -5,7 +5,7 @@ const express     = require( 'express');  // importe 'express'
 const bodyParser  = require( 'body-parser');
 // const mongoose    = require('mongoose');
 const path        = require('path');
-const sauceRoutes = require('./routes/sauceRoutes.js')
+const sauceRoutes = require('./routes/photoRoutes.js')
 const userRoutes  = require('./routes/userRoutes.js')
 const app         = express(); //  cree une application express
 const helmet      = require('helmet')
@@ -17,19 +17,19 @@ app.use(helmet())
 app.use(cors());
 
 
-const DATABASE = process.env.DATABASE;
-const PSW = process.env.PSW;
-const ADDRESS = process.env.ADDRESS
+// const DATABASE = process.env.DATABASE;
+// const PSW = process.env.PSW;
+// const ADDRESS = process.env.ADDRESS
 
 
-mongoose.connect(`mongodb+srv://${DATABASE}:${PSW}@${ADDRESS}`,
-  { 
-    useNewUrlParser: true,
-    useUnifiedTopology: true 
-  }
-)
-.then(()  => console.log('Connection to MongoDB:  Success !'))
-.catch(() => console.log('Connection to MongoDB:  Failed !'));
+// mongoose.connect(`mongodb+srv://${DATABASE}:${PSW}@${ADDRESS}`,
+//   { 
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true 
+//   }
+// )
+// .then(()  => console.log('Connection to MongoDB:  Success !'))
+// .catch(() => console.log('Connection to MongoDB:  Failed !'));
 
 
 app.use((req, res, next) => {
@@ -52,7 +52,7 @@ app.use(limiter ({
 }))
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.use('/api/sauces', sauceRoutes )
+app.use('/api/photos', photoRoutes )
 app.use('/api/auth', userRoutes )
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
