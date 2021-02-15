@@ -1,6 +1,6 @@
 
 module.exports = ( sequelize, Sequelize) => {
-    const User = sequelize.define("user", {
+    const User = sequelize.define("users", {
 
         firstName: {
             type: Sequelize.STRING
@@ -20,8 +20,8 @@ module.exports = ( sequelize, Sequelize) => {
 
         departement: {
             type: Sequelize.STRING
-
         },
+
         email: {
             type: Sequelize.STRING,
             allowNull: false,

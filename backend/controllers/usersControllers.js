@@ -1,6 +1,6 @@
 const bcrypt       = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
-const User         = require('../dataStructure/UserModel.js');
+const User         = require('./../models');
 const validator    = require('email-validator');
 
 const TOKEN        = process.env.TOKEN;
@@ -14,21 +14,20 @@ exports.singup = (req, res, next) => {
         return res.status(401).json({ error: `Password not Strong! :  7 characters at least 1 Uppercase, 
                                               1 Lowercase, 1 Digit, 1 symbol between: ! ? & # @ $ % µ € _ `});       
     } 
-           
-    bcrypt.hash( req.body.password, 13)
+             
+    bcrypt.hash( req.body.password, 13)   // password crypting
     .then( hash => {
-        const user = new User( 
-            {
+        const user =  {    // new user created
                 email: req.body.email,
                 password: hash
-            }
-        );
-        user.save()
-        .then( () => res.status(201).json( {message: 'User Created !'}))
-        .catch( error =>  res.status(400).json( {error}) )
+        };
+        User.create(user)
+        .then( data => res.send(data))
+        .catch( err => res.status(500).send({ message: err.message || ` Some error occured while creating the Tutorial in DB`}))
     })
-    .catch(error => res.status(500).json( {error}))
+    .catch( err => res.status(500).send({ message: err.message || ` Some error occured while crypting Password`}))
 }
+
 
 
 // -----------------------------------------------------------------------------------------
@@ -38,6 +37,12 @@ exports.login = (req, res, next) => {
     if (!validator.validate(req.body.email)) {
         return res.status(401).json({error:" Email invalid !" } )      
     }
+
+    const emai
+
+    User.findByPk
+
+
     
     User.findOne( {email: req.body.email})
     .then( user => {

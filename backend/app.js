@@ -42,9 +42,9 @@ app.use(limiter ({
 
 const db = require('./models/');
 
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-});
+db.sequelize.sync({ force: true })
+.then(() => console.log("Drop and re-sync db."))
+.catch(error => res.status(500).json( {error}))
 
 
 app.get ('/', (req, res, next) => {
