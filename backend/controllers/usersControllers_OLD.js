@@ -1,6 +1,6 @@
 const bcrypt       = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
-const User         = require('./../models');
+const User         = require('../models');
 const validator    = require('email-validator');
 
 const TOKEN        = process.env.TOKEN;

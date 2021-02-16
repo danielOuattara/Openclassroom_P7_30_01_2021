@@ -1,6 +1,6 @@
 
 module.exports = ( sequelize, Sequelize) => {
-    const Photo = sequelize.define("photo", {
+    const Photo = sequelize.define("photos", {
 
         title: {
             type: Sequelize.STRING,

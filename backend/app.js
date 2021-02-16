@@ -12,6 +12,9 @@ const cors        = require('cors');
 const limiter     = require('express-rate-limit');
 
 
+// import {initial} from './config/initial.js'
+
+
 app.use(helmet())
 app.use(cors());
 
@@ -41,20 +44,39 @@ app.use(limiter ({
 }))
 
 const db = require('./models/');
+const Role = db.role;
 
 db.sequelize.sync({ force: true })
-.then(() => console.log("Drop and re-sync db."))
-.catch(error => res.status(500).json( {error}))
+.then(() =>  {
+  console.log("Drop and re-sync db.");
+  // initial();
 
+    Role.create({
+      id: 1,
+      name: "user"
+    });
+   
+    Role.create({
+      id: 2,
+      name: "moderator"
+    });
+   
+    Role.create({
+      id: 3,
+      name: "admin"
+    });
+  
+})
 
 app.get ('/', (req, res, next) => {
   res.json({message: "Welcome to Tutorial Application !"})
 });
 
-// app.use('/images', express.static(path.join(__dirname, 'images')));
-
-// app.use('/api/photos', photoRoutes )
-// app.use('/api/auth'  , userRoutes  )
+app.use('/images', express.static(path.join(__dirname, 'images')));
+require('./routes/authRoute.js')(app);
+require('./routes/userRoutes.js')(app);
+// app.use('/api/photos', photoRoutes_OLD )  // OLD
+// app.use('/api/auth'  , userRoutes  )      // OLD
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
 
