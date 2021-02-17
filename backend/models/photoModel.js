@@ -7,14 +7,15 @@ module.exports = ( sequelize, Sequelize) => {
             allowNull: false
         },
 
-        url: {
+        imageUrl: {
             type: Sequelize.STRING,
             allowNull: false
         },
 
-        photoPostDate: {
-            type: Sequelize.DATE
-        }
+        // owner_id: {
+        //     type: Sequelize.INTEGER,
+        //     allowNull: false
+        // }
     });
 
     return Photo;

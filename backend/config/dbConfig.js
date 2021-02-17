@@ -15,7 +15,7 @@ module.exports =  {
 };
 
 /**
- First five parameters are for MySQL connection.
+First five parameters are for MySQL connection.
 pool is optional, it will be used for Sequelize connection pool configuration:
      
   max:     maximum number of connection in pool

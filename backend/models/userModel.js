@@ -25,7 +25,14 @@ module.exports = ( sequelize, Sequelize) => {
         email: {
             type: Sequelize.STRING,
             allowNull: false,
-            isEmail: true,
+            validate: {
+                isEmail: true,
+                msg: "Invalid email ! "
+            },
+            unique: {
+                args: true,
+                msg: "Email address already in use !"
+            },
         },
 
         pswd: {

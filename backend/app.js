@@ -5,15 +5,13 @@ const express     = require( 'express');  // importe 'express'
 const bodyParser  = require( 'body-parser');
 const path        = require('path');
 // const sauceRoutes = require('./routes/photoRoutes.js')
-// const userRoutes  = require('./routes/userRoutes.js')
+const userRoutes  = require('./routes/userRoutes.js')
 const app         = express(); //  cree une application express
 const helmet      = require('helmet')
 const cors        = require('cors');
 const limiter     = require('express-rate-limit');
 
-
 // import {initial} from './config/initial.js'
-
 
 app.use(helmet())
 app.use(cors());
@@ -75,8 +73,8 @@ app.get ('/', (req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 require('./routes/authRoute.js')(app);
 require('./routes/userRoutes.js')(app);
-// app.use('/api/photos', photoRoutes_OLD )  // OLD
-// app.use('/api/auth'  , userRoutes  )      // OLD
+// app.use('/api/photos', photoRoutes )  // OLD
+app.use('/api/auth'  , userRoutes  )      // OLD
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
 

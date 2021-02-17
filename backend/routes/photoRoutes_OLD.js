@@ -11,14 +11,15 @@ router.get('/'          ,  auth,         photosControllers.getAllPhoto    );
 router.get('/:id'       ,  auth,         photosControllers.getOnePhoto    );
 router.put('/:id'       ,  auth, multer, photosControllers.updatePhoto    );
 router.delete('/:id'    ,  auth,         photosControllers.deleteOnePhoto );
+router.delete('/'       ,  auth,         photosControllers.deleteOnePhoto );
 
 // ---------------------------------------------------------------------------------
 
-router.post('/:id/comments'       ,    auth, photosControllers.addComment       );
-router.get('/:id/comments'        ,    auth, photosControllers.getAllComments   );
-router.get('/:id/comments/:id'    ,    auth, photosControllers.getOneComment    );
+router.post('/:id/comments'       ,    auth,         photosControllers.addComment       );
+router.get('/:id/comments'        ,    auth,         photosControllers.getAllComments   );
+router.get('/:id/comments/:id'    ,    auth,         photosControllers.getOneComment    );
 router.put('/:id/comments/:id'    ,    auth, multer, photosControllers.updateOneComment );
-router.delete('/:id/commnets/:id' ,    auth, photosControllers.deleteOneComment );
+router.delete('/:id/commnets/:id' ,    auth,         photosControllers.deleteOneComment );
 
 
 module.exports = router;

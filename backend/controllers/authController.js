@@ -1,6 +1,6 @@
 
-const  db    = require ('../models');
-const config = require('../config/authConfig.js');
+const db     = require ('./../models');
+const config = require('./../config/authConfig.js');
 const User   = db.user;
 const Role   = db.role;
 const Op     = db.Sequelize.Op;
@@ -45,7 +45,7 @@ exports.signup = (req, res, next) => {
 
 //---------------------------------------------------------------------------------------------------
 
-exports.signin =(req, res, next) => {
+exports.signin =(req, res, next) => {  // (login)  <-----------
 
     User.findOne( {
         where: {
@@ -60,11 +60,10 @@ exports.signin =(req, res, next) => {
         const passwordIsValid = bcrypt.compareSync ( req.body.password, user.password);
         
         if(!passwordIsValid) {
-            return  res.status(401).send({ accessToken: null, message: "Invalide Password !"}) 
+            return  res.status(401).send({ accessToken: null, message: "Invalid Password !"}) 
         }
 
         const token = jwt.sign( {id: user.id}, config.secret, {expiresIn: 3600});
-
         const authorities = [];
         user.getRoles()
         .then( roles =>  {
@@ -75,7 +74,7 @@ exports.signin =(req, res, next) => {
                 id: user.id,
                 username: user.username,
                 email: user.email,
-                rolse: authorities,
+                roles: authorities,
                 accessToken: token
             });
         })
