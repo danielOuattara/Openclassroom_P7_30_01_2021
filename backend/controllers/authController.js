@@ -31,7 +31,7 @@ exports.signin = (req, res) => {
   User.create({
     username: req.body.username,
     email: req.body.email,
-    password: bcrypt.hash(req.body.password, 8)  // change her hashSync() to hash()  <------
+    password: bcrypt.hashSync(req.body.password, 8)  // change her hashSync() to hash()  <------
   })
   .then(user => {
       if (req.body.roles) {
@@ -49,8 +49,8 @@ exports.signin = (req, res) => {
         user.setRoles([1])
         .then(() => { res.send({ message: "User was registered successfully!" }) });
       }
-    })
-    .catch(err => { res.status(500).send({ message: err.message }) });
+  })
+  .catch(err => { res.status(500).send({ message: err.message }) });
 };
 
 // ----------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ exports.login = (req, res) => {
       return res.status(404).send({ message: "User Not found." });
     }
 
-    var passwordIsValid = bcrypt.compare(  // change her compareSync() to compare()  <------
+    var passwordIsValid = bcrypt.compareSync(  // change her compareSync() to compare()  <------
       req.body.password,
       user.password
     );

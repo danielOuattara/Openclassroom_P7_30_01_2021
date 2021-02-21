@@ -34,9 +34,9 @@ checkDuplicateUser = (req, res, next) => {   // check for duplicate user email o
             }
           next();
         })
-        .catch();
+        // .catch();
   })
-  .catch();
+  //.catch();
 };
 
 // --------------------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ checkRoles = (req, res, next) => {
 
 const verifySignUp = {
   checkDuplicateUser,
-  checkRolesExisted,
+  checkRoles,
 };
 
 module.exports = verifySignUp;

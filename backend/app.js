@@ -66,6 +66,10 @@ app.get ('/', (req, res, next) => {
   res.json({message: "Welcome to Tutorial Application !"})
 });
 
+// routes
+require('./routes/authRoutes')(app);
+require('./routes/userRoutes')(app);
+
 // app.use('/images', express.static(path.join(__dirname, 'images')));
 // require('./routes/authRoute.js')(app);
 // require('./routes/userRoutes.js')(app);
