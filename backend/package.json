@@ -15,5 +15,17 @@
   "bugs": {
     "url": "https://github.com/danielOuattara/Openclassroom_P7_30_01_2021/issues"
   },
-  "homepage": "https://github.com/danielOuattara/Openclassroom_P7_30_01_2021#readme"
+  "homepage": "https://github.com/danielOuattara/Openclassroom_P7_30_01_2021#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.2.6",
+    "helmet": "^4.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.5.0"
+  }
 }

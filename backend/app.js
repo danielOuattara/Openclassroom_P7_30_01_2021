@@ -5,7 +5,7 @@ const express     = require( 'express');  // importe 'express'
 const bodyParser  = require( 'body-parser');
 const path        = require('path');
 // const sauceRoutes = require('./routes/photoRoutes.js')
-const userRoutes  = require('./routes/userRoutes.js')
+// const userRoutes  = require('./routes/userRoutes.js')
 const app         = express(); //  cree une application express
 const helmet      = require('helmet')
 const cors        = require('cors');
@@ -41,40 +41,40 @@ app.use(limiter ({
   }
 }))
 
-const db = require('./models/');
-const Role = db.role;
+// const db = require('./models/');
+// const Role = db.role;
 
-db.sequelize.sync({ force: true })
-.then(() =>  {
-  console.log("Drop and re-sync db.");
-  // initial();
+// db.sequelize.sync({ force: true })
+// .then(() =>  {
+//   console.log("Drop and re-sync db.");
+//   // initial();
 
-    Role.create({
-      id: 1,
-      name: "user"
-    });
+//     Role.create({
+//       id: 1,
+//       name: "user"
+//     });
    
-    Role.create({
-      id: 2,
-      name: "moderator"
-    });
+//     Role.create({
+//       id: 2,
+//       name: "moderator"
+//     });
    
-    Role.create({
-      id: 3,
-      name: "admin"
-    });
+//     Role.create({
+//       id: 3,
+//       name: "admin"
+//     });
   
-})
+// })
 
 app.get ('/', (req, res, next) => {
   res.json({message: "Welcome to Tutorial Application !"})
 });
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
-require('./routes/authRoute.js')(app);
-require('./routes/userRoutes.js')(app);
-// app.use('/api/photos', photoRoutes )  // OLD
-app.use('/api/auth'  , userRoutes  )      // OLD
+// app.use('/images', express.static(path.join(__dirname, 'images')));
+// require('./routes/authRoute.js')(app);
+// require('./routes/userRoutes.js')(app);
+// // app.use('/api/photos', photoRoutes )  // OLD
+// app.use('/api/auth'  , userRoutes  )      // OLD
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
 
