@@ -10,7 +10,8 @@ const app         = express(); //  cree une application express
 const helmet      = require('helmet')
 const cors        = require('cors');
 const limiter     = require('express-rate-limit');
-
+const db = require("./models");
+const Role = db.role;
 // import {initial} from './config/initial.js'
 
 app.use(helmet())
@@ -41,30 +42,25 @@ app.use(limiter ({
   }
 }))
 
-// const db = require('./models/');
-// const Role = db.role;
 
-// db.sequelize.sync({ force: true })
-// .then(() =>  {
-//   console.log("Drop and re-sync db.");
-//   // initial();
 
-//     Role.create({
-//       id: 1,
-//       name: "user"
-//     });
-   
-//     Role.create({
-//       id: 2,
-//       name: "moderator"
-//     });
-   
-//     Role.create({
-//       id: 3,
-//       name: "admin"
-//     });
-  
-// })
+db.sequelize.sync();
+
+Role.create({
+  id: 1,
+  name: "user"
+});
+
+Role.create({
+  id: 2,
+  name: "moderator"
+});
+
+Role.create({
+  id: 3,
+  name: "admin"
+});
+
 
 app.get ('/', (req, res, next) => {
   res.json({message: "Welcome to Tutorial Application !"})
