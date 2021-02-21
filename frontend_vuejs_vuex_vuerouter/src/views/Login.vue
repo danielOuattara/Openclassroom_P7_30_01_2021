@@ -8,13 +8,14 @@
       />
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">Pseudo</label>
           <input
             v-model="user.username"
             v-validate="'required'"
             type="text"
             class="form-control"
             name="username"
+            placeholder="Entrez votre Pseudo ..."
           />
           <div
             v-if="errors.has('username')"
@@ -23,13 +24,14 @@
           >Username is required!</div>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Mot de passe</label>
           <input
             v-model="user.password"
             v-validate="'required'"
             type="password"
             class="form-control"
             name="password"
+            placeholder="Entre votre mot de passe ..."
           />
           <div
             v-if="errors.has('password')"
@@ -40,7 +42,7 @@
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
             <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Login</span>
+            <span>Connexion</span>
           </button>
         </div>
         <div class="form-group">
@@ -52,7 +54,7 @@
 </template>
 
 <script>
-import User from '../models/user';
+import User from './../models/user';
 
 export default {
   name: 'Login',

@@ -38,12 +38,12 @@ export const router = new Router({
       // lazy-loaded
       component: () => import('./views/BoardAdmin.vue')
     },
-    {
-      path: '/mod',
-      name: 'moderator',
-      // lazy-loaded
-      component: () => import('./views/BoardModerator.vue')
-    },
+    // {
+    //   path: '/mod',
+    //   name: 'moderator',
+    //   // lazy-loaded
+    //   component: () => import('./views/BoardModerator.vue')
+    // },
     {
       path: '/user',
       name: 'user',

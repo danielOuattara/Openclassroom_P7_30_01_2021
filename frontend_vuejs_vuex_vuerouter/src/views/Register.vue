@@ -26,13 +26,14 @@ src/views/Register.vue
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
           <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">Pseudo</label>
             <input
               v-model="user.username"
               v-validate="'required|min:3|max:20'"
               type="text"
               class="form-control"
               name="username"
+              placeholder="Choississez un Pseudo ..."
             />
             <div
               v-if="submitted && errors.has('username')"
@@ -47,6 +48,7 @@ src/views/Register.vue
               type="email"
               class="form-control"
               name="email"
+              placeholder="Entrez votre E-mail ..."
             />
             <div
               v-if="submitted && errors.has('email')"
@@ -54,13 +56,14 @@ src/views/Register.vue
             >{{errors.first('email')}}</div>
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">Mot de passe</label>
             <input
               v-model="user.password"
               v-validate="'required|min:6|max:40'"
               type="password"
               class="form-control"
               name="password"
+              placeholder="Choississez un mot de passe"
             />
             <div
               v-if="submitted && errors.has('password')"
@@ -68,7 +71,7 @@ src/views/Register.vue
             >{{errors.first('password')}}</div>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary btn-block">Sign Up</button>
+            <button class="btn btn-primary btn-block">Inscription</button>
           </div>
         </div>
       </form>
@@ -83,7 +86,7 @@ src/views/Register.vue
 </template>
 
 <script>
-import User from '../models/user';
+import User from './../models/user';
 
 export default {
   name: 'Register',

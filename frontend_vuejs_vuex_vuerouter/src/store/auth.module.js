@@ -9,6 +9,7 @@ export const auth = {
   namespaced: true,
   state: initialState,
   actions: {
+
     login({ commit }, user) {
       return AuthService.login(user).then(
         user => {
@@ -21,10 +22,12 @@ export const auth = {
         }
       );
     },
+
     logout({ commit }) {
       AuthService.logout();
       commit('logout');
     },
+    
     register({ commit }, user) {
       return AuthService.register(user).then(
         response => {
@@ -38,22 +41,27 @@ export const auth = {
       );
     }
   },
+
   mutations: {
     loginSuccess(state, user) {
       state.status.loggedIn = true;
       state.user = user;
     },
+
     loginFailure(state) {
       state.status.loggedIn = false;
       state.user = null;
     },
+
     logout(state) {
       state.status.loggedIn = false;
       state.user = null;
     },
+
     registerSuccess(state) {
       state.status.loggedIn = false;
     },
+
     registerFailure(state) {
       state.status.loggedIn = false;
     }

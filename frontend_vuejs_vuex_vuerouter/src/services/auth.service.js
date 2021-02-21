@@ -13,12 +13,13 @@ The service provides three important methods with the help of axios for HTTP req
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/auth/';
+const API_URL = 'http://localhost:3000/api/auth/';
 
 class AuthService {
+  
   login(user) {
     return axios
-      .post(API_URL + 'signin', {
+      .post(API_URL + 'login', {
         username: user.username,
         password: user.password
       })
@@ -36,7 +37,7 @@ class AuthService {
   }
 
   register(user) {
-    return axios.post(API_URL + 'signup', {
+    return axios.post(API_URL + 'signin', {
       username: user.username,
       email: user.email,
       password: user.password
