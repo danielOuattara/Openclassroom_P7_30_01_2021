@@ -33,7 +33,7 @@
 const express    = require('express');
 const router     = express.Router();
 const checkRoles = require('./../middleware/checkRoles')
-const checkDuplicateEmail = require('../middleware/checkDuplicatesEmail.js')
+const checkDuplicateEmail = require('./../middleware/checkDuplicateEmail.js')
 const strongPass = require('./../middleware/strongPass.js')
 const userController = require("../controllers/userController");
 

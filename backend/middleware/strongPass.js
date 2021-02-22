@@ -1,5 +1,5 @@
 
-exports.module = (next) => {
+exports.module = (req, res, next) => {
     
     // 'Password not strong ?'
     if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!?&#@$%µ€_])[a-zA-Z0-9!?&#@$%µ€_]{7,}/.test(req.body.password)) {
@@ -8,6 +8,4 @@ exports.module = (next) => {
    }
 
    next();
-
-
 }

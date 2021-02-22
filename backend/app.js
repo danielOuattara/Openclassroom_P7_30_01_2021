@@ -5,9 +5,9 @@ const express     = require( 'express');  // importe 'express'
 const bodyParser  = require( 'body-parser');
 const path        = require('path');
 // const sauceRoutes = require('./routes/photoRoutes.js')
+const app         = express(); //  cree une application express
 const userRoutes  = require('./routes/userRoutes.js')
 const authRoutes  = require('./routes/authRoutes.js')
-const app         = express(); //  cree une application express
 const helmet      = require('helmet')
 const cors        = require('cors');
 const limiter     = require('express-rate-limit');
@@ -46,20 +46,20 @@ app.use(limiter ({
 
 db.sequelize.sync();
 
-Role.create({
-  id: 1,
-  name: "user"
-});
+// Role.create({
+//   id: 1,
+//   name: "user"
+// });
+
+// // Role.create({
+// //   id: 2,
+// //   name: "moderator"
+// // });
 
 // Role.create({
 //   id: 2,
-//   name: "moderator"
+//   name: "admin"
 // });
-
-Role.create({
-  id: 2,
-  name: "admin"
-});
 
 
 app.get ('/', (req, res, next) => {
@@ -77,12 +77,7 @@ app.get ('/', (req, res, next) => {
 // app.use('/api/auth'  , userRoutes  )      // OLD
 
 
-
-
-
-
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
-
 
 
 app.use('/api/test' , authRoutes )

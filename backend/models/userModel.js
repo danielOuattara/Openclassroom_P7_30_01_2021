@@ -1,7 +1,7 @@
 
 // const { validator } = require("sequelize/types/lib/utils/validator-extras");
 
-const validator = require('validator');
+// const validator = require('validator');
 
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("users", {
@@ -23,11 +23,6 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING,
           allowNull: false,
           unique: true,
-          // unique: {
-            // args: true,
-            // msg: "Email address already in use !"
-        // },
-          // validate: [ validator.validate, 'Invalid email']
       },
 
       password: {

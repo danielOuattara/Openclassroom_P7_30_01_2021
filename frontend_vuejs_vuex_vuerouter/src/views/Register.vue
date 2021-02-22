@@ -25,10 +25,10 @@ src/views/Register.vue
       />
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
-          <div class="form-group">
-            <label for="username">Pseudo</label>
+          <!-- <div class="form-group">
+            <label for="email">email</label>
             <input
-              v-model="user.username"
+              v-model="user.email"
               v-validate="'required|min:3|max:20'"
               type="text"
               class="form-control"
@@ -39,7 +39,7 @@ src/views/Register.vue
               v-if="submitted && errors.has('username')"
               class="alert-danger"
             >{{errors.first('username')}}</div>
-          </div>
+          </div> -->
           <div class="form-group">
             <label for="email">Email</label>
             <input
@@ -55,6 +55,8 @@ src/views/Register.vue
               class="alert-danger"
             >{{errors.first('email')}}</div>
           </div>
+
+
           <div class="form-group">
             <label for="password">Mot de passe</label>
             <input
@@ -70,9 +72,11 @@ src/views/Register.vue
               class="alert-danger"
             >{{errors.first('password')}}</div>
           </div>
+
           <div class="form-group">
             <button class="btn btn-primary btn-block">Inscription</button>
           </div>
+          
         </div>
       </form>
 
