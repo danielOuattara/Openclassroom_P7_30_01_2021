@@ -1,31 +1,40 @@
+/* Authentication:
+--------------------
 
-/* Authorization:
-------------------
+    POST /api/auth/signin
+    POST /api/auth/login */
 
-    GET /api/test/all
-    GET /api/test/user for logged-in users (user/moderator/admin)
-    GET /api/test/mod for moderator
-    GET /api/test/admin for admin */
+// const { verifySignUp } = require("../middleware");
+// const controller = require("../controllers/userController");
+
+// module.exports = function(app) {
+//   app.use(function(req, res, next) {
+
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "x-access-token, Origin, Content-Type, Accept"
+//     );
+//     next();
+//   });
+
+//   app.post("/api/auth/signin", [verifySignUp.checkDuplicateUser, verifySignUp. ], controller.signin );
+
+//   app.post("/api/auth/login", controller.login);
+// };
 
 
-const { authJwt } = require("../middleware");
-const controller = require("../controllers/userController");
+// =========================================================
 
-module.exports = function(app) {
 
-  app.use(function(req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
-  });
 
-  app.get("/api/test/all", controller.allAccess); /* ??? Privée ou Publique ou semi-privée ????*/
+const express    = require('express');
+const router     = express.Router();
+const checkRoles = require('./../middleware/checkRoles')
 
-  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard );
+const userController = require("../controllers/userController");
 
-//   app.get("/api/test/mod", [authJwt.verifyToken, authJwt.isModerator], controller.moderatorBoard );
 
-  app.get("/api/test/admin", [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard );
-};
+router.post('/signin', checkRoles, userController.signin );
+router.post('/login'  ,             userController.login  );
+
+module.exports = router;
