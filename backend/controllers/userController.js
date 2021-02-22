@@ -13,8 +13,8 @@ There are 2 main functions for Authentication:
 
 controllers/auth.controller.js */
 
-const db = require("../models");
-const config = require("../config/authConfig.js");
+const db = require("./../models");
+const config = require("./../config/authConfig.js");
 const User = db.user;
 const Role = db.role;
 
@@ -27,9 +27,17 @@ const bcrypt = require("bcryptjs");
 // --------------------------------------------------------------------------------------
 
 exports.signin = (req, res) => {
+
+
+  //   // 'Password not strong ?'
+  //   if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!?&#@$%µ€_])[a-zA-Z0-9!?&#@$%µ€_]{7,}/.test(req.body.password)) {
+  //     return res.status(401).json({ error: `Password not Strong! :  7 characters at least 1 Uppercase,
+  //                                           1 Lowercase, 1 Digit, 1 symbol between: ! ? & # @ $ % µ € _ `});
+  // }
+
+
   // Save User to Database
   User.create({
-    username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)  // change her hashSync() to hash()  <------
   })
@@ -43,11 +51,14 @@ exports.signin = (req, res) => {
         .then(roles => {
             user.setRoles(roles)
             .then(() => { res.send({ message: "User was registered successfully!" }) });
-        });
+        })
+        .catch( error =>  res.status(400).json( {error}) );
+
       } else {
         // user role = 1
         user.setRoles([1])
-        .then(() => { res.send({ message: "User was registered successfully!" }) });
+        .then(() => { res.send({ message: "User was registered successfully!" }) })
+        .catch( error =>  res.status(400).json( {error}) )
       }
   })
   .catch(err => { res.status(500).send({ message: err.message }) });
@@ -57,20 +68,18 @@ exports.signin = (req, res) => {
 
 
 exports.login = (req, res) => {
+
+
+
   User.findOne({
-    where: {
-      username: req.body.username
-    }
+    where: { email: req.body.email }
   })
   .then(user => {
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
 
-    var passwordIsValid = bcrypt.compareSync(  // change her compareSync() to compare()  <------
-      req.body.password,
-      user.password
-    );
+    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password );  // change her compareSync() to compare()  <------
 
     if (!passwordIsValid) {
       return res.status(401).send({

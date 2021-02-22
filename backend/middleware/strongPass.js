@@ -1,6 +1,4 @@
 
-// strong pass ?
-
 exports.module = (next) => {
     
     // 'Password not strong ?'

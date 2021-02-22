@@ -1,5 +1,3 @@
-// userModel
-
 
 // const { validator } = require("sequelize/types/lib/utils/validator-extras");
 
