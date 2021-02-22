@@ -3,22 +3,25 @@
     <div class="card card-container">
       <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" alt="logo image profile" />
       <form name="form" @submit.prevent="handleLogin">
+
         <div class="form-group">
-          <label for="username">Pseudo</label>
+          <label for="email">Email</label>
           <input
-            v-model="user.username"
+            v-model="user.email"
             v-validate="'required'"
             type="text"
             class="form-control"
-            name="username"
+            name="email"
             placeholder="Entrez votre Pseudo ..."
           />
           <div
-            v-if="errors.has('username')"
+            v-if="errors.has('email')"
             class="alert alert-danger"
             role="alert"
           >Username is required!</div>
         </div>
+
+
         <div class="form-group">
           <label for="password">Mot de passe</label>
           <input
@@ -35,6 +38,7 @@
             role="alert"
           >Password is required!</div>
         </div>
+
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
             <span v-show="loading" class="spinner-border spinner-border-sm"></span>

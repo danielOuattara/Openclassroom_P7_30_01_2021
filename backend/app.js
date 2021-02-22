@@ -46,20 +46,16 @@ app.use(limiter ({
 
 db.sequelize.sync();
 
-// Role.create({
-//   id: 1,
-//   name: "user"
-// });
+Role.create({
+  id: 1,
+  name: "user"
+});
 
-// // Role.create({
-// //   id: 2,
-// //   name: "moderator"
-// // });
 
-// Role.create({
-//   id: 2,
-//   name: "admin"
-// });
+Role.create({
+  id: 2,
+  name: "admin"
+});
 
 
 app.get ('/', (req, res, next) => {

@@ -1,6 +1,6 @@
 // check duplicate email
 
-const db = require("../models");
+const db = require("./../models");
 const User = db.user;
 
 module.exports = (req, res, next) => {   // check for duplicate user email or username

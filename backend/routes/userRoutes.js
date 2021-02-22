@@ -28,17 +28,15 @@
 
 // =========================================================
 
-
-
-const express    = require('express');
-const router     = express.Router();
-const checkRoles = require('./../middleware/checkRoles')
-const checkDuplicateEmail = require('./../middleware/checkDuplicateEmail.js')
-const strongPass = require('./../middleware/strongPass.js')
+const express        = require('express');
+const router         = express.Router();
+const checkRoles     = require('./../middleware/checkRoles.js')
+const checkEmail     = require('./../middleware/checkEmail.js')
+const strongPass     = require('./../middleware/strongPass.js')
 const userController = require("../controllers/userController");
 
 
-router.post('/signin', checkDuplicateEmail, strongPass, checkRoles, userController.signin );
+router.post('/signin', checkEmail, strongPass, checkRoles, userController.signin );
 
 router.post('/login', userController.login  );
 

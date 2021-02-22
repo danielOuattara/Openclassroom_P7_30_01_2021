@@ -59,26 +59,27 @@ exports.signin = (req, res) => {
 // ----------------------------------------------------------------------------------------
 
 
-exports.login = (req, res) => {
+exports.login = (req, res, next) => {
 
   User.findOne({
     where: { email: req.body.email }
   })
-  .then(user => {
-    if (!user) {
-      return res.status(404).send({ message: "User Not found." });
-    }
+  .then( user => {
 
-    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password );  // change her compareSync() to compare()  <------
+      if (!user) {
+        return res.status(401).json( {error: ' Email or Password unknown !'} )    // Password Not Recognized
+      }
 
-    if (!passwordIsValid) {
-      return res.status(401).send({
-        accessToken: null,
-        message: "Invalid Password!"
-      });
-    }
+      const passwordIsValid = bcrypt.compareSync(req.body.password, user.password );  // change her compareSync() to compare()  <------
 
-    var token = jwt.sign({ id: user.id }, config.secret, {
+      if (!passwordIsValid) {
+        return res.status(401).send({
+          accessToken: null,
+          message: "Invalid Password!"
+        });
+      }
+
+    const token = jwt.sign({ id: user.id }, config.secret, {
       expiresIn: 86400 // 24 hours
     });
 

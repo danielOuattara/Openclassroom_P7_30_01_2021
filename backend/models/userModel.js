@@ -12,12 +12,12 @@ module.exports = (sequelize, Sequelize) => {
 
      lastName: {
        type: Sequelize.STRING,
-      },
+     },
 
-      username: {
-        type: Sequelize.STRING,
-        unique: true,
-      },
+     username: {
+       type: Sequelize.STRING,
+       unique: true,
+     },
       
       email: {
           type: Sequelize.STRING,
@@ -42,10 +42,6 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING,
       },
 
-
-      accountCreationDate: {
-          type: Sequelize.DATE,
-      },
 
 
 });
