@@ -30,11 +30,11 @@
 const express    = require('express');
 const router     = express.Router();
 const checkRoles = require('./../middleware/checkRoles')
-
+// const checkDuplicate = require('./../middleware/checkDuplicates.js')
 const userController = require("../controllers/userController");
 
 
-router.post('/signin', checkRoles, userController.signin );
-router.post('/login'  ,             userController.login  );
+router.post('/signin', /* checkDuplicate, */ checkRoles, userController.signin );
+router.post('/login' ,                             userController.login  );
 
 module.exports = router;
