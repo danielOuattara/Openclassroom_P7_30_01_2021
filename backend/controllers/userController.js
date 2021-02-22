@@ -13,8 +13,8 @@ There are 2 main functions for Authentication:
 
 controllers/auth.controller.js */
 
-const db = require("../models");
-const config = require("../config/authConfig.js");
+const db = require("./../models");
+const config = require("./../config/authConfig.js");
 const User = db.user;
 const Role = db.role;
 
@@ -70,7 +70,7 @@ exports.signin = (req, res) => {
 exports.login = (req, res) => {
 
 
-  
+
   User.findOne({
     where: { email: req.body.email }
   })
@@ -79,10 +79,7 @@ exports.login = (req, res) => {
       return res.status(404).send({ message: "User Not found." });
     }
 
-    var passwordIsValid = bcrypt.compareSync(  // change her compareSync() to compare()  <------
-      req.body.password,
-      user.password
-    );
+    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password );  // change her compareSync() to compare()  <------
 
     if (!passwordIsValid) {
       return res.status(401).send({
