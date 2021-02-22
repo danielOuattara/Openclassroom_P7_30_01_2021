@@ -2,7 +2,8 @@
 Authentication service
 ----------------------
 
-The service provides three important methods with the help of axios for HTTP requests & reponses:
+The service provides three important methods with the help of 
+axios for HTTP requests & reponses:
 
     login(): POST {username, password} & save JWT to Local Storage
     logout(): remove JWT from Local Storage
@@ -18,8 +19,7 @@ const API_URL = 'http://localhost:3000/api/auth/';
 class AuthService {
   
   login(user) {
-    return axios
-      .post(API_URL + 'login', {
+    return axios.post(API_URL + 'login', {
         email: user.email,
         password: user.password
       })

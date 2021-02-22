@@ -41,9 +41,9 @@ const authController = require("../controllers/authController");
 const authAdmin      = require('./../middleware/authAdmin.js')
 
 
-router.get('./all',                      authController.allAccess);
-router.get('./user',  auth ,             authController.userBoard );
-router.get('./admin', auth , authAdmin , authController.adminBoard )
+router.get('/all',                      authController.allAccess);
+router.get('/user',  auth ,             authController.userBoard );
+router.get('/admin', auth , authAdmin , authController.adminBoard )
 
 
 module.exports = router;

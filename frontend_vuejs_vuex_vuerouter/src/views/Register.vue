@@ -25,21 +25,7 @@ src/views/Register.vue
       />
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
-          <!-- <div class="form-group">
-            <label for="email">email</label>
-            <input
-              v-model="user.email"
-              v-validate="'required|min:3|max:20'"
-              type="text"
-              class="form-control"
-              name="username"
-              placeholder="Choississez un Pseudo ..."
-            />
-            <div
-              v-if="submitted && errors.has('username')"
-              class="alert-danger"
-            >{{errors.first('username')}}</div>
-          </div> -->
+
           <div class="form-group">
             <label for="email">Email</label>
             <input

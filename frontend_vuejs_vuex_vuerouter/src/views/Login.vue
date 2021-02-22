@@ -12,31 +12,32 @@
             type="text"
             class="form-control"
             name="email"
-            placeholder="Entrez votre Pseudo ..."
+            placeholder="Entrez votre Email ..."
           />
           <div
             v-if="errors.has('email')"
             class="alert alert-danger"
             role="alert"
-          >Username is required!</div>
+          >Votre Email est requis!</div>
         </div>
 
 
         <div class="form-group">
           <label for="password">Mot de passe</label>
+
           <input
             v-model="user.password"
             v-validate="'required'"
             type="password"
             class="form-control"
             name="password"
-            placeholder="Entre votre mot de passe ..."
-          />
+            placeholder="Entre votre mot de passe ..." />
+
           <div
             v-if="errors.has('password')"
             class="alert alert-danger"
-            role="alert"
-          >Password is required!</div>
+            role="alert" >Votre mot de passe est requis
+          </div>
         </div>
 
         <div class="form-group">
@@ -57,6 +58,7 @@
 import User from './../models/user';
 
 export default {
+  
   name: 'Login',
   data() {
     return {
@@ -84,7 +86,7 @@ export default {
           return;
         }
 
-        if (this.user.username && this.user.password) {
+        if (this.user.email && this.user.password) {
           this.$store.dispatch('auth/login', this.user).then(
             () => {
               this.$router.push('/profile');

@@ -6,10 +6,17 @@ To make code clear and easy to read, we define the User model first.
 Under src/models folder, create user.js like this. */
 
 export default class User {
-  constructor(username, email, password) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
+  constructor( firstName, lastName, username, email, password, gender, age, department) {
+    
+    this.firstName  = firstName;
+    this.lastName   = lastName;
+    this.username   = username;
+    this.email      = email;
+    this.password   = password;
+    this.gender     = gender;
+    this.age        = age;
+    this.department = department;
+       
   }
 }
 

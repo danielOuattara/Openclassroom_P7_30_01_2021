@@ -91,12 +91,12 @@ exports.login = (req, res, next) => {
       }
       res.status(200).send({
         id: user.id,
-        username: user.username,
+        // username: user.username,
         email: user.email,
         roles: authorities,
         accessToken: token
       });
-    });
+    }).catch(err => { res.status(400).send({ message: err.message }) });
   })
   .catch(err => { res.status(500).send({ message: err.message }) });
 };
