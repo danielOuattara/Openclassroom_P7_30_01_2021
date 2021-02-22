@@ -33,7 +33,7 @@ const router         = express.Router();
 const checkRoles     = require('./../middleware/checkRoles.js')
 const checkEmail     = require('./../middleware/checkEmail.js')
 const strongPass     = require('./../middleware/strongPass.js')
-const userController = require("../controllers/userController");
+const userController = require('./../controllers/');
 
 
 router.post('/signin', checkEmail, strongPass, checkRoles, userController.signin );
