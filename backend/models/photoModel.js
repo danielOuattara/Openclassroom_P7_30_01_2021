@@ -12,10 +12,18 @@ module.exports = ( sequelize, Sequelize) => {
             allowNull: false
         },
 
-        // owner_id: {
-        //     type: Sequelize.INTEGER,
-        //     allowNull: false
-        // }
+        owner_id: {
+            type: Sequelize.INTEGER,
+        },
+
+        userId_like: {
+            type: Sequelize.INTEGER,
+        },
+
+        userId_dislike: {
+            type: Sequelize.INTEGER,
+        },
+
     });
 
     return Photo;

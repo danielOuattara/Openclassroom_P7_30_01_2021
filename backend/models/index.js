@@ -28,8 +28,10 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("./userModel.js")(sequelize, Sequelize);
-db.role = require("./roleModel.js")(sequelize, Sequelize);
+db.user    = require("./userModel.js")(sequelize, Sequelize);
+db.role    = require("./roleModel.js")(sequelize, Sequelize);
+db.photo   = require('./roleModel.js')(sequelize, Sequelize);
+db.comment = require('./roleModel.js')(sequelize, Sequelize)
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",

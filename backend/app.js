@@ -6,8 +6,10 @@ const bodyParser  = require( 'body-parser');
 const path        = require('path');
 // const sauceRoutes = require('./routes/photoRoutes.js')
 const app         = express(); //  cree une application express
+const boardRoutes = require('./routes/boardRoutes.js')
 const userRoutes  = require('./routes/userRoutes.js')
-const authRoutes  = require('./routes/authRoutes.js')
+const authRoutes  = require('./routes/boardRoutes.js')
+const photoRoutes  = require('./routes/photoRoutes.js')
 const helmet      = require('helmet')
 const cors        = require('cors');
 const limiter     = require('express-rate-limit');
@@ -76,5 +78,7 @@ app.get ('/', (req, res, next) => {
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
 
 
-app.use('/api/test' , authRoutes )
-app.use('/api/auth' , userRoutes )
+app.use('/api/board'  , boardRoutes )
+app.use('/api/auth'   , authRoutes )
+app.use('/api/users'  , userRoutes )
+app.use('/api/photos' , photoRoutes )

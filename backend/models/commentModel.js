@@ -4,18 +4,26 @@ module.exports = ( sequelize, Sequelize) => {
 
         content: {
             type: Sequelize.STRING,
-            allowNull: true
         },
 
-        // owner_id: {  // ??
-        //     type: Sequelize.INTEGER,
-        //     allowNull: false
-        // }
+        owner_id: {  // ??
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
 
-        // photo_id: {  // ??
-        //     type: Sequelize.INTEGER,
-        //     allowNull: false
-        // }
+        photo_id: {  // ??
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+
+        userId_like: {
+            type: Sequelize.INTEGER,
+        },
+
+        userId_dislike: {
+            type: Sequelize.INTEGER,
+        },
+
     });
 
     return Comment;

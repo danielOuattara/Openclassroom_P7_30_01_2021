@@ -42,6 +42,10 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING,
       },
 
+      avatar: {
+        type: Sequelize.STRING,
+      }
+
 
 
 });

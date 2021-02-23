@@ -1,4 +1,4 @@
-const db = require('./../models');
+const db = require('../models');
 const Photo = db.tutorials;
 const Op = db.Sequelize.Op;
 const fs    = require('fs');
@@ -39,66 +39,66 @@ exports.addPhoto = (req, res, next) => {
 //-----------------------------------------------------------------------------------------------------------
 
 exports.userLikePhoto = (req, res, next) => {
-    switch (req.body.like) {
+    // switch (req.body.like) {
 
-        case 1:
-            Photo.updateOne(
-                {_id: req.params.id},
-                {
-                  $inc:  { likes: +1 },
-                  $push: { usersLiked: req.body.userId},
-                  _id: req.params.id
-                }
-            )
-            .then( ()    => res.status(201).json( { message: 'Thanks for vote'}))
-            .catch(error => res.status(400).json( {error } ))
-            break;
+        // case 1:
+        //     Photo.updateOne(
+        //         {_id: req.params.id},
+        //         {
+        //           $inc:  { likes: +1 },
+        //           $push: { usersLiked: req.body.userId},
+        //           _id: req.params.id
+        //         }
+        //     )
+        //     .then( ()    => res.status(201).json( { message: 'Thanks for vote'}))
+        //     .catch(error => res.status(400).json( {error } ))
+        //     break;
 
-        case -1:
-            Photo.updateOne(
-                {_id: req.params.id},
-                {
-                  $inc:  { dislikes: +1 },
-                  $push: { usersDisliked: req.body.userId},
-                  _id: req.params.id
-                }
-            )
-            .then( ()    => res.status(201).json( { message: 'Thanks for vote'}))
-            .catch(error => res.status(400).json( {error } ))
-            break;
+        // case -1:
+        //     Photo.updateOne(
+        //         {_id: req.params.id},
+        //         {
+        //           $inc:  { dislikes: +1 },
+        //           $push: { usersDisliked: req.body.userId},
+        //           _id: req.params.id
+        //         }
+        //     )
+        //     .then( ()    => res.status(201).json( { message: 'Thanks for vote'}))
+        //     .catch(error => res.status(400).json( {error } ))
+        //     break;
 
 
-        case 0:
-            Photo.findOne( { _id: req.params.id } )
-            .then((photo) => {
-                if (photo.usersLiked.find( userVote => userVote === req.body.userId)) {
-                  Photo.updateOne(
-                    { _id: req.params.id },
-                    {
-                      $inc: { likes: -1 },
-                      $pull: { usersLiked: req.body.userId },
-                      _id: req.params.id
-                    }
-                  )
-                    .then(()       =>  res.status(201).json( { message: 'Your vote was reversed' } ) )
-                    .catch((error) =>  res.status(400).json( { error} ));
-                }
+        // case 0:
+        //     Photo.findOne( { _id: req.params.id } )
+        //     .then((photo) => {
+        //         if (photo.usersLiked.find( userVote => userVote === req.body.userId)) {
+        //           Photo.updateOne(
+        //             { _id: req.params.id },
+        //             {
+        //               $inc: { likes: -1 },
+        //               $pull: { usersLiked: req.body.userId },
+        //               _id: req.params.id
+        //             }
+        //           )
+        //             .then(()       =>  res.status(201).json( { message: 'Your vote was reversed' } ) )
+        //             .catch((error) =>  res.status(400).json( { error} ));
+        //         }
 
-                if (photo.usersDisliked.find( userVote => userVote === req.body.userId)) {
-                  Photo.updateOne(
-                    { _id: req.params.id }, {
-                      $inc: { dislikes: -1 },
-                      $pull: { usersDisliked: req.body.userId },
-                      _id: req.params.id
-                    }
-                  )
-                    .then( ()       => { res.status(201).json({ message: 'Your vote was reversed' }) })
-                    .catch( (error) =>  res.status(400).json({ error}));
-                }
-            })
-            .catch(error => res.status(404).json({ error }));
-            break;
-    }
+        //         if (photo.usersDisliked.find( userVote => userVote === req.body.userId)) {
+        //           Photo.updateOne(
+        //             { _id: req.params.id }, {
+        //               $inc: { dislikes: -1 },
+        //               $pull: { usersDisliked: req.body.userId },
+        //               _id: req.params.id
+        //             }
+        //           )
+        //             .then( ()       => { res.status(201).json({ message: 'Your vote was reversed' }) })
+        //             .catch( (error) =>  res.status(400).json({ error}));
+        //         }
+        //     })
+        //     .catch(error => res.status(404).json({ error }));
+        //     break;
+    // }
 }
 
 
@@ -112,7 +112,7 @@ exports.getAllPhoto = (req, res, next) => {
                                     //  consider it as condition for findAll() method.
   let condition = title ? { title: { [Op.like]: `%${title}%`} } : null;
 
-  Tutorial.findAll ( {where: condition} )
+  Photo.findAll ( {where: condition} )
   .then( photos => res.status(200).json(photos))
   .catch( err => res.status(500).send( { message: err.message || `Error while retrieving photos`} ))
 };
@@ -134,64 +134,7 @@ exports.getOnePhoto  = (req, res, next) => {
 
 //-----------------------------------------------------------------------------------------------------------
 
-  // Update a Tutorial by the id in the request
-
-exports.updatePhoto = (req, res, next) => {
-
-    const id = req.params.id;
-    const photoObject = req.file ?
-        {
-          ...JSON.parse(req.body.photo),  //si update d'image
-          imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        }
-        :
-        {
-          ...req.body // sinon
-        }
-
-    // do not trust user input, even on update !
-    const regex =  /[\[\]<>=0]+/gi;
-
-    if ( regex.test(photoObject.title) || regex.test(photoObject.imageUrl) ) {
-      return res.status(401).json( { error: ' Fill in text Invalid !'  });
-    }
-
-    if (req.file) {
-
-        Photo.findByPk(id)
-        .then( photo => {
-            const filename = photo.imageUrl.split('/images/')[1];
-
-            fs.unlink( `images/${filename}`, () => {
-                Photo.update(req.body, { where: {id}})
-                .then( num => {
-                  if (num == 1) {
-                      res.send( {message: `Tutorial was updated succesfully !` })
-                  } else {
-                      res.send({ message: `Cannot update Tutorial with id=${id} : Tutorial not found OR Request body is empty!`})
-                  }
-              })
-                .catch( error =>  res.status(400).json({error}))
-            })
-              })
-        .catch( error => res.status(500).json({error}))
-
-    } else {
-
-        Photo.findByPk(id)
-        .then(photo => {
-          Photo.update(req.body, { where: {id}})
-          .then( num => {
-            if (num == 1) {
-                res.send( {message: `Tutorial was updated succesfully !` })
-            } else {
-                res.send({ message: `Cannot update Tutorial with id=${id} : Tutorial not found OR Request body is empty!`})
-            }
-          })
-          .catch( error =>  res.status(400).json({error}))
-        })
-    }
-  }
+  // Update a Photo by the id in the request
 
 
 
