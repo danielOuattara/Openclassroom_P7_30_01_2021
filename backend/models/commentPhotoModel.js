@@ -7,7 +7,7 @@ module.exports = ( sequelize, Sequelize) => {
         },
 
         comment_owner_id: {  // ??
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: false
         },
 

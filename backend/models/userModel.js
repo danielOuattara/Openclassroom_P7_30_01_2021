@@ -31,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
       },
 
       age: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.INTEGER.UNSIGNED,
       },
 
       department: {
