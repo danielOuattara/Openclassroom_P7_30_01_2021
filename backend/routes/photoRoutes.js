@@ -1,8 +1,8 @@
 const express          = require('express');
 const router           = express.Router();
-const auth             = require('./../auth/auth.js');
+const auth             = require('./../middleware/auth.js');
 const photoControllers = require('./../controllers/photoControllers.js');
-const multer           = require('./../auth/multer-config.js');
+const multer           = require('./../middleware/multer-config.js');
 
 
 router.post('/'         ,  auth, multer, photoControllers.addPhoto       );
