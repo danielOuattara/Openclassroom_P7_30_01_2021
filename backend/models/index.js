@@ -1,5 +1,5 @@
 
-//  Initialize Sequelize
+//  Initialize Sequelize : coonection & tables creation
 //----------------------
 
 const config = require("./../config/dbConfig.js");
@@ -31,7 +31,12 @@ db.sequelize = sequelize;
 db.user    = require("./userModel.js")(sequelize, Sequelize);
 db.role    = require("./roleModel.js")(sequelize, Sequelize);
 db.photo   = require('./photoModel.js')(sequelize, Sequelize);
-db.comment = require('./commentModel.js')(sequelize, Sequelize)
+db.commentPhoto = require('./commentPhotoModel.js')(sequelize, Sequelize)
+db.usersLikesPhoto = require('./usersLikesPhoto.js')(sequelize, Sequelize);
+
+
+
+// ----------------------------------------------------------------------------
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -46,5 +51,46 @@ db.user.belongsToMany(db.role, {
 });
 
 db.ROLES = ["user", "admin"];
+
+// ----------------------------------------------------------------------------
+
+db.user.hasMany(db.photo, {as: "photos"});
+db.photo.belongsTo(db.user, {
+  foreignKey:"userId",
+  as: "user",
+});
+
+// ----------------------------------------------------------------------------
+
+db.photo.belongsToMany(db.commentPhoto, {
+  through: "comment_photo",
+  as: "commentsPhoto",
+  foreignKey: "photo_id",
+});
+
+db.commentPhoto.belongsToMany(db.photo, {
+  through: "comment_photo",
+  as: "photos",
+  foreignKey: "commentPhoto_id",
+});
+
+
+// ----------------------------------------------------------------------------
+
+
+
+db.photo.belongsToMany(db.usersLikesPhoto, {
+  through: "usersLikesPhoto_photo",
+  as: "userLikesPhoto",
+  foreignKey: "photo_id",
+});
+
+
+db.usersLikesPhoto.belongsToMany(db.photo, {
+  through: "usersLikesPhoto_photo",
+  as:"photos",
+  foreignKey: "userLikesPhoto_id"
+});
+// ----------------------------------------------------------------------------
 
 module.exports = db;

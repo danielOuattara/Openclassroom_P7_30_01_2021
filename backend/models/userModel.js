@@ -1,32 +1,28 @@
 
-// const { validator } = require("sequelize/types/lib/utils/validator-extras");
-
-// const validator = require('validator');
-
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("users", {
 
       firstName: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(30),
      },
 
      lastName: {
-       type: Sequelize.STRING,
+       type: Sequelize.STRING(30),
      },
 
      username: {
-       type: Sequelize.STRING,
+       type: Sequelize.STRING(30),
        unique: true,
      },
       
       email: {
-          type: Sequelize.STRING,
+          type: Sequelize.STRING(30),
           allowNull: false,
           unique: true,
       },
 
       password: {
-          type: Sequelize.STRING,
+          type: Sequelize.STRING(30),
           allowNull: false
       },
       
@@ -38,15 +34,17 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.INTEGER,
       },
 
-      departement: {
-          type: Sequelize.STRING,
+      department: {
+          type: Sequelize.STRING(30),
       },
 
       avatar: {
         type: Sequelize.STRING,
+      },
+
+      aboutme: {
+        type: Sequelize.STRING,
       }
-
-
 
 });
   

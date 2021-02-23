@@ -12,7 +12,9 @@ const photoRoutes  = require('./routes/photoRoutes.js')
 const helmet      = require('helmet')
 const cors        = require('cors');
 const limiter     = require('express-rate-limit');
+const {sequelize} = require('./models');
 const db = require("./models");
+const { mainModule } = require('process');
 const Role = db.role;
 
 app.use(helmet())
@@ -44,8 +46,11 @@ app.use(limiter ({
 }))
 
 
+const main = async () => {
+  await db.sequelize.sync({force:"true"});
+}
 
-db.sequelize.sync();
+main();
 
 Role.create({
   id: 1,
