@@ -2,9 +2,8 @@
 //  Initialize Sequelize : coonection & tables creation
 //----------------------
 
-const config = require("./../config/dbConfig.js");
-
 const Sequelize = require("sequelize");
+const config = require("./../config/dbConfig.js");
 const sequelize = new Sequelize(
   config.DB,
   config.USER,
@@ -23,7 +22,17 @@ const sequelize = new Sequelize(
   }
 );
 
+// test DB
+// -----------------------
+sequelize.authenticate()
+.then( ()=> console.log("==========  **** Database Conected !  **** ============"))
+.catch( err => console.log(err));
+
+
+
 const db = {};
+
+
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
