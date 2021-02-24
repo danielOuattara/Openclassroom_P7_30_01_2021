@@ -65,6 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     aboutMe:    {
       type: DataTypes.STRING,
     },
+    
   },
   
   {

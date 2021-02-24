@@ -12,10 +12,27 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
+  }
+
   UsersLikesPhoto.init({
-    firstName: DataTypes.STRING
-  }, {
+
+    userLikes: {
+      type: DataTypes.INTEGER(1).UNSIGNED,
+    },
+
+    userDislikes: {
+      type: DataTypes.INTEGER(1).UNSIGNED,
+    },
+
+    likes_owner_id: {  // ??
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false
+    },
+
+  }, 
+  
+  
+  {
     sequelize,
     modelName: 'UsersLikesPhoto',
     tableName: 'users_likes_photos',

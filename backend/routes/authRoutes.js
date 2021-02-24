@@ -8,6 +8,6 @@ const checkEmail     = require('./../middleware/checkEmail.js')
 const userController = require('../controllers/authController.js')
 
 
-router.post('/signin', checkEmail, /* strongPass, */ checkRoles, userController.signin );
+router.post('/signin', checkEmail, /* strongPass, */ /* checkRoles, */ userController.signin );
 router.post('/signout' , usersController.signout );
 router.post('/login'   , userController.login);
