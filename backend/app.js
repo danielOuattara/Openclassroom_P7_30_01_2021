@@ -72,7 +72,7 @@ app.use(limiter ({
 
 
 const main = async () => {
-  await sequelize.sync({force: true});
+  await sequelize.sync();
 } 
 
 main();
