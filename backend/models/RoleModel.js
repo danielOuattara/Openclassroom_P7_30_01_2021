@@ -12,8 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
+    toJSON() {
+      return {...this.get(), id: undefined } // Hide every id
+    }
+    
+  }
+
   Roles.init({
+
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
 
     id: {
       type: DataTypes.INTEGER,

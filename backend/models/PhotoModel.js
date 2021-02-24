@@ -12,9 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+    toJSON() {
+      return {...this.get(), id: undefined } // Hide every id
+    }
+    
   }
 
   Photos.init({
+
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
 
     title: {
       type: DataTypes.STRING(30),

@@ -10,6 +10,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
 
+      uuid: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+      },
+
       userLikes: {
         type: Sequelize.INTEGER(1).UNSIGNED,
       },
