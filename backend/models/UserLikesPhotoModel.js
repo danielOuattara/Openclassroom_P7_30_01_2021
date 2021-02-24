@@ -26,14 +26,15 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     userLikes: {
-      type: DataTypes.INTEGER(1).UNSIGNED,
+      type: DataTypes.INTEGER(1),
     },
 
-    userDislikes: {
-      type: DataTypes.INTEGER(1).UNSIGNED,
+    ownerId: {  
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
 
-    likes_owner_id: {  // ??
+    roleId: {  
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
     },

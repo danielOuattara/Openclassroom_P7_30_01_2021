@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
 
-    comment_userId: {
+    ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false
     }

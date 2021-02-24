@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false,
       },
   
-      user_Id: {
+      ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

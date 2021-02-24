@@ -16,14 +16,10 @@ module.exports = {
       },
 
       userLikes: {
-        type: Sequelize.INTEGER(1).UNSIGNED,
+        type: Sequelize.INTEGER(1),
       },
   
-      userDislikes: {
-        type: Sequelize.INTEGER(1).UNSIGNED,
-      },
-  
-      likes_owner_id: {  // ??
+      ownerId: { 
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false
       },

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({User}) {
       // define association here
-      this.belongsTo(User, {foreignKey:'userId'})
+      this.belongsTo(User, {foreignKey:'ownerId'})
     }
     toJSON() {
       return {...this.get(), id: undefined } // Hide every id
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
 
-    user_Id: {
+    ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

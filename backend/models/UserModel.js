@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({Photo}) {
       // define association here
-      this.hasMany(Photo,{foreignKey: 'userId'})
+      this.hasMany(Photo,{foreignKey: 'ownerId'})
     }
 
     toJSON() {
@@ -71,6 +71,12 @@ module.exports = (sequelize, DataTypes) => {
     aboutMe:    {
       type: DataTypes.STRING,
     },
+
+    roleId: {  
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
     
   },
   
