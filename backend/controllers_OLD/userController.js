@@ -87,6 +87,8 @@ exports.deleteUser = (req, res, next) => {
     User.findByPk(id)
     .then( user => {
         const filename = user.imageUrl.split('/images/')[1];
+
+        // regaer
         fs.unlink( `images/${filename}`, () => {
             User.destroy(  {
               where: { _id: req.params.id } 

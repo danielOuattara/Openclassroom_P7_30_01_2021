@@ -72,7 +72,7 @@ exports.signout = (req, res, next) => {
 
         bcrypt.compare( req.body.password, user.password)
         .then(() => {
-            if (user.id === req.params.id) {
+            if (user.id === req.params.i /* || is Admin ?*/)  {  
                 User.destroy({
                     where: { id: req.params.id}
                 })
@@ -104,7 +104,7 @@ exports.login = (req, res, next) => {
             if(valid) {
 
                 const authorities = [];
-                const token = jwt.sign( {id: user.id}, config.secret, {expiresIn: 3600});
+                const token = jwt.sign( {id: user.id, role:isAdmin}, config.secret, {expiresIn: 3600});
                 
                 user.getRoles()
                 .then( roles => {
