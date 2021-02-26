@@ -6,7 +6,6 @@ const boardController = require("./../controllers/boardController");
 const authAdmin      = require('./../middleware/authAdmin.js')
 
 
-router.get('/all',                      boardController.allAccess);
 router.get('/user',  auth ,             boardController.userBoard );
 router.get('/admin', auth , authAdmin , boardController.adminBoard )
 

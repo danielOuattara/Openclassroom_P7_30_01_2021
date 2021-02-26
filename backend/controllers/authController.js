@@ -1,3 +1,4 @@
+
 const db = require("./../models");
 const config = require("./../config/authConfig.js");
 const User = db.user;
@@ -6,17 +7,27 @@ const Role = db.role;
 const Op = db.Sequelize.Op;
 
 const jwt = require("jsonwebtoken");
+const validator    = require('email-validator');
+
 const bcrypt = require("bcryptjs");
 
 
 // --------------------------------------------------------------------------------------
 
-exports.signin = (req, res) => {
+exports.signin = (req, res, next) => {
 
-  // Save User to Database
+  if (!validator.validate(req.body.email)) {
+    return res.status(401).json({error:" Email invalid !" } )
+}
+
+  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!?&#@$%µ€_])[a-zA-Z0-9!?&#@$%µ€_]{7,}/.test(req.body.password)) {
+    return res.status(401).json({ error: `Password not Strong! :  7 characters at least 1 Uppercase,
+                                          1 Lowercase, 1 Digit, 1 symbol between: ! ? & # @ $ % µ € _ `});
+}
+
   User.create({
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)  // change her hashSync() to hash()  <------
+    password: bcrypt.hash(req.body.password, 8)  // change her hashSync() to hash()  <------
   })
   .then(user => {
       if (req.body.roles) {
@@ -50,18 +61,13 @@ exports.login = (req, res, next) => {
     where: { email: req.body.email }
   })
   .then( user => {
-
       if (!user) {
-        return res.status(401).json( {error: ' Email or Password unknown !'} )    // Password Not Recognized
+        return res.status(401).json( {error: ' Invalid Email or Password !'} )    // Password Not Recognized
       }
 
       const passwordIsValid = bcrypt.compareSync(req.body.password, user.password );  // change her compareSync() to compare()  <------
-
       if (!passwordIsValid) {
-        return res.status(401).send({
-          accessToken: null,
-          message: "Invalid Password!"
-        });
+        return res.status(401).send({error: "Invalid Email or Password !"})
       }
 
     const token = jwt.sign({ id: user.id }, config.secret, {

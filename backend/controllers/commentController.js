@@ -1,53 +1,27 @@
 
 const db = require('./../models');
-const Tutorial = db.tutorials;
+const Comment = db.comments;
 const Op = db.Sequelize.Op;
 
 
+
+//------------------------------------------------------------------------------------
 // create & save a new Tutorial (add & save)
 exports.create = (req, res, next) => { 
-    // validate request
-    if(!req.body.title) {
-        return res.status(400).send({message: `Title can not be empty`});
+
+    if(!req.body.content) {
+        return res.status(400).send({message: `Content can not be empty`});
     }
 
-    // create a tutorial
-    const tutorial = {
-        title:       req.body.title,
-        description: req.body.description,
-        published:   req.body.published ? req.body.published : false
-    };
+    const comment = { content: req.body.content };
 
-    // save Tutorial in  the database
-    Tutorial.create(tutorial)
-    .then( data => res.send(data))
-    .catch( err => res.status(500).send({ message: err.message || ` Some error occured while creating the Tutorial in DB`}))
+    Comment.create(comment)
+    .then( () => res.status(201).json({message: 'Comment added !'}))
+    .catch( err => res.status(500).send({ message: err.message || ` Some error happened when creating your comment`}))
  };
 
  //---------------------------------------------------------------------------------------------
 
-// Retreive all Tutorials from the database (with conditions)
-exports.findAll = (req, res, next) => {   
-
-    const title = req.query.title;    //  We use req.query.title to get query string from the Request and consider it as condition for findAll() method.
-    let condition = title ? { title: { [Op.like]: `%${title}%`} } : null;
-
-    Tutorial.findAll ( {where: condition} )
-    .then( data => res.send(data))
-    .catch( err => res.status(500).send( { message: err.message || `Error while retrieving tutorials`} ))
-};
-
-
-// Find a single Tutorial with an id :
-exports.findOne  = (req, res, next) => {  
-    const id = req.params.id;
-    Tutorial.findByPk(id)
-    .then(data => res.send(data))
-    .catch( err => res.status(500).send( { message: err.message || `Error while retrieving Tutorial id = ${id}`} ))
- };
-
-
-// Update a Tutorial by the id in the request
 exports.update = (req, res, next) => {
     const id = req.params.id;
     Tutorial.update(req.body, { where: {id}})  // ???
