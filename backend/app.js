@@ -7,9 +7,8 @@ const app         = express(); //  cree une application express
 const path        = require('path');
 
 const authRoutes    = require('./routes/boardRoutes.js')
-const boardRoutes   = require('./routes/boardRoutes.js')
 const userRoutes    = require('./routes/userRoutes.js')
-const photoRoutes   = require('./routes/photoRoutes.js')
+// const photoRoutes   = require('./routes/photoRoutes.js')
 // const commentRoutes = require('./routes/commentRoutes.js')
 // const likeRoutes    = require('./routes/likeRoutes.js')
 
@@ -48,14 +47,14 @@ const main = async () => {
   try {
     await sequelize.sync();
     // await sequelize.authenticate(); 
-    await Role.create({
-      id: 1,
-      name: "user"
-    });
-    await Role.create({
-      id: 2,
-      name: "admin"
-    });
+    // await Role.create({
+    //   id: 1,
+    //   name: "user"
+    // });
+    // await Role.create({
+    //   id: 2,
+    //   name: "admin"
+    // });
     // await sequelize.sync({force: true});
     console.log('=== Database Connected =========================');
 
@@ -64,6 +63,16 @@ const main = async () => {
   }
 } 
 main();
+
+
+ Role.create({
+      id: 1,
+      name: "user"
+    });
+Role.create({
+      id: 2,
+      name: "admin"
+    });
 
 
 app.get ('/', (req, res, next) => {
@@ -75,9 +84,9 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
 
-app.use('/api/auth'     , authRoutes )
-app.use('/api/board'    , boardRoutes )
-app.use('/api/users'    , userRoutes )
-app.use('/api/photos'   , photoRoutes )
+app.use('/api/test'     , authRoutes )
+app.use('/api/auth'     , userRoutes )
+// app.use('/api/users'    , userRoutes )
+// app.use('/api/photos'   , photoRoutes )
 // app.use('/api/comments' , commentRoutes )
 // app.use('/api/likes'    , likeRoutes )

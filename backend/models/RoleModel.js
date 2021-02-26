@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
     toJSON() {
-      return {...this.get(), id: undefined, ownerId: undefined } // Hide every id
+      return {...this.get(), id: undefined, ownerId: undefined } 
     }
     
   }
@@ -34,11 +34,6 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
     },
-
-    // ownerId: {  
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false
-    // },
 
   }, 
   

@@ -32,7 +32,7 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;  // Library itself, useful ???
+db.Sequelize = Sequelize; 
 
 db.ROLES = ["user", "admin"];
 
