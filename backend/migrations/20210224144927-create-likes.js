@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('users_likes_photos', {
+    await queryInterface.createTable('likes', {
 
       id: {
         allowNull: false,
@@ -15,14 +15,14 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
       },
 
-      userLikes: {
+      likes: {
         type: Sequelize.INTEGER(1),
       },
   
-      ownerId: { 
-        type: Sequelize.INTEGER.UNSIGNED,
-        allowNull: false
-      },
+      // ownerId: { 
+      //   type: Sequelize.INTEGER.UNSIGNED,
+      //   allowNull: false
+      // },
 
       createdAt: {
         allowNull: false,
@@ -37,6 +37,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users_likes_photos');
+    await queryInterface.dropTable('likes');
   }
 };

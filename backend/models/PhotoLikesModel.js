@@ -3,36 +3,38 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Role extends Model {
+  class Likes extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({User}) {
+    static associate({User, Photo}) {
       // define association here
+      this.belongsTo(User, {foreignKey:'ownerId', as: 'user'});
 
-      this.belongsToMany(User, { 
-        through:    "user_roles",
-        foreignKey: "roleUuid",
-        otherKey:   "userUuid",
+      this.belongsToMany(Photo, { 
+        through:    "photo_likes",
+        foreignKey: "likeUuid",
+        otherKey:   "photoUuid",
       });
+
     }
     toJSON() {
       return {...this.get(), id: undefined, ownerId: undefined } // Hide every id
     }
-    
+
   }
 
-  Role.init({
+  Likes.init({
 
     uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
     },
 
-    name: {
-      type: DataTypes.STRING,
+    like: {
+      type: DataTypes.INTEGER(1),
     },
 
     // ownerId: {  
@@ -40,12 +42,18 @@ module.exports = (sequelize, DataTypes) => {
     //   allowNull: false
     // },
 
+    // roleId: {  
+    //   type: DataTypes.INTEGER.UNSIGNED,
+    //   allowNull: false
+    // },
+
   }, 
+  
   
   {
     sequelize,
-    modelName: 'Role',
-    tableName: 'roles',
+    modelName: 'Like',
+    tableName: 'likes',
   });
-  return Role;
+  return Likes;
 };

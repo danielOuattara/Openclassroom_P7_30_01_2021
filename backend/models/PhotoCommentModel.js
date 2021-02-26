@@ -3,23 +3,31 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class PhotoComment extends Model {
+  class Comment extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({User, Photo}) {
       // define association here
+      this.belongsTo(User, {foreignKey:'ownerId', as: 'user'});
+
+      this.belongsToMany(Photo, { 
+        through:    "photo_comments",
+        foreignKey: "commentUuid",
+        otherKey:   "photoUuid",
+      });
+
     }
 
     toJSON() {
-      return {...this.get(), id: undefined } // Hide every id
+      return {...this.get(), id: undefined, ownerId: undefined } // Hide every id
     }
  
   }
 
-  PhotoComment.init({
+  Comment.init({
 
     uuid: {
       type: DataTypes.UUID,
@@ -30,16 +38,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
 
-    ownerId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
+    // ownerId: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false
+    // }
   },
   
   {
     sequelize,
-    modelName: 'PhotoComment',
-    tableName: 'photos_comments',
+    modelName: 'Comment',
+    tableName: 'comments',
   });
-  return PhotoComment;
+  return Comment;
 };

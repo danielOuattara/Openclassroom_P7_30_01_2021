@@ -9,15 +9,22 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Photo}) {
+    static associate({Photo, Like, Comment, Role}) {
       // define association here
-      this.hasMany(Photo,{foreignKey: 'ownerId'})
+      this.hasMany(Photo,  { foreignKey: 'ownerId', as: 'photo' });
+      this.hasMany(Like,   { foreignKey: 'ownerId', as: 'like' });
+      this.hasMany(Comment,{ foreignKey: 'ownerId', as: 'comment' });
+      
+      this.belongsToMany(Role, { 
+        through:    "user_roles",
+        foreignKey: "userUuid",
+        otherKey:   "roleUuid",
+      });
     }
 
     toJSON() {
       return {...this.get(), id: undefined } // Hide every id
     }
-    
   }
 
   User.init({
@@ -44,11 +51,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(30),
       unique: true,
       allowNull:false,
+      validate: {
+        notNull: { msg: "Un Email valide est requis"},
+        notEmpty: { msg: "Un Email non vide est requis"}
+      },
     },
 
     password: {
       type: DataTypes.STRING(30),
-      allowNull:false
+      allowNull:false,
+      validate: {
+        notNull: { msg: "Un mot de passe valide est requis"},
+        notEmpty: { msg: "Un mot de passe non vide est requis"}
+      },
+      
     },
 
     gender: {
@@ -57,7 +73,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     age: {
-      type: DataTypes.INTEGER(2).UNSIGNED,  // 2 chiffres ?
+      type: DataTypes.INTEGER(2).UNSIGNED, 
     },
 
     department: {
@@ -72,10 +88,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
 
-    roleId: {  
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
+    // roleId: {  
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false
+    // },
 
     
   },

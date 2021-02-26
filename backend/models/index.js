@@ -34,4 +34,6 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;  // Library itself, useful ???
 
+db.ROLES = ["user", "admin"];
+
 module.exports = db;

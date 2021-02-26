@@ -12,14 +12,15 @@ const photoRoutes  = require('./routes/photoRoutes.js')
 const helmet      = require('helmet')
 const cors        = require('cors');
 const limiter     = require('express-rate-limit');
-// const {sequelize} = require('./models');
+const {sequelize, Sequelize} = require('./models');
+
 const db = require("./models");
-// const { mainModule } = require('process');
-// const Role = db.role;
+db.role = require("./models/RoleModel.js")(sequelize, Sequelize);
+db.Role = require('./models/RoleModel.js')
+const Role = db.role;
 
 // -----------------------------------------------------------------------------
 
-const { sequelize} = require('./models');
 
 
 // ----------------------------------------------------------------------------
@@ -46,37 +47,31 @@ app.use(bodyParser.json());
 app.use(limiter ({
   windowMs: 5000,
   max: 200, 
-  message: {
-    code: 429,
-    message: 'Too many connection; Try later !'
-  }
+  message: {code: 429, message: 'Too many connection; Try later !' }
 }))
 
-
-// const main = async () => {
-//   await db.sequelize.sync();
-// }
-
-// main();
-
-// Role.create({
-//   id: 1,
-//   name: "user"
-// });
-
-
-// Role.create({
-//   id: 2,
-//   name: "admin"
-// });
-
-
 const main = async () => {
-  // await sequelize.sync({force:true});
-  // await sequelize.sync();
-  await sequelize.authenticate(); 
-  console.log('--->>> Database Connected ! <<< ---');
+  try {
+    await sequelize.sync({force:true});
+    Role.create({
+      id: 1,
+      name: "user"
+    });
+    Role.create({
+      id: 2,
+      name: "admin"
+    });
+    // await sequelize.sync();
+    // await sequelize.authenticate(); 
+    console.log('=== Database Connected on http://localhost <<< ---');
+
+  } catch (err) {
+      console.log(err)
+  }
+
 } 
+
+
 
 main();
 

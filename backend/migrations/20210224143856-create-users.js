@@ -32,11 +32,19 @@ module.exports = {
         type: Sequelize.STRING(30),
         unique: true,
         allowNull:false,
+        validate: {
+          notNull: { msg: "Un Email valide est requis"},
+          notEmpty: { msg: "Un Email non vide est requis"}
+        },
       },
   
       password: {
         type: Sequelize.STRING(30),
-        allowNull:false
+        allowNull:false,
+        validate: {
+          notNull: { msg: "Un mot de passe valide est requis"},
+          notEmpty: { msg: "Un mot de passe non vide est requis"}
+        },
       },
   
       gender: {
@@ -58,11 +66,6 @@ module.exports = {
   
       aboutMe:    {
         type: Sequelize.STRING,
-      },
-
-      roleId: {  
-        type: Sequelize.INTEGER,
-        allowNull: false
       },
 
       createdAt: {
