@@ -3,9 +3,7 @@ require('dotenv').config();
 
 const express     = require( 'express');  // importe 'express'
 const bodyParser  = require( 'body-parser');
-
 const app         = express(); //  cree une application express
-
 const path        = require('path');
 
 const authRoutes    = require('./routes/boardRoutes.js')
@@ -25,20 +23,9 @@ db.role = require("./models/RoleModel.js")(sequelize, Sequelize);
 db.Role = require('./models/RoleModel.js')
 const Role = db.role;
 
-// -----------------------------------------------------------------------------
-
-
-
-// ----------------------------------------------------------------------------
 
 app.use(helmet())
 app.use(cors());
-
-
-// const DATABASE = process.env.DATABASE;
-// const PSW = process.env.PSW;
-// const ADDRESS = process.env.ADDRESS
-
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -59,7 +46,7 @@ app.use(limiter ({
 
 const main = async () => {
   try {
-    await sequelize.sync({force:true});
+    await sequelize.sync();
     // await sequelize.authenticate(); 
     await Role.create({
       id: 1,

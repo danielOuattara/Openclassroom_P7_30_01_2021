@@ -2,9 +2,9 @@
 
 const express        = require('express');
 const router         = express.Router();
-const checkRoles     = require('./../middleware/checkRoles.js')
 const checkEmail     = require('./../middleware/checkEmail.js')
 const checkPassword     = require('./../middleware/strongPass.js')
+const checkRoles     = require('./../middleware/checkRoles.js')
 const authController = require('../controllers/authController.js')
 
 

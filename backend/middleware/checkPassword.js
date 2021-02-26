@@ -6,6 +6,5 @@ exports.module = (req, res, next) => {
       return res.status(401).json({ error: `Password not Strong! :  7 characters at least 1 Uppercase,
                                             1 Lowercase, 1 Digit, 1 symbol between: ! ? & # @ $ % µ € _ `});
     }
-
    next();
 }

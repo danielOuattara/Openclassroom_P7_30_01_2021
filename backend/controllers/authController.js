@@ -7,7 +7,7 @@ const Role = db.role;
 const Op = db.Sequelize.Op;
 
 const jwt = require("jsonwebtoken");
-const validator    = require('email-validator');
+// const validator    = require('email-validator');
 
 const bcrypt = require("bcryptjs");
 
@@ -16,14 +16,14 @@ const bcrypt = require("bcryptjs");
 
 exports.signin = (req, res, next) => {
 
-  if (!validator.validate(req.body.email)) {
-    return res.status(401).json({error:" Email invalid !" } )
-}
+//   if (!validator.validate(req.body.email)) {
+//     return res.status(401).json({error:" Email invalid !" } )
+// }
 
-  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!?&#@$%µ€_])[a-zA-Z0-9!?&#@$%µ€_]{7,}/.test(req.body.password)) {
-    return res.status(401).json({ error: `Password not Strong! :  7 characters at least 1 Uppercase,
-                                          1 Lowercase, 1 Digit, 1 symbol between: ! ? & # @ $ % µ € _ `});
-}
+//   if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!?&#@$%µ€_])[a-zA-Z0-9!?&#@$%µ€_]{7,}/.test(req.body.password)) {
+//     return res.status(401).json({ error: `Password not Strong! :  7 characters at least 1 Uppercase,
+//                                           1 Lowercase, 1 Digit, 1 symbol between: ! ? & # @ $ % µ € _ `});
+// }
 
   User.create({
     email: req.body.email,
