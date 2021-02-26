@@ -50,30 +50,128 @@ app.use(limiter ({
   message: {code: 429, message: 'Too many connection; Try later !' }
 }))
 
+
 const main = async () => {
   try {
     await sequelize.sync({force:true});
-    Role.create({
+    // await sequelize.authenticate(); 
+    await Role.create({
       id: 1,
       name: "user"
     });
-    Role.create({
+    await Role.create({
       id: 2,
       name: "admin"
     });
-    // await sequelize.sync();
-    // await sequelize.authenticate(); 
-    console.log('=== Database Connected on http://localhost <<< ---');
+    // await sequelize.sync({force: true});
+    console.log('=== Database Connected =========================');
 
   } catch (err) {
       console.log(err)
   }
-
 } 
-
-
-
 main();
+
+
+// const initial = async () => {
+//   try {
+//     // await sequelize.sync({force:true});
+//     // await sequelize.authenticate(); 
+//     const roleUser = await Role.create({
+//       id: 1,
+//       name: "user"
+//     });
+
+//     const roleAdmin = await Role.create({
+//       id: 2,
+//       name: "admin"
+//     });
+
+//     return { roleUser, roleAdmin}
+//     // await sequelize.sync({force: true});
+//     // console.log('=== Database Connected on http://localhost <<< ---');
+
+//   } catch (err) {
+//       console.log(err)
+//   }
+// } 
+// initial();
+
+
+// db.sequelize.sync({force:true})
+// .then( () => {
+//   console.log('=== Database Connected on http://localhost <<< ---')
+  
+//    Role.create({
+//     id: 1,
+//     name: "user"
+//   });
+
+//    Role.create({
+//     id: 2,
+//     name: "admin"
+//   });
+
+// })
+// .catch( (err) => console.log(err))
+
+// // const main = async () => {
+  
+// //     await sequelize.sync(); 
+
+// // } 
+// // main();
+
+
+//    async function initial() {
+
+//     try {
+
+//       await Role.create({
+//         id: 1,
+//         name: "user"
+//       });
+  
+//       await Role.create({
+//         id: 2,
+//         name: "admin"
+//       });
+
+
+
+
+//     } catch(err){
+//       console.log(err)
+//     }
+
+
+
+//   }
+ 
+// initial();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.get ('/', (req, res, next) => {
