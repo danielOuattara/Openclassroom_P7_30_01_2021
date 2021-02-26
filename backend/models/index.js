@@ -1,3 +1,12 @@
+
+/*
+ NOTE :witch back to sequelize only
+       sequelize-cli generate problems, I'm in the rush. Can't handle them now.
+       Switching back to sequelize. 
+       Sequelize-cli remains on this branch and need to be continued !
+*/
+
+
 'use strict';
 
 const fs = require('fs');
