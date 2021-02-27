@@ -15,7 +15,7 @@ const userRoutes    = require('./routes/userRoutes.js')
 const helmet      = require('helmet')
 const cors        = require('cors');
 const limiter     = require('express-rate-limit');
-const {sequelize, Sequelize} = require('./models');
+const {sequelize, Sequelize, Role} = require('./models');
 
 const db = require("./models");
 db.role = require("./models/RoleModel.js")(sequelize, Sequelize);
@@ -59,8 +59,6 @@ const main = async (req, res, next) => {
   // adminRole();
   // userRole();
 }
-
-
 
 // const adminRole = async (req, res, next) => {
 

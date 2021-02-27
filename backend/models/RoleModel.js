@@ -12,9 +12,15 @@ module.exports = (sequelize, DataTypes) => {
 
       this.belongsToMany(User, { 
         through:    "user_roles",
-        foreignKey: "userId",
-        otherKey:   "roleId",
+        foreignKey: "roleId",
+        otherKey:   "userId",
       });
+
+      // this.belongsToMany(User, { 
+      //   through:    "user_roles",
+      //   foreignKey: "roleId",
+      //   // otherKey:   "roleId",
+      // });
     }
     toJSON() {
       return {...this.get(), id: undefined, ownerId: undefined } 

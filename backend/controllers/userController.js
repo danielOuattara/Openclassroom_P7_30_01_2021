@@ -1,12 +1,12 @@
 const db = require("./../models");
 const config = require("./../config/authConfig.js");
 const { User, Role } = require('./../models');
+const jsonwebtoken = require('jsonwebtoken');
 
 // const Role = db.role;
 
 const Op = db.Sequelize.Op;
 
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const fs = require('fs')
@@ -28,14 +28,14 @@ exports.signin = (req, res, next) => {
           })
           .then(roles => {
               user.setRoles(roles)
-              .then(() => { res.send({ message: "User was registered successfully!" }) });
+              .then(() =>  res.status(201).json({ message: "User was registered successfully!" }) );
           })
           .catch( error =>  res.status(400).json( {error}) );
 
         } else {
           // user role = 1
           user.setRoles([1])
-          .then(() => { res.send({ message: "User was registered successfully!" }) })
+          .then( () =>  res.status(201).json({ message: "User was registered successfully!" }) ) 
           .catch( error =>  res.status(400).json( {error}) )
         }
     })
@@ -62,18 +62,21 @@ exports.login = (req, res, next) => {
     where: { email: req.body.email }
   })
   .then( user => {
+    
       if (!user) {
         return res.status(401).json( {error: ' Invalid Email or Password !'} )    // Password Not Recognized
       }
 
       const passwordIsValid = bcrypt.compare(req.body.password, user.password );  // change her compareSync() to compare()  <------
       if (!passwordIsValid) {
-        return res.status(401).send({error: "Invalid Email or Password !"})
+        return res.status(401).json({error: "Invalid Email or Password !"})
       }
 
-    const token = jwt.sign({ id: user.id }, config.secret, {
-      expiresIn: 86400 // 24 hours
-    });
+       const token = jsonwebtoken.sign(
+          { id: user.id }, 
+          config.secret, 
+          {  expiresIn: 86400}
+       );
 
     const authorities = [];
     user.getRoles()
@@ -81,11 +84,11 @@ exports.login = (req, res, next) => {
       for (let i = 0; i < roles.length; i++) {
         authorities.push("ROLE_" + roles[i].name.toUpperCase());
       }
-      res.status(200).send({
-        // id: user.id,
-        uuid: user.uuid,
-        username: user.username,
-        email: user.email,
+      res.status(200).json({
+        id: user.id,
+        // uuid: user.uuid,
+        // username: user.username,
+        // email: user.email,
         roles: authorities,
         accessToken: token
       });

@@ -18,6 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         otherKey:   "roleId",
       });
+
+      // this.belongsToMany(Role, { 
+      //   through:    "user_roles",
+      //   foreignKey: "userId",
+      //   // otherKey:   "roleId",
+      // });
     }
 
     toJSON() {
