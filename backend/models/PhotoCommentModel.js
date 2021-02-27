@@ -13,8 +13,7 @@ module.exports = (sequelize, DataTypes) => {
 
       this.belongsToMany(Photo, { 
         through:    "photo_comments",
-        foreignKey: "commentUuid",
-        otherKey:   "photoUuid",
+        foreignKey: "commentId",
       });
 
     }

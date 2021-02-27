@@ -16,15 +16,14 @@ module.exports = (sequelize, DataTypes) => {
 
       this.belongsToMany(Comment, { 
         through:    "photo_comments",
-        foreignKey: "photoUuid",
-        otherKey:   "commentUuid",
+        foreignKey: "photoId",
+
       });
 
       
       this.belongsToMany(Like, { 
         through:    "photo_likes",
-        foreignKey: "photoUuid",
-        otherKey:   "likeUuid",
+        foreignKey: "photoId",
       });
 
 

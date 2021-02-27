@@ -56,32 +56,32 @@ const main = async (req, res, next) => {
     return res.status(400).json(err)
   }
 
-  // adminRole();
-  // userRole();
+  adminRole();
+  userRole();
 }
 
-// const adminRole = async (req, res, next) => {
+const adminRole = async (req, res, next) => {
 
-//   try {
-//     await Role.create({ id: 1, name: "user" });
-//   } catch (err) {
+  try {
+    await Role.create({ id: 1, name: "user" });
+  } catch (err) {
 
-//     console.log(err)
-//     return res.status(400).json(err)
-//   }
-// }
+    console.log(err)
+    return res.status(400).json(err)
+  }
+}
 
 
-// const userRole = async (req, res, next) => {
+const userRole = async (req, res, next) => {
 
-//   try {
-//     await Role.create({ id: 2, name: "admin" });
-//   } catch (err) {
+  try {
+    await Role.create({ id: 2, name: "admin" });
+  } catch (err) {
 
-//     console.log(err)
-//     return res.status(400).json(err)
-//   }
-// }
+    console.log(err)
+    return res.status(400).json(err)
+  }
+}
 
 
 main()

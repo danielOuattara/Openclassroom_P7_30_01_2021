@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(Role, { 
         through:    "user_roles",
         foreignKey: "userId",
-        otherKey:   "roleId",
       });
 
       // this.belongsToMany(Role, { 
