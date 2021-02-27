@@ -20,7 +20,6 @@ const {sequelize, Sequelize} = require('./models');
 const db = require("./models");
 db.role = require("./models/RoleModel.js")(sequelize, Sequelize);
 db.Role = require('./models/RoleModel.js')
-const Role = db.role;
 
 
 app.use(helmet())
@@ -43,40 +42,77 @@ app.use(limiter ({
 }))
 
 
-const main = async () => {
+
+//  --------------------------------------------------------------
+
+
+const main = async (req, res, next) => {
+
   try {
-    await sequelize.sync();
-    // await sequelize.authenticate(); 
-    // await Role.create({
-    //   id: 1,
-    //   name: "user"
-    // });
-    // await Role.create({
-    //   id: 2,
-    //   name: "admin"
-    // });
-    // await sequelize.sync({force: true});
-    console.log('=== Database Connected =========================');
-
+    await db.sequelize.sync();
   } catch (err) {
-      console.log(err)
+
+    console.log(err)
+    return res.status(400).json(err)
   }
-} 
-main();
+
+  // adminRole();
+  // userRole();
+}
 
 
- Role.create({
-      id: 1,
-      name: "user"
-    });
-Role.create({
-      id: 2,
-      name: "admin"
-    });
+
+// const adminRole = async (req, res, next) => {
+
+//   try {
+//     await Role.create({ id: 1, name: "user" });
+//   } catch (err) {
+
+//     console.log(err)
+//     return res.status(400).json(err)
+//   }
+// }
+
+
+// const userRole = async (req, res, next) => {
+
+//   try {
+//     await Role.create({ id: 2, name: "admin" });
+//   } catch (err) {
+
+//     console.log(err)
+//     return res.status(400).json(err)
+//   }
+// }
+
+
+main()
+
+
+
+
+// ----------------------------------------------------------------
+
+// sequelize.sync({force:true}); 
+
+// Role.create({
+//     id: 1,
+//     name: "user",
+//     // uuid: '111bbb9f-2044-4787-84ad-493aa11d7111'
+// });
+
+// Role.create({
+//     id: 2,
+//     name: "admin",
+//     // uuid: '222bbb9f-2044-4787-84ad-493aa11d7222'
+// });
+
+
+
 
 
 app.get ('/', (req, res, next) => {
-  res.json({message: "Welcome to Tutorial Application !"})
+  res.json({message: "Welcome Groupomania's Social Application !"})
 });
 
 

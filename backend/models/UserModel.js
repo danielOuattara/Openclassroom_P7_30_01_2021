@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -17,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       
       this.belongsToMany(Role, { 
         through:    "user_roles",
-        foreignKey: "userUuid",
-        otherKey:   "roleUuid",
+        foreignKey: "userId",
+        otherKey:   "roleId",
       });
     }
 
@@ -58,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     password: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING,
       allowNull:false,
       validate: {
         notNull: { msg: "Un mot de passe valide est requis"},

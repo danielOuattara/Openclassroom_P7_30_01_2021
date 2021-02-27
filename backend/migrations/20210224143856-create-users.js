@@ -39,7 +39,7 @@ module.exports = {
       },
   
       password: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING,
         allowNull:false,
         validate: {
           notNull: { msg: "Un mot de passe valide est requis"},

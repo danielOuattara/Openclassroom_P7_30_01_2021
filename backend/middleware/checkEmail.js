@@ -4,7 +4,8 @@
 
 const validator = require('email-validator')
 const db = require("./../models");
-const User = db.user;
+const { User } = require('./../models');
+
 
 
 module.exports = (req, res, next) => {   // check for duplicate user email or username

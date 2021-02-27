@@ -14,7 +14,7 @@ axios for HTTP requests & reponses:
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/auth/';
+const API_URL = 'http://localhost:4100/api/auth/';
 
 class AuthService {
   
@@ -38,7 +38,6 @@ class AuthService {
 
   register(user) {
     return axios.post(API_URL + 'signin', {
-      // username: user.username,
       email: user.email,
       password: user.password
     });

@@ -1,7 +1,8 @@
 const db = require("./../models");
 const config = require("./../config/authConfig.js");
-const User = db.user;
-const Role = db.role;
+const { User, Role } = require('./../models');
+
+// const Role = db.role;
 
 const Op = db.Sequelize.Op;
 
@@ -16,7 +17,7 @@ const fs = require('fs')
 exports.signin = (req, res, next) => {
     User.create({
       email: req.body.email,
-      password: bcrypt.hash(req.body.password, 8)  // change her hashSync() to hash()  <------
+      password: bcrypt.hashSync(req.body.password, 8)  // change her hashSync() to hash()  <------
     })
     .then(user => {
         if (req.body.roles) {
@@ -51,6 +52,12 @@ exports.signin = (req, res, next) => {
 
 exports.login = (req, res, next) => {
 
+  console.log('#===========================================================================================================================================')
+  // console.log(req)
+  // console.log(req.body.email)
+  // console.log(req.body.password)
+  console.log('#===========================================================================================================================================')
+
   User.findOne({
     where: { email: req.body.email }
   })
@@ -59,7 +66,7 @@ exports.login = (req, res, next) => {
         return res.status(401).json( {error: ' Invalid Email or Password !'} )    // Password Not Recognized
       }
 
-      const passwordIsValid = bcrypt.compareSync(req.body.password, user.password );  // change her compareSync() to compare()  <------
+      const passwordIsValid = bcrypt.compare(req.body.password, user.password );  // change her compareSync() to compare()  <------
       if (!passwordIsValid) {
         return res.status(401).send({error: "Invalid Email or Password !"})
       }
@@ -75,8 +82,9 @@ exports.login = (req, res, next) => {
         authorities.push("ROLE_" + roles[i].name.toUpperCase());
       }
       res.status(200).send({
-        id: user.id,
-        // username: user.username,
+        // id: user.id,
+        uuid: user.uuid,
+        username: user.username,
         email: user.email,
         roles: authorities,
         accessToken: token
@@ -91,6 +99,14 @@ exports.login = (req, res, next) => {
 
 
 exports.signout = (req, res, next) => {
+
+  console.log("===================================================================")
+  console.log(req.body.email)
+  console.log(req.body.password)
+  console.log("---------------------")
+  console.log(user.password)
+  console.log(req.params.id)
+  console.log("====================================================================")
 
   User.findOne( {
       where: { email: req.body.email }
@@ -118,6 +134,9 @@ exports.signout = (req, res, next) => {
 }
 
 
+// ----------------------------------------------------------------------------------------------------
+
+
 exports.getOneUser = (req, res, next) => {
     const id = req.params.id;
     User.findByPk(id)
@@ -126,7 +145,8 @@ exports.getOneUser = (req, res, next) => {
   };
 
 
-// -----------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------
+
 
 exports.getAllUsers = (req, res, next) => {
 
@@ -135,7 +155,9 @@ exports.getAllUsers = (req, res, next) => {
   .catch( error => res.status(400).json( {error} ));
   }
 
-// -----------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------------
+
 
 exports.updateUser = (req, res, next) => {
 

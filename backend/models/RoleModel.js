@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
     /**
@@ -14,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
 
       this.belongsToMany(User, { 
         through:    "user_roles",
-        foreignKey: "roleUuid",
-        otherKey:   "userUuid",
+        foreignKey: "userId",
+        otherKey:   "roleId",
       });
     }
     toJSON() {
