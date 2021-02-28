@@ -9,8 +9,8 @@ const path        = require('path');
 const authRoutes    = require('./routes/authRoutes.js')
 const userRoutes    = require('./routes/userRoutes.js')
 const photoRoutes   = require('./routes/photoRoutes.js')
-const commentRoutes = require('./routes/commentRoutes.js')
-const likeRoutes    = require('./routes/likeRoutes.js')
+// const commentRoutes = require('./routes/commentRoutes.js')
+// const likeRoutes    = require('./routes/likeRoutes.js')
 
 const helmet      = require('helmet')
 const cors        = require('cors');
@@ -100,5 +100,5 @@ module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du p
 app.use('/api/users'    , userRoutes )
 app.use('/api/auth'     , authRoutes )
 app.use('/api/photos'   , photoRoutes )
-app.use('/api/comments' , commentRoutes )
-app.use('/api/likes'    , likeRoutes )
+// app.use('/api/comments' , commentRoutes )
+// app.use('/api/likes'    , likeRoutes )
