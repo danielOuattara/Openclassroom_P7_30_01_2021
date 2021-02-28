@@ -1,20 +1,22 @@
 const db = require('../models');
-const Photo = db.tutorials;
-const Op = db.Sequelize.Op;
+const  { Photo, Op } = require('./../models')
+// const Op = db.Sequelize.Op;
 const fs    = require('fs');
 
 //-----------------------------------------------------------------------------------------------------------
 
 exports.addPhoto = (req, res, next) => {
 
-    if(!req.body.title) {
+    // const photoObject = JSON.parse(req.body.photo);
+
+    if(req.body.title = "") {
       return res.status(400).send({message: `Title can not be empty`});
     }
 
     // do not trust user input !
     const pattern =  /[\[\]<>=0]+/gi;
 
-    if ( pattern.test(photoObject.title) ||  pattern.test(photoObject.url)  )
+    if ( pattern.test(req.body.title) ||  pattern.test(req.body.imageUrl)  )
     {
       fs.unlink( `images/${req.file.filename}`, function (err) {
           if (err) throw err;
@@ -26,13 +28,12 @@ exports.addPhoto = (req, res, next) => {
     const photo = {
       title:    req.body.title,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-      owner_id: req.body.userId
     };
 
     // save Tutorial in  the database
     Photo.create(photo)
-    .then(  data => res.send(data))
-    .catch( err => res.status(500).send({ message: err.message || ` Error occured while posting photo in DB`}))
+    .then( ()  => res.status(201).json({message: 'Photo Successsfully Posted !'}))
+    .catch( err => res.status(500).json({ message: err.message || ` Error occured while posting photo in DB`}))
 
 }
 
@@ -134,10 +135,7 @@ exports.getOnePhoto  = (req, res, next) => {
 
 //-----------------------------------------------------------------------------------------------------------
 
-  // Update a Photo by the id in the request
-
-
-
+  // exports.updateOnePhoto = ( req, res, next) = {}  // NON ACCEPTEE
 
 //-----------------------------------------------------------------------------------------------------------
 

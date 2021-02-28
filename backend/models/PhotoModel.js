@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(Comment, { 
         through:    "photo_comments",
         foreignKey: "photoId",
-
       });
 
       

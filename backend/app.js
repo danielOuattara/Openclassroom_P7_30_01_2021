@@ -6,9 +6,9 @@ const bodyParser  = require( 'body-parser');
 const app         = express(); //  cree une application express
 const path        = require('path');
 
-const authRoutes    = require('./routes/boardRoutes.js')
+const authRoutes    = require('./routes/authRoutes.js')
 const userRoutes    = require('./routes/userRoutes.js')
-// const photoRoutes   = require('./routes/photoRoutes.js')
+const photoRoutes   = require('./routes/photoRoutes.js')
 // const commentRoutes = require('./routes/commentRoutes.js')
 // const likeRoutes    = require('./routes/likeRoutes.js')
 
@@ -50,63 +50,42 @@ const main = async (req, res, next) => {
 
   try {
     await db.sequelize.sync();
+    console.log('   ================   Connected to groupomania_db !  ========================  ')
   } catch (err) {
 
     console.log(err)
     return res.status(400).json(err)
   }
 
-  adminRole();
-  userRole();
+  // adminRole();
+  // userRole();
 }
 
-const adminRole = async (req, res, next) => {
+// const adminRole = async (req, res, next) => {
 
-  try {
-    await Role.create({ id: 1, name: "user" });
-  } catch (err) {
+//   try {
+//     await Role.create({ id: 1, name: "user" });
+//   } catch (err) {
 
-    console.log(err)
-    return res.status(400).json(err)
-  }
-}
+//     console.log(err)
+//     return res.status(400).json(err)
+//   }
+// }
 
 
-const userRole = async (req, res, next) => {
+// const userRole = async (req, res, next) => {
 
-  try {
-    await Role.create({ id: 2, name: "admin" });
-  } catch (err) {
+//   try {
+//     await Role.create({ id: 2, name: "admin" });
+//   } catch (err) {
 
-    console.log(err)
-    return res.status(400).json(err)
-  }
-}
+//     console.log(err)
+//     return res.status(400).json(err)
+//   }
+// }
 
 
 main()
-
-
-
-
-// ----------------------------------------------------------------
-
-// sequelize.sync({force:true}); 
-
-// Role.create({
-//     id: 1,
-//     name: "user",
-//     // uuid: '111bbb9f-2044-4787-84ad-493aa11d7111'
-// });
-
-// Role.create({
-//     id: 2,
-//     name: "admin",
-//     // uuid: '222bbb9f-2044-4787-84ad-493aa11d7222'
-// });
-
-
-
 
 
 app.get ('/', (req, res, next) => {
@@ -118,9 +97,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
 
-app.use('/api/test'     , authRoutes )
-app.use('/api/auth'     , userRoutes )
-// app.use('/api/users'    , userRoutes )
-// app.use('/api/photos'   , photoRoutes )
+app.use('/api/users'       , userRoutes )
+app.use('/api/auth'        , authRoutes )
+app.use('/api/photos'      , photoRoutes )
 // app.use('/api/comments' , commentRoutes )
 // app.use('/api/likes'    , likeRoutes )

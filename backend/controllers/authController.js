@@ -1,15 +1,13 @@
-
-
 /* 
 Controller for testing Authorization
 ------------------------------------
 
-There are 2 functions:
+There are 4 functions:
+– /api/test/all for public access
 – /api/test/user for loggedin users (role: user/moderator/admin)
 – /api/test/admin for users having admin role
 
-//--------------------------------*/
-
+controllers/user.controller.js */
 
 
 exports.userBoard = (req, res) => {

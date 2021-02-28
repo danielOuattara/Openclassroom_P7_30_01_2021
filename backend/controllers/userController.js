@@ -43,12 +43,7 @@ exports.signin = (req, res, next) => {
 };
 
 
-
-
-
-
 // ----------------------------------------------------------------------------------------
-
 
 exports.login = (req, res, next) => {
 
@@ -85,8 +80,8 @@ exports.login = (req, res, next) => {
         authorities.push("ROLE_" + roles[i].name.toUpperCase());
       }
       res.status(200).json({
-        id: user.id,
-        // uuid: user.uuid,
+        // id: user.id,
+        uuid: user.uuid,
         // username: user.username,
         // email: user.email,
         roles: authorities,
@@ -101,40 +96,40 @@ exports.login = (req, res, next) => {
 // --------------------------------------------------------------------------------------
 
 
-exports.signout = (req, res, next) => {
+// exports.signout = (req, res, next) => {
 
-  console.log("===================================================================")
-  console.log(req.body.email)
-  console.log(req.body.password)
-  console.log("---------------------")
-  console.log(user.password)
-  console.log(req.params.id)
-  console.log("====================================================================")
+//   console.log("===================================================================")
+//   console.log(req.body.email)
+//   console.log(req.body.password)
+//   console.log("---------------------")
+//   console.log(user.password)
+//   console.log(req.params.id)
+//   console.log("====================================================================")
 
-  User.findOne( {
-      where: { email: req.body.email }
-  })
+//   User.findOne( {
+//       where: { email: req.body.email }
+//   })
 
-  .then( user => {
-      if(!user) {
-          return res.status(401).json( {error: " Email or Password unknown !" } )  
-      }
+//   .then( user => {
+//       if(!user) {
+//           return res.status(401).json( {error: " Email or Password unknown !" } )  
+//       }
 
-      bcrypt.compare( req.body.password, user.password)
-      .then(() => {
-          if (user.id === req.params.id) {
-              User.destroy({
-                  where: { id: req.params.id}
-              })
-              .then(() => res.status(200).json({ message: "Account deleted !" }))
-              .catch((err) => res.status(403).json({ err }));
-          }
+//       bcrypt.compare( req.body.password, user.password)
+//       .then(() => {
+//           if (user.id === req.params.id) {
+//               User.destroy({
+//                   where: { id: req.params.id}
+//               })
+//               .then(() => res.status(200).json({ message: "Account deleted !" }))
+//               .catch((err) => res.status(403).json({ err }));
+//           }
           
-      })
-      .catch( res.status(401).json( {error: ' Email or Password unknown !'} ) )
-  })
-  .catch( error => res.status(500).json( {error} ))  
-}
+//       })
+//       .catch( res.status(401).json( {error: ' Email or Password unknown !'} ) )
+//   })
+//   .catch( error => res.status(500).json( {error} ))  
+// }
 
 
 // ----------------------------------------------------------------------------------------------------
@@ -153,7 +148,7 @@ exports.getOneUser = (req, res, next) => {
 
 exports.getAllUsers = (req, res, next) => {
 
-  User.find()
+  User.findAll()
   .then( users => res.status(200).json(users))
   .catch( error => res.status(400).json( {error} ));
   }
@@ -165,9 +160,9 @@ exports.getAllUsers = (req, res, next) => {
 exports.updateUser = (req, res, next) => {
 
     const id = req.params.id;
-    const photoObject = req.file ?
+    const userObject = req.file ?
         {
-          ...JSON.parse(req.body.photo),  //si update d'image
+          ...JSON.parse(req.body.user),  //si update d'image
           imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         }
         :
@@ -178,18 +173,26 @@ exports.updateUser = (req, res, next) => {
     // do not trust user input, even on update !
     const regex =  /[\[\]<>=0]+/gi;
 
-    if ( regex.test(photoObject.title) || regex.test(photoObject.imageUrl) ) {
+    if ( regex.test(userObject.firstName)  || 
+         regex.test(userObject.lastName)   ||
+         regex.test(userObject.userName)   ||
+         regex.test(userObject.email)      ||
+         regex.test(userObject.gender)     ||
+         regex.test(userObject.age)        ||
+         regex.test(userObject.department) ||
+         regex.test(userObject.avatar)     ||
+         regex.test(userObject.aboutMe)   ) {
       return res.status(401).json( { error: ' Fill in text Invalid !'  });
     }
 
     if (req.file) {
 
-        Photo.findByPk(id)
+        User.findByPk(id)
         .then( photo => {
             const filename = photo.imageUrl.split('/images/')[1];
-
             fs.unlink( `images/${filename}`, () => {
-                Photo.update(req.body, { where: {id}})
+
+                User.update({...userObject})
                 .then( num => {
                   if (num == 1) {
                       res.send( {message: `Tutorial was updated succesfully !` })
@@ -242,3 +245,39 @@ exports.deleteUser = (req, res, next) => {
 }
 
 // -----------------------------------------------------------------------------------------
+
+
+exports.signout = (req, res, next) => {  // delete my account
+
+  console.log("===================================================================")
+  console.log(req.body.email)
+  console.log(req.body.password)
+  console.log("---------------------")
+  console.log(user.password)
+  console.log(req.params.id)
+  console.log("====================================================================")
+
+  User.findOne( {
+      where: { email: req.body.email }
+  })
+
+  .then( user => {
+      if(!user) {
+          return res.status(401).json( {error: " Email or Password unknown !" } )  
+      }
+
+      bcrypt.compare( req.body.password, user.password)
+      .then(() => {
+          if (user.id === req.params.id) {
+              User.destroy({
+                  where: { id: req.params.id}
+              })
+              .then(() => res.status(200).json({ message: "Account deleted !" }))
+              .catch((err) => res.status(403).json({ err }));
+          }
+          
+      })
+      .catch( res.status(401).json( {error: ' Email or Password unknown !'} ) )
+  })
+  .catch( error => res.status(500).json( {error} ))  
+}

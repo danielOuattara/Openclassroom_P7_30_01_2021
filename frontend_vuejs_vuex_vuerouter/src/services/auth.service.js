@@ -14,7 +14,7 @@ axios for HTTP requests & reponses:
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4100/api/auth/';
+const API_URL = 'http://localhost:4100/api/users/';
 
 class AuthService {
   
