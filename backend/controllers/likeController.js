@@ -20,28 +20,6 @@ exports.create = (req, res, next) => {
     .catch( err => res.status(500).send({ message: err.message || ` Some error happened when creating your comment`}))
  };
 
-
- // -------------------------------------------------------------------------------------------------------------
-
-
-exports.getAll = (req, res, next) => {
-    Tutorial.findAll( {where: { published: true} })
-    .then( data => res.send(data))
-    .catch( err => res.status(500).send( { message: err.message || `Error while retrieving all Tutorials `} ))
-};
-
- // -------------------------------------------------------------------------------------------------------------
-
-exports.getOne = (req, res, next) => {
-    Tutorial.findAll( {where: { published: true} })
-    .then( data => res.send(data))
-    .catch( err => res.status(500).send( { message: err.message || `Error while retrieving all Tutorials `} ))
-};
-
- // -------------------------------------------------------------------------------------------------------------
-
-
-
  //-------------------------------------------------------------------------------------------------------------
 
 exports.update = (req, res, next) => {
@@ -59,6 +37,7 @@ exports.update = (req, res, next) => {
 
  // -------------------------------------------------------------------------------------------------------------
 
+// Delete a Tutorial with the specified Id in the request
 exports.delete = (req, res, next) => { 
     const id= req.params.id;
     Tutorial.destroy ( { where: {id} })
@@ -72,10 +51,33 @@ exports.delete = (req, res, next) => {
 
  // -------------------------------------------------------------------------------------------------------------
 
+
+// Delete all tutorial from db
 exports.deleteAll = (req, res, next) => { 
 
     Tutorial.destroy({ where: {}, truncate: false})
     .then( nums => res.send({message: ` All Tutorials successfully deleted `}))
     .catch( err => res.status(500).send( { message: err.message || `Error while deleting  all Tutorials `} ))
 };
+
+ // -------------------------------------------------------------------------------------------------------------
+
+
+// Find all published Tutorials
+exports.getAll= (req, res, next) => {
+    Tutorial.findAll( {where: { published: true} })
+    .then( data => res.send(data))
+    .catch( err => res.status(500).send( { message: err.message || `Error while retrieving all Tutorials `} ))
+};
+
+ // -------------------------------------------------------------------------------------------------------------
+
+// Find all published Tutorials
+exports.get= (req, res, next) => {
+    Tutorial.findAll( {where: { published: true} })
+    .then( data => res.send(data))
+    .catch( err => res.status(500).send( { message: err.message || `Error while retrieving all Tutorials `} ))
+};
+
+ // -------------------------------------------------------------------------------------------------------------
 

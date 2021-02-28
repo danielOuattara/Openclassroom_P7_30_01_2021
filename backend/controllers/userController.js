@@ -135,9 +135,18 @@ exports.login = (req, res, next) => {
 // ----------------------------------------------------------------------------------------------------
 
 
+// exports.getOneUser = (req, res, next) => {
+//     const id = req.params.id;
+//     User.findByPk(id)
+//     .then( user  => res.status(200).json(user))
+//     .catch( err => res.status(500).send( { message: err.message || `Error while retrieving Tutorial id = ${id}`} ))
+//   };
+
 exports.getOneUser = (req, res, next) => {
-    const id = req.params.id;
-    User.findByPk(id)
+    const uuid = req.params.uuid;
+    User.findOne( {
+      where: {uuid}
+    })
     .then( user  => res.status(200).json(user))
     .catch( err => res.status(500).send( { message: err.message || `Error while retrieving Tutorial id = ${id}`} ))
   };
@@ -247,7 +256,13 @@ exports.deleteUser = (req, res, next) => {
 // -----------------------------------------------------------------------------------------
 
 
-exports.signout = (req, res, next) => {  // delete my account
+exports.signout = (req, res, next) => {  // delete my account (me or Admin)
+
+  /*
+  This logic delete an user account. 
+  Can be called by user itself or by admin
+  Anyway, both images posted and corresponding comments, likes, dislakes are also deleted
+  */
 
   console.log("===================================================================")
   console.log(req.body.email)
@@ -268,7 +283,7 @@ exports.signout = (req, res, next) => {  // delete my account
 
       bcrypt.compare( req.body.password, user.password)
       .then(() => {
-          if (user.id === req.params.id) {
+          if (user.id === req.params.id /* || user is admin (how to ?) */) {
               User.destroy({
                   where: { id: req.params.id}
               })

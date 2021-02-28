@@ -9,8 +9,8 @@ const path        = require('path');
 const authRoutes    = require('./routes/authRoutes.js')
 const userRoutes    = require('./routes/userRoutes.js')
 const photoRoutes   = require('./routes/photoRoutes.js')
-// const commentRoutes = require('./routes/commentRoutes.js')
-// const likeRoutes    = require('./routes/likeRoutes.js')
+const commentRoutes = require('./routes/commentRoutes.js')
+const likeRoutes    = require('./routes/likeRoutes.js')
 
 const helmet      = require('helmet')
 const cors        = require('cors');
@@ -49,7 +49,7 @@ app.use(limiter ({
 const main = async (req, res, next) => {
 
   try {
-    await db.sequelize.sync();
+    await db.sequelize.sync(/* {force:true} */);
     console.log('   ================   Connected to groupomania_db !  ========================  ')
   } catch (err) {
 
@@ -97,8 +97,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
 
-app.use('/api/users'       , userRoutes )
-app.use('/api/auth'        , authRoutes )
-app.use('/api/photos'      , photoRoutes )
-// app.use('/api/comments' , commentRoutes )
-// app.use('/api/likes'    , likeRoutes )
+app.use('/api/users'    , userRoutes )
+app.use('/api/auth'     , authRoutes )
+app.use('/api/photos'   , photoRoutes )
+app.use('/api/comments' , commentRoutes )
+app.use('/api/likes'    , likeRoutes )
