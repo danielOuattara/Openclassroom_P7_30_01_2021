@@ -9,16 +9,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({User, Photo}) {
       // define association here
-      this.belongsTo(User, {foreignKey:'userId', as: 'user'});
+      this.belongsTo(User, {
+        foreignKey:'userId', 
+        as: 'user',
+        onDelete:'cascade',
+      
+      });
 
       this.belongsToMany(Photo, { 
         through:    "photo_likes",
         foreignKey: "likeId",
+        onDelete:'cascade',
       });
 
     }
     toJSON() {
-      return {...this.get(), id: undefined, ownerId: undefined } // Hide every id
+      return {...this.get(), id: undefined, userId: undefined } // Hide every id
     }
 
   }
@@ -34,19 +40,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER(1),
     },
 
-    // ownerId: {  
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false
-    // },
-
-    // roleId: {  
-    //   type: DataTypes.INTEGER.UNSIGNED,
-    //   allowNull: false
-    // },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
 
   }, 
-  
-  
+   
   {
     sequelize,
     modelName: 'Like',

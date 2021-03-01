@@ -18,11 +18,12 @@ module.exports = {
       likes: {
         type: Sequelize.INTEGER(1),
       },
+
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
   
-      // ownerId: { 
-      //   type: Sequelize.INTEGER.UNSIGNED,
-      //   allowNull: false
-      // },
 
       createdAt: {
         allowNull: false,

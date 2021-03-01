@@ -3,14 +3,14 @@ const User = db.user;
 
 
 module.exports = (req, res, next) => {
-    User.findByPk(req.userId)
+    User.findByPk(req.userUuid)
     .then( user => { 
         user.getRoles()
         .then(roles => { 
             for (let i = 0; i < roles.length; i++) {
                 if (roles[i].name === "admin") {
                     next();
-                    // return;
+                    return;
                 }
             }
             return res.status(403).send({ message: "Require Admin Role!" });

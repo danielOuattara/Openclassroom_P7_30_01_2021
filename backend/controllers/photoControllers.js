@@ -1,41 +1,97 @@
-const db = require('../models');
-const  { Photo, Op } = require('./../models')
-// const Op = db.Sequelize.Op;
+// const db = require('../models');
+const  { Photo, User } = require('./../models')
+const { Op } = require('sequelize');
 const fs    = require('fs');
 
 //-----------------------------------------------------------------------------------------------------------
 
-exports.addPhoto = (req, res, next) => {
+exports.addPhoto =  async (req, res, next) => {
 
-    // const photoObject = JSON.parse(req.body.photo);
+    const  { userUuid, title, imageUrl } = req.body
 
-    if(req.body.title = "") {
+    if(!title) {
       return res.status(400).send({message: `Title can not be empty`});
     }
+    if(!imageUrl) {
+      return res.status(400).send({message: `imageUrl can not be empty`});
+    }
 
-    // do not trust user input !
-    const pattern =  /[\[\]<>=0]+/gi;
+    const pattern =  /[\[\]<>=0]+/gi;  // do not trust user input !
 
-    if ( pattern.test(req.body.title) ||  pattern.test(req.body.imageUrl)  )
+    if ( pattern.test(title) ||  pattern.test(imageUrl)  )
     {
-      fs.unlink( `images/${req.file.filename}`, function (err) {
-          if (err) throw err;
-      })
+      // fs.unlink( `images/${req.file.filename}`, function (err) {
+      //     if (err) throw err;
+      // })
       return res.status(401).json( {error: "Fill in text Invalid !"} );  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
     }
 
-    // prepare a photo
-    const photo = {
-      title:    req.body.title,
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-    };
+    try {
+      await User.findOne({ where: {uuid: userUuid}})
+      await Photo.create({title, imageUrl, userId:user.id})
+      return res.status(201).json({message: 'Photo Successsfully Posted !'})
+
+    } catch(err) {
+
+      return res.status(500).json({ message: err.message || ` Error occured while posting photo in DB`})
+    }
+}
+
+
+
+    // ===============================================================================================================================
+    // exports.addPhoto =  async (req, res, next) => {
+    // const  { userUuid, title, imageUrl} = req.body
+
+    // if(!title) {
+    //   return res.status(400).send({message: `Title can not be empty`});
+    // }
+    // if(!imageUrl) {
+    //   return res.status(400).send({message: `imageUrl can not be empty`});
+    // }
+
+    // const pattern =  /[\[\]<>=0]+/gi;  // do not trust user input !
+
+    // if ( pattern.test(title) ||  pattern.test(imageUrl)  )
+    // {
+    //   // fs.unlink( `images/${req.file.filename}`, function (err) {
+    //   //     if (err) throw err;
+    //   // })
+    //   return res.status(401).json( {error: "Fill in text Invalid !"} );  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
+    // }
+
+    // User.findOne({ where: {uuid: userUuid}})
+    // .then(() => {
+    //   Photo.create({title, imageUrl, userId: user.id})
+    //   .then( ()  => res.status(201).json({message: 'Photo Successsfully Posted !'}))
+    //   .catch( err => res.status(400).json({ message: err.message || ` Error in DB`}))
+    // })
+    // .catch( err => res.status(500).json({ message: err.message || ` Error occured while posting photo in DB`}))
+  // =================================================================================================================================================================
+
+    // const photo = {
+    //   userId: req.body.id,
+    //   title: req.body.title,
+    //   imageUrl: req.body.imageUrl,  // test purpose only,
+      // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+
+    // };
 
     // save Tutorial in  the database
-    Photo.create(photo)
-    .then( ()  => res.status(201).json({message: 'Photo Successsfully Posted !'}))
-    .catch( err => res.status(500).json({ message: err.message || ` Error occured while posting photo in DB`}))
+    // Photo.create(photo)
+    // .then( ()  => res.status(201).json({message: 'Photo Successsfully Posted !'}))
+    // .catch( err => res.status(500).json({ message: err.message || ` Error occured while posting photo in DB`}))
 
-}
+  //    console.log(req)
+  //   Photo.create({
+      
+  //     title: req.body.title,
+  //     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  // })
+  //     .then(post => res.status(201).json({ post }))
+  //     .catch(error => res.status(400).json({ error }))
+
+// }
 
 //-----------------------------------------------------------------------------------------------------------
 
@@ -107,16 +163,54 @@ exports.userLikePhoto = (req, res, next) => {
 
 // Retreive all Photo from the database (with conditions)
 
-exports.getAllPhoto = (req, res, next) => {
+// exports.getAllPhoto = (req, res, next) => {
 
-  const title = req.query.title;    //  We use req.query.title to get query string from the Request and
-                                    //  consider it as condition for findAll() method.
-  let condition = title ? { title: { [Op.like]: `%${title}%`} } : null;
+//   const title = req.query.title;    //  We use req.query.title to get query string from the Request and
+//                                     //  consider it as condition for findAll() method.
+//   const condition = title ? { title: { [Op.like]: `%${title}%`} } : null;
 
-  Photo.findAll ( {where: condition} )
-  .then( photos => res.status(200).json(photos))
-  .catch( err => res.status(500).send( { message: err.message || `Error while retrieving photos`} ))
-};
+//   Photo.findAll ( {where: condition} )
+//   .then( photos => res.status(200).json(photos))
+//   .catch( err => res.status(500).send( { message: err.message || `Error while retrieving photos`} ))
+// };
+
+//
+
+
+exports.getAllPhoto =  async (req, res, next) => {
+
+  try {
+    await Photo.findAll()
+    return res.status(201).json({message: 'Photo Successsfully Posted !'})
+
+  } catch(err) {
+
+    return res.status(500).json({ message: err.message || ` Error occured while posting photo in DB`})
+  }
+}
+
+// ---------------------------------------------------------------------------------
+
+exports.getAllPhoto =  async (req, res, next) => {
+
+  try {
+    await Photo.findAll( {include: ['user' /* User and other */] })
+    return res.status(201).json({message: 'Photo Successsfully Posted !'})
+
+  } catch(err) {
+
+    return res.status(500).json({ message: err.message || ` Error occured while posting photo in DB`})
+  }
+}
+
+
+
+
+
+
+
+
+
 
 
 //-----------------------------------------------------------------------------------------------------------

@@ -16,13 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(Role, { 
         through:    "user_roles",
         foreignKey: "userId",
+        otherKey:   "roleId",
       });
 
-      // this.belongsToMany(Role, { 
-      //   through:    "user_roles",
-      //   foreignKey: "userId",
-      //   // otherKey:   "roleId",
-      // });
     }
 
     toJSON() {
@@ -54,18 +50,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(30),
       unique: true,
       allowNull:false,
+      required: true,
       validate: {
-        notNull: { msg: "Un Email valide est requis"},
-        notEmpty: { msg: "Un Email non vide est requis"}
+        isEmail: true
       },
     },
 
     password: {
       type: DataTypes.STRING,
       allowNull:false,
+      required: true,
       validate: {
-        notNull: { msg: "Un mot de passe valide est requis"},
-        notEmpty: { msg: "Un mot de passe non vide est requis"}
+        notEmpty: { msg: "Password is required"}
       },
       
     },
@@ -90,12 +86,6 @@ module.exports = (sequelize, DataTypes) => {
     aboutMe:    {
       type: DataTypes.STRING,
     },
-
-    // roleId: {  
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false
-    // },
-
     
   },
   

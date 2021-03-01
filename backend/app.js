@@ -9,8 +9,6 @@ const path        = require('path');
 const authRoutes    = require('./routes/authRoutes.js')
 const userRoutes    = require('./routes/userRoutes.js')
 const photoRoutes   = require('./routes/photoRoutes.js')
-// const commentRoutes = require('./routes/commentRoutes.js')
-// const likeRoutes    = require('./routes/likeRoutes.js')
 
 const helmet      = require('helmet')
 const cors        = require('cors');
@@ -34,6 +32,7 @@ app.use((req, res, next) => {
 
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}))
 
 app.use(limiter ({
   windowMs: 5000,
@@ -43,23 +42,27 @@ app.use(limiter ({
 
 
 
-//  --------------------------------------------------------------
+//  -------------------------------------------------------------------------------------------------
 
+// BLock 1   <<<<<<<<<<< --------------- : decommenter et executer une seule fois ( node ./server.js). Ensuite comenter à nouveau.
 
-const main = async (req, res, next) => {
+//                                         Pour une utilisation courante du code, décommenter Block 2 (ci-dessous) puis executer node ./server.js
+// =======================================================================================================================
 
-  try {
-    await db.sequelize.sync(/* {force:true} */);
-    console.log('   ================   Connected to groupomania_db !  ========================  ')
-  } catch (err) {
+// const main = async (req, res, next) => {
 
-    console.log(err)
-    return res.status(400).json(err)
-  }
+//   try {
+//     await db.sequelize.sync({force:true});
+//     console.log('   ===  Connected to groupomania_db !  === ')
+//   } catch (err) {
 
-  // adminRole();
-  // userRole();
-}
+//     console.log(err)
+//     return res.status(400).json(err)
+//   }
+
+//   adminRole();
+//   userRole();
+// }
 
 // const adminRole = async (req, res, next) => {
 
@@ -84,8 +87,30 @@ const main = async (req, res, next) => {
 //   }
 // }
 
+// main()
+// ======================================================================================================
 
-main()
+
+
+// BLock 2   <<<<<<<<<<< ---------------
+// ======================================================================================================
+// const main = async (req, res, next) => {
+
+//   try {
+//     await db.sequelize.sync();
+//      console.log('   ===  Connected to groupomania_db !  === ')
+// } catch (err) {
+
+//     console.log(err)
+//     return res.status(400).json(err)
+//   }
+// }
+
+//   main()
+
+
+// ========================================================================================================
+
 
 
 app.get ('/', (req, res, next) => {
@@ -99,6 +124,4 @@ module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du p
 
 app.use('/api/users'    , userRoutes )
 app.use('/api/auth'     , authRoutes )
-app.use('/api/photos'   , photoRoutes )
-// app.use('/api/comments' , commentRoutes )
-// app.use('/api/likes'    , likeRoutes )
+app.use('/api/photos'   , photoRoutes)

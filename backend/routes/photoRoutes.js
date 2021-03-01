@@ -12,7 +12,7 @@ const multer           = require('./../middleware/multer-config.js');
 
 
 
-router.post('/'         ,  auth, multer, photoControllers.addPhoto       );
+router.post('/'         , /*  auth, */ multer, photoControllers.addPhoto       );
 router.get('/'          ,  auth,         photoControllers.getAllPhoto    );
 router.get('/:id'       ,  auth,         photoControllers.getOnePhoto    );
 router.delete('/:id'    ,  auth,         photoControllers.deleteOnePhoto );

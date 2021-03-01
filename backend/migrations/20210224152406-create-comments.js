@@ -19,10 +19,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
   
-      // ownerId: {
-      //   type: Sequelize.INTEGER,
-      //   allowNull: false
-      // },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
 
       createdAt: {
         allowNull: false,
