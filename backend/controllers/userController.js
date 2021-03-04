@@ -1,9 +1,10 @@
 // const config = require("./../config/authConfig.js");
+const bcrypt = require("bcryptjs");
 const config = require("./../config/authConfig.js");
 const { User, Role } = require('./../models');
 const { Op } = require('sequelize')
 const jsonwebtoken = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const validator = require('email-validator')
 
 const fs = require('fs')
 
@@ -11,141 +12,133 @@ const fs = require('fs')
 // --------------------------------------------------------------------------------------
 
 
-exports.signin = (req, res, next) => {
-    User.create({
-      email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8)  // change her hashSync() to hash()  <------
-    })
-    .then(user => {
-        if (req.body.roles) {
-          Role.findAll({
-            where: {
-              name: { [Op.or]: req.body.roles }
-            }
-          })
-          .then(roles => {
-              user.setRoles(roles)
-              .then(() =>  res.status(201).json({ message: "User was registered successfully!" }) );
-          })
-          .catch( error =>  res.status(400).json( {error}) );
+exports.signin = (req, res) => {
 
-        } else {
-          // user role = 1
-          user.setRoles([1])
-          .then( () =>  res.status(201).json({ message: "User was registered successfully!" }) ) 
-          .catch( error =>  res.status(400).json( {error}) )
-        }
+    const regex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!?&#@$%µ€_])[a-zA-Z0-9!?&#@$%µ€_]{7,}/
+    if (!regex.test(req.body.password)) {
+          return res.status(401).json({ error: `Password not Strong!: 7 characters, at least 1 Uppercase, 1 Lowercase, 1 Digit, 1 symbol between ! ? & # @ $ % µ € _ `});
+    }
+
+    bcrypt.hash(req.body.password, 11)
+    .then( hash => {
+        User.create( {        
+          email: req.body.email,
+          password: hash
+        })
+        .then(user => {
+          if (req.body.roles) {
+            Role.findAll({
+              where: {
+                name: { [Op.or]: req.body.roles }
+              }
+            })
+            .then(roles => {
+                user.setRoles(roles)
+                .then(() =>  res.status(201).json({ message: "User was registered successfully!" }) );
+            })
+            .catch( error =>  res.status(400).json( {error}) );
+
+          } else {
+            // user role = 1
+            user.setRoles([1])
+            .then( () =>  res.status(201).json({ message: "User was registered successfully!" }) ) 
+            .catch( error =>  res.status(400).json( {error}) )
+          }
+        })
+        .catch(err => { res.status(500).send({ message: err.message }) });
+    
     })
-    .catch(err => { res.status(500).send({ message: err.message }) });
-};
+    .catch(error => res.status(500).json( {error}))
+
+
+}
 
 // ----------------------------------------------------------------------------------------
 
 
-exports.login = (req, res, next) => {
+exports.login = (req, res) => {
 
+  if (!validator.validate(req.body.email)) {
+    return res.status(401).json({error:" Invalid Email or Password !" } )
+  }
   User.findOne({
     where: { email: req.body.email }
   })
   .then( user => {
+
       if (!user) {
         return res.status(401).json( {error: ' Invalid Email or Password !'} )   
       }
-      const passwordIsValid = bcrypt.compareSync(req.body.password, user.password ); 
-      if (!passwordIsValid) {
-        return res.status(401).json({error: "Invalid Email or Password !"})
-      }
 
-       const token = jsonwebtoken.sign(
-          { id: user.id }, 
-          config.secret, 
-          {  expiresIn: 86400}
-       );
+      bcrypt.compare( req.body.password, user.password)
+      .then( valid => {
+        if(valid) {
 
-    const authorities = [];
-    user.getRoles()
-    .then(roles => {
-      for (let i = 0; i < roles.length; i++) {
-        authorities.push("ROLE_" + roles[i].name.toUpperCase());
-      }
-      res.status(200).json({
-        // id: user.id,
-        uuid: user.uuid,
-        username: user.username,
-        email: user.email,
-        roles: authorities,
-        accessToken: token
-      });
-    }).catch(err => { res.status(400).send({ message: err.message }) });
+          const authorities = [];
+          user.getRoles()
+          .then(roles => {
+            for (let i = 0; i < roles.length; i++) {
+              authorities.push("ROLE_" + roles[i].name.toUpperCase());
+            }
+            res.status(200).json({
+              roles: authorities,
+              // id: user.id,
+              uuid: user.uuid,
+              email: user.email,
+              username: user.username,
+              token : jsonwebtoken.sign(
+                // { id: user.id }, 
+                { userUuid: user.uuid }, 
+                { role: role.name},
+                config.secret, 
+                {  expiresIn: 86400}),
+            });
+          }).catch(err => { res.status(400).send({ message: err.message }) });
+
+
+        } else {
+        return res.status(401).json( {error: ' Email or Password unknown !'} )    // Password Not Recognized
+    }
+      })
+      .catch(err => { res.status(400).send({ error: ' Invalid Email or Password !'}) })
   })
   .catch(err => { res.status(500).send({ message: err.message }) });
-};
+}
 
-// --------------------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------------------------------------------
 
 
 exports.deleteUser = (req, res, next) => {  //  = delate my account, by Admin
   const uuid = req.params.uuid;
   const { email, password } = req.body;
 
-  User.findOne( { where: { uuid, password, email }
+  User.findOne({
+    where: { email }
   })
   .then( user => {
       if(!user) {
-          return res.status(401).json( {error: " Email or Password unknown ! : Erreur 1" } )  
+          return res.status(401).json( {error: " Email or Password Invalid !" } )  
       }
 
-      // if (!email) {
-      //   return res.status(401).json( {error: " User unknown ! : Erreur 1" } ) 
-      // }
-
-      bcrypt.compare( req.body.password, user.password)
-      .then(() => {
-          if (user.uuid === uuid) {
+      bcrypt.compare( password, user.password)
+      .then( valid => {
+          if( valid) {
+            if( user.uuid === req.params.uuid) {
               User.destroy({
-                  where: { uuid}
+                where: { uuid}
               })
               .then(() => res.status(200).json({ message: "Account deleted !" }))
               .catch((err) => res.status(403).json({ err }));
-          }
-          
+            }
+           }
       })
-      .catch( res.status(401).json( {error: ' Email or Password unknown !'} ) )
-  })
-  .catch( error => res.status(500).json( {message:"User not in DB"} ))  
-}
-  // -----------------------------------------------------------------------------------------
+      .catch((error) => res.status(401).json( {error: " Email or Password Invalid !" } ))
 
-exports.deleteUser = (req, res, next) => {  //  = delate my account (by user himself )
-  const uuid = req.params.uuid
-  const { email, password } = req.body
-  User.findOne( { where: { uuid}
   })
-  .then(() => {
-      User.destroy({
-      where: { uuid}
-   })
-     .then(() => res.status(200).json({ message: "Account deleted !" }))
-     .catch((err) => res.status(403).json({ err }));       
-})
-  .catch((err) => res.status(403).json({ message: "ERREUR sur User" }));
+  .catch( error => res.status(500).json( {eeror: error.message} )) 
 }
 
-
-// exports.deleteUser = (req, res, next) => {  //  = delate my account (by user himself )
-//   const uuid = req.params.uuid
-//   const { email, password } = req.body
-//   User.findOne( { where: { uuid: user.uuid}
-//   })
-//   .then(() => {
-//       User.destroy({
-//       where: { id: req.params.id}
-//    })
-//      .then(() => res.status(200).json({ message: "Account deleted !" }))
-//      .catch((err) => res.status(403).json({ err }));       
-// })
-//   .catch((err) => res.status(403).json({ message: "ERREUR sur User" }));
-// }
 
 
 // ----------------------------------------------------------------------------------------------------
@@ -261,90 +254,3 @@ exports.getAllUsers = (req, res, next) => {
 
 // -----------------------------------------------------------------------------------------
 
-exports.deleteUser = (req, res, next) => {  // Delete one accont, by Admin
-
-    User.findByPk(id)
-    .then( user => {
-        const filename = user.imageUrl.split('/images/')[1];
-
-        // regaer
-        fs.unlink( `images/${filename}`, () => {
-            User.destroy(  {
-              where: { _id: req.params.id } 
-            })
-            .then( ()     => res.status(200).json( { message: 'User deleted succesfully !'}) )
-            .catch( error => {console.log(error); res.status(400).json({error}) })
-            })
-    })
-    .catch( error => res.status(500).json({error}) )
-}
-
-
-// exports.deleteUser = (req, res, next) => {
-
-//     User.findByPk(req.body)
-//     .then( user => {
-//         const filename = user.imageUrl.split('/images/')[1];
-
-//         // regaer
-//         fs.unlink( `images/${filename}`, () => {
-//             User.destroy(  {
-//               where: { _id: req.params.id } 
-//             })
-//             .then( ()     => res.status(200).json( { message: 'User deleted succesfully !'}) )
-//             .catch( error => {console.log(error); res.status(400).json({error}) })
-//             })
-//     })
-//     .catch( error => res.status(500).json({error}) )
-
-// }
-
-
-// exports.deleteUser = async (req, res,next) =>{
-//   const  uuid = req.params.uuid
-
-//   try {
-//     await User.findONe( { where: { uuid } })
-//     await User.destroy()
-//     return res.status(200).json({message:"USer Succesfully Deleted !"})
-
-//   } catch(err) {
-
-//   }
-
-// }
-
-
-// -----------------------------------------------------------------------------------------
-
-
-exports.signout = (req, res, next) => {  // delete my account (me or Admin)
-
-  /*
-  Can be called bu user Only
-  Both images posted and corresponding comments, likes, dislakes are also deleted
-  */
-
-   User.findOne( {
-      where: { email: req.body.email }
-  })
-  .then( user => {
-      if(!user) {
-          return res.status(401).json( {error: " user unknown !" } )  
-      }
-
-      bcrypt.compare( req.body.password, user.password)
-      .then(() => {
-          if (uuid === req.params.uuid /* || user is admin (how to ?) */) {
-              User.destroy({
-                  where: { uuid: req.params.uuid}
-              })
-              .then(() => res.status(200).json({ message: "Account deleted !" }))
-              .catch((err) => res.status(403).json({ err }));
-          }
-          
-      })
-      .catch( res.status(401).json( {error: ' error 2  !'} ) )
-  })
-  .catch( error => res.status(500).json( {error} ))  
-}

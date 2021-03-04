@@ -94,19 +94,19 @@ app.use(limiter ({
 
 // BLock 2   <<<<<<<<<<< ---------------
 // ======================================================================================================
-// const main = async (req, res, next) => {
+const main = async (req, res, next) => {
 
-//   try {
-//     await db.sequelize.sync();
-//      console.log('   ===  Connected to groupomania_db !  === ')
-// } catch (err) {
+  try {
+    await db.sequelize.sync();
+     console.log('   ===  Connected to groupomania_db !  === ')
+} catch (err) {
 
-//     console.log(err)
-//     return res.status(400).json(err)
-//   }
-// }
+    console.log(err)
+    return res.status(400).json(err)
+  }
+}
 
-//   main()
+  main()
 
 
 // ========================================================================================================
