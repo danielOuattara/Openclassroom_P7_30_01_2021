@@ -26,8 +26,8 @@ const  config = require('./../config/authConfig.js')
 module.exports  = (req, res, next) => {
 
     try {
-        // const token = req.headers['x-access-token']
-        const token = req.headers.authorization;
+        const token = req.headers['x-access-token']
+        // const token = req.headers.authorization;
         const decodedToken = jsonwebtoken.verify(token, config.secret);
         const userUuid  = decodedToken.userUuid;
         // const isAdmin = decodedToken.role;

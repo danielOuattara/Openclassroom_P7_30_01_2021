@@ -89,7 +89,7 @@ exports.login = (req, res) => {
               token : jsonwebtoken.sign(
                 // { id: user.id }, 
                 { userUuid: user.uuid }, 
-                { role: role.name},
+                // { role: role.name},
                 config.secret, 
                 {  expiresIn: 86400}),
             });
