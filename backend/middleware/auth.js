@@ -27,13 +27,14 @@ module.exports  = (req, res, next) => {
 
     try {
         const token = req.headers['x-access-token']
-        // const token = req.headers.authorization;
         const decodedToken = jsonwebtoken.verify(token, config.secret);
         const userUuid  = decodedToken.userUuid;
+        // const isAdmin = decodedToken.userRole;
+
         // const isAdmin = decodedToken.role;
         // req.userUuid = userUuid;
         // req.isAdmin = isAdmin;
-        if (req.body.userUuid && req.body.userUuid != userUuid /* || req.body.isAdmin && req.body.isAdmin != isAdmin */) {
+        if (req.body.userUuid && req.body.userUuid != userUuid  /* || req.body.isAdmin && req.body.isAdmin != ROLE_ADMIN */ ) {
             throw 'User ID Not Valid'
         } else {
             next();
