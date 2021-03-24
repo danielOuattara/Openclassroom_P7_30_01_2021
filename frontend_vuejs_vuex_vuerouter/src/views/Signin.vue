@@ -1,6 +1,6 @@
 <template>
 <!--
-Vue Register Page
+Vue Signin Page
 
 This page is similar to Login Page.
 
@@ -10,9 +10,9 @@ For form validation, we have some more details:
     email: required|email|max:50
     password: required|min:6|max:40
 
-For form submission, we dispatch 'auth/register' Vuex Action.
+For form submission, we dispatch 'auth/signin' Vuex Action.
 
-src/views/Register.vue
+src/views/Signin.vue
 
 -->
 
@@ -76,10 +76,10 @@ src/views/Register.vue
 </template>
 
 <script>
-import User from './../models/user';
+import User from '../models/user';
 
 export default {
-  name: 'Register',
+  name: 'Signin',
   data() {
     return {
       user: new User('', '', ''),
@@ -104,7 +104,7 @@ export default {
       this.submitted = true;
       this.$validator.validate().then(isValid => {
         if (isValid) {
-          this.$store.dispatch('auth/register', this.user).then(
+          this.$store.dispatch('auth/signin', this.user).then(
             data => {
               this.message = data.message;
               this.successful = true;

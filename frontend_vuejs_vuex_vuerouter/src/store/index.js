@@ -17,6 +17,6 @@ export default new Vuex.Store({
 Then we start to define Vuex Authentication module that contains:
 
   >  state: { status, user }
-  >  actions: { login, logout, register }
+  >  actions: { login, logout, signin }
   >  mutations: { loginSuccess, loginFailure, logout, registerSuccess, registerFailure }
 */

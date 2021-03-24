@@ -15,8 +15,7 @@ export default class User {
     this.password   = password;
     this.gender     = gender;
     this.age        = age;
-    this.department = department;
-       
+    this.department = department;   
   }
 }
 

@@ -1,6 +1,6 @@
 const db = require("../models");
 const User = db.user;
-// const Role = db.role;
+const Role = db.role;
 
 
 module.exports = (req, res, next) => {
@@ -15,7 +15,8 @@ module.exports = (req, res, next) => {
                 }
             }
             return res.status(403).send({ message: "Require Admin Role!" });
-        });
+        })
+        .catch(error => res.status(500).json( {error}))
     });
 };
 

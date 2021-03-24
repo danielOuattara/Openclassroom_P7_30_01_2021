@@ -37,7 +37,7 @@
 
             <ul class="navbar-nav">
                <li class="nav-item">
-                  <router-link to="/register" class="nav-link">
+                  <router-link to="/signin" class="nav-link">
                     <font-awesome-icon icon="user-plus" />Inscription
                   </router-link>
                </li>

@@ -1,4 +1,3 @@
-// userRoutes
 
 const express        = require('express');
 const router         = express.Router();
@@ -12,7 +11,7 @@ const authAdmin = require('./../middleware/authAdmin.js');
 
 
 router.post('/signin', checkEmail, checkRoles, userController.signin );
-router.post('/login', userController.login  );
+router.post('/login', userController.login );
 router.delete ('/:uuid', auth , userController.deleteUser );    // delete(): by Admin
 router.get ('/'    ,/*  auth , */ userController.getAllUsers );
 router.get ('/:uuid' ,/*  auth , */ userController.getOneUser );

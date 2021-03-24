@@ -1,6 +1,6 @@
 
-const  jsonwebtoken = require('jsonwebtoken');
-const  config = require('./../config/authConfig.js')
+// const  jsonwebtoken = require('jsonwebtoken');
+// const  config = require('./../config/authConfig.js')
 
 // module.exports  = (req, res, next) => {
 
@@ -23,18 +23,23 @@ const  config = require('./../config/authConfig.js')
 // }
 
 
+const  jsonwebtoken = require('jsonwebtoken');
+const  config = require('./../config/authConfig.js')
+
 module.exports  = (req, res, next) => {
 
     try {
         const token = req.headers['x-access-token']
         const decodedToken = jsonwebtoken.verify(token, config.secret);
         const userUuid  = decodedToken.userUuid;
+        // const roles = decodedToken.userRole
+
         // const isAdmin = decodedToken.userRole;
 
         // const isAdmin = decodedToken.role;
         // req.userUuid = userUuid;
         // req.isAdmin = isAdmin;
-        if (req.body.userUuid && req.body.userUuid != userUuid  /* || req.body.isAdmin && req.body.isAdmin != ROLE_ADMIN */ ) {
+        if (req.body.userUuid && req.body.userUuid != userUuid  /* || roles && roles.includes("ROLE_ADMIN")== false */) {
             throw 'User ID Not Valid'
         } else {
             next();

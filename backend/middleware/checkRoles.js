@@ -1,7 +1,8 @@
 
 // const db = require("./../models");
 // const ROLES = db.ROLES;
-const {  ROLES } = require('./../models');
+
+const { ROLES } = require('./../models');
 
 module.exports = (req, res, next) => {
 

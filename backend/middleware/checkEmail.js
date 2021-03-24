@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {   // check for duplicate user email or us
 
     User.findOne({ 
         where: { email: req.body.email }
-      })
+    })
     .then(user => {
         if (user) {
             return res.status(400).send({ message: " Email address is already used!" });

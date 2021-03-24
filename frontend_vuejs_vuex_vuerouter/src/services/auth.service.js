@@ -7,7 +7,7 @@ axios for HTTP requests & reponses:
 
     login(): POST {username, password} & save JWT to Local Storage
     logout(): remove JWT from Local Storage
-    register(): POST {username, email, password}
+    signin(): POST {email, password}
 
 */
 
@@ -27,7 +27,6 @@ class AuthService {
         if (response.data.accessToken) {
           localStorage.setItem('user', JSON.stringify(response.data));
         }
-
         return response.data;
       });
   }
@@ -36,7 +35,7 @@ class AuthService {
     localStorage.removeItem('user');
   }
 
-  register(user) {
+  signin(user) {
     return axios.post(API_URL + 'signin', {
       email: user.email,
       password: user.password

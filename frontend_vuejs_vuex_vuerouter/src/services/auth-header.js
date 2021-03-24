@@ -11,23 +11,18 @@ inside auth-header.js:
 */
 
 
-//export default = authHeader () => {
+// export default  function authHeader() {
 //  let user = JSON.parse(localStorage.getItem('user'))
-//
+
 //  if (user && user.accesToken) {
 //    return { Authorization: 'Bearer' + user.accesToken};
-//
+
 //  } else {
 //    return {};
 //  }
 // }
 
-
-/* It checks Local Storage for user item.
-If there is a logged in user with accessToken (JWT),
-return HTTP Authorization header. Otherwise, return
-an empty object.*/
-
+// --------------------------------------------------------------------
 
 export default function authHeader() {
   let user = JSON.parse(localStorage.getItem('user'));
@@ -39,4 +34,11 @@ export default function authHeader() {
     return {};
   }
 }
+
+
+
+/* It checks Local Storage for user item.
+If there is a logged in user with accessToken (JWT),
+return HTTP Authorization header. Otherwise, return
+an empty object.*/
 

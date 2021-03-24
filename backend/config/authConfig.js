@@ -9,7 +9,6 @@ that needs a secret key (as String) to encode and decode token.
 
 require('dotenv').config();
 
-
 module.exports = {
     secret: process.env.SECRET_KEY
   };

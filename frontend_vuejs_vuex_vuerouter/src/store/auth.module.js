@@ -28,8 +28,8 @@ export const auth = {
       commit('logout');
     },
     
-    register({ commit }, user) {
-      return AuthService.register(user).then(
+    signin({ commit }, user) {
+      return AuthService.signin(user).then(
         response => {
           commit('registerSuccess');
           return Promise.resolve(response.data);

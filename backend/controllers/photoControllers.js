@@ -7,7 +7,7 @@ const fs    = require('fs');
 
 exports.addPhoto =  async (req, res, next) => {
 
-    const  { userUuid, title, imageUrl } = req.body
+    const  { title, imageUrl } = req.body
 
     if(!title) {
       return res.status(400).send({message: `Title can not be empty`});

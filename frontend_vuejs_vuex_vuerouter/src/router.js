@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
-import Register from './views/Register.vue';
+import Signin from './views/Signin.vue';
 
 Vue.use(Router);
 
@@ -23,8 +23,8 @@ export const router = new Router({
       component: Login
     },
     {
-      path: '/register',
-      component: Register
+      path: '/signin',
+      component: Signin
     },
     {
       path: '/profile',
@@ -57,7 +57,7 @@ is trigger, just add router.beforeEach() at the end of src/router.js
 like this:*/
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home'];
+  const publicPages = ['/login', '/signin', '/home'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 
