@@ -34,6 +34,7 @@ export default {
   mounted() {
     UserService.getUserBoard().then(
       response => {
+        console.log(response.data)
         this.content = response.data;
       },
       error => {

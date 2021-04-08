@@ -8,7 +8,7 @@ src/views/Profile.vue-->
   <div class="container">
     <header class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        <strong>{{currentUser.username}}</strong> User Profile Here Hello
       </h3>
     </header>
     <p>
@@ -16,8 +16,8 @@ src/views/Profile.vue-->
       {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
     </p>
     <p>
-      <strong>Id:</strong>
-      {{currentUser.id}}
+      <strong>uuid:</strong>
+      {{currentUser.user.uuid}}
     </p>
     <p>
       <strong>Email:</strong>
@@ -36,6 +36,7 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
+      // return this.$store.state.user;
     }
   },
   mounted() {

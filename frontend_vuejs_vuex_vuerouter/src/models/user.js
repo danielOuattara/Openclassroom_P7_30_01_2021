@@ -19,9 +19,6 @@ export default class User {
   }
 }
 
-
-
-
 /*
 
 Let’s continue with Authentication Components.

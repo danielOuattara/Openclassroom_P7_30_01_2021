@@ -4,6 +4,8 @@ const Tutorial = db.tutorials;
 const Op = db.Sequelize.Op;
 
 
+// ------------------------------------------------------------------------------------------------
+
 // create & save a new Tutorial (add & save)
 exports.create = (req, res, next) => { 
     // validate request
@@ -24,6 +26,8 @@ exports.create = (req, res, next) => {
     .catch( err => res.status(500).send({ message: err.message || ` Some error occured while creating the Tutorial in DB`}))
  };
 
+
+ // -----------------------------------------------------------------------------------------------------
 
 // Retreive all Tutorials from the database (with conditions)
 exports.findAll = (req, res, next) => {   

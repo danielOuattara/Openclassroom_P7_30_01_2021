@@ -48,7 +48,6 @@
                </li>
             </ul>
 
-
           </div>
 
           <div v-if="currentUser" class="navbar-nav ml-auto">
@@ -78,6 +77,7 @@
 
 <script>
 export default {
+  
   computed: {
 
     currentUser() {
@@ -91,14 +91,8 @@ export default {
 
       return false;
     },
-    // showModeratorBoard() {
-    //   if (this.currentUser && this.currentUser.roles) {
-    //     return this.currentUser.roles.includes('ROLE_MODERATOR');
-    //   }
-
-    //   return false;
-    // }
   },
+  
   methods: {
     
     logOut() {

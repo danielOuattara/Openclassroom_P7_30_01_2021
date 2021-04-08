@@ -11,13 +11,7 @@ const fs = require('fs')
 
 // --------------------------------------------------------------------------------------
 
-
 exports.signin = (req, res) => {
-
-    const regex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!?&#@$%µ€_])[a-zA-Z0-9!?&#@$%µ€_]{7,}/
-    if (!regex.test(req.body.password)) {
-          return res.status(401).json({ error: `Password not Strong!: 7 characters, at least 1 Uppercase, 1 Lowercase, 1 Digit, 1 symbol between ! ? & # @ $ % µ € _ `});
-    }
 
     bcrypt.hash(req.body.password, 11)
     .then( hash => {
@@ -54,28 +48,21 @@ exports.signin = (req, res) => {
 
 // ----------------------------------------------------------------------------------------
 
-
 exports.login = (req, res) => {
 
   if (!validator.validate(req.body.email)) {
     return res.status(401).json({error:" Invalid Email or Password !" } )
   }
-  User.findOne({
-    where: { email: req.body.email }
-  })
+  User.findOne({ where: { email: req.body.email } })
   .then( user => {
 
       if (!user) {
         return res.status(401).json( {error: ' Invalid Email or Password !'} )   
       }
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
       bcrypt.compare( req.body.password, user.password)
       .then( valid => {
         if(valid) {
-
-
           const authorities = [];
           user.getRoles()
           .then(roles => {
@@ -93,10 +80,8 @@ exports.login = (req, res) => {
                 {  expiresIn: 43200}),
             });
           }).catch(err => { res.status(400).send({ message: err.message }) });
-
-
         } else {
-        return res.status(401).json( {error: ' Email or Password unknown !'} )    // Password Not Recognized
+        return res.status(401).json( {error: ' Invalid Email or Password !'} )    // Password Not Recognized
     }
       })
       .catch(err => { res.status(400).send({ error: ' Invalid Email or Password !'}) })
@@ -104,97 +89,57 @@ exports.login = (req, res) => {
   .catch(err => { res.status(500).send({ message: err.message }) });
 }
 
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-// exports.login = (req, res) => {
-
-//   if (!validator.validate(req.body.email)) {
-//     return res.status(401).json({error:" Invalid Email or Password !" } )
-//   }
-  
-//   User.findOne({
-//     where: { email: req.body.email }
-//   })
-//   .then( user => {
-
-//       if (!user) {
-//         return res.status(401).json( {error: ' Invalid Email or Password !'} )   
-//       }
-//       const passwordIsValid = bcrypt.compareSync(req.body.password, user.password );  // change her compareSync() to compare()  <------
-
-//       if (!passwordIsValid) {
-//         return res.status(401).send({
-//           // accessToken: null,
-//           message: "Invalid Email or Password!"
-//         });
-//       }
-
-//       const token = jsonwebtoken.sign({ id: user.id }, config.secret, {
-//       expiresIn: 86400 // 24 hours
-//       });
-
-//       const authorities = [];
-//       user.getRoles()
-//       .then(roles => {
-//           for (let i = 0; i < roles.length; i++) {
-//             authorities.push("ROLE_" + roles[i].name.toUpperCase());
-//           }
-//           res.status(200).send({
-//             id: user.id,
-//             // username: user.username,
-//             email: user.email,
-//             roles: authorities,
-//             accessToken: token
-//           });
-//       }).catch(err => { res.status(400).send({ message: err.message }) });
-//   })
-//   .catch(err => { res.status(500).send({ message: err.message }) });
-// };
-
-
 // ----------------------------------------------------------------------------------------------------------------
 
 
-exports.deleteUser = (req, res, next) => {  //  = delate my account, by Admin
-  const uuid = req.params.uuid;
+exports.signout = (req, res, next) => { 
   const { email, password } = req.body;
-
   User.findOne({ where: { email } })
   .then( user => {
       if(!user) {
-          return res.status(401).json( {error: " Email or Password Invalid !" } )  
+          return res.status(401).json( {error: " Email or Password Invalid ! 1" } )  
       }
 
       bcrypt.compare( password, user.password)
       .then( valid => {
-          if( valid) {
-            if( user.uuid === req.params.uuid /*|| role.name === admin*/ ) {
-              User.destroy({
-                where: { uuid }
-              })
+          if (valid) {
+              user.destroy()
               .then(() => res.status(200).json({ message: "Account deleted !" }))
               .catch((err) => res.status(403).json({ err }));
-            }
-            else {
-              return res.status(401).json( {error: " Operation Rejected !" } )
-            }
-           }
+          } else {
+               return res.status(401).json( {error: " Email or Password Invalid ! 2" } )
+          }
       })
-      .catch((error) => res.status(401).json( {error: " Email or Password Invalid !" } ))
-
+      .catch( error => res.status(500).json( {eeror: error.message} )) 
   })
   .catch( error => res.status(500).json( {eeror: error.message} )) 
 }
 
-// ----------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------
+
+
+exports.adminDeleted = (req, res, next) => {  // by Admin
+  const {uuid } = req.body;
+
+  User.findOne({ where: { uuid } })
+  .then( user => {
+      if(!user) {
+          return res.status(401).json( {error: " User Unknown !" } )  
+      }
+
+      User.destroy({ where: { uuid } })
+      .then(() => res.status(200).json({ message: "Account deleted !" }))
+      .catch((err) => res.status(403).json({ err }))
+    })
+  .catch( error => res.status(500).json( {eeror: error.message} )) 
+
+  };
+
+  // ----------------------------------------------------------------------------------------------------
 
 exports.getOneUser = (req, res, next) => {
     const uuid = req.params.uuid;
-    User.findOne( {
-      where: {uuid}
-    })
+    User.findOne( { where: {uuid}  })
     .then( user => res.status(200).json(user))
     .catch( err => res.status(500).send( { message: err.message || `Error while retrieving Tutorial id = ${id}`} ))
   };
@@ -203,81 +148,78 @@ exports.getOneUser = (req, res, next) => {
 
 
 exports.getAllUsers = (req, res, next) => {
-
   User.findAll()
   .then( users => res.status(200).json(users))
   .catch( error => res.status(400).json( {error} ));
   }
 
-
 // -------------------------------------------------------------------------------------------------------
 
+exports.updateUser = (req, res, next) => {
 
-// exports.updateUser = (req, res, next) => {
+    const uuid = req.params.uuid;
+    const userObject = req.file ?
+        {
+          ...JSON.parse(req.body.user),  //si update d'image
+          imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        }
+        :
+        {
+          ...req.body // sinon
+        }
 
-//     const uuid = req.params.uuid;
-//     const userObject = req.file ?
-//         {
-//           ...JSON.parse(req.body.user),  //si update d'image
-//           imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-//         }
-//         :
-//         {
-//           ...req.body // sinon
-//         }
+    // do not trust user input, even on update !
+    const regex =  /[\[\]<>=0]+/gi;
 
-//     // do not trust user input, even on update !
-//     const regex =  /[\[\]<>=0]+/gi;
+    if ( regex.test(userObject.firstName)  || 
+         regex.test(userObject.lastName)   ||
+         regex.test(userObject.userName)   ||
+         regex.test(userObject.email)      ||
+         regex.test(userObject.gender)     ||
+         regex.test(userObject.age)        ||
+         regex.test(userObject.department) ||
+         regex.test(userObject.avatar)     ||
+         regex.test(userObject.aboutMe)   ) {
+      return res.status(401).json( { error: ' Filled in text is Invalid !'  });
+    }
 
-//     if ( regex.test(userObject.firstName)  || 
-//          regex.test(userObject.lastName)   ||
-//          regex.test(userObject.userName)   ||
-//          regex.test(userObject.email)      ||
-//          regex.test(userObject.gender)     ||
-//          regex.test(userObject.age)        ||
-//          regex.test(userObject.department) ||
-//          regex.test(userObject.avatar)     ||
-//          regex.test(userObject.aboutMe)   ) {
-//       return res.status(401).json( { error: ' Filled in text is Invalid !'  });
-//     }
+    if (req.file) {
 
-//     if (req.file) {
+      User.findOne({ where: {uuid } })
+      .then( photo => {
+          const filename = photo.imageUrl.split('/images/')[1];
+          fs.unlink( `images/${filename}`, () => {
 
-//       User.findOne({ where: {uuid } })
-//       .then( photo => {
-//           const filename = photo.imageUrl.split('/images/')[1];
-//           fs.unlink( `images/${filename}`, () => {
+              User.update({...userObject})
+              .then( num => {
+                if (num == 1) {
+                    res.send( {message: `Tutorial was updated succesfully !` })
+                } else {
+                    res.send({ message: `Cannot update : Tutorial not found OR Request body is empty!`})
+                }
+            })
+              .catch( error =>  res.status(400).json({error}))
+          })
+            })
+      .catch( error => res.status(500).json({error}))
 
-//               User.update({...userObject})
-//               .then( num => {
-//                 if (num == 1) {
-//                     res.send( {message: `Tutorial was updated succesfully !` })
-//                 } else {
-//                     res.send({ message: `Cannot update : Tutorial not found OR Request body is empty!`})
-//                 }
-//             })
-//               .catch( error =>  res.status(400).json({error}))
-//           })
-//             })
-//       .catch( error => res.status(500).json({error}))
+    } else {
 
-//     } else {
-
-//       User.findOne({ where: {uuid } })
-//       .then(user => {
-//         Photo.update(req.body, { where: {id}})
-//         .then( num => {
-//           if (num == 1) {
-//               res.send( {message: `User profil was updated succesfully !` })
-//           } else {
-//               res.send({ message: `Cannot update: user not found OR Request body is empty!`})
-//           }
-//         })
-//         .catch( error =>  res.status(400).json({error}))
-//       })
-//       .catch( error =>  res.status(500).json({error}))
-//     }
-//   }
+      User.findOne({ where: {uuid } })
+      .then(user => {
+        Photo.update(req.body, { where: {id}})
+        .then( num => {
+          if (num == 1) {
+              res.send( {message: `User profil was updated succesfully !` })
+          } else {
+              res.send({ message: `Cannot update: user not found OR Request body is empty!`})
+          }
+        })
+        .catch( error =>  res.status(400).json({error}))
+      })
+      .catch( error =>  res.status(500).json({error}))
+    }
+  }
 
 
   // exports.updateUser = async (req, res,next) => {

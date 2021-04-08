@@ -8,6 +8,16 @@
     <header class="jumbotron">
       <h3>{{content}}</h3>
     </header>
+
+    <main>
+
+      <div>
+        
+
+        
+      </div>
+
+    </main>
   </div>
 </template>
 

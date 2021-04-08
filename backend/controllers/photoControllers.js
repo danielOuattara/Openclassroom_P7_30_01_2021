@@ -20,9 +20,9 @@ exports.addPhoto =  async (req, res, next) => {
 
     if ( pattern.test(title) ||  pattern.test(imageUrl)  )
     {
-      // fs.unlink( `images/${req.file.filename}`, function (err) {
-      //     if (err) throw err;
-      // })
+      fs.unlink( `images/${req.file.filename}`, function (err) {
+          if (err) throw err;
+      })
       return res.status(401).json( {error: "Fill in text Invalid !"} );  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
     }
 
@@ -40,33 +40,34 @@ exports.addPhoto =  async (req, res, next) => {
 
 
     // ===============================================================================================================================
-    // exports.addPhoto =  async (req, res, next) => {
-    // const  { userUuid, title, imageUrl} = req.body
+  //   exports.addPhoto =  async (req, res, next) => {
+  //   const  { userUuid, title, imageUrl} = req.body
 
-    // if(!title) {
-    //   return res.status(400).send({message: `Title can not be empty`});
-    // }
-    // if(!imageUrl) {
-    //   return res.status(400).send({message: `imageUrl can not be empty`});
-    // }
+  //   if(!title) {
+  //     return res.status(400).send({message: `Title can not be empty`});
+  //   }
+  //   if(!imageUrl) {
+  //     return res.status(400).send({message: `imageUrl can not be empty`});
+  //   }
 
-    // const pattern =  /[\[\]<>=0]+/gi;  // do not trust user input !
+  //   const pattern =  /[\[\]<>=0]+/gi;  // do not trust user input !
 
-    // if ( pattern.test(title) ||  pattern.test(imageUrl)  )
-    // {
-    //   // fs.unlink( `images/${req.file.filename}`, function (err) {
-    //   //     if (err) throw err;
-    //   // })
-    //   return res.status(401).json( {error: "Fill in text Invalid !"} );  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
-    // }
+  //   if ( pattern.test(title) ||  pattern.test(imageUrl)  )
+  //   {
+  //     fs.unlink( `images/${req.file.filename}`, function (err) {
+  //         if (err) throw err;
+  //     })
+  //     return res.status(401).json( {error: "Fill in text Invalid !"} );  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
+  //   }
 
-    // User.findOne({ where: {uuid: userUuid}})
-    // .then(() => {
-    //   Photo.create({title, imageUrl, userId: user.id})
-    //   .then( ()  => res.status(201).json({message: 'Photo Successsfully Posted !'}))
-    //   .catch( err => res.status(400).json({ message: err.message || ` Error in DB`}))
-    // })
-    // .catch( err => res.status(500).json({ message: err.message || ` Error occured while posting photo in DB`}))
+  //   User.findOne({ where: {uuid: userUuid}})
+  //   .then(() => {
+  //     Photo.create({title, imageUrl, userId: user.id})
+  //     .then( ()  => res.status(201).json({message: 'Photo Successsfully Posted !'}))
+  //     .catch( err => res.status(400).json({ message: err.message || ` Error in DB`}))
+  //   })
+  //   .catch( err => res.status(500).json({ message: err.message || ` Error occured while posting photo in DB`}))
+  // }
   // =================================================================================================================================================================
 
     // const photo = {
@@ -92,6 +93,43 @@ exports.addPhoto =  async (req, res, next) => {
   //     .catch(error => res.status(400).json({ error }))
 
 // }
+
+
+// --------------------------------------------------------------------------------------------------
+
+
+// create & save a new Tutorial (add & save)
+exports.addPhoto = (req, res, next) => { 
+  // validate request
+  if(!req.body.title) {
+      return res.status(400).send({message: `Title can not be empty`});
+  }
+
+  // create a tutorial
+  const photo = {
+      title:       req.body.title,
+      imageUrl: req.body.imageUrl,
+
+  };
+
+  // save Tutorial in  the database
+  Photo.create(photo)
+  .then( data => res.send(data))
+  .catch( err => res.status(500).send({ message: err.message || ` Some error occured while creating the Tutorial in DB`}))
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //-----------------------------------------------------------------------------------------------------------
 

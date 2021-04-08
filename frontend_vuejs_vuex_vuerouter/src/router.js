@@ -9,42 +9,13 @@ Vue.use(Router);
 export const router = new Router({
   mode: 'history',
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/home',
-      component: Home
-    },
-    {
-      path: '/login',
-      component: Login
-    },
-    {
-      path: '/signin',
-      component: Signin
-    },
-    {
-      path: '/profile',
-      name: 'profile',
-      // lazy-loaded
-      component: () => import('./views/Profile.vue')
-    },
-    {
-      path: '/admin',
-      name: 'admin',
-      // lazy-loaded
-      component: () => import('./views/BoardAdmin.vue')
-    },
-
-    {
-      path: '/user',
-      name: 'user',
-      // lazy-loaded
-      component: () => import('./views/BoardUser.vue')
-    }
+    { path: '/'       , name: 'home'   , component: Home },
+    { path: '/home'   , name: ''       , component: Home  },
+    { path: '/login'  , name: ''       , component: Login },
+    { path: '/signin' , name: ''       , component: Signin },
+    { path: '/profile', name: 'profile', component: () => import('./views/Profile.vue')  },  /* lazy-loaded*/
+    { path: '/admin'  , name: 'admin'  , component: () => import('./views/BoardAdmin.vue') }, /* lazy-loaded*/
+    { path: '/user'   , name: 'user'   , component: () => import('./views/BoardUser.vue')  }  /* lazy-loaded*/
   ]
 });
 
