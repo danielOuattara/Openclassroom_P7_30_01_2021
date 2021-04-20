@@ -6,15 +6,23 @@
 
   <div class="container">
     <header class="jumbotron">
-      <h3>{{content}}</h3>
+      <h3>{{content}} Home</h3>
     </header>
 
     <main>
 
-      <div>
-        
+     <br/>
 
-        
+      <div>
+        <form >
+          <label for="myfile">Select a file:</label>
+          <input type="file" id="myfile" name="myfile">
+          <input type="button" value="Submit" v-on:click="photoPost">
+        </form>     
+      </div>
+
+      <div class="mur-photo">
+        mur des photos
       </div>
 
     </main>

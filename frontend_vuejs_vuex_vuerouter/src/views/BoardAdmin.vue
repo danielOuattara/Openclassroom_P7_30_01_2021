@@ -1,5 +1,4 @@
 
-
 <template>
 
   <!-- Create Vue Components for accessing Resources

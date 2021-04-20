@@ -8,22 +8,22 @@ src/views/Profile.vue-->
   <div class="container">
     <header class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> User Profile Here Hello
+        <strong>{{currentUser.username}}</strong> User Profile Here
       </h3>
     </header>
     <p>
-      <strong>Token:</strong>
+      <strong>Token :</strong>
       {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
     </p>
     <p>
-      <strong>uuid:</strong>
+      <strong>uuid :</strong>
       {{currentUser.user.uuid}}
     </p>
     <p>
-      <strong>Email:</strong>
-      {{currentUser.email}}
+      <strong>Email :</strong>
+      {{currentUser.user.email}}
     </p>
-    <strong>Authorities:</strong>
+    <strong>Authorities :</strong>
     <ul>
       <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
     </ul>
@@ -36,7 +36,6 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
-      // return this.$store.state.user;
     }
   },
   mounted() {

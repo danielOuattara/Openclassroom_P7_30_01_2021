@@ -22,6 +22,7 @@ src/views/Signin.vue
         id="profile-img"
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
         class="profile-img-card"
+        alt=""
       />
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">

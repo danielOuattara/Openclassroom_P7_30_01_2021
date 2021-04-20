@@ -63,7 +63,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: { msg: "Password is required"}
       },
-      
     },
 
     gender: {
