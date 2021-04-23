@@ -1,27 +1,40 @@
 require('dotenv').config();
 
-const express     = require( 'express');  // importe 'express'
+const express     = require( 'express');  // import 'express'
 const bodyParser  = require( 'body-parser');
+const helmet      = require('helmet')
 const cors        = require('cors');
-const app         = express(); //  cree une application express
+const limiter     = require('express-rate-limit');
+const app         = express(); 
 
 
+app.use(helmet())
 app.use(cors());
 
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-//     next();
-// });
+const {sequelize, Sequelize} = require('./models');
+
+const db = require("./models");
+db.role = require("./models/role.model.js")(sequelize, Sequelize);
+const Role =  db.role;
+db.Role = require('./models/role.model.js');
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+});
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}))
 
+app.use(limiter ({
+  windowMs: 5000,
+  max: 200, 
+  message: {code: 429, message: 'Too many connection; Try later !' }
+}))
 
-const db= require("./models/");
-const Role =  db.role;
 
 db.sequelize.sync(/* {force:'true'} */)
 .then(() => {
@@ -49,7 +62,7 @@ function initial() {
 
 
 app.get ('/', (req, res, next) => {
-  res.json({ message: "Node.js Demo for JWT Authentication" })
+  res.json({ message: "Groupomania development server !" })
 });
 
 

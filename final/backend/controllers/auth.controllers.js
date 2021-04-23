@@ -1,15 +1,15 @@
 
-const db = require("./../models");
 const config = require("./../config/auth.config.js");
-const User = db.user;
-const Role = db.role;
-const Op = db.Sequelize.Op;
+const db = require("./../models");
+const { User, Role } = require('./../models');
+// const Role = db.role;
+const { Op } = require('sequelize')
+// const Op = db.Sequelize.Op;
 
-let jwt = require("jsonwebtoken");
-let bcrypt = require("bcryptjs");
 
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
-//-------------------------------------------------------------------------------------------------
 
 exports.signup = (req ,res) =>{
 
@@ -28,11 +28,20 @@ exports.signup = (req ,res) =>{
             .then( roles => {
                 user.setRoles(roles)
                 .then( () =>  res.send({ message: "User was registered Successfully !"}))
+                .catch( err =>  {
+                console.log(err);
+                res.status(400).send({ message: "error2"})});
             })
+            .catch( err =>  {
+                console.log(err);
+                res.status(400).send({ message: "error3"})});
 
         } else { // user role = 1
             user.setRoles([1])
             .then(() => res.send({ message: "User was registered successfully"}))
+            .catch( err =>  {
+                console.log(err);
+                res.status(400).send({ message: "error4"})});
         }
     })
     .catch( err =>  {
@@ -49,7 +58,7 @@ exports.signin = (req, res) => {
     })
     .then( user=> {
         if(!user) {
-            return res.Status(404).send({ message: "User Unkown !"})
+            return res.status(404).send({ message: "User Unkown !"})
         }
 
         const passwordIsValid = bcrypt.compareSync( req.body.password, user.password);
