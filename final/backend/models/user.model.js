@@ -13,22 +13,39 @@ module.exports = (sequelize, DataTypes) => {
         through: "user_roles",
         foreignKey: "userId",
         otherKey: "roleId"
-      })
+      });
+    }
+
+    toJSON() {
+      return {
+        ...this.get(),
+        id: undefined, // hide id
+       }
     }
   }
 
   User.init({
+
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
+
+    firstName: {
+      type: DataTypes.STRING(30),
+    },
+
+    lastName: {
+      type: DataTypes.STRING(30),
+    },
+
     username: { 
-      type: DataTypes.STRING,
-      required: true,
-      allowNull:false,
-      validate: {
-        notEmpty: { msg: "Username is required"}
-      },
+      type: DataTypes.STRING(30),
+      unique: true,
     },
 
     email: { 
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
       required: true,
       unique: true,
       allowNull:false,
@@ -45,7 +62,15 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: { msg: "Password is required"}
       },
-    }
+    },
+        
+    avatar: {
+      type: DataTypes.STRING,
+    },
+
+    aboutMe:    {
+      type: DataTypes.STRING,
+    },
   }, 
   
   {
@@ -53,5 +78,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
     tableName: "users"
   });
+  
   return User;
 };

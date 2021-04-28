@@ -17,6 +17,7 @@
       </button>
 
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          
           <div class="navbar-nav mr-auto">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -34,7 +35,6 @@
           </div>
 
           <div v-if="!currentUser" class="navbar-nav ml-auto">
-
             <ul class="navbar-nav">
                <li class="nav-item">
                   <router-link to="/signin" class="nav-link">
@@ -47,7 +47,6 @@
                   </router-link>
                </li>
             </ul>
-
           </div>
 
           <div v-if="currentUser" class="navbar-nav ml-auto">
@@ -64,8 +63,8 @@
                 </a>
               </li>
             </ul>
-
           </div>
+
       </div>
     </nav>
 

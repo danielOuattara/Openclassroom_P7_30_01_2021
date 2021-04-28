@@ -131,7 +131,7 @@ exports.adminDeleted = (req, res, next) => {  // by Admin
       .then(() => res.status(200).json({ message: "Account deleted !" }))
       .catch((err) => res.status(403).json({ err }))
     })
-  .catch( error => res.status(500).json( {eeror: error.message} )) 
+  .catch( error => res.status(500).json( {error: error.message} )) 
 
   };
 

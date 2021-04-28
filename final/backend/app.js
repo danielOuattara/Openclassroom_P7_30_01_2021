@@ -2,20 +2,21 @@ require('dotenv').config();
 
 const express     = require( 'express');  // import 'express'
 const bodyParser  = require( 'body-parser');
+const app         = express(); 
 const helmet      = require('helmet')
 const cors        = require('cors');
 const limiter     = require('express-rate-limit');
-const app         = express(); 
 
 
 app.use(helmet())
 app.use(cors());
 
-const {sequelize, Sequelize} = require('./models');
+const {sequelize, Sequelize, Role} = require('./models');
 
 const db = require("./models");
 db.role = require("./models/role.model.js")(sequelize, Sequelize);
-const Role =  db.role;
+
+// const Role =  db.role;
 db.Role = require('./models/role.model.js');
 
 app.use((req, res, next) => {
@@ -36,7 +37,7 @@ app.use(limiter ({
 }))
 
 
-db.sequelize.sync(/* {force:'true'} */)
+db.sequelize.sync( /* {force:'true'} */ )
 .then(() => {
   console.log('Resync database');
   // initial();

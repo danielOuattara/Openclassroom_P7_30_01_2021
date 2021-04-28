@@ -15,6 +15,15 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: "userId"
       })
     }
+
+    toJSON() {
+      return {
+        ...this.get(), 
+        id: undefined, 
+        userId: undefined,
+        roleId: undefined,
+      } 
+    }
   }
 
   Role.init({
@@ -23,6 +32,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
+
+    // uuid: {
+    //   type: DataTypes.UUID,
+    //   defaultValue: DataTypes.UUIDV4,
+    // },
+
 
     name:  { 
       type: DataTypes.STRING,
@@ -35,5 +50,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Role',
     tableName: "roles",
   });
+  
   return Role;
 };

@@ -2,16 +2,16 @@
 const config = require("./../config/auth.config.js");
 const db = require("./../models");
 const { User, Role } = require('./../models');
-// const Role = db.role;
-const { Op } = require('sequelize')
-// const Op = db.Sequelize.Op;
+// const { Op } = require('sequelize')
+const Op = db.Sequelize.Op;
 
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 
-exports.signup = (req ,res) =>{
+// ------------------------------------------------------------------------------
+exports.signin = (req ,res) =>{
 
     User.create({  // Save new User to Database
         username: req.body.username,
@@ -22,15 +22,17 @@ exports.signup = (req ,res) =>{
         if(req.body.roles) {
             Role.findAll({ 
                 where : {
-                    name: {[Op.or]: req.body.roles}
+                    name: {
+                        [Op.or]: req.body.roles
+                    }
                 }
             })
             .then( roles => {
                 user.setRoles(roles)
                 .then( () =>  res.send({ message: "User was registered Successfully !"}))
                 .catch( err =>  {
-                console.log(err);
-                res.status(400).send({ message: "error2"})});
+                    console.log(err);
+                    res.status(400).send({ message: "error2"})});
             })
             .catch( err =>  {
                 console.log(err);
@@ -52,7 +54,7 @@ exports.signup = (req ,res) =>{
 
 //-------------------------------------------------------------------------------------------------
 
-exports.signin = (req, res) => {
+exports.login = (req, res) => {
     User.findOne({ 
         where: {username: req.body.username}
     })
@@ -60,29 +62,29 @@ exports.signin = (req, res) => {
         if(!user) {
             return res.status(404).send({ message: "User Unkown !"})
         }
-
+        
         const passwordIsValid = bcrypt.compareSync( req.body.password, user.password);
         if(!passwordIsValid) {
             return res.status(401).send({ accessToken: null, message: "Invalid Password !"})
         }
-
+        
         const token = jwt.sign(
             { id:user.id}, 
             config.secret, 
             {expiresIn: 3600}
-        );
-
-        const authorities = [];
-
-        user.getRoles()
-        .then( roles => {
-            for (let i = 0; i < roles.length; i++) {
-                authorities.push("ROLE_" + roles[i].name.toUpperCase());
-            }
-            res.status(200).send({
-                id: user.id,
-                username: user.username,
-                email: user.email,
+            );
+            
+            const authorities = [];
+            
+            user.getRoles()
+            .then( roles => {
+                for (let i = 0; i < roles.length; i++) {
+                    authorities.push("ROLE_" + roles[i].name.toUpperCase());
+                }
+                res.status(200).send({
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
                 roles: authorities,
                 accessToken: token
             });
@@ -90,3 +92,47 @@ exports.signin = (req, res) => {
     })
     .catch( err => res.status(500).send({ message: err.message }) )
 }
+
+//-------------------------------------------------------------------------------------------------
+
+exports.signout = (req, res, next) => { 
+    const { email, password } = req.body;
+    User.findOne({ where: { email } })
+    .then( user => {
+        if(!user) {
+            return res.status(401).json( {error: " Email or Password Invalid ! 1" } )  
+        }
+        
+        bcrypt.compare( password, user.password)
+        .then( valid => {
+            if (valid) {
+                user.destroy()
+                .then(() => res.status(200).json({ message: "Account deleted !" }))
+                .catch((err) => res.status(403).json({ err }));
+            } else {
+                return res.status(401).json( {error: " Email or Password Invalid ! 2" } )
+            }
+        })
+        .catch( error => res.status(500).json( {eeror: error.message} )) 
+    })
+    .catch( error => res.status(500).json( {eeror: error.message} )) 
+}
+
+//-------------------------------------------------------------------------------------------------
+
+exports.adminDeleted = (req, res, next) => {  // by Admin
+  const {uuid } = req.body;
+
+  User.findOne({ where: { uuid } })
+  .then( user => {
+      if(!user) {
+          return res.status(401).json( {error: " User Unknown !" } )  
+      }
+
+      User.destroy({ where: { uuid } })
+      .then(() => res.status(200).json({ message: "Account deleted !" }))
+      .catch((err) => res.status(403).json({ err }))
+    })
+  .catch( error => res.status(500).json( {error: error.message} )) 
+
+  };
