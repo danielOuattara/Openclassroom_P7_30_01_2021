@@ -1,11 +1,8 @@
 'use strict';
 
-const { sequelize } = require("../models");
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-
-      return queryInterface.addColumn('photos', 'ownerId', {type:Sequelize.UUID });
+    return  queryInterface.addColumn('photos', 'ownerUuid', {type:Sequelize.UUID })
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -15,5 +12,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
+    return queryInterface.removeColumn('photos', 'ownerUuid', {type:Sequelize.UUID })
   }
 };

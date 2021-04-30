@@ -1,9 +1,10 @@
 
 const config = require("./../config/auth.config.js");
 const db = require("./../models");
-const { User, Role } = require('./../models');
+const { User, Role, Photo } = require('./../models');
 // const { Op } = require('sequelize')
 const Op = db.Sequelize.Op;
+const model = require("./../models");
 
 
 exports.allAccess = (req, res) => {
@@ -35,7 +36,10 @@ exports.getOneUser = (req, res, next) => {
 
 
 exports.getAllUsers = (req, res, next) => {
-  User.findAll()
+  User.findAll( {
+      include: 'photos'
+    //   include: [{ model: Photo, as:'owner'}]
+  })
   .then( users => res.status(200).json(users))
   .catch( error => res.status(400).json( {error} ));
   }

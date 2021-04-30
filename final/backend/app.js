@@ -8,16 +8,6 @@ const cors        = require('cors');
 const helmet      = require('helmet')
 const limiter     = require('express-rate-limit');
 
-// // const {sequelize, Sequelize} = require('./models');
-// const Role = require("./models").Role;
-
-// const db = require("./models");  // !important
-// // db.role = require("./models/role.js")(sequelize, Sequelize);
-// // const Role = db.role;
-// db.Role = require('./models/Role.js'); // ! important
-// // const Role = db.Role; 
-
-
 const { sequelize, Sequelize } = require('./models');
 
 const db = require("./models");
@@ -31,7 +21,7 @@ app.use(cors());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, x-acces-token');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
@@ -47,7 +37,7 @@ app.use(limiter ({
 }))
 
 
-  db.sequelize.sync( )
+  db.sequelize.sync(/* {force:true} */ )
 .then(() => {
   console.log('Resync database');
   console.log('   ===  Connected to Groupomania !  === ')
@@ -63,6 +53,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 // routes
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/photo.routes')(app);
 
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet

@@ -20,7 +20,7 @@ const checkDuplicateUser = (req, res, next) => {
         })
         .then( user => {
             if (user) {
-                return res.status(400).send({message: "FAiled, email in use !"});
+                return res.status(400).send({message: "Failed, email in use !"});
             }
             next();
         })

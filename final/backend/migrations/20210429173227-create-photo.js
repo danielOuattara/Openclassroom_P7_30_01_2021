@@ -8,17 +8,36 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+
       uuid: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
     
       title: {
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING(30),
+        allowNull: false,
+        required: true,
+        validate: {
+          notEmpty: { msg: "Title cannot be empty"},
+          not: /[\[\]<>=0]+/gi  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
+        },
       },
+
+      
       imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        required: true,
+        validate: {
+          notEmpty: { msg: "iamgeUrl can not be empty"},
+          againstInjection(imageUrl) {
+            const pattern =  /[\[\]<>=0]+/gi;  // do not trust user input !
+            if ( pattern.test(imageUrl) ) throw new Error("Fill in text Invalid !");  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
+          },
+        },
       },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

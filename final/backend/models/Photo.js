@@ -12,30 +12,48 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ User }) {
       // define association here
       this.belongsTo(User, {
-        foreignKey: 'userId', 
-        as:         'user',
+        foreignKey: 'ownerUuid', 
+        as:         'owner',
         onDelete:'cascade'
       });
     }
   }
 
   Photo.init({
+
       uuid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
     
       title: {
-        type: DataTypes.STRING(30)
+        type: DataTypes.STRING(30),
+        allowNull: false,
+        required: true,
+        validate: {
+          notEmpty: { msg: "Title cannot be empty"},
+          not: /[\[\]<>=0]+/gi  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
+        },
       },
 
+      
       imageUrl: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: false,
+        required: true,
+        validate: {
+          notEmpty: { msg: "iamgeUrl can not be empty"},
+          againstInjection(imageUrl) {
+            const pattern =  /[\[\]<>=0]+/gi;  // do not trust user input !
+            if ( pattern.test(imageUrl) ) throw new Error("Fill in text Invalid !");  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
+          },
+        },
       },
 
   }, {
     sequelize,
     modelName: 'Photo',
+    tableName:"photos"
   });
   return Photo;
 };
