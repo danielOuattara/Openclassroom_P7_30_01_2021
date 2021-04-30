@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: "roleId"
       });
 
-      this.hasMany(Photo,  { foreignKey: 'userId', as: 'photo' });
+      this.hasMany(Photo, { foreignKey: 'ownerId', as: 'photo' });
     }
 
     toJSON() {

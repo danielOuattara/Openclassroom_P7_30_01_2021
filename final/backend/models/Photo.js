@@ -31,12 +31,8 @@ module.exports = (sequelize, DataTypes) => {
 
       imageUrl: {
         type: DataTypes.STRING
-
       },
 
-      ownerId: {
-        type: DataTypes.UUID
-      }
   }, {
     sequelize,
     modelName: 'Photo',
