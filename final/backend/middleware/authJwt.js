@@ -4,7 +4,6 @@ const config = require('./../config/auth.config.js');
 const { User } = require('./../models');
 
 
-
 const verifyToken = (req, res, next) => {
 
     let token = req.headers["x-access-token"];
@@ -17,7 +16,7 @@ const verifyToken = (req, res, next) => {
         if(err) {
             return res.status(401).send({ message: " Unauthorized !"});
         }
-        req.userId = decoded.id;
+        req.userUuid = decoded.uuid;
         next();
     });
 };
@@ -42,6 +41,7 @@ const isAdmin = (req, res, next) => {
     });
 };
 
+
 const isModerator = (req, res, next) => {
     User.findByPk(req.userId)
     .then( user => {
@@ -57,6 +57,7 @@ const isModerator = (req, res, next) => {
         });
     });
 };
+
 
 const isModeratorOrAdmin = (req, res, next) => {
     User.findByPk(req.userId)

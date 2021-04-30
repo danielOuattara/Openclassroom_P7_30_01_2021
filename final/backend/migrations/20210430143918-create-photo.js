@@ -2,6 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('photos', {
+
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,7 +25,6 @@ module.exports = {
         },
       },
 
-      
       imageUrl: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -42,10 +42,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+
+      ownerUuid: {
+        type: Sequelize.UUID,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {

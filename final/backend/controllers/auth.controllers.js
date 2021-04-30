@@ -64,10 +64,9 @@ exports.login = (req, res) => {
         }
 
         const token = jwt.sign(
-            { 
-                uuid:user.uuid}, 
+            { uuid: user.uuid }, 
             config.secret, 
-            {expiresIn: 3600}
+            { expiresIn: 3600 }
         );
 
         const authorities = [];

@@ -7,22 +7,25 @@ const Op = db.Sequelize.Op;
 
 exports.AddPhoto = async (req, res, next)=> {
 
-     const image= { 
+     const image = { 
          title: req.body.title, 
          imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
      };
 
-    if(!title) {
+    if(!image.title) {
       return res.status(400).send({message: `Title can not be empty`});
     }
 
-    if(!imageUrl) {
+    if(!image.imageUrl) {
       return res.status(400).send({message: `imageUrl can not be empty`});
     }
     
     try {
-      await User.findOne({ where: {uuid: uuid}})
-      await Photo.create(image)
+      // await User.findOne({ where: {uuid: req.userUuid}})
+      await Photo.create( {
+          ...image,
+          ownerUuid: req.userUuid
+        })
       return res.status(201).json({message: 'Photo Successsfully Posted !'})
 
     } catch(err) {
