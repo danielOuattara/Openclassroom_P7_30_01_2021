@@ -3,21 +3,31 @@ require('dotenv').config();
 const express     = require( 'express');  // import 'express'
 const bodyParser  = require( 'body-parser');
 const app         = express(); 
-const helmet      = require('helmet')
+const path        = require('path');
 const cors        = require('cors');
+const helmet      = require('helmet')
 const limiter     = require('express-rate-limit');
+
+// // const {sequelize, Sequelize} = require('./models');
+// const Role = require("./models").Role;
+
+// const db = require("./models");  // !important
+// // db.role = require("./models/role.js")(sequelize, Sequelize);
+// // const Role = db.role;
+// db.Role = require('./models/Role.js'); // ! important
+// // const Role = db.Role; 
+
+
+const { sequelize, Sequelize } = require('./models');
+
+const db = require("./models");
+db.role = require("./models/Role.js")(sequelize, Sequelize);
+// db.Role = require('./models/Role.js'); !! 
+// const Role = require("./models").Role;
 
 
 app.use(helmet())
 app.use(cors());
-
-const {sequelize, Sequelize, Role} = require('./models');
-
-const db = require("./models");
-db.role = require("./models/role.model.js")(sequelize, Sequelize);
-
-// const Role =  db.role;
-db.Role = require('./models/role.model.js');
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,35 +47,18 @@ app.use(limiter ({
 }))
 
 
-db.sequelize.sync( /* {force:'true'} */ )
+  db.sequelize.sync( )
 .then(() => {
   console.log('Resync database');
-  // initial();
+  console.log('   ===  Connected to Groupomania !  === ')
 });
-
-
-function initial() {
-  Role.create({
-    id: 1,
-    name:"user"
-  });
-
-  Role.create({
-    id: 2,
-    name: "moderator"
-  });
-
-  Role.create({
-    id: 3,
-    name: "admin"
-  });
-}
 
 
 app.get ('/', (req, res, next) => {
   res.json({ message: "Groupomania development server !" })
 });
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // routes
 require('./routes/auth.routes')(app);

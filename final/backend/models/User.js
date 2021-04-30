@@ -1,6 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
+  
   class User extends Model {
     /**
      * Helper method for defining associations.
@@ -17,10 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      return {
-        ...this.get(),
-        id: undefined, // hide id
-       }
+      return {...this.get(), id: undefined, }
     }
   }
 
@@ -50,7 +48,9 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       allowNull:false,
       validate: {
-        notEmpty: { msg: "Email is required"},
+        notEmpty: { 
+          msg: "Email is required"
+        },
         isEmail: true
       },
     },
@@ -60,7 +60,9 @@ module.exports = (sequelize, DataTypes) => {
       required: true,
       allowNull:false,
       validate: {
-        notEmpty: { msg: "Password is required"}
+        notEmpty: { 
+          msg: "Password is required"
+        }
       },
     },
         

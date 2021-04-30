@@ -12,44 +12,32 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(User, {
         through: "user_roles",
         foreignKey: "roleId",
-        otherKey: "userId"
+        otherKey: "userId",
       })
     }
 
     toJSON() {
-      return {
-        ...this.get(), 
-        id: undefined, 
-        userId: undefined,
-        roleId: undefined,
-      } 
+      return {...this.get(), id: undefined,  userId: undefined, } 
     }
   }
 
   Role.init({
-
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true
+    
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
 
-    // uuid: {
-    //   type: DataTypes.UUID,
-    //   defaultValue: DataTypes.UUIDV4,
-    // },
-
-
-    name:  { 
-      type: DataTypes.STRING,
-      
+    name:  {
+      type: DataTypes.STRING(10)
     },
+
   }, 
-  
+
   {
     sequelize,
     modelName: 'Role',
-    tableName: "roles",
+    tableName:"roles"
   });
-  
   return Role;
 };

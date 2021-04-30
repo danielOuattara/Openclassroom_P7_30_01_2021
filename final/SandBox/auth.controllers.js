@@ -1,12 +1,22 @@
 
 const bcrypt = require("bcryptjs");
 const config = require("./../config/auth.config.js");
-const db = require("./../models");
-const { sequelize, User, Role } = require('./../models');
-const Op = db.Sequelize.Op;
+// const db = require("./../models");
+const { User} = require('./../models');
+const { Op } = require('sequelize');
+const {sequelize, Sequelize} = require('./../models');
+// // const Role = require('./../models/roleModel.js');
+// // const Op = db.Sequelize.Op;
+// // const db = require("./models");
+const Role = require("../models/role.model.js")(sequelize, Sequelize);
+// const Role = db.role;
+// // db.Role = require('../models/role.model.js');
+
+
 const jwt = require("jsonwebtoken");
 
-//--------------------------------------------------------------------------
+
+// ------------------------------------------------------------------------------
 
 exports.signin = (req ,res) =>{
 
@@ -17,17 +27,20 @@ exports.signin = (req ,res) =>{
     })
     .then( user => { 
         if(req.body.roles) {
-            Role.findAll({ 
+            console.log(" Role ================" + Role)
+            Role({ 
                 where : {
-                    name: {[Op.or]: req.body.roles }
+                    name: {
+                        [Op.or]: req.body.rolesù
+                    }
                 }
             })
             .then( roles => {
                 user.setRoles(roles)
                 .then( () =>  res.send({ message: "User was registered Successfully !"}))
                 .catch( err =>  {
-                console.log(err);
-                res.status(400).send({ message: "error2"})});
+                    console.log(err);
+                    res.status(400).send({ message: "error2"})});
             })
             .catch( err =>  {
                 console.log(err);
@@ -47,6 +60,48 @@ exports.signin = (req ,res) =>{
         // .catch(error => res.status(500).json( {error}));
 };
 
+
+
+
+// exports.signin = (req, res) => {
+
+//     bcrypt.hash(req.body.password, 11)
+//     .then( hash => {
+//         User.create( {        
+//           email: req.body.email,
+//           password: hash,
+//           username: req.body.username
+//         })
+//         .then(user => {
+//           if (req.body.roles) {
+//             Role.findAll({
+//               where: {
+//                 name: { [Op.or]: req.body.roles }
+//               }
+//             })
+//             .then(roles => {
+//                 user.setRoles(roles)
+//                 .then(() =>  res.status(201).json({ message: "User was registered successfully!" }) )
+//                 .catch( error =>  res.status(400).json( {error}) )
+//             })
+//             .catch( error =>  res.status(400).json( {error}) );
+
+//           } else {
+//             // user role = 1
+//             user.setRoles([1])
+//             .then( () =>  res.status(201).json({ message: "User was registered successfully!" }) ) 
+//             .catch( error =>  res.status(400).json( {error}) )
+//           }
+//         })
+//         .catch(err => { res.status(500).send({ message: err.message }) });
+    
+//     })
+//     .catch(error => res.status(500).json( {error}))
+// }
+
+
+
+
 //-------------------------------------------------------------------------------------------------
 
 exports.login = (req, res) => {
@@ -57,29 +112,29 @@ exports.login = (req, res) => {
         if(!user) {
             return res.status(404).send({ message: "User Unkown !"})
         }
-
+        
         const passwordIsValid = bcrypt.compareSync( req.body.password, user.password);
         if(!passwordIsValid) {
             return res.status(401).send({ accessToken: null, message: "Invalid Password !"})
         }
-
+        
         const token = jwt.sign(
             { id:user.id}, 
             config.secret, 
             {expiresIn: 3600}
-        );
-
-        const authorities = [];
-
-        user.getRoles()
-        .then( roles => {
-            for (let i = 0; i < roles.length; i++) {
-                authorities.push("ROLE_" + roles[i].name.toUpperCase());
-            }
-            res.status(200).send({
-                id: user.id,
-                username: user.username,
-                email: user.email,
+            );
+            
+            const authorities = [];
+            
+            user.getRoles()
+            .then( roles => {
+                for (let i = 0; i < roles.length; i++) {
+                    authorities.push("ROLE_" + roles[i].name.toUpperCase());
+                }
+                res.status(200).send({
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
                 roles: authorities,
                 accessToken: token
             });
@@ -87,7 +142,6 @@ exports.login = (req, res) => {
     })
     .catch( err => res.status(500).send({ message: err.message }) )
 }
-
 
 //-------------------------------------------------------------------------------------------------
 

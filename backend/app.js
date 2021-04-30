@@ -117,8 +117,9 @@ app.get ('/', (req, res, next) => {
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
-
 app.use('/api/auth'  , authRoutes )
 app.use('/api/users' , userRoutes )
 app.use('/api/photos', photoRoutes)
+
+module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
+

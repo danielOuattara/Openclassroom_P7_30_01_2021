@@ -2,8 +2,10 @@
 const db = require("./../models");
 const { User } = require('./../models/');
 const ROLES = db.ROLES;
+// before changes 
 
-  const checkDuplicateUser = (req, res, next) => {
+
+const checkDuplicateUser = (req, res, next) => {
 
     // username
     User.findOne({ 
