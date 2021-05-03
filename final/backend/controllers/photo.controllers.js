@@ -33,24 +33,26 @@ exports.addPhoto = (req, res)=> {
 
 //-----------------------------------------------------------------------------------------
 
-// exports.getAllPhoto = (req, res) => {
-//   Photo.findAll({ 
-//     include: 'owner' 
-//   })
-//   .then( photos => res.status(200).json(photos))
-//   .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
-// };
+exports.getAllPhoto = (req, res) => {
+  Photo.findAll({
+    // include:  'owner'   
+  })
+  .then( photos => res.status(200).json(photos))
+  .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
+};
 
 //-----------------------------------------------------------------------------------------
 
-// exports.getOnePhoto = (req, res) => {
-//   Photo.findOne( {
-//     where: { uuid: req.params.photoUuid }
-//   })
-//   .then( photo =>  {
-//     if(!photo) {
-//       return res.satus(400).send( {meassge: message.err || `Photo ${req.params.photoUuid} does not exist` })
-//     }
-//     res.status(200).json(photo)})
-//   .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
-// }
+exports.getOnePhoto = (req, res) => {
+  Photo.findOne( {
+    where: { uuid: req.params.photoUuid },
+    // include: "owner"
+    // include: [{ model: User, as:'owner'}]
+  })
+  .then( photo =>  {
+    if(!photo) {
+      return res.satus(400).send( {message: message.err || `Photo ${req.params.photoUuid} does not exist` })
+    }
+    res.status(200).json(photo)})
+  .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
+}

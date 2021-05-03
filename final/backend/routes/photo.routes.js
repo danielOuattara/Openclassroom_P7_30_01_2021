@@ -15,6 +15,8 @@ module.exports = app => {
     });
 
     app.post("/api/photos/", authJwt.verifyToken, multer, controller.addPhoto )
+    app.get("/api/photos/", authJwt.verifyToken,          controller.getAllPhoto )
+    app.get("/api/photos/:photoUuid", authJwt.verifyToken,  controller.getOnePhoto )
 
 
 
