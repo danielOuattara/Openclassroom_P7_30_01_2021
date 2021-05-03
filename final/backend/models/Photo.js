@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate( { User}) {
       // define association here
       this.belongsTo( User, {
-        foreignKey: "ownerUuid",
+        foreignKey: "ownerId",
         as: 'owner'
       })
     }
@@ -52,8 +52,8 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
 
-      ownerUuid: {
-        type: DataTypes.UUID,
+      ownerId: {
+        type: DataTypes.INTEGER
       },
 
   }, 

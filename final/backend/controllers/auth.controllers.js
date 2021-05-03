@@ -64,7 +64,10 @@ exports.login = (req, res) => {
         }
 
         const token = jwt.sign(
-            { uuid: user.uuid }, 
+            { 
+                uuid: user.uuid,
+                id: user.id
+            }, 
             config.secret, 
             { expiresIn: "24h" }
         );
@@ -78,6 +81,7 @@ exports.login = (req, res) => {
             }
             res.status(201).send({
                 uuid: user.uuid,
+                id: user.id,
                 username: user.username,
                 email: user.email,
                 roles: authorities,

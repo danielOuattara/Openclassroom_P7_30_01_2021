@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.hasMany(Photo, { 
-        foreignKey: 'ownerUuid', 
+        foreignKey: 'ownerId', 
         as: 'photos' 
       });
 

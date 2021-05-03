@@ -22,7 +22,8 @@ exports.addPhoto = (req, res)=> {
     
      Photo.create( {
           ...image,
-          ownerUuid: req.userUuid
+          // ownerUuid: req.userUuid,
+          ownerId: req.userId
      })
      .then( photo =>  {
        console.log(photo.toJSON())
