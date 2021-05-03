@@ -76,7 +76,7 @@ exports.login = (req, res) => {
             for (let i = 0; i < roles.length; i++) {
                 authorities.push("ROLE_" + roles[i].name.toUpperCase());
             }
-            res.status(200).send({
+            res.status(201).send({
                 uuid: user.uuid,
                 username: user.username,
                 email: user.email,

@@ -7,31 +7,21 @@ const Op = db.Sequelize.Op;
 const model = require("./../models");
 
 
-exports.allAccess = (req, res) => {
-    res.status(200).send(" Public Content !");  // for public access
-};
+exports.allAccess = (req, res) => res.status(200).send(" Public Content !");  // for public access
 
+exports.userBoard = (req, res) => res.status(200).send("User Content !");  //  for loggedin users (role: user/moderator/admin)
 
-exports.userBoard = (req, res) => {
-    res.status(200).send("User Content !");  //  for loggedin users (role: user/moderator/admin)
-};
+exports.moderatorBoard = (req, res) => res.status(200).send("Moderator Content !");  // for users having moderator role
 
+exports.adminBoard = (req, res) => res.status(200).send("Admin Content !");  // for users having admin role
 
-exports.moderatorBoard = (req, res) => {
-    res.status(200).send("Moderator Content !");  // for users having moderator role
-};
-
-
-exports.adminBoard = (req, res) => {
-    res.status(200).send("Admin Content !");  // for users having admin role
-}
 
 
 exports.getOneUser = (req, res, next) => {
     const uuid = req.params.uuid;
     User.findOne( { where: {uuid}  })
     .then( user => res.status(200).json(user))
-    .catch( err => res.status(500).send( { message: err.message || `Error while retrieving Tutorial id = ${id}`} ))
+    .catch( err => res.status(500).send( { message: err.message || `Error while retrieving Tutorial id = ${uuid}`} ))
   };
 
 

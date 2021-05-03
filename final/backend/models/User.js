@@ -23,13 +23,20 @@ module.exports = (sequelize, DataTypes) => {
 
     }
 
-    toJSON() {
-      return {...this.get(), id: undefined, }
-    }
+    // toJSON() {
+    //   return {...this.get(), }
+    // }
   }
 
   User.init({
 
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    
     uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,

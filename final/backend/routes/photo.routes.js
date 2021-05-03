@@ -14,7 +14,7 @@ module.exports = app => {
         next();
     });
 
-    app.post("/api/photos/", authJwt.verifyToken, multer, controller.AddPhoto )
+    app.post("/api/photos/", authJwt.verifyToken, multer, controller.addPhoto )
 
 
 

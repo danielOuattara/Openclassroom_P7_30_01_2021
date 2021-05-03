@@ -18,11 +18,18 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      return {...this.get(), id: undefined,  userId: undefined, } 
+      return {...this.get(), id: undefined, } 
     }
   }
 
   Role.init({
+
+    id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
 
     uuid: {
       type: DataTypes.UUID,

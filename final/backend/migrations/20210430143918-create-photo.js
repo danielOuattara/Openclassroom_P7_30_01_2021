@@ -12,7 +12,7 @@ module.exports = {
 
       uuid: {
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
+        defaultValue: Sequelize.UUIDV4,  
       },
     
       title: {
@@ -31,10 +31,10 @@ module.exports = {
         required: true,
         validate: {
           notEmpty: { msg: "iamgeUrl can not be empty"},
-          againstInjection(imageUrl) {
-            const pattern =  /[\[\]<>=0]+/gi;  // do not trust user input !
-            if ( pattern.test(imageUrl) ) throw new Error("Fill in text Invalid !");  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
-          },
+          // againstInjection(imageUrl) {
+          //   const pattern =  /[\[\]<>=0]+/gi;  // do not trust user input !
+          //   if ( pattern.test(imageUrl) ) throw new Error("Fill in text Invalid !");  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
+          // },
         },
       },
 
