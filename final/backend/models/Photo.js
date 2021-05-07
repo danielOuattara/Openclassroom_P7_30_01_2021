@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsTo( User, {
         foreignKey: "ownerId",
-        as: 'owner'
+        as: 'owner',
+        // onDelete: 'cascade'
       })
     }
   }
@@ -50,10 +51,6 @@ module.exports = (sequelize, DataTypes) => {
           //   if ( pattern.test(imageUrl) ) throw new Error("Fill in text Invalid !");  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
           // },
         },
-      },
-
-      ownerId: {
-        type: DataTypes.INTEGER
       },
 
   }, 

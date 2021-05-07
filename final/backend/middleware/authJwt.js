@@ -4,8 +4,10 @@ const config = require('./../config/auth.config.js');
 const { User } = require('./../models');
 
 
-const verifyToken = (req, res, next) => {
 
+// --------------------------------------------------------------------------
+const verifyToken = (req, res, next) => {
+    
     let token = req.headers["x-access-token"];
     
     if(!token) {
@@ -21,10 +23,11 @@ const verifyToken = (req, res, next) => {
         next();
     });
 };
+// --------------------------------------------------------------------------
 
 
 const isAdmin = (req, res, next) => {
-
+    
     User.findByPk(req.userId)
     .then(user => {
         user.getRoles()
@@ -36,11 +39,12 @@ const isAdmin = (req, res, next) => {
                 }
             }
             res.status(403).send({ message: "Require Admin Role!" });
-
-
+            
+            
         });
     });
 };
+// --------------------------------------------------------------------------
 
 
 const isModerator = (req, res, next) => {
@@ -58,6 +62,7 @@ const isModerator = (req, res, next) => {
         });
     });
 };
+// --------------------------------------------------------------------------
 
 
 const isModeratorOrAdmin = (req, res, next) => {
@@ -70,7 +75,7 @@ const isModeratorOrAdmin = (req, res, next) => {
                     next();
                     return;
                 }
-
+                
                 if(roles[i].name ==="admin") {
                     next();
                     return;
@@ -80,6 +85,8 @@ const isModeratorOrAdmin = (req, res, next) => {
         });
     });
 };
+// --------------------------------------------------------------------------
+
 
 const authJwt = {
     verifyToken,
@@ -87,6 +94,8 @@ const authJwt = {
     isModerator,
     isModeratorOrAdmin,
 };
+// --------------------------------------------------------------------------
+
 
 module.exports = authJwt;
 

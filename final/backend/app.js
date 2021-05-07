@@ -41,7 +41,8 @@ db.sequelize.sync(/* {force:true} */ )
 .then(() => {
   console.log('Resync database');
   console.log('   ===  Connected to Groupomania !  === ')
-});
+})
+.catch( err=> res.status(500).send( {message: err.message}));
 
 
 app.get ('/', (req, res, next) => {
@@ -54,6 +55,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
 require('./routes/photo.routes')(app);
+require('./routes/admin.routes')(app);
 
 
 module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet

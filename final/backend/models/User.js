@@ -18,7 +18,9 @@ module.exports = (sequelize, DataTypes) => {
 
       this.hasMany(Photo, { 
         foreignKey: 'ownerId', 
-        as: 'photos' 
+        as: 'photos',
+        // onDelete: 'cascade',
+        // hooks: true
       });
 
     }

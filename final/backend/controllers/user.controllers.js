@@ -17,33 +17,21 @@ exports.adminBoard = (req, res) => res.status(200).send("Admin Content !");  // 
 
 
 
-// exports.getOneUser = (req, res, next) => {
-//     const uuid = req.params.uuid;
-//     User.findOne( { 
-//       where: {uuid},
-//       include: 'photos'
-//     })
-//     .then( user => res.status(200).json(user))
-//     .catch( err => res.status(500).send( { message: err.message || `Error while retrieving Tutorial id = ${uuid}`} ))
-//   };
-
 exports.getOneUser = (req, res, next) => {
     const uuid = req.params.uuid;
-    User.findOne( { where: {uuid} })
-    .then( user =>  {
-      user.getPhotos( { where: {ownerUuid: req.params.uuid}})
-      .then( user => res.status(200).json(user))
-      .catch(err => res.status(400).send( { message:err.message ||"error 1"} ))
+    User.findOne( { 
+      where: {uuid},
+      include: 'photos'
     })
+    .then( user => res.status(200).json(user))
     .catch( err => res.status(500).send( { message: err.message || `Error while retrieving Tutorial id = ${uuid}`} ))
   };
 
 
-
 exports.getAllUsers = (req, res, next) => {
   User.findAll( {
-      // include: 'photos'
-      include: [{ model: Photo, as:'photos'}]
+      include: 'photos'
+      // include: [{ model: Photo, as:'photos'}]
   })
   .then( users => res.status(200).json(users))
   .catch( error => res.status(400).json( {error: error.message} ));

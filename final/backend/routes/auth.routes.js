@@ -15,8 +15,8 @@ module.exports = app => {
         next();
     });
 
-    app.post("/api/auth/signin", [ verifySignUp.checkDuplicateUser, verifySignUp.checkRoles], controller.signin );
+    app.post("/api/auth/signin",  verifySignUp.checkDuplicateUser, verifySignUp.checkRoles , controller.signin );
     app.delete("/api/auth/signout", authJwt.verifyToken, controller.signout );
     app.post("/api/auth/login", controller.login)
-    app.delete("/api/auth/admindelete", [authJwt.verifyToken, authJwt.isAdmin], controller.adminDeleted);
+    
 };

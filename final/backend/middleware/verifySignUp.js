@@ -13,21 +13,24 @@ const checkDuplicateUser = (req, res, next) => {
     })
     .then(user => {
         if (user) {
-           return res.status(400).send({ message: "Failed ! Username in use !"});
+           return res.status(400).send({ message: "Sorry, Username is used !"});
         }
         User.findOne({
             where: { email: req.body.email}
         })
         .then( user => {
             if (user) {
-                return res.status(400).send({message: "Failed, email in use !"});
+                return res.status(400).send({message: "Sorry, Email is used !"});
             }
             next();
         })
+        .catch( err => res.status(500).send({ message: err.message || ` Server error. Try again later ! `}));
      })
-    .catch( err => res.status(500).send({ message: err.message || ` Some error occured `}));
+    .catch( err => res.status(500).send({ message: err.message || ` Server error. Try again later ! `}));
 
 };
+
+// -----------------------------------------------------------------------------------------------
 
  const checkRoles = (req, res, next) => {
 
