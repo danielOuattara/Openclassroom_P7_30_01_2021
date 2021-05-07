@@ -73,15 +73,18 @@ exports.login = (req, res) => {
               user,
               roles: authorities,
               accessToken : jsonwebtoken.sign(
-                { userUuid: user.uuid,
+                { 
+                  userUuid: user.uuid,
                   userRole: [...authorities]
                 }, 
                 config.secret, 
                 {  expiresIn: 43200}),
             });
           }).catch(err => { res.status(400).send({ message: err.message }) });
+
         } else {
-        return res.status(401).json( {error: ' Invalid Email or Password !'} )    // Password Not Recognized
+          
+          return res.status(401).json( {error: ' Invalid Email or Password !'} )    // Password Not Recognized
     }
       })
       .catch(err => { res.status(400).send({ error: ' Invalid Email or Password !'}) })

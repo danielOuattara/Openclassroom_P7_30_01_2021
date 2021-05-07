@@ -38,4 +38,49 @@ exports.getAllUsers = (req, res, next) => {
   }
 
   
-exports.updateUser = (req, res, next) => {}
+exports.updateUser = (req, res, next) => {
+
+    const userObject = req.file ? 
+    {
+      ...JSON.parse(req.body),  //si update d'image 
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
+    }
+    :  
+    {
+      ...req.body // sinon 
+    }
+
+
+    if(req.file) {
+
+        User.findOne({ where: { uuid: req.params.userUuid } })
+        .then( user => {
+            if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+                return res.status(403).json( {error: "Acces Denied ! Violation reported using your IP address" } )  
+            }
+            const filename = user.imageUrl.split('/images/')[1];
+            fs.unlink( `images/${filename}`, () => {
+                user.update( userObject )
+                    .then( num => {
+                        if (num == 1) {
+                          res.status(201).send({message: "User successfully updated ! "})
+                        } 
+                    })
+                    .catch( error => res.status(500).json( {ERROR: "Update Failed"} )) 
+
+            })
+      })
+      .catch( error => res.status(500).json( {error: error.message} )) 
+      
+
+
+    } else {
+      User.update( userObject, {
+        where: { uuid: req.params.userUuid }
+      })
+      .then( user => {
+        res.status(201).send({message: "User successfully updated ! "})
+      })
+      .catch( error => res.status(500).json( {error: error.message} )) 
+    }
+}

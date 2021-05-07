@@ -20,6 +20,6 @@ module.exports = app => {
     
     app.get("/api/users/", authJwt.verifyToken, controller.getAllUsers);
     app.get("/api/users/:uuid", authJwt.verifyToken, controller.getOneUser);
-    app.put("/api/users/:uuid", authJwt.verifyToken, controller.updateUser);
+    app.put("/api/users/:uuid", authJwt.verifyToken,authJwt.isAdminOrUser, controller.updateUser);
 
 }

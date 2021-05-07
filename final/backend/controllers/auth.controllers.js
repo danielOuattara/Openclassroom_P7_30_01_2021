@@ -42,26 +42,16 @@ exports.signin = (req, res) =>{
 //------------------------------------------------------------------------------------------------
 
 exports.signout = (req, res, next) => { 
-  const { email, password } = req.body;
-  User.findOne({ where: { email } })
-  .then( user => {
-      if(!user) {
-          return res.status(401).json( {error: " Email or Password Invalid ! 1" } )  
-      }
-
-      bcrypt.compare( password, user.password)
-      .then( valid => {
-          if (valid) {
-              user.destroy()
-              .then(() => res.status(200).json({ message: "Account deleted !" }))
-              .catch((err) => res.status(403).json({ err }));
-          } else {
-               return res.status(401).json( {error: " Email or Password Invalid ! 2" } )
-          }
-      })
-      .catch( error => res.status(500).json( {eeror: error.message} )) 
-  })
-  .catch( error => res.status(500).json( {error: error.message} )) 
+    User.findOne({ where: { uuid: req.params.userUuid } })
+    .then( user => {
+        if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+            return res.status(403).json( {error: "Acces Denied ! Violation reported using your IP address" } )  
+        }
+        user.destroy()
+        .then(() => res.status(200).json({ message: "Account successfully deleted !" }))
+        .catch((error) => res.status(403).json({ error: error.message }));
+    })
+    .catch( error => res.status(500).json( {error: error.message} )) 
 }
 //-------------------------------------------------------------------------------------------------
 
@@ -76,34 +66,26 @@ exports.login = (req, res) => {
         }
 
         const passwordIsValid = bcrypt.compareSync( req.body.password, user.password);
-        
         if(!passwordIsValid) {
             return res.status(401).send({ accessToken: null, message: "Login Failed !"})
         }
 
-        const token = jwt.sign(
-            { 
-                uuid: user.uuid,
-                id: user.id
-            }, 
-            config.secret, 
-            { expiresIn: "3h" }
-        );
-
         const authorities = [];
-
         user.getRoles()
         .then( roles => {
             for (let i = 0; i < roles.length; i++) {
                 authorities.push("ROLE_" + roles[i].name.toUpperCase());
             }
             res.status(201).send({
-                uuid: user.uuid,
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                roles: authorities,
-                accessToken: token
+                accessToken: jwt.sign(
+                    {
+                        uuid: user.uuid,
+                        id: user.id,
+                        userRoles: [...authorities]
+                    },
+                    config.secret,
+                    {expiresIn: '5h'}
+                )
             });
         });
     })
