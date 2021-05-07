@@ -19,6 +19,7 @@ module.exports = app => {
     app.get("/api/photos/:photoUuid", authJwt.verifyToken,  controller.getOnePhoto )
     app.delete("/api/photos/:photoUuid", authJwt.verifyToken,  controller.deleteOne )
     app.delete("/api/photos/", authJwt.verifyToken,  controller.deleteAll )
+    app.post("api/photos/:photoUuid/like", authJwt.verifyToken, controller.photoLike )
 
 
 

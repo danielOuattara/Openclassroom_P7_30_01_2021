@@ -10,7 +10,7 @@ exports.addPhoto = (req, res)=> {
 
     const image = { 
         title: req.body.title, 
-        imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
+        imageUrl:`${req.protocol}://${req.get('host')}/images/photos/${req.file.filename}` 
     };
 
     if(!image.title) {
@@ -114,24 +114,8 @@ exports.deleteAll = (req, res) => {
 };
 
 
-
-
-// exports.deleteAll = (req, res) => {
-//   Photo.destroy({
-//     where: { 
-//       ownerid: req.userId
-//     },
-//     truncate: false
-//   })
-//   .then(nums =>  {
-//       if (nums == 0) {
-//         return res.status(401).send({message: " You have no photos"})
-//       }
-//       res.send({message: `All your ${nums} photo(s) were successfully deleted`})
-//   })
-//   .catch(err => res.status(500).send({ message: err.message || "Some error on deleting all your photos"}) )
-// };
-
-
-
 // -----------------------------------------------------------------------------------------
+
+exports.photoLike = (req, res) => {
+  
+}

@@ -8,9 +8,8 @@ const MIME_TYPES = {
     'image/jfif': 'jfif'
 }
 
-const storage = multer.diskStorage( 
-    {
-        destination: (req, file, callback) => callback( null, 'images'),
+const storage = multer.diskStorage({
+        destination: (req, file, callback) =>  callback( null, 'images'),
         filename:    (req, file, callback) => {
             const name = file.originalname.split(' ').join('_').split('.').slice(0, -1);
             const extension = MIME_TYPES[file.mimetype];
@@ -20,3 +19,22 @@ const storage = multer.diskStorage(
 );
 
 module.exports = multer( {storage}).single('image');
+
+
+// const storage = multer.diskStorage({
+//         destination: (req, file, callback) => {
+//             if(req.body.event === "photos")  {
+//                 callback(null, "images/photos")
+//             } else  {
+//                 callback(null, "images/avatars") 
+//             }
+//         },
+//         filename: (req, file, callback) => {
+//             const name = file.originalname.split(' ').join('_').split('.').slice(0, -1);
+//             const extension = MIME_TYPES[file.mimetype];
+//             callback( null, name + ('_') + Date.now() + '.' + extension)
+//         }
+//     }
+// );
+
+// module.exports = multer( {storage}).single('image');

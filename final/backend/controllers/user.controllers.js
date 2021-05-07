@@ -18,7 +18,7 @@ exports.adminBoard = (req, res) => res.status(200).send("Admin Content !");  // 
 
 
 exports.getOneUser = (req, res, next) => {
-    const uuid = req.params.uuid;
+    const uuid = req.params.userUuid;
     User.findOne( { 
       where: {uuid},
       include: 'photos'
@@ -40,22 +40,19 @@ exports.getAllUsers = (req, res, next) => {
 //-------------------------------------------------------------------
 
 exports.updateUser = (req, res, next) => {
-  console.log(req)
-  
-  const userObject = req.file ? 
-  {
-    ...JSON.parse(req.body.user),  //si update d'image 
-    avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
-  }
-  :  
-  {
-    ...req.body // sinon 
-  }
-  
-  console.log("test ===" , userObject)
-    if(req.files) {
 
-        User.findOne({ where: { uuid: req.params.uuid } })
+  const userObject = req.file ? 
+    {
+      ...JSON.parse(req.body.user),  //si update d'image 
+      avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` 
+    }
+    :   
+    {
+      ...req.body // sinon 
+    }
+  
+    if(req.files) {
+        User.findOne({ where: { uuid: req.params.userUuid } })
         .then( user => {
             if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
                 return res.status(403).json( {error: "Acces Denied ! Violation reported using your IP address" } )  
@@ -69,16 +66,13 @@ exports.updateUser = (req, res, next) => {
                         } 
                     })
                     .catch( error => res.status(500).json( {ERROR: "Update Failed"} )) 
-
             })
       })
       .catch( error => res.status(500).json( {error: error.message} )) 
       
-
-
     } else {
       User.update( userObject, {
-        where: { uuid: req.params.uuid }
+        where: { uuid: req.params.userUuid }
       })
       .then( user => {
         res.status(201).send({message: "User successfully updated ! "})
