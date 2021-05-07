@@ -2,7 +2,7 @@
 const db = require("./../models");
 const { sequelize, User, Role, Photo } = require('./../models');
 const Op = db.Sequelize.Op;
-fs = require("fs")
+const fs = require("fs");
 
 //-----------------------------------------------------------------------------------------
 
@@ -63,14 +63,22 @@ exports.getOnePhoto = (req, res) => {
 
 exports.deleteOne = (req, res) => {
   Photo.findOne( {
-    where: { uuid: req.params.photoUuid },
+    where: { 
+      [Op.or]: [
+        {uuid: req.params.photoUuid },
+        { ownerId: req.userId}
+      ]
+    }
   })
   .then( photo =>  {
-    if(!photo) {
-      return res.status(400).send( {message:`Photo requested does not exist` })
+    if( photo.ownerId !== req.userId) {
+      return res.status(403).send( {message:`Access Denied` })
     }
-    photoName = photo.imagUrl.split('/images/')[1];
-    fs.unlink(`images/${filename}`, () => {
+    if(photo.uuid !== req.params.photoUuid) {
+      return res.status(404).send( {message:`Photo unknown` })
+    }
+    photoName = photo.imageUrl.split('/images/')[1];
+    fs.unlink(`images/${photoName}`, () => {
       photo.destroy({})
       .then(() => res.status(200).json({ message: ` Photo successfully deleted !`}))
       .catch(err => res.status(403).json({ message: err.message }))
@@ -83,20 +91,46 @@ exports.deleteOne = (req, res) => {
 // -----------------------------------------------------------------------------------------
 
 exports.deleteAll = (req, res) => {
-  Photo.destroy({
-    where: { 
-      ownerid: req.userId
-    },
-    truncate: false
+
+  Photo.findAll({
+    where: { ownerId: req.userId },
   })
-  .then(nums =>  {
-      if (nums == 0) {
-        return res.status(401).send({message: " You have no photos"})
-      }
-      res.send({message: `All your ${nums} photo(s) were successfully deleted`})
+  .then( photos => {
+    if (photos.length === 0) {
+      return res.status(401).send({message: " You have no photos"})
+    }
+    photos.forEach( photo => {
+      let photoName = photo.imageUrl.split('/images/')[1];
+      fs.unlink(`images/${photoName}`, () => {
+          Photo.destroy({
+            where: { ownerid: req.userId },
+            truncate: false
+          })
+          .then(nums => res.send({message: `All your ${nums} photo(s) were successfully deleted`}))
+      })
+    })
   })
   .catch(err => res.status(500).send({ message: err.message || "Some error on deleting all your photos"}) )
 };
+
+
+
+
+// exports.deleteAll = (req, res) => {
+//   Photo.destroy({
+//     where: { 
+//       ownerid: req.userId
+//     },
+//     truncate: false
+//   })
+//   .then(nums =>  {
+//       if (nums == 0) {
+//         return res.status(401).send({message: " You have no photos"})
+//       }
+//       res.send({message: `All your ${nums} photo(s) were successfully deleted`})
+//   })
+//   .catch(err => res.status(500).send({ message: err.message || "Some error on deleting all your photos"}) )
+// };
 
 
 
