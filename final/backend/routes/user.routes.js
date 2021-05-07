@@ -1,6 +1,7 @@
 
 const  { authJwt } = require("./../middleware");
 const controller = require("./../controllers/user.controllers.js");
+const multer = require("./../middleware/multer.config.js");
 
 module.exports = app => {
 
@@ -20,6 +21,6 @@ module.exports = app => {
     
     app.get("/api/users/", authJwt.verifyToken, controller.getAllUsers);
     app.get("/api/users/:uuid", authJwt.verifyToken, controller.getOneUser);
-    app.put("/api/users/:uuid", authJwt.verifyToken,authJwt.isAdminOrUser, controller.updateUser);
+    app.put("/api/users/:uuid", authJwt.verifyToken, authJwt.isAdminOrUser, multer, controller.updateUser);
 
 }
