@@ -14,23 +14,21 @@ module.exports = app => {
         next();
     });
 
-    app.post("/api/photos/", authJwt.verifyToken, multer, controller.addPhoto )
-    app.get("/api/photos/", authJwt.verifyToken,          controller.getAllPhoto )
-    app.get("/api/photos/:photoUuid", authJwt.verifyToken,  controller.getOnePhoto )
-    app.delete("/api/photos/:photoUuid", authJwt.verifyToken,  controller.deleteOne )
-    app.delete("/api/photos/", authJwt.verifyToken,  controller.deleteAll )
-    app.post("api/photos/:photoUuid/like", authJwt.verifyToken, controller.photoLike )
+    app.post("/api/photos/", authJwt.verifyToken, multer, controller.addPhoto);
+    app.get("/api/photos/", authJwt.verifyToken,          controller.getAllPhoto);
+    app.get("/api/photos/:photoUuid", authJwt.verifyToken,  controller.getOnePhoto);
+    app.delete("/api/photos/:photoUuid", authJwt.verifyToken,  controller.deleteOnePhoto);
+    app.delete("/api/photos/", authJwt.verifyToken,  controller.deleteAllPhoto);
 
+    app.post("api/photos/:photoUuid/like", authJwt.verifyToken, controller.photoLike);
 
-
-    // app.get("/api/test/all", controller.allAccess);
-    // app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
-    // app.get("/api/test/mod", [authJwt.verifyToken, authJwt.isModerator], controller.moderatorBoard);
-    // app.get("/api/test/admin", [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
-
-    
-    // app.get("/api/users/", authJwt.verifyToken, controller.getAllUsers);
-    // app.get("/api/users/:uuid", authJwt.verifyToken, controller.getOneUser);
-    // app.put("/api/users/:uuid", authJwt.verifyToken, controller.updateUser);
+    app.post("/api/photos/:photoUuid/comments", authJwt.verifyToken, controller.createComment);
+    app.get("/api/photos/:photoUuid/comments", authJwt.verifyToken, controller.getAllComment);
+    app.get("/api/photos/:photoUuid/comments/:commentUuid", authJwt.verifyToken, controller.getOneComment);
+    app.put("/api/photos/:photoUuid/comments/:commentUuid", authJwt.verifyToken, controller.updateOneComment);
+    app.delete("/api/photos/:photoUuid/comments/:commentUuid", authJwt.verifyToken, controller.deleteOneComment);
+    app.delete("/api/photos/:photoUuid/comments/", authJwt.verifyToken, controller.deleteAllCommentFromOnePhoto);
+    app.delete("/api/users/:userUuid/comments/", authJwt.verifyToken, controller.deleteAllCommentFromOneUser);
+    app.delete("/api/users/:userUuid/photos/", authJwt.verifyToken, controller.deleteAllPhotoFromOneUser);
 
 }
