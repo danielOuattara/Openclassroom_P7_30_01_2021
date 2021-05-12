@@ -1,39 +1,27 @@
 
 const db = require("./../models");
-const { User } = require('./../models/');
+const { User, Role } = require('./../models/');
 const ROLES = db.ROLES;
-// before changes 
 
-
+// ----------------------------------------------------------------------------------------------------------------------
 const checkDuplicateUser = (req, res, next) => {
-
-    // username
-    User.findOne({ 
-        where : {username: req.body.username } 
-    })
+    User.findOne({ where : {username: req.body.username } })
     .then(user => {
-        if (user) {
-           return res.status(400).send({ message: "Sorry, Username is used !"});
-        }
-        User.findOne({
-            where: { email: req.body.email}
-        })
+        if (user) return res.status(400).send({ message: "Error: Username is used, choose antoher."});
+        
+        user.findOne({ where: { email: req.body.email } })
         .then( user => {
-            if (user) {
-                return res.status(400).send({message: "Sorry, Email is used !"});
-            }
+            if (user) return res.status(400).send({message: "Error: Email is used, choose another."});
             next();
         })
         .catch( err => res.status(500).send({ message: err.message || ` Server error. Try again later ! `}));
      })
     .catch( err => res.status(500).send({ message: err.message || ` Server error. Try again later ! `}));
-
 };
 
-// -----------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------
 
  const checkRoles = (req, res, next) => {
-
     if(req.body.roles) {
         for (let i = 0; i < req.body.roles.length; i++) {
             if (!ROLES.includes(req.body.roles[i])) {
@@ -43,6 +31,8 @@ const checkDuplicateUser = (req, res, next) => {
     }
     next();
 }
+
+// ------------------------------------------------------------------------------------------------------------------------
 
 const verifySignUp = {
     checkDuplicateUser,

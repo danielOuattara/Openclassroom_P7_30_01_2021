@@ -28,7 +28,8 @@
     "mysql2": "^2.2.5",
     "remove": "^0.1.5",
     "sequelize": "^6.6.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
     "dotenv": "^8.2.0"

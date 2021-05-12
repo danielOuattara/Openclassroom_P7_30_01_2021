@@ -5,7 +5,7 @@ const db = require("./../models");
 const { sequelize, User, Role } = require('./../models');
 const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
-
+// const {isEmail }= require('validator');
 
 //--------------------------------------------------------------------------
 
@@ -39,6 +39,8 @@ exports.signin = (req, res) =>{
     .catch( err => res.status(500).send({ message: err.message}));
 };
 
+
+
 //------------------------------------------------------------------------------------------------
 
 exports.signout = (req, res, next) => { 
@@ -58,16 +60,18 @@ exports.signout = (req, res, next) => {
 exports.login = (req, res) => {
 
     User.findOne({ 
-        where: {username: req.body.username}
+        where: { 
+            [Op.or]: [
+                {username: req.body.emailOrUsername}, 
+                {email: req.body.emailOrUsername} 
+            ] 
+        }
     })
     .then( user => {
-        if(!user) {
-            return res.status(404).send({ message: "Login Failed !"})
-        }
+        if(!user) return res.status(404).send({ message: "Login Failed !"});
+
         const passwordIsValid = bcrypt.compareSync( req.body.password, user.password);
-        if(!passwordIsValid) {
-            return res.status(401).send({ accessToken: null, message: "Login Failed !"})
-        }
+        if(!passwordIsValid) return res.status(401).send({ accessToken: null, message: "Login Failed !"});
 
         const authorities = [];
         user.getRoles()
@@ -86,9 +90,10 @@ exports.login = (req, res) => {
                     {expiresIn: '5h'}
                 )
             });
-        });
+        })
+        .catch( err => res.status(500).send({ message: err.message }) );
     })
-    .catch( err => res.status(500).send({ message: err.message }) )
+    .catch( err => res.status(500).send({ message: err.message }) );
 }
 
 //-------------------------------------------------------------------------------------------------
