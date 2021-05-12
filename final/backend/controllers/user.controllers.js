@@ -17,7 +17,8 @@ exports.adminBoard = (req, res) => res.status(200).send("Admin Content !");  // 
 exports.getOneUser = (req, res, next) => {
     User.findOne( { 
       where: {uuid : req.params.userUuid},
-      include: 'photos'
+      // include: 'photos',
+      // include: 'comments'
     })
     .then( user => res.status(200).json(user))
     .catch( err => res.status(500).send( { message: err.message || `Error while retrieving Tutorial id = ${uuid}`} ))
@@ -27,7 +28,9 @@ exports.getOneUser = (req, res, next) => {
 
 exports.getAllUsers = (req, res, next) => {
   User.findAll( {
-    include: 'photos'
+    include: ['photos', 'comments', 'likes'],
+    include:' comments',
+    // include: 'likes'
   })
   .then( users => res.status(200).json(users))
   .catch( error => res.status(400).json( {error: error.message} ));
@@ -95,7 +98,7 @@ exports.updateUser = (req, res, next) => {
   .then( user => {
 
     if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-      return res.status(403).json( {error: "Acces Denied ! Violation reported using your IP address" } )  
+      return res.status(403).json( {error: "Acces Denied !" } )  
     }
 
     if(req.files) {

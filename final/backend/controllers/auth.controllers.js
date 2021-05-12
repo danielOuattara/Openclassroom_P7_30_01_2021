@@ -64,7 +64,6 @@ exports.login = (req, res) => {
         if(!user) {
             return res.status(404).send({ message: "Login Failed !"})
         }
-
         const passwordIsValid = bcrypt.compareSync( req.body.password, user.password);
         if(!passwordIsValid) {
             return res.status(401).send({ accessToken: null, message: "Login Failed !"})

@@ -10,7 +10,7 @@ exports.addPhoto = (req, res)=> {
 
     const image = { 
         title: req.body.title, 
-        imageUrl:`${req.protocol}://${req.get('host')}/images/photos/${req.file.filename}` 
+        imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
     };
 
     if(!image.title) {
@@ -33,7 +33,8 @@ exports.addPhoto = (req, res)=> {
 
 exports.getAllPhoto = (req, res) => {
   Photo.findAll({
-    include:  'owner'   
+    include:  ['owner','comments'] 
+    // include:'comments'  
   })
   .then( photos => res.status(200).json(photos))
   .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
@@ -44,7 +45,9 @@ exports.getAllPhoto = (req, res) => {
 exports.getOnePhoto = (req, res) => {
   Photo.findOne( {
     where: { uuid: req.params.photoUuid },
-    include: "owner"
+    include: "owner",
+    include:'comments',
+    include:'likes'
     // include: [{ model: User, as:'owner'}]
   })
   .then( photo =>  {
@@ -62,7 +65,7 @@ exports.getOnePhoto = (req, res) => {
 // -----------------------------------------------------------------------------------------
 
 exports.deleteOnePhoto = (req, res) => {
-  Photo.findOne( { where: {uuid: req.params.photoUuid } })
+  Photo.findOne( { where: { uuid: req.params.photoUuid } })
   .then( photo =>  {
     if(!photo) {
       return res.status(404).send( {message:`Photo unknown` })
@@ -71,6 +74,7 @@ exports.deleteOnePhoto = (req, res) => {
       return res.status(403).send( {message:`Access Denied` })
     }
     photoName = photo.imageUrl.split('/images/')[1];
+    console.log(photoName);
     fs.unlink(`images/${photoName}`, () => {
       photo.destroy({})
       .then(() => res.status(200).json({ message: ` Photo successfully deleted !`}))
