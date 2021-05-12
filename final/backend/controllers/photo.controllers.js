@@ -62,20 +62,11 @@ exports.getOnePhoto = (req, res) => {
 // -----------------------------------------------------------------------------------------
 
 exports.deleteOnePhoto = (req, res) => {
-  Photo.findOne( {
-    where: { 
-      [Op.or]: [
-        {uuid: req.params.photoUuid },
-        { ownerId: req.userId}
-      ]
-    }
-  })
+  Photo.findOne( { where: {uuid: req.params.photoUuid } })
   .then( photo =>  {
-
     if(!photo) {
       return res.status(404).send( {message:`Photo unknown` })
     }
-
     if( photo.ownerId !== req.userId && !req.userRoles.includes("ROLE_ADMIN")) {
       return res.status(403).send( {message:`Access Denied` })
     }
@@ -85,7 +76,6 @@ exports.deleteOnePhoto = (req, res) => {
       .then(() => res.status(200).json({ message: ` Photo successfully deleted !`}))
       .catch(err => res.status(403).json({ message: err.message }))
     })
-
   })
   .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
 }
