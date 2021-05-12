@@ -5,14 +5,13 @@ const db = require("./../models");
 const { sequelize, User, Role } = require('./../models');
 const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
-// const {isEmail }= require('validator');
 
 //--------------------------------------------------------------------------
 
 exports.signin = (req, res) =>{
 
     User.create({  // Save new User to Database
-        username: req.body.username,
+        // username: req.body.username,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8)
     })
@@ -58,7 +57,6 @@ exports.signout = (req, res, next) => {
 //-------------------------------------------------------------------------------------------------
 
 exports.login = (req, res) => {
-
     User.findOne({ 
         where: { 
             [Op.or]: [
@@ -68,10 +66,10 @@ exports.login = (req, res) => {
         }
     })
     .then( user => {
-        if(!user) return res.status(404).send({ message: "Login Failed !"});
+        if(!user) return res.status(401).send({ message: "Error: Type again your login credentials !"});
 
         const passwordIsValid = bcrypt.compareSync( req.body.password, user.password);
-        if(!passwordIsValid) return res.status(401).send({ accessToken: null, message: "Login Failed !"});
+        if(!passwordIsValid) return res.status(401).send({ message: "Error: Type again your login credentials !"});
 
         const authorities = [];
         user.getRoles()

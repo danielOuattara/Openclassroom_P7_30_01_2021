@@ -1,6 +1,6 @@
 
 const db = require("./../models");
-const { sequelize, User, Role, Photo, Comment } = require('./../models');
+const { sequelize, User, Role, Photo, Comment, Like } = require('./../models');
 const Op = db.Sequelize.Op;
 const fs = require("fs");
 
@@ -67,9 +67,7 @@ exports.getOnePhoto = (req, res) => {
 exports.deleteOnePhoto = (req, res) => {
   Photo.findOne( { where: { uuid: req.params.photoUuid } })
   .then( photo =>  {
-    if(!photo) {
-      return res.status(404).send( {message:`Photo unknown` })
-    }
+    if(!photo) return res.status(404).send( {message:`Photo unknown` })
     if( photo.ownerId !== req.userId && !req.userRoles.includes("ROLE_ADMIN")) {
       return res.status(403).send( {message:`Access Denied` })
     }
@@ -107,28 +105,64 @@ exports.deleteAllPhoto = (req, res) => {
   .catch(err => res.status(500).send({ message: err.message || "Some error on deleting all your photos"}) )
 };
 
-
 // -----------------------------------------------------------------------------------------
 
 exports.photoLike = (req, res) => {
+   Photo.findOne({ where: { uuid: req.params.photoUuid} })
+   .then( photo => {
+      if(!photo) return res.status(404).send( {message:`Photo unknown` })
+      Like.findOne( { 
+        where: {
+          [Op.and]: [ 
+            {ownerId: req.userId},
+            {photoId: photo.id}
+          ]
+        }
+      })
+      .then(like => {
+        if(!like) {
+          // creation du like
+          Like.create({
+            value: req.body.value,
+            ownerId: req.userId,
+            photoId: photo.id
+          })
+          .then( () => res.status(200).json({ message: ` Likes successfully sent on photo !`}))
+          .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
+        }
 
-  switch(req.body.value) {
-    case 1:
+        if(like) {
+          // update du like
+          like.update({value: req.body.value})
+          .then( () => res.status(200).json({ message: ` Likes successfully updated on photo !`}))
+          .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
+        }
+      })
+      .catch()
 
-        break;
 
-    case -1:
+   })
 
-
-        break;
-
-
-    case 0:
-
-        break;
-  }
-
+   .catch()
+ 
+      .catch(err => res.status(500).send({ message: err.message || "Server error on commenting photos."}) )
 }
+
+
+// exports.photoLike = (req, res) => {
+//       Photo.findOne({ where: { uuid: req.params.photoUuid} })
+//       .then( photo => {
+//         if(!photo) return res.status(404).send( {message:`Photo unknown` })
+//         Like.create({
+//           value: req.body.value,
+//           ownerId: req.userId,
+//           photoId: photo.id
+//         })
+//         .then( () => res.status(200).json({ message: ` Photo successfully commented !`}))
+//         .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
+//       })
+//       .catch(err => res.status(500).send({ message: err.message || "Server error on commenting photos."}) )
+// }
 
 
 // ----------------------------------------------------------------------------------------

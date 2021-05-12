@@ -23,9 +23,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Like.init({
-    uuid: DataTypes.UUID,
-    value: DataTypes.TINYINT
-  }, {
+    uuid:  {
+      type:DataTypes.UUID,
+      defaultValue:DataTypes.UUIDV4
+    },
+
+    value:  {
+      type: DataTypes.TINYINT,
+      defaultValue: 0
+    },
+
+  }, 
+  
+  {
     sequelize,
     modelName: 'Like',
     tableName:'likes',
