@@ -2,47 +2,49 @@
 const bcrypt = require("bcryptjs");
 const config = require("./../config/auth.config.js");
 const db = require("./../models");
-const { sequelize, User, Role } = require('./../models');
+const { User, Role } = require('./../models');
 const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
 
 //--------------------------------------------------------------------------
 
-exports.signin = (req, res) =>{
-
-    User.create({  // Save new User to Database
-        // username: req.body.username,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8)
-    })
-    .then( user => { 
-        if(req.body.roles) {
-            Role.findAll({ 
-                where : {
-                    name: {[Op.or]: req.body.roles }
-                }
+exports.signin = (req, res) => {
+    bcrypt.hash(req.body.password, 11)
+    .then( hash => {
+        User.create( {        
+          email: req.body.email,
+          password: hash
+        })
+        .then(user => {
+          if (req.body.roles) {
+            Role.findAll({
+              where: {
+                name: { [Op.or]: req.body.roles }
+              }
             })
-            .then( roles => {
+            .then(roles => {
                 user.setRoles(roles)
-                .then( () =>  res.send({ message: "User was registered Successfully !"}))
-                .catch( err => res.status(400).send({ message: err.message}));
+                .then(() =>  res.status(201).json({ message: "User was registered successfully!" }) )
+                .catch( error =>  res.status(400).json( {error}) )
             })
-            .catch( err => res.status(400).send({ message: err.message}));
+            .catch( error =>  res.status(400).json( {error}) );
 
-        } else { // user role = 1
+          } else {
+            // user role = 1
             user.setRoles([1])
-            .then(() => res.send({ message: "User was registered successfully"}))
-            .catch( err => res.status(400).send({ message: err.message}));
-        }
+            .then( () =>  res.status(201).json({ message: "User was registered successfully!" }) ) 
+            .catch( error =>  res.status(400).json( {error}) )
+          }
+        })
+        .catch(err => { res.status(500).send({ message: err.message }) });
+    
     })
-    .catch( err => res.status(500).send({ message: err.message}));
-};
-
-
+    .catch(error => res.status(500).json( {error}))
+}
 
 //------------------------------------------------------------------------------------------------
 
-exports.signout = (req, res, next) => { 
+exports.signout = (req, res) => { 
     User.findOne({ where: { uuid: req.params.userUuid } })
     .then( user => {
         if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){

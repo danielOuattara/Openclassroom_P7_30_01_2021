@@ -8,7 +8,6 @@ const validator = require('email-validator')
 
 const fs = require('fs')
 
-
 // --------------------------------------------------------------------------------------
 
 exports.signin = (req, res) => {

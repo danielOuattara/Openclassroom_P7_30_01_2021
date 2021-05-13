@@ -39,7 +39,7 @@ exports.getOneUser = (req, res, next) => {
 exports.getAllUsers = (req, res, next) => {
   User.findAll( {
     include: ['photos', 'comments', 'likes'],
-    include:' comments',
+    // include:' comments',
     // include: 'likes'
   })
   .then( users => res.status(200).json(users))

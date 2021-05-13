@@ -10,7 +10,7 @@ exports.addPhoto = (req, res)=> {
 
     const image = { 
         title: req.body.title, 
-        imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
+        imageUrl:`${req.protocol}://${req.get('host')}/images/photos/${req.file.filename}` 
     };
 
     if(!image.title) {
@@ -111,7 +111,7 @@ exports.photoLike = (req, res) => {
    Photo.findOne({ where: { uuid: req.params.photoUuid} })
    .then( photo => {
       if(!photo) return res.status(404).send( {message:`Photo unknown` })
-      Like.findOne( { 
+      Like.findOne({ 
         where: {
           [Op.and]: [ 
             {ownerId: req.userId},
@@ -120,8 +120,8 @@ exports.photoLike = (req, res) => {
         }
       })
       .then(like => {
-        if(!like) {
-          // creation du like
+
+        if(!like) {   // like creation
           Like.create({
             value: req.body.value,
             ownerId: req.userId,
@@ -131,39 +131,16 @@ exports.photoLike = (req, res) => {
           .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
         }
 
-        if(like) {
-          // update du like
+        if(like) { // like update
           like.update({value: req.body.value})
           .then( () => res.status(200).json({ message: ` Likes successfully updated on photo !`}))
           .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
         }
       })
       .catch()
-
-
    })
-
-   .catch()
- 
-      .catch(err => res.status(500).send({ message: err.message || "Server error on commenting photos."}) )
+   .catch(err => res.status(500).send({ message: err.message || "Server error on commenting photos."}) )
 }
-
-
-// exports.photoLike = (req, res) => {
-//       Photo.findOne({ where: { uuid: req.params.photoUuid} })
-//       .then( photo => {
-//         if(!photo) return res.status(404).send( {message:`Photo unknown` })
-//         Like.create({
-//           value: req.body.value,
-//           ownerId: req.userId,
-//           photoId: photo.id
-//         })
-//         .then( () => res.status(200).json({ message: ` Photo successfully commented !`}))
-//         .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
-//       })
-//       .catch(err => res.status(500).send({ message: err.message || "Server error on commenting photos."}) )
-// }
-
 
 // ----------------------------------------------------------------------------------------
 
