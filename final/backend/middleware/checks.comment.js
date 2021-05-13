@@ -3,11 +3,10 @@ const ROLES = require("../models").ROLES;
 const { User } = require('../models');
 const validator = require("node-email-validation");
 
-
 // ------------------------------------------------------------------------------------------------------------------------
 const email = (req, res, next) => {
     if (!validator.is_email_valid(req.body.email)) {
-        return res.status(400).send({ message: "ERROR : Invalid email."});
+        return res.status(400).send({ message: "Error : Invalid email."});
     }
     next();
 }

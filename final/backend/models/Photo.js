@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         required: true,
         validate: {
           notEmpty: { msg: "Title cannot be empty"},
-          not: /[\[\]<>=0]+/gi  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
+          not: /[\[\]<>=01]+/gi  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
         },
       },
 

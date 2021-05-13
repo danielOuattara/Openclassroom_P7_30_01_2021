@@ -45,10 +45,11 @@ exports.signin = (req, res) => {
 //------------------------------------------------------------------------------------------------
 
 exports.signout = (req, res) => { 
+    
     User.findOne({ where: { uuid: req.params.userUuid } })
     .then( user => {
         if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-            return res.status(403).json( {error: "Acces Denied ! Violation reported using your IP address" } )  
+            return res.status(403).json( {error: "Unauthorize !" } )  
         }
         user.destroy()
         .then(() => res.status(200).json({ message: "Account successfully deleted !" }))

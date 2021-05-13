@@ -1,7 +1,7 @@
 
 const config = require("./../config/auth.config.js");
 const db = require("./../models");
-const { User, Role, Photo } = require('./../models');
+const { User } = require('./../models');
 // const { Op } = require('sequelize')
 const Op = db.Sequelize.Op;
 const model = require("./../models");
@@ -63,13 +63,15 @@ exports.updateUser = (req, res, next) => {
   User.findOne({ where: { uuid: req.params.userUuid } })
   .then( user => {
 
+    if(!user) return res.status(400).json( {Error: "User unknown !" } )
+
     if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
       return res.status(403).json( {error: "Acces Denied !" } )  
     }
 
     if(req.files) {
       const filename = user.imageUrl.split('/images/')[1];
-      fs.unlink( `images/${filename}`, () => {
+      fs.unlink( `images/avatars/${filename}`, () => {
         user.update( userObject )
         .then( num => {
           if (num == 1) {
@@ -87,6 +89,7 @@ exports.updateUser = (req, res, next) => {
       .catch( error => res.status(500).json( {error: error.message} )) 
       }
   })
+  .catch( error => res.status(500).json( {error: error.message} )) 
 }
   
   // ---------------------------------------------------------------------------------------------------------------

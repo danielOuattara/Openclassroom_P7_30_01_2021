@@ -39,7 +39,7 @@ app.use(limiter ({
 // ----------------------------------------------------------------------
 db.sequelize.sync(/* {force:true} */ )
 .then(() => {
-  console.log('Resync database');
+  console.log('Resync database : success !');
   console.log('   ===  Connected to Groupomania !  === ')
 })
 .catch( err=> res.status(500).send( {message: err.message}));
