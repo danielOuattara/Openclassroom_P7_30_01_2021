@@ -23,36 +23,40 @@ exports.adminBoard = (req, res) =>  {
 }
 // ---------------------------------------------------------------------------------------------------------------
 
-// exports.getOneUser = async (req, res) => {
-//     try {
-//       const user = await User.findOne({
-//         where: {uuid : req.params.userUuid},
-//         include: ['photos', 'comments', 'likes']
-//       })
+exports.getOneUser = async (req, res) => {
+    try {
+      const user = await User.findOne({
+        where: {uuid : req.params.userUuid},
+        include: ['photos', 'comments', 'likes']
+      })
 
-//       if(!user) {
-//           return res.status(404).json(" Error : User unknown !");
-//          } 
-//       res.status(200).json(user);
-//     } 
-//     catch(err){
-//       return res.status(500).send( { message: err.message || `Error while retrieving user`})
-//     }
-// };
-
-exports.getOneUser = (req, res) => {
-    User.findOne( { 
-      where: {uuid : req.params.userUuid},
-      include: ['photos', 'comments', 'likes']
-    })
-    .then( user  => {
+      // if(!user) {
+      //     return res.status(404).json(" Error : User unknown !");
+      //    } 
       if(!user) {
-        return res.status(404).json(" Error : User unknown !");
-      } 
-      return res.status(200).json(user)
-    })
-    .catch( err => res.status(500).json( { message: err.message || `Error while retrieving user`} )) 
-  };
+          // throw new Error(" Error : User unknown !");
+          throw "Error user unk"
+         } 
+      res.status(200).json(user);
+    } 
+    catch(err){
+      return res.status(400).send( { message: err.message || `Error while retrieving user`})
+    }
+};
+
+// exports.getOneUser = (req, res) => {
+//     User.findOne( { 
+//       where: {uuid : req.params.userUuid},
+//       include: ['photos', 'comments', 'likes']
+//     })
+//     .then( user  => {
+//       if(!user) {
+//         return res.status(404).json(" Error : User unknown !");
+//       } 
+//       return res.status(200).json(user)
+//     })
+//     .catch( err => res.status(500).json( { message: err.message || `Error while retrieving user`} )) 
+//   };
 
 // ---------------------------------------------------------------------------------------------------------------
 

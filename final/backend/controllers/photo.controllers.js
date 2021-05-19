@@ -29,18 +29,18 @@ const fs = require("fs");
 // };
 
 exports.addPhoto = (req, res)=> {
-    console.log(" req = ", req)
+    console.log(" req = ", req.file)
     const image = { 
       photos: req.body.event,
       title: req.body.title, 
       imageUrl:`${req.protocol}://${req.get('host')}/images/photos/${req.file.filename}` 
     };
-    if(!image.title) {
-      return res.status(400).send({message: `Title can not be empty`});
-    }
-    if(!image.imageUrl) {
-      return res.status(400).send({message: `imageUrl can not be empty`});
-    }
+    // if(!image.title) {
+    //   return res.status(400).send({message: `Title can not be empty`});
+    // }
+    // if(!image.imageUrl) {
+    //   return res.status(400).send({message: `imageUrl can not be empty`});
+    // }
     Photo.create( {...image, ownerId: req.userId } )
     .then( () =>  {
        res.status(200).json({message: 'Photo Successsfully Posted !'})})

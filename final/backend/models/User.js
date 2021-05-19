@@ -62,7 +62,11 @@ module.exports = (sequelize, DataTypes) => {
 
     username: { 
       type: DataTypes.STRING(30),
+      allowNull: true,
       unique: true,
+      validate: {
+        msg: "This username is already in use, please choose anoyther one."
+      }
     },
 
     email: { 
