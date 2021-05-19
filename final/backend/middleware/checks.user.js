@@ -13,13 +13,19 @@ const email = (req, res, next) => {
 }
 // -----------------------------------------------------------------------------
 
-const emailOrUsername = (req, res, next) => {
-    if (!req.body.emailOrUsername) {
-        return res.status(400).json("Error : Provide email OR username");
+const duplicateUser = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ where : {email: req.body.email }});
+        if (user) {
+            return res.status(400).json("Error : Choose another email.");
+        }
+        next();
+    } 
+    catch(err) { 
+        err => res.status(400).send(err.message)
     }
-    next();
 }
-// -----------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 const password = (req, res, next) => {
     if (!req.body.password) {
@@ -33,26 +39,10 @@ const password = (req, res, next) => {
     // }
     next();
 }
+// -----------------------------------------------------------------------------
 
-// ------------------------------------------------------------------------------
-
-const duplicateUser = async (req, res, next) => {
-    try {
-        const user = await User.findOne({ where : {email: req.body.email }});
-        if (user) {
-            return res.status(400).json("Error : Choose another email.");
-        }
-        next();
-    } 
-    catch(err) { 
-        err => res.status(400).send(err.message)
-    }
-}
-
-// ------------------------------------------------------------------------------
-
- const roles = (req, res, next) => {
-     try {    
+const roles = (req, res, next) => {
+    try {    
         if(req.body.roles) {
             for (let i = 0; i < req.body.roles.length; i++) {
                 if (!ROLES.includes(req.body.roles[i])) {
@@ -60,11 +50,57 @@ const duplicateUser = async (req, res, next) => {
                 }
             }
         }
-     } 
-     catch(err){
-         err => res.status(400).json(err.message)
-     }
+    } 
+    catch(err){
+        err => res.status(500).json(err.message)
+    }
     next();
+}
+
+// --------------------------------------------------------------------------
+
+const emailOrUsername = (req, res, next) => {
+    if (!req.body.emailOrUsername) {
+        return res.status(400).json("Error : Provide email OR username");
+    }
+    next();
+}
+// ------------------------------------------------------------------------------
+
+const userKnown = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ where : {uuid: req.params.userUuid }});
+        if (!user) {
+            return res.status(404).json({ Error: "User unknown !"});
+        }
+        next();
+    } 
+    catch(err) { 
+        err => res.status(500).json(err.message)
+    }
+}
+
+// ------------------------------------------------------------------------------
+
+const ownerOrAdmin = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ where : {uuid: req.params.userUuid }});
+        if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+            return res.status(403).json({ Error : "Non Authorized !" })  
+        }
+        next();
+    } 
+    catch(err) { 
+        err => res.status(500).json(err.message)
+    }
+}
+// ------------------------------------------------------------------------------
+
+const admin = (req, res, next) => {
+        if(!req.userRoles.includes("ROLE_ADMIN")){
+            return res.status(403).json({ Error : "Non Authorized !" })  
+        }
+        next();
 }
 
 // ------------------------------------------------------------------------------
@@ -74,7 +110,11 @@ const checks = {
     emailOrUsername,
     password,
     duplicateUser,
-    roles
+    roles, 
+    userKnown,
+    ownerOrAdmin,
+    admin,
+
 };
 
 module.exports = checks;

@@ -12,7 +12,6 @@ exports.signin =  async (req, res) => {
     try {
         const hash = await bcrypt.hash(req.body.password, 11);
         const user = await User.create({ email: req.body.email, password: hash })
-
         if (req.body.roles) {
             const roles = await Role.findAll({
                 where: {
@@ -21,7 +20,6 @@ exports.signin =  async (req, res) => {
             });
             await user.setRoles(roles);
             res.status(200).json({ message: "User was registered successfully!"})  
-
         } else {
             await user.setRoles([1])
             res.status(200).json({ message: "User was registered successfully!"}) 
@@ -51,13 +49,13 @@ exports.login = async (req, res) => {
         if(!validPassword) {
             return res.status(401).json({ Error: "Login failed ! Try again !"});
         }
-
+        
         const authorities = [];
         const roles = await user.getRoles();
         for (let i = 0; i < roles.length; i++) {
             authorities.push("ROLE_" + roles[i].name.toUpperCase());
         }
-        res.status(201).send({
+        res.status(201).json({
             accessToken: jwt.sign(
                 {
                     uuid: user.uuid,
@@ -80,12 +78,6 @@ exports.signout = (req, res) => {
     
     User.findOne({ where: { uuid: req.params.userUuid } })
     .then( user => {
-        if(!user){
-            return res.status(404).json({ Error : "User unknown !" })  
-        }
-        if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-            return res.status(403).json({ Error : "Unauthorize !" })  
-        }
         user.destroy()
         .then(() => res.status(200).json({ message: "Account successfully deleted !" }))
         .catch((error) => res.status(403).json({ Error: error.message }));
