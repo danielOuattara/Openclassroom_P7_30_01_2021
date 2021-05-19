@@ -36,6 +36,6 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 
-db.ROLES = ["user", "admin", "moderator"];
+db.ROLES = ["user", "admin"];
 
 module.exports = db;

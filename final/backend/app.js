@@ -1,5 +1,5 @@
-require('dotenv').config();
 
+require('dotenv').config();
 const express     = require( 'express');  // import 'express'
 const bodyParser  = require( 'body-parser');
 const app         = express(); 
@@ -37,7 +37,7 @@ app.use(limiter ({
 }))
 
 // ----------------------------------------------------------------------
-db.sequelize.sync(/* {force:true} */ )
+db.sequelize.sync(  /* {force:true} */  )
 .then(() => {
   console.log('Resync database : success !');
   console.log('   ===  Connected to Groupomania !  === ')
@@ -52,16 +52,12 @@ app.get ('/', (req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // routes
-// require('./routes/auth.routes')(app);
-// require('./routes/user.routes')(app);
-// require('./routes/photo.routes')(app);
-
 app.use('/api/auth'  , authRoutes )
 app.use('/api/users' , userRoutes )
 app.use('/api/tests' , userRoutes )
 app.use('/api/photos', photoRoutes)
 
-module.exports = app;  //  rend 'app' accessible depuis les autres fichiers du projet
+module.exports = app;  
 
 
 

@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         as: 'owner',
       })
 
-
       this.belongsTo( Photo, {
         foreignKey: "photoId",
         as: 'photos',

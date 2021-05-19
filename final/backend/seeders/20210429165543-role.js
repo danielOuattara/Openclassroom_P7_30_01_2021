@@ -10,7 +10,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date()
         },
-        // {
+        // { // stand by !
         //   id: 2,
         //   uuid:"e9fcbf74-7559-45df-97d1-7932ae01d55f" ,
         //   name: 'moderator',

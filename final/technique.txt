@@ -1,0 +1,7 @@
+Article.findAll({
+        where: condition, 
+        include: [{
+            model: Commentaire,
+            as: 'commentaires',
+            include: [{model: Users, as: 'author'}]
+        }],

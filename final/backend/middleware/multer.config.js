@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
             if(req.body.event === "photos")  {
                 callback(null, "images/photos")
             }
-            if(req.body.event === "avatars")  {
+            else {
                 callback(null, "images/avatars") 
             }
         },

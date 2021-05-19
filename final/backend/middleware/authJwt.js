@@ -3,12 +3,14 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/auth.config.js');
 
 // --------------------------------------------------------------------------
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     try {
-        console.log("req = " , req.body)
         const token = req.headers["x-access-token"];
-        if(!token) return res.status(401).send({message: " Error : No token provided !"});
-        jwt.verify( token, config.secret, (err, decoded) => {
+        if(!token)  {
+            // throw (" Error : No token provided !") 
+            return res.status(401).json("Token not provided !");
+        }
+        await jwt.verify( token, config.secret, (err, decoded) => {
             if(err) return res.status(401).send({ message: " Error : Unauthorized !"});
             req.userUuid = decoded.uuid;
             req.userId = decoded.id;
@@ -16,7 +18,8 @@ module.exports = (req, res, next) => {
         });
     }    
     catch(err) { 
-        err => res.status(500).send({ message: err.message})
+        err => res.status(401).json(err.message)
     }
     next();
 };
+
