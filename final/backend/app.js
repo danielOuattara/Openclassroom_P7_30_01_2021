@@ -54,7 +54,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 // routes
 app.use('/api/auth'  , authRoutes )
 app.use('/api/users' , userRoutes )
-app.use('/api/tests' , userRoutes )
+// app.use('/api/tests' , userRoutes )
 app.use('/api/photos', photoRoutes)
 
 module.exports = app;  

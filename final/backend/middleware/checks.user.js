@@ -22,7 +22,7 @@ const duplicateUser = async (req, res, next) => {
         next();
     } 
     catch(err) { 
-        err => res.status(400).send(err.message)
+        err => res.status(500).send(err.message)
     }
 }
 // ------------------------------------------------------------------------------
@@ -105,6 +105,8 @@ const admin = (req, res, next) => {
 
 // ------------------------------------------------------------------------------
 
+
+
 const checks = {
     email,
     emailOrUsername,
@@ -114,7 +116,6 @@ const checks = {
     userKnown,
     ownerOrAdmin,
     admin,
-
 };
 
 module.exports = checks;

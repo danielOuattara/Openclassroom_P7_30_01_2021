@@ -45,8 +45,27 @@ exports.getAllUsers = (req, res) => {
 
 exports.updateUser =  async (req, res) => {
   try {
+
+          // const userObject = req.file ? 
+          // {
+          //   ...JSON.parse(req.body.user),
+          //   avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` 
+          // }
+          // :   
+          // {...req.body } 
+
+
+      // const textOnly = {...req.body};
+      // const fullData =  {  
+      //     ...JSON.parse(req.body.user),
+      //     avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}`
+      //  };
+
+      // const userObject = req.file ? fullData : textOnly;
+
+
       // const userObject = req.file ? 
-      //     ( req.body.user ? 
+      //     req.body.user ? 
       //         {  
       //           ...JSON.parse(req.body.user),
       //           avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}`
@@ -55,111 +74,148 @@ exports.updateUser =  async (req, res) => {
       //         {
       //           avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}`
       //         }
-      //     )
       //     :   
       //     {...req.body } 
-
-//--------------------------------------------------------------------------------------------------
-      const textOnly = {...req.body};
-      const avatarOnly = { avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` };
-      const fullData =  {  
-          ...JSON.parse(req.body.user),
-          avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}`
-       };
-      const userObject = req.file ? ( req.body.user ? fullData: avatarOnly ) : textOnly;
+      
+      //--------------------------------------------------------------------------------------------------
 
 
+      console.log("req.file = ",  req.file)
+      
+      // const textOnly = {...req.body};
+      // console.log( "textOnly = ", textOnly);
+      
+      // const avatarOnly = { avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` };
+      // console.log( "avatarOnly = ", avatarOnly);
+      
+      // const fullData =  {  
+      //   ...JSON.parse(req.body.user),
+      //   avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}`
+      // };
+      // console.log( "fullData = ", fullData);
+
+      // const userObject = req.file ? req.body.user ? fullData: avatarOnly : textOnly;
+
+      // console.log( "userObject = ",  userObject);
+
+      // if (req.body === null ) {
+      //   return res.status(400).json({Error: "No Data provided for update, try again !"})
+      // }
+
+      // let userObject;
+      // if (req.file && req.body.user) {
+      //     userObject = 
+      //       {  ...JSON.parse(req.body.user),
+      //           avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}`
+      //       };
+      // }
+
+      // if (req.file && !req.body.user) {
+      //   userObject = {avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` }
+      // }
+      // if (!req.file && !req.body.user) {
+      //   userObject = {...req.body }
+      // }
 
 
+      // console.log("req.file = ",  req.file)
+      
+      // const textOnly = {...req.body};
+      // console.log( "textOnly = ", textOnly);
+      
+      // const avatarOnly = { avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` };
+      // console.log( "avatarOnly = ", avatarOnly);
+      
+      // const fullData =  {  
+      //   ...JSON.parse(req.body.user),
+      //   avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}`
+      // };
+      // console.log( "fullData = ", fullData);
 
+      // const userObject = req.file ? req.body.user ? fullData: avatarOnly : textOnly;
 
-      console.log( "userObject = ",  userObject)
-      if (!userObject) {
-        return res.status(400).json({Error: "No Data provided for update, try again !"})
-      }
+      // console.log( "userObject = ",  userObject);
+      console.log( "userObject = ",  userObject);
 
+      // if ( Object.entries(userObject).length === 0 && userObject.constructor === Object) {
+      //     return res.status(400).json({Error: "Nothing provided. Nothing to update. Try again !"})
+      // }
       const user = await User.findOne( { where: { uuid: req.params.userUuid }} );
 
       if(req.file) {
 
-          if(!user.avatar) {
+          if(req.body.user && !user.avatar) {
+              console.log( "userObject = " , userObject)
               await user.update( userObject)
-              res.status(201).json( "User data & photo successfully updated ! ")
+              res.status(201).json("New data & newly photo successfully updated !")  
+          }  
           
-          } else if (!req.body.user) {
+          if (req.body.user && user.avatar) {
+              console.log( "userObject = " , userObject)
               const filename = user.avatar.split('/avatars/')[1];
               fs.unlink(`images/avatars/${filename}`, (err) => {
                 if(err) throw err;
               })
               await user.update( userObject)
-              res.status(201).json( "Photo successfully updated ! ")
-          
-          } else {
-              const filename = user.avatar.split('/avatars/')[1];
-              fs.unlink(`images/avatars/${filename}`, (err) => {
-                if(err) throw err;
-              })
-              await user.update(userObject)
-                  res.status(201).json( "User data & photo successfully updated ! ")
+              res.status(201).json("New data & Changed Photo successfully updated !")
           }
+          
+          if (!req.body.user && !user.avatar) {
+            console.log( "userObject = " , userObject)
+            await user.update( userObject)
+            res.status(201).json(" Newly photo successfully updated !")
+          } 
+          
+          if (!req.body.user && user.avatar) {
+              console.log( "userObject = " , userObject)
+              const filename = user.avatar.split('/avatars/')[1];
+              fs.unlink(`images/avatars/${filename}`, (err) => {
+                if(err) throw err;
+              })
+              await user.update( userObject)
+              res.status(201).json("Changed photo successfully updated !")
+          } 
+
       } else {
           await user.update(userObject)
-          return res.status(201).json( "User data successfully updated ! ");
+          return res.status(201).json("New data successfully updated !");
       }
+
+
+      // if(req.file) {
+
+      //     if(!user.avatar) {
+      //         await user.update( userObject)
+      //         res.status(201).json( "User data & photo successfully updated ! ")
+          
+
+      //     } else if (!req.body.user) {
+      //         const filename = user.avatar.split('/avatars/')[1];
+      //         fs.unlink(`images/avatars/${filename}`, (err) => {
+      //           if(err) throw err;
+      //         })
+      //         await user.update( userObject)
+      //         res.status(201).json( "Photo successfully updated ! ")
+          
+
+      //     } else {
+      //         const filename = user.avatar.split('/avatars/')[1];
+      //         fs.unlink(`images/avatars/${filename}`, (err) => {
+      //           if(err) throw err;
+      //         })
+      //         await user.update(userObject)
+      //             res.status(201).json( "User data & photo successfully updated ! ")
+      //     }
+
+
+
+
+      // } else {
+      //     await user.update(userObject)
+      //     return res.status(201).json( "User data successfully updated ! ");
+      // }
   } catch(err) {
     return res.status(400).json({ Error: err.message})
   }
 }
-
-
-// exports.updateUser = (req, res) => {
-//   const userObject = req.file ? 
-//   {
-//     ...JSON.parse(req.body.user),
-//     avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` 
-//   }
-//   :   
-//   {...req.body }  
-
-//   User.findOne({ where: { uuid: req.params.userUuid } })
-//   .then( user => {
-//     if(!user) return res.status(400).json( {Error: "User unknown !" } )
-
-//     if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-//       return res.status(403).json( {error: "Acces Denied !" } )  
-//     }
-
-//     if(req.file) {
-//         if(!user.avatar) {
-//             User.update( userObject, { where: { uuid: req.params.userUuid } } )
-//             .then( num => {
-//                 console.log("num ==== ", num)
-//                 if (num == 1) {
-//                   res.status(201).json( "User data & photo successfully updated ! ")
-//                 } 
-//             })
-//             .catch( err => res.status(500).json( {message: err.message || "ERROR: Update Failed"} )) 
-
-//         } else {
-//             const filename = user.avatar.split('/avatars/')[1];
-//             fs.unlink( `images/avatars/${filename}`, () => {
-//               User.update( userObject, { where: { uuid: req.params.userUuid } } )
-//               .then( num => {
-//                 console.log("num ==== ", num)
-//                 if (num == 1) {
-//                   res.status(201).json( "User data & photo successfully updated ! ")
-//                 } 
-//               })
-//               .catch( err => res.status(500).json( {message: err.message || "ERROR: Update Failed"} )) 
-//             })
-//         } 
-//     } else {
-//       user.update( userObject)
-//       .then( () => res.status(201).json( "User data successfully updated ! "))
-//       .catch( error => res.status(500).json( {error: error.message} )) 
-//       }
-//   })
-//   .catch(err => res.status(500).json({err: err.message})) 
-// }
-  
-  // ---------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------

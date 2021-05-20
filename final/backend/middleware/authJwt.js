@@ -15,10 +15,11 @@ module.exports = async (req, res, next) => {
             req.userId = decoded.id;
             req.userRoles = decoded.userRoles;
         });
+        next();
     }    
     catch(err) { 
         err => res.status(401).json(err.message)
     }
-    next();
+ 
 };
 

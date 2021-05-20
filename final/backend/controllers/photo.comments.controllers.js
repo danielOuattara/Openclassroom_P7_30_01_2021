@@ -9,23 +9,20 @@ const fs = require("fs");
 exports.createComment = (req, res) => {
   Photo.findOne({ where: { uuid: req.params.photoUuid } })
   .then( photo =>  {
-    if(!photo) {
-      return res.status(404).send( {message:`Photo ${req.params.photoUuid} not found` })
-    }
     Comment.create({
       content: req.body.content, 
       ownerId: req.userId, 
       photoId: photo.id 
     })
-    .then(() => res.status(200).json({ message: ` Comment successfully created !`}))
+    .then(() => res.status(200).json({ message: `Comment successfully created !`}))
     .catch(err => res.status(403).json({ message: err.message }))
   })
-  .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
+  .catch( err => res.status(500).json({ message: err.message || `Server Error ! Try again Soon `}) )
 }
 
 // ----------------------------------------------------------------------------------------
 
-exports.getAllComment = (req, res) => {
+exports.getPhotoAllComment = (req, res) => {
   Photo.findOne({ where: { uuid: req.params.photoUuid } })
   .then( photo =>  {
     if(!photo) {
@@ -33,8 +30,7 @@ exports.getAllComment = (req, res) => {
     }
     Comment.findAll({
       where: { photoId: photo.id },
-      include: "owner" ,
-      include: "photo" 
+      include: ["owner", 'photo']
     })
     .then( comments => res.status(200).json(comments))
     .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
@@ -76,7 +72,7 @@ exports.updateOneComment = (req, res) => {
         return res.status(404).send( {message:`Photo ${req.params.photoUuid} not found ` })
       }
       comment.update(commentObject)
-      .then( () => res.status(201).send({message: "User successfully updated ! "}))
+      .then( () => res.status(201).send({message: "Comment successfully updated ! "}))
       .catch( err => res.status(500).json( { message: err.message || "ERROR: Update Failed"} )) 
   })
   .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
@@ -152,26 +148,3 @@ exports.deleteAllCommentFromOneUser = (req, res) => {
 }
 // ----------------------------------------------------------------------------------------
 
-exports.deleteAllPhotoFromOneUser = (req, res) => {
-  User.findOne( {where: { uuid: req.params.userUuid}})
-  .then( user => { 
-    if(!user) {
-      return res.status(404).send( {message:`User not found` })
-    }
-     if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")) {
-      return res.status(403).json( {error: "Access Denied ! " } )  
-     } 
-     Photo.destroy({
-       where: { ownerId: user.id},
-       truncate: false,      
-      })
-     .then( num => {
-        if (num === 0) {
-          return res.status(404).send({message:`No photo found for this user`})
-        } 
-        res.status(201).send({ message: `${num} photo(s) from user successfully deleted `})
-      })
-      .catch(() => res.send({ message:`Server Error ! Try again Soon 1`}))
-  })
-  .catch(() => res.status(500).json({ message:` Server Error ! Try again Soon 2 `})) 
-}

@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'photos',
       })
     }
-  };
+  }
   Like.init({
     uuid:  {
       type:DataTypes.UUID,
