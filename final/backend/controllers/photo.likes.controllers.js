@@ -37,114 +37,42 @@ exports.photoLikes =  async (req, res) => {
       return res.status(500).json( {message:"Server Error"})
   }
 }
-// exports.photoLikes =  async (req, res) => {  // @@@ -->>> WORKING !!!
-//   try  {
-//     const photo = await Photo.findOne({ where: { uuid: req.params.photoUuid} })
-//     if(!photo)  {
-//       return res.status(404).send( {message:`Photo unknown` })
-//     }
-//     const like = await Like.findOne({ 
-//       where: {
-//         [Op.and]: [ 
-//           {ownerId: req.userId},
-//           {photoId: photo.id}
-//         ]
-//       }
-//     })
+//---------------------------------------------------------------------------------------
 
-//     if(!like) {   // like creation
-//         await Like.create({
-//           value: req.body.value,
-//           ownerId: req.userId,
-//           photoId: photo.id
-//         })
-//         return res.status(200).json({ message: ` Likes successfully sent on photo !`})
+exports.photoLikesCounting = async (req, res) => {
 
-//     } else { // like update
-//         await like.update({value: req.body.value})
-//         return res.status(200).json({ message: ` Likes successfully updated on photo !`})
-//     }
-//   } catch(err) {
-//       return res.status(500).json({Error: err.message})
-//   }
-// }
+  try {
+    const photo = await Photo.findOne({ where: { uuid: req.params.photoUuid} })
+    if(!photo)  {
+      return res.status(404).send( {message:`Photo unknown` })
+    }
+    const userLikes = await Like.count({
+      where: { 
+        [Op.and]: [ 
+          {photoId: photo.id}, 
+          {value: 1}
+        ]},
+      distinct: true,
+    })
+    console.log(userLikes);
 
+    const userDisLikes = await Like.count({
+      where: { 
+        [Op.and]: [
+          {photoId: photo.id},
+          {value: -1}
 
+        ]},
+      distinct: true,
+    })
+    // res.status(200).json(userDisLike)
 
-// exports.photoLikes = (req, res) => {   // @@@ -->>> WORKING !!!
-//    Photo.findOne({ where: { uuid: req.params.photoUuid} })
-//    .then( photo => {
-//       if(!photo)  {
-//         return res.status(404).send( {message:`Photo unknown` })
-//       }
-//       Like.findOne({ 
-//         where: {
-//           [Op.and]: [ 
-//             {ownerId: req.userId},
-//             {photoId: photo.id}
-//           ]
-//         }
-//       })
-//       .then(like => {
+    const result = { userLikes, userDisLikes};
+    res.status(200).json(result)
 
-//         if(!like) {   // like creation
-//           Like.create({
-//             value: req.body.value,
-//             ownerId: req.userId,
-//             photoId: photo.id
-//           })
-//           .then( () => res.status(200).json({ message: ` Likes successfully sent on photo !`}))
-//           .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
-//         }
+  } catch(err) {
+     return res.status(500).json({message: err.message});
+  }
 
-//         if(like) { // like update
-//           like.update({value: req.body.value})
-//           .then( () => res.status(200).json({ message: ` Likes successfully updated on photo !`}))
-//           .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
-//         }
-//       })
-//       .catch()
-//    })
-//    .catch(err => res.status(500).send({ message: err.message || "Server error on commenting photos."}) )
-// }
+}
 
-
-
-exports.photoLikesCounting = (req, res) => { }
-
-//    Photo.findOne({ where: { uuid: req.params.photoUuid} })
-//    .then( photo => {
-//       if(!photo)  {
-//         return res.status(404).send( {message:`Photo unknown` })
-//       }
-//       Like.findOne({ 
-//         where: {
-//           [Op.and]: [ 
-//             {ownerId: req.userId},
-//             {photoId: photo.id}
-//           ]
-//         }
-//       })
-//       .then(like => {
-
-//         if(!like) {   // like creation
-//           Like.create({
-//             value: req.body.value,
-//             ownerId: req.userId,
-//             photoId: photo.id
-//           })
-//           .then( () => res.status(200).json({ message: ` Likes successfully sent on photo !`}))
-//           .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
-//         }
-
-//         if(like) { // like update
-//           console.log("like = ", like)
-//           like.update({value: req.body.value})
-//           .then( () => res.status(200).json({ message: ` Likes successfully updated on photo !`}))
-//           .catch( err => res.status(404).send({ message:err.message ||`Error when sending likes to Photo` }));
-//         }
-//       })
-//       .catch()
-//    })
-//    .catch(err => res.status(500).send({ message: err.message || "Server error on commenting photos."}) )
-// }
