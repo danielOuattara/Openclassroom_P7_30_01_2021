@@ -1,4 +1,4 @@
-const http = require('http');  // importer le package de serveur http de Node.js. L'objet 'http' permet de créer un serveur.
+const http = require('http');  
 const app = require ('./app.js');
 
 const normalizePort = val => {
@@ -17,7 +17,7 @@ const normalizePort = val => {
     return false;
 };
 
-const port = normalizePort(process.env.PORT ||'4100');
+const port = normalizePort(process.env.PORT ||'4200');
 app.set('port', port);
 
 
