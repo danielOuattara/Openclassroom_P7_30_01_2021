@@ -35,8 +35,5 @@ The frontend is built with Vue2, VueX, Vue Router.
 - follow VueJS instructions on the terminal windows
 - done
 
-### Questions ? 
-email me : daniel.ouattara@gmx.com
-
 ### Notice:
 Until now only the backend part of the project is completed. The frontend runs on jwt authentification and few authorizations only 
