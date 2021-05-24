@@ -24,6 +24,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'likes',
       });
     }
+
+    toJSON() {
+      return {...this.get(), id: undefined} 
+    }
+
+
   }
   Photo.init({
 

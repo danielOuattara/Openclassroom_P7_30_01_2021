@@ -52,19 +52,34 @@ exports.login = async (req, res) => {
         
         const authorities = [];
         const roles = await user.getRoles();
-        for (let i = 0; i < roles.length; i++) {
-            authorities.push("ROLE_" + roles[i].name.toUpperCase());
+        
+        for (const role of roles) {
+            authorities.push("ROLE_" + role.name.toUpperCase());
         }
+
+        // for (let i = 0; i < roles.length; i++) {
+        //     authorities.push("ROLE_" + roles[i].name.toUpperCase());
+        // }
+
+        const token = jwt.sign(
+            {
+                uuid: user.uuid,
+                id: user.id,
+                userRoles: [...authorities]
+            },
+            config.secret,
+            {expiresIn: '12h'}
+        )
+
+
+
         res.status(201).json({
-            accessToken: jwt.sign(
-                {
-                    uuid: user.uuid,
-                    id: user.id,
-                    userRoles: [...authorities]
-                },
-                config.secret,
-                {expiresIn: '12h'}
-            )
+            user,
+            email: user.email,
+            id: user.id,
+            username: user.username,
+            roles: authorities,
+            accessToken: token
         });
         } 
     catch(err) {

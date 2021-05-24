@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'photo',
       })
     }
-  };
+
+    toJSON() {
+      return {...this.get(), id: undefined} 
+    }
+  }
   Comment.init({
 
     uuid:  {

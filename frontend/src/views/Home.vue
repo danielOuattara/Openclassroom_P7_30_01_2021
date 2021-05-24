@@ -4,6 +4,7 @@
     <header class="jumbotron">
       <h3>Wall of photo</h3>
     </header>
+    <!-- <h3>{{content}}</h3> -->
 
     <ul> 
       <li v-for='(item, index) in this.content' :key='index'>
@@ -11,6 +12,7 @@
           <img :src='item.imageUrl'
                 :alt='"picture of " + item.title'
                 class="photos">
+          <!-- <p :></p> -->
         </div>
       </li>
     </ul>
@@ -37,10 +39,9 @@ export default {
     mounted() {
 
         PhotoService.getAllPhoto()
-        .then( response =>
-              this.content = response.data ,
+        .then( response => this.content = response.data,
                error => this.content = (error.response && error.response.data) || error.message || error.toString()  
-        )
+          )
 
         PhotoServiceComments.getAllPhotoComment() 
           .then (res => this.comments = res.data)
@@ -74,12 +75,12 @@ export default {
   margin: auto
 } */
 
-.photo {
+.photos {
   /* display: block; */
   /* margin-left: auto;
   margin-right: auto; */
-  /* max-width: 100%; */
-  /* height: auto; */
+  max-width: 100%; 
+  height: auto;
   /* border: 5px solid #ddd; Gray border */
   /* border-radius: 4px;  Rounded border */
   /* padding: 5px; Some padding */

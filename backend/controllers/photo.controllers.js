@@ -22,6 +22,13 @@ exports.addPhoto = (req, res)=> {
 
 exports.getAllPhoto = (req, res) => {
   Photo.findAll({
+    where: {}, 
+        include: [{
+            model: Comment,
+            as: 'comments',
+            include: [{model: User, as: 'owners'}]
+        }],
+
     order: [
       ['createdAt', 'DESC']
     ],
@@ -30,6 +37,19 @@ exports.getAllPhoto = (req, res) => {
   .then( photos => res.status(200).json(photos))
   .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
 };
+
+
+
+// exports.getAllPhoto = (req, res) => {
+//   Photo.findAll({
+//     order: [
+//       ['createdAt', 'DESC']
+//     ],
+//     include:  ['owner','comments','likes'],
+//   })
+//   .then( photos => res.status(200).json(photos))
+//   .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
+// };
 
 //-----------------------------------------------------------------------------------------
 

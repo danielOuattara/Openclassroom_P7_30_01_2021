@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'photos',
       })
     }
+
+    toJSON() {
+      return {...this.get(), id: undefined} 
+    }
+
   }
   Like.init({
     uuid:  {

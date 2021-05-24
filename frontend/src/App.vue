@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark main-nav">
         <a href class="navbar-brand" @click.prevent>
             <img src="./assets/images/image_Groupomania/icon-left-font-monochrome-white.svg" 
                  style="width:200px" 
@@ -99,3 +99,18 @@ export default {
     }
 };
 </script>
+
+
+<style>
+
+#app {
+    min-height: 100vh;
+    background: linear-gradient(to left top, rgba(6, 33, 77, 0.8), rgba(15, 34, 64, 0.2))!important;
+}
+
+.main-nav {
+    /* background-color: rgba(0, 0, 0, 0)!important; */
+    background-color: red!important;
+}
+
+</style>
