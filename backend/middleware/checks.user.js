@@ -71,7 +71,7 @@ const userKnown = async (req, res, next) => {
     try {
         const user = await User.findOne({ where : {uuid: req.params.userUuid }});
         if (!user) {
-            return res.status(404).json({ Error: "User unknown !"});
+            return res.status(404).json({ Error: "User unknown TEST !"});
         }
         next();
     } 

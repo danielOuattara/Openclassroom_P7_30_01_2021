@@ -10,11 +10,8 @@
 <script>
 
 import UserService from './../services/user.service.js';
-
 export default {
-
     name: 'Home',
-  
     data() {
         return {
         content: ''

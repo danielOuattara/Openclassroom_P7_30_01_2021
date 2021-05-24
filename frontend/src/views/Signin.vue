@@ -52,10 +52,8 @@
 
 <script>
 import User from './../models/user';
-
 export default {
     name: 'Signin',
-  
     data() {
         return {
             user: new User('', ''),

@@ -9,11 +9,8 @@
 
 <script>
 import UserService from './../services/user.service.js';
-
 export default {
-
     name: 'User',
-  
     data() {
         return {
             content: ''

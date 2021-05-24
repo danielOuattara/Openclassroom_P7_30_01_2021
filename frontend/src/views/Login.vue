@@ -53,9 +53,7 @@
 
 import User from './../models/user.js';
 export default {
-
     name: "Login",
-
     data() {
         return {
             user: new User('',''),
