@@ -7,6 +7,17 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielOuattara/Openclassroom_P7_30_01_2021.git"
+  },
+    "author": "daniel.ouattara@gmx.com",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/danielOuattara/Openclassroom_P7_30_01_2021/issues"
+    },
+    "homepage": "https://github.com/danielOuattara/Openclassroom_P7_30_01_2021#readme",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
