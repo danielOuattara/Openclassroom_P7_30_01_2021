@@ -40,7 +40,7 @@ app.use(limiter ({
 db.sequelize.sync(  /* {force:true} */  )
 .then(() => {
   console.log('Resync database : success !');
-  console.log('   ===  Connected to Groupomania !  === ')
+  console.log('   ===  Connected to Groupomania:  localhost 4200 !  === ')
 })
 .catch( err=> res.status(500).send( {message: err.message}));
 // -----------------------------------------------------------------------
@@ -52,9 +52,8 @@ app.get ('/', (req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // routes
-app.use('/api/auth'  , authRoutes )
+app.use('/api/auths'  , authRoutes )
 app.use('/api/users' , userRoutes )
-// app.use('/api/tests' , userRoutes )
 app.use('/api/photos', photoRoutes)
 
 module.exports = app;  
