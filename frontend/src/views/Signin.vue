@@ -16,7 +16,8 @@
                            class="form-control" 
                            name="email"/>
                     <div v-if="submitted && errors.has('email')" 
-                         class="alert-danger" >{{errors.first('email')}}
+                         class="alert-danger" >
+                            {{errors.first('email')}}
                     </div>
                 </div>
 
@@ -28,7 +29,8 @@
                            class="form-control" 
                            name="password" />
                     <div v-if="submitted && errors.has('password')" 
-                         class="alert-danger">{{errors.first('password')}}
+                         class="alert-danger">
+                            {{errors.first('password')}}
                     </div>
                 </div>
 

@@ -24,27 +24,13 @@ export const auth =  {
                         commit("loginFailure");
                         return Promise.reject(error);
                     }
-                );
-            
+                );  
         },
 
         logout( {commit}) {
             AuthService.logout();
             commit("logout");
         },
-
-        // register( {commit}, user) {
-        //     return AuthService.register(user)
-        //         .then( response => {
-        //             commit("registerSuccess");
-        //             return Promise.resolve(response.data);
-        //             },
-        //             error => {
-        //                 commit( "registerFailure");
-        //                 return Promise.reject(error);
-        //             }                
-        //         );
-        // }
 
         signin( {commit}, user) {
             return AuthService.signin(user)
@@ -60,7 +46,6 @@ export const auth =  {
         }
     },
 
-    
     mutations: {
         loginSuccess(state, user) {
             state.status.loggedIn = true;
@@ -76,14 +61,6 @@ export const auth =  {
             state.status.loggedIn = false;
             state.user = null;
         },
-
-        // registerSuccess(state) {
-        //     state.status.loggedIn = false;
-        // },
-
-        // registerFailure(state) {
-        //     state.status.loggedIn = false;
-        // }
 
         signinSuccess(state) {
             state.status.loggedIn = false;

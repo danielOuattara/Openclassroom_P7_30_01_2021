@@ -8,7 +8,8 @@
 //     }
 // }
 
-/* Note: For Node.js Express back-end tutorial, please use x-access-token header like this: */
+/* Note: For Node.js Express back-end tutorial, 
+         prefer x-access-token header like this: */
 
 export default function authHeader() {
     let user = JSON.parse(localStorage.getItem("user"));
@@ -18,6 +19,3 @@ export default function authHeader() {
         return {};
     }
 }
-
-//testing
-// testing
