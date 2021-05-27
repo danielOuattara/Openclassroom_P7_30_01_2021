@@ -7,8 +7,8 @@ axios for HTTP requests & reponses:
     login(): POST { username, password } & save JWT to Local Storage
     logout(): remove JWT from Local Storage
     signin(): POST { email, password }
-
 */
+
 import axios from "axios";
 
 const API_URL = "http://localhost:4200/api/auths/";
@@ -31,16 +31,6 @@ class AuthService {
     logout() {
         localStorage.removeItem("user");
     }
-
-    
-    // register(user) {
-    //     return axios.post( API_URL + "signin", { 
-    //             username: user.username, 
-    //             email: user.email ,
-    //             password: user.password 
-    //         })
-
-    // }
 
     signin(user) {
         return axios.post( API_URL + "signin", { 

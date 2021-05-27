@@ -5,20 +5,16 @@
       <h3>Wall of photo</h3>
     </header>
     <!-- <h3>{{content}}</h3> -->
-
     <ul> 
       <li v-for='(item, index) in this.content' :key='index'>
         <div>
           <img :src='item.imageUrl'
                 :alt='"picture of " + item.title'
                 class="photos">
-          <!-- <p :></p> -->
         </div>
       </li>
     </ul>
   </div>
-
-  
 </template>
 
 <script>
@@ -36,7 +32,7 @@ export default {
         };
     },
 
-    mounted() {
+    created() {
 
         PhotoService.getAllPhoto()
         .then( response => this.content = response.data,

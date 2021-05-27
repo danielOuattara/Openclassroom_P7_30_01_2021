@@ -10,6 +10,3 @@ export default new Vuex.Store({
     modules: { auth }
 });
 
-// test
-
-// testing
