@@ -4,24 +4,24 @@
     <header class="jumbotron">
       <h3>Wall of photo</h3>
     </header>
-    <!-- <h3>{{content}}</h3> -->
-    <ul> 
-      <li v-for='(item, index) in this.content' :key='index'>
-        <div>
-          <img :src='item.imageUrl'
-                :alt='"picture of " + item.title'
-                class="photos">
+    <div>
+      <h3>Photos</h3>
+      <!-- <p>{{allPhotos}}</p> -->
+      <div class="todos">
+        <div v-for="photo in allPhotos" 
+             :key="photo.id"
+             class="photo-container">
+              <img :src="photo.imageUrl" 
+                   :alt='"picture of " + photo.title'
+                   class="photos">
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-
-import PhotoService from './../services/photo.service.js'
-import PhotoServiceComments from './../services/photo.service.comments.js'
-import PhotoServiceLikes from './../services/photo.service.likes.js'
+import { mapGetters, mapActions } from 'vuex';
 export default {
     name: 'Home',
     data() {
@@ -32,27 +32,16 @@ export default {
         };
     },
 
+    computed: {
+          ...mapGetters(['allPhotos']),
+    },
+
+      methods: {
+      ...mapActions(['fetchAllPhotos']),
+  },
+
     created() {
-
-        PhotoService.getAllPhoto()
-        .then( response => this.content = response.data,
-               error => this.content = (error.response && error.response.data) || error.message || error.toString()  
-          )
-
-        PhotoServiceComments.getAllPhotoComment() 
-          .then (res => this.comments = res.data)
-          .catch(err => this.comments = (err.response && err.response.data) || err.message || err.toString()
-        )
-        
-        PhotoServiceLikes.photoLikesCounting() 
-          .then (res => this.likes = res.data)
-          .catch(err => this.likes = (err.response && err.response.data) || err.message || err.toString()
-        )
-        
-
-
-
-
+      this.fetchAllPhotos();
       },
 
 
@@ -82,5 +71,10 @@ export default {
   /* padding: 5px; Some padding */
   /* width: 150px; Set a small width */
   /* margin: 10px; */
+}
+.photo-container {
+  margin : 30px; 
+  border: 1px solid lightblue;
+  padding: 20px;
 }
 </style>

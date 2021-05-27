@@ -23,29 +23,11 @@
       <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
     </ul>
 
-    <br><br><br>
-    <hr><hr>
-    <br><br><br>
-
-    <div>
-      <h3>Photos</h3>
-      <p>{{allPhotos}}</p>
-      <div class="todos">
-        <div v-for="photo in allPhotos" 
-             :key="photo.id">
-              <img :src="photo.imageUrl" :alt="photo.title">
-        </div>
-      </div>
-    </div>
-
-
-
   </div>
 </template>
 
 <script>
 
-import { mapGetters, mapActions } from 'vuex';
 
 export default {
   
@@ -53,8 +35,7 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
-    },
-    ...mapGetters(['allPhotos']), 
+    }, 
   },
   
   mounted() {
@@ -63,12 +44,8 @@ export default {
     }
   },
 
-  methods: {
-      ...mapActions(['fetchAllPhotos']),
-  },
+  methods: {  },
 
-  created() {
-      this.fetchAllPhotos();
-    }
+  created() { }
 };
 </script>
