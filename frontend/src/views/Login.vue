@@ -85,7 +85,7 @@ export default {
                 }
 
                 if (this.user.emailOrUsername && this.user.password) {
-                    this.$store.dispatch("auth/login", this.user)
+                    this.$store.dispatch("auth/loginAction", this.user)
                     .then(() => {
                             this.$router.push("/profile");
                         },

@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block">Sign Up</button>
+                    <button class="btn btn-primary btn-block">Signin</button>
                 </div>
 
             </div>
