@@ -19,10 +19,10 @@ exports.signin =  async (req, res) => {
                 }
             });
             await user.setRoles(roles);
-            res.status(200).json({ message: "User was registered successfully!"})  
+            res.status(200).json("User was registered successfully!")  
         } else {
             await user.setRoles([1])
-            res.status(200).json({ message: "User was registered successfully!"}) 
+            res.status(200).json("User was registered successfully!") 
         }
     }
     catch(err){
@@ -42,12 +42,12 @@ exports.login = async (req, res) => {
             }
         })
         if(!user)  {
-            return res.status(401).json({ Error: "Login failed ! Try again !"});
+            return res.status(401).json("Login failed, try again !");
         }
 
         const validPassword = await bcrypt.compare( req.body.password, user.password);
         if(!validPassword) {
-            return res.status(401).json({ Error: "Login failed ! Try again !"});
+            return res.status(401).json("Login failed, try again !");
         }
         
         const authorities = [];
@@ -70,9 +70,6 @@ exports.login = async (req, res) => {
             config.secret,
             {expiresIn: '12h'}
         )
-
-
-
         res.status(201).json({
             user,
             email: user.email,
@@ -94,7 +91,7 @@ exports.signout = (req, res) => {
     User.findOne({ where: { uuid: req.params.userUuid } })
     .then( user => {
         user.destroy()
-        .then(() => res.status(200).json({ message: "Account successfully deleted !" }))
+        .then(() => res.status(200).json("Account successfully deleted !"))
         .catch((error) => res.status(403).json({ Error: error.message }));
     })
     .catch( error => res.status(500).json( { Error: error.message} )) 

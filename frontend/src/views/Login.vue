@@ -43,7 +43,6 @@
                          class="alert alert-danger" 
                          role="alert">{{message}}</div>
                 </div>
-
             </form>
         </div>
     </div>
@@ -75,28 +74,46 @@ export default {
     },
 
     methods: {
-        handleLogin() {
-            this.loading = true;
-            this.$validator.validateAll()
-            .then( isValid => {
+        
+       async handleLogin() {
+           try {
+                this.loading = true;
+                const isValid = await this.$validator.validateAll();
                 if(!isValid) {
                     this.loading = false;
                     return;
                 }
-
                 if (this.user.emailOrUsername && this.user.password) {
-                    this.$store.dispatch("auth/loginAction", this.user)
-                    .then(() => {
-                            this.$router.push("/home");
-                        },
-                        error => {
-                            this.loading = false;
-                            this.message = (error.response && error.response.data) || error.message || error.toString();
-                        }
-                    );
+                    await this.$store.dispatch("auth/loginAction", this.user)
+                    this.$router.push("/home");
                 }
-            });
-        }
+           } catch(error) {
+                this.loading = false;
+                this.message = (error.response && error.response.data) || error.message || error.toString();
+           }
+        },
+
+        // handleLogin() {  // OLD VERSION
+        //     this.loading = true;
+        //     this.$validator.validateAll()
+        //     .then( isValid => {
+        //         if(!isValid) {
+        //             this.loading = false;
+        //             return;
+        //         }
+        //         if (this.user.emailOrUsername && this.user.password) {
+        //             this.$store.dispatch("auth/loginAction", this.user)
+        //             .then(() => {
+        //                     this.$router.push("/home");
+        //                 },
+        //                 error => {
+        //                     this.loading = false;
+        //                     this.message = (error.response && error.response.data) || error.message || error.toString();
+        //                 }
+        //             );
+        //         }
+        //     });
+        // }
     }
 };
 </script>

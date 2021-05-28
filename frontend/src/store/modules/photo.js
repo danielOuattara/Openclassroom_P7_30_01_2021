@@ -1,7 +1,7 @@
 
 import photoService from "./../../services/photo.service";
 
-export  const photos = {
+export const photos = {
 
     state: {
         photos: [ ],
@@ -24,9 +24,9 @@ export  const photos = {
             }
         },
 
-        async addOnePhotoAction( {commit}, title, file) {
+        async addOnePhotoAction( {commit}, title, image) {
             try {
-                const res = await photoService.addPhoto(title, file);
+                const res = await photoService.addPhoto(title, image);
                 commit('addOnePhotoMutation', res.data);
                 return await Promise.resolve(res.data);
             } catch (err) {
@@ -34,9 +34,6 @@ export  const photos = {
                 return Promise.reject(err);
             }
         },
-
-
-
     },
 
     mutations: {
@@ -46,5 +43,7 @@ export  const photos = {
 
         addOnePhotoMutation:( state, photo) => state.photos.unshift(photo),
         errAddOnePhoto: (state) => state.photos,
+
+        
     }
 }

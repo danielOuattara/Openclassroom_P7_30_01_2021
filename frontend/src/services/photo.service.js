@@ -9,7 +9,14 @@ const API_URL = "http://localhost:4200/api/photos";
 class PhotoService {
     
     addPhoto() {
-        return axios.post(API_URL + "/", { headers: authHeader() });
+        const data = new FormData();
+        data.append('title', this.photo.title)
+        data.append('image', this.selectedFile, this.selectedFile.name)
+        const config =  {
+            header : {'Content-Type': 'multipart/form-data' }
+        }
+        
+        return axios.post(API_URL + "/", data, { headers: authHeader() }, config)  
     }
 
     getAllPhoto() {

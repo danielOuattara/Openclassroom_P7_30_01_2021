@@ -5,17 +5,16 @@
     </header>
     <div>
       <h3>Add Photo</h3> <!-- --------------------------------  Section: Add  Photo-->
-    
-        <form name="form" @submit.prevent="onUpload">
+        <form name="form" @submit.prevent="addOnePhoto">
                 <div class="form-group">
                     <label for="title">Choose a title  : </label>
                     <input  
-                        @change="showEvent"
-                        id="title"
+                        @change.prevent="showEvent"
                         v-validate="'required'" 
                         type="text" 
                         v-model="photo.title" 
                         class="form-control" 
+                        ref="title"
                         name="title"/>
                     <div    
                       class="alert alert-danger" 
@@ -23,7 +22,6 @@
                       role="alert"> A title is required !
                     </div>
                 </div>
-
                 <div class="form-group">
                     <!-- <label for="filename" id="file-label"> choose a file ... : </label> -->
                     <!-- next: hide input area, replace it by button -->
@@ -37,11 +35,7 @@
                         @change="onFileSelect"
                         ref="imageFile"
                      />
-
                     <!-- <button @click="$refs.imageFile.click()"> Pick an image</button> -->
-
-                    <!-- <button @click="onUpload">Upload</button> -->
-
                     <div 
                         class="alert alert-danger" 
                         v-if="errors.has('file')" 
@@ -67,8 +61,7 @@
             </form>
       </div>
 
-      <!-- ---------------------------------------------- Section: Get All photos -->
-      <h3>View Photo</h3>
+      <h3>View Photo</h3>  <!-- ---------------------------------------------- Section: Get All photos -->
       <div class="todos">
         <div v-for="photo in allPhotos" 
              :key="photo.id"
@@ -76,18 +69,15 @@
               <img :src="photo.imageUrl" 
                    :alt='"picture of " + photo.title'
                    class="photos">
-        </div>
-    </div>
-
-    <!-- ----------------------------------------------------- -->
-
+        </div> <!-- ----------------------------------------------------- -->
+      </div> 
   </div>
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import Photo from './../models/photo.js';
-import authHeader from "./../services/auth.header.js";
+// import authHeader from "./../services/auth.header.js";
 import { mapGetters, mapActions } from 'vuex';
 export default {
     name: 'Home',
@@ -95,10 +85,9 @@ export default {
         return {
           photo: new Photo(''),
           loading: false,
+          title:'',
           message:'',
-          // filename: '',
           selectedFile:'',
-
           content: '',
           comments: '',
           likes:'',
@@ -110,6 +99,8 @@ export default {
     },
 
     methods: {
+      
+      ...mapActions(['fetchAllPhotosAction', 'addOnePhotoAction']),
 
       showEvent(event) {
         console.log(event);
@@ -117,94 +108,95 @@ export default {
 
       onFileSelect(event) {
         this.selectedFile =  event.target.files[0];
-        console.log( "selectedFile  ="  , this.selectedFile)
       },
 
-      onUpload() { // BACK UP: OK <<<<-----
-
-        this.loading = true;
-        this.$validator.validateAll()
-        .then( isValid => {
+      async addOnePhoto() { //
+          try{
+            this.loading = true;
+            const isValid = await this.$validator.validateAll()
             if(!isValid) {
                 this.loading = false;
+                this.photo.title= "";
                 return;
             }
-            const data = new FormData();
-            data.append('title', this.photo.title)
-            data.append('image', this.selectedFile, this.selectedFile.name)
-            const config =  {
-              header : {
-                  'Content-Type': 'multipart/form-data'
-              }
-            }
-            axios.post(
-              'http://localhost:4200/api/photos',  
-              data, 
-              { headers: authHeader() },
-              config,
-              // { onUploadProgress: uploadEvent => {
-              //     console.log('Upload Progress : ' + Math.round( uploadEvent.loading / uploadEvent.total * 100 ) + ' %' )
-              //   } 
-              // }
-            )
-            .then( () => {
-                // console.log(res);
-                this.loading = false;
-                this.input.value = ''
-                this.fetchAllPhotosAction()
-              },
-                error => {
-                  this.loading = false;
-                  this.photo.title ='';
-                  this.input.value= '';
+            
+            await this.$store.dispatch("photo/addOnePhotoAction", this.photo)
+            await this.fetchAllPhotosAction()
+            this.loading = false;
+            this.$refs.imageFile.value = '';
+            this.$refs.title.value = '';
 
-                  this.message = (error.response && error.response.data) || error.message || error.toString();
-                }
-            )
-        });
+          } catch(error) {
+                this.loading = false;
+                this.photo.title ='';
+                this.message = (error.response && error.response.data) || error.message || error.toString();
+            }
       },
+      // addOnePhoto() { //  // BACK UP ###
+      //   this.loading = true;
+      //   this.$validator.validateAll()
+      //   .then( isValid => {
+      //       if(!isValid) {
+      //           this.loading = false;
+      //           this.photo.title= "";
+      //           return;
+      //       }
+
+      //       if(this.photo.title ) {       addOnePhotoAction
+      //         this.$store.dispatch("photo/addOnePhotoAction", this.photo)
+      //         .then(() => {
+      //             this.fetchAllPhotosAction()
+      //             this.loading = false;
+      //             this.$refs.imageFile.value = '';
+      //             this.$refs.title.value = '';
+      //           },
+      //             error => {
+      //               this.loading = false;
+      //               this.photo.title ='';
+      //               this.message = (error.response && error.response.data) || error.message || error.toString();
+      //             }
+      //         )
+      //     }
+      //   });
+      // },
 
 
 
       // onUpload() { // BACK UP: OK <<<<-----
-      //   const data = new FormData();
-      //   data.append('title', this.photo.title)
-      //   data.append('image', this.selectedFile, this.selectedFile.name)
-      //   const config =  {
-      //     header : {
-      //         'Content-Type': 'multipart/form-data'
-      //     }
-      //   }
-      //   axios.post(
-      //     'http://localhost:4200/api/photos',  
-      //     data, 
-      //     { headers: authHeader() },
-      //     config,
-      //     // { onUploadProgress: uploadEvent => {
-      //     //     console.log('Upload Progress : ' + Math.round( uploadEvent.loading / uploadEvent.total * 100 ) + ' %' )
-      //     //   } 
-      //     // }
-      //   )
-      //   .then( res=> {
-      //       console.log(res);
-      //       // this.$forceUpdate();
-      //       this.fetchAllPhotosAction()
-      //     },
-      //       error => {
-      //          this.loading = false;
-      //          this.photo.title ='';
-      //          this.input.value= '';
-
-      //          this.message = (error.response && error.response.data) || error.message || error.toString();
+      //   this.loading = true;
+      //   this.$validator.validateAll()
+      //   .then( isValid => {
+      //       if(!isValid) {
+      //           this.loading = false;
+      //           this.photo.title= "";
+      //           return;
       //       }
-      //   )
+      //         const data = new FormData();
+      //         data.append('title', this.photo.title)
+      //         data.append('image', this.selectedFile, this.selectedFile.name)
+      //         const config =  {
+      //           header : {'Content-Type': 'multipart/form-data' }
+      //         }
+
+      //       if(this.photo.title ) {
+      //         axios.post( 'http://localhost:4200/api/photos', data, { headers: authHeader() }, config )
+      //         .then(() => {
+      //             this.fetchAllPhotosAction()
+      //             this.loading = false;
+      //             this.$refs.imageFile.value = '';
+      //             this.$refs.title.value = '';
+      //           },
+      //             error => {
+      //               this.loading = false;
+      //               this.photo.title ='';
+      //               this.message = (error.response && error.response.data) || error.message || error.toString();
+      //             }
+      //         )
+      //     }
+      //   });
       // },
-
-
-//==============================================================
-
-      ...mapActions(['fetchAllPhotosAction', 'addOnePhotoAction']),
-  
+      
+      
     },
 
     created() {
