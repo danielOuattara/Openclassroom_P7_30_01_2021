@@ -1,8 +1,6 @@
 
-
 export default class Photo {
-    constructor( title, imageUrl ) {                     
+    constructor( title) {                     
         this.title = title;
-        this.imageUrl = imageUrl;
     }
 }

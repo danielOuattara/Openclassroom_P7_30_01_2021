@@ -10,17 +10,9 @@ const API_URL = "http://localhost:4200/api/users";
 
 class UserService {
     
-    // getPublicContent() {
-    //     return axios.get(API_URL + "all"); 
-    // }
-
     getUserBoard() {
         return axios.get(API_URL + "/userboard", { headers: authHeader() });
     }
-
-    // getModeratorBoard() {
-    //     return axios.get(API_URL + "mod", { headers: authHeader() });
-    // }
 
     getAdminBoard() {
         return axios.get(API_URL + "/adminboard", { headers: authHeader() });
@@ -37,6 +29,9 @@ class UserService {
     updateOneUser() {
         return axios.put(API_URL + "/:userUuid ", { headers: authHeader() })
     }
+
+    searchUsers() {}  // ## TO DO
+
 }
 
 export default new UserService();

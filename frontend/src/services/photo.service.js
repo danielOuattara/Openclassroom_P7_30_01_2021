@@ -31,6 +31,10 @@ class PhotoService {
     deleteAllPhotoFromOneUser() {
         return axios.delete(API_URL + "/userUuid", { headers: authHeader() })
     }
+
+    searchPhoto() {}  // TODO !
+    
+
 }
 
 export default new PhotoService();

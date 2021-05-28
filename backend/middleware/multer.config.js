@@ -7,14 +7,22 @@ const MIME_TYPES = {
     'image/png' :  'png',
 }
 
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb("Please upload only images.", false);
+  }
+};
+
 const storage = multer.diskStorage({
 
         destination: (req, file, callback) => {
-            if(req.body.event === "photos")  {
-                callback(null, "images/photos")
+            if(req.body.event === "avatars")  {
+                callback(null, "images/avatars")
             }
             else {
-                callback(null, "images/avatars") 
+                callback(null, "images/photos") 
             }
         },
         

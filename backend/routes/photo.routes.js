@@ -5,6 +5,7 @@ const controller = require("../controllers/photo.controllers.js");
 const controllerLikes = require("../controllers/photo.likes.controllers.js");
 const controllerComments = require("../controllers/photo.comments.controllers.js");
 // --------------------------------------------------------------------------------------------------
+
 router.post("/",             authJwt, /* checksPhoto.title, checksPhoto.image, */ multer, controller.addPhoto);
 router.get("/",              authJwt, controller.getAllPhoto);
 router.get("/:photoUuid",    authJwt, checksPhoto.photoKnown, controller.getOnePhoto);

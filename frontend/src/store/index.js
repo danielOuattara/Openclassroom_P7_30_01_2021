@@ -8,6 +8,9 @@ import { photos } from "./modules/photos.js"
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules: { auth, photos }
+    modules: { 
+        auth, 
+        photos 
+    }
 });
 

@@ -7,13 +7,14 @@ const fs = require("fs");
 //-----------------------------------------------------------------------------------------
 
 exports.addPhoto = (req, res)=> {
+
+    console.log( " REQUETES : ", req)
     const image = { 
-      photos: req.body.event,
       title: req.body.title, 
       imageUrl:`${req.protocol}://${req.get('host')}/images/photos/${req.file.filename}` 
     };
     Photo.create( {...image, ownerId: req.userId } )
-    .then( () =>  {
+    .then(() =>  {
        res.status(200).json({message: 'Photo Successsfully Posted !'})})
     .catch( err => res.status(400).json({ message: err.message}) )
 };

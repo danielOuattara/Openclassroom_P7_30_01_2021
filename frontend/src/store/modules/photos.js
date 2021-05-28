@@ -13,21 +13,38 @@ export  const photos = {
 
     actions: {
 
-        async fetchAllPhotos( {commit}) {
+        async fetchAllPhotosAction( {commit}) {
             try {
                 const res = await photoService.getAllPhoto();
-                commit('getAllPhotos', res.data);
+                commit('getAllPhotosMutation', res.data);
                 return await Promise.resolve(res.data);
             } catch (err) {
-                commit("errGetAllPhotos");
+                commit("errGetAllPhotosMutation");
                 return Promise.reject(err);
             }
-        }
+        },
+
+        async addOnePhotoAction( {commit}, title, file) {
+            try {
+                const res = await photoService.addPhoto(title, file);
+                commit('addOnePhotoMutation', res.data);
+                return await Promise.resolve(res.data);
+            } catch (err) {
+                commit("errAddOnePhoto");
+                return Promise.reject(err);
+            }
+        },
+
+
+
     },
 
     mutations: {
 
-        getAllPhotos: (state, photos) => state.photos = photos,
-        errGetAllPhotos: (state) => state.photos = [],
+        getAllPhotosMutation: (state, photos) => state.photos = photos,
+        errGetAllPhotosMutation: (state) => state.photos = [],
+
+        addOnePhotoMutation:( state, photo) => state.photos.unshift(photo),
+        errAddOnePhoto: (state) => state.photos,
     }
 }
