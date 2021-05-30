@@ -147,9 +147,9 @@ exports.deleteAllPhotoFromOneUser = async (req, res) => {
           truncate: false,      
           })
       if (num === 0) {
-          return res.status(404).send({message:`No photo found for this user`});
+          return res.status(404).send(`No photo found for this user`);
       } 
-      res.status(201).send({ message: `${num} photo(s) from user successfully deleted `});
+      res.status(201).send(`${num} photo(s) successfully deleted `);
     
     } catch(err) {
         res.status(500).json(err.message) 

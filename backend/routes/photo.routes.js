@@ -10,11 +10,11 @@ router.post("/",  authJwt, multer, controller.addPhoto);
 router.get("/",   authJwt, controller.getAllPhoto);
 router.get("/:photoUuid",    authJwt, controller.getOnePhoto);
 router.delete("/:photoUuid", authJwt, controller.deleteOnePhoto);
-router.delete("/",           authJwt, controller.userDeleteAllPhotos);
+router.delete("/",  authJwt, controller.userDeleteAllPhotos);
 router.delete("/user/:userUuid",  authJwt, controller.deleteAllPhotoFromOneUser);
 
 router.post("/:photoUuid/likes", authJwt, controllerLikes.photoLikes);
-router.get("/:photoUuid/likes", authJwt, controllerLikes.photoLikesCounting);
+router.get("/:photoUuid/likes" , authJwt, controllerLikes.photoLikesCounting);
 
 router.post("/:photoUuid/comments", authJwt, controllerComments.createComment);
 router.get("/:photoUuid/comments",  authJwt, controllerComments.getPhotoAllComment);
@@ -22,6 +22,6 @@ router.get("/:photoUuid/comments/:commentUuid",    authJwt, controllerComments.g
 router.put("/:photoUuid/comments/:commentUuid",    authJwt, controllerComments.updateOneComment);
 router.delete("/:photoUuid/comments/:commentUuid", authJwt, controllerComments.deleteOneComment);
 router.delete("/:photoUuid/comments/",             authJwt, controllerComments.deleteAllCommentFromOnePhoto);
-router.delete("/:userUuid/comments/",              authJwt, controllerComments.deleteAllCommentFromOneUser);
+router.delete("/user/:userUuid/comments/",              authJwt, controllerComments.deleteAllCommentFromOneUser);
 
 module.exports = router;
