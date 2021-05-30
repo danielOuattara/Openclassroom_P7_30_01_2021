@@ -75,6 +75,7 @@ exports.login = async (req, res) => {
 //-------------------------------------------------------------------------------------------------
 
 exports.signout = (req, res) => { 
+    console.log(req);
     
     User.findOne({ where: { uuid: req.params.userUuid } })
     .then( user => {

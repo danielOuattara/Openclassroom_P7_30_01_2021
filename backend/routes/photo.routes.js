@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const { authJwt, checksPhoto, checks} = require("../middleware");
-const  multer = require ('./../middleware/multer.config.js');
+const { authJwt, multer} = require("../middleware");
 
 const controller = require("../controllers/photo.controllers.js");
 const controllerLikes = require("../controllers/photo.likes.controllers.js");
@@ -10,9 +9,9 @@ const controllerComments = require("../controllers/photo.comments.controllers.js
 router.post("/",  authJwt, multer, controller.addPhoto);
 router.get("/",   authJwt, controller.getAllPhoto);
 router.get("/:photoUuid",    authJwt, controller.getOnePhoto);
-router.delete("/:photoUuid", authJwt, checks.ownerOrAdmin, controller.deleteOnePhoto);
-router.delete("/",           authJwt, checks.ownerOrAdmin, controller.deleteUserAllPhoto);
-router.delete("/:userUuid",  authJwt, controller.deleteAllPhotoFromOneUser);
+router.delete("/:photoUuid", authJwt, controller.deleteOnePhoto);
+router.delete("/",           authJwt, controller.userDeleteAllPhotos);
+router.delete("/user/:userUuid",  authJwt, controller.deleteAllPhotoFromOneUser);
 
 router.post("/:photoUuid/likes", authJwt, controllerLikes.photoLikes);
 router.get("/:photoUuid/likes", authJwt, controllerLikes.photoLikesCounting);
