@@ -26,7 +26,7 @@ exports.getOneUser = (req, res) => {
       include: ['photos', 'comments', 'likes']
     })
     .then( user  => {
-      return res.status(200).json(user)
+      return res.status(200).json(user);
     })
     .catch( err => res.status(500).json( { message: err.message || `Error while retrieving user`} )) 
   };

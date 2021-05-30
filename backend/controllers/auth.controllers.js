@@ -72,10 +72,8 @@ exports.login = async (req, res) => {
         )
         res.status(201).json({
             user,
-            email: user.email,
-            id: user.id,
-            username: user.username,
-            roles: authorities,
+            uuid: user.uuid,
+            // roles: authorities,
             accessToken: token
         });
         } 

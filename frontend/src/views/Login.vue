@@ -75,8 +75,8 @@ export default {
 
     methods: {
         
-       async handleLogin() {
-           try {
+        async handleLogin() {
+            try {
                 this.loading = true;
                 const isValid = await this.$validator.validateAll();
                 if(!isValid) {
@@ -87,7 +87,7 @@ export default {
                     await this.$store.dispatch("auth/loginAction", this.user)
                     this.$router.push("/home");
                 }
-           } catch(error) {
+            } catch(error) {
                 this.loading = false;
                 this.message = (error.response && error.response.data) || error.message || error.toString();
            }

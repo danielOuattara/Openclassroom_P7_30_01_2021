@@ -15,7 +15,6 @@ class PhotoService {
         const config =  {
             header : {'Content-Type': 'multipart/form-data' }
         }
-        
         return axios.post(API_URL + "/", data, { headers: authHeader() }, config)  
     }
 

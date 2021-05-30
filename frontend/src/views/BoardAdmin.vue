@@ -1,9 +1,9 @@
 
 <template>
   <div class="container">
-    <header class="jumbotron">
+    <div class="jumbotron">
       <h3>{{content}}</h3>
-    </header>
+    </div>
   </div>
 </template>
 

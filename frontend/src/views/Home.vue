@@ -1,15 +1,14 @@
 <template>
   <div class="container">
-    <header class="jumbotron">
+    <div class="jumbotron">
       <h3>Wall of photo</h3>
-    </header>
+    </div>
     <div>
       <h3>Add Photo</h3> <!-- --------------------------------  Section: Add  Photo-->
         <form name="form" @submit.prevent="addOnePhoto">
                 <div class="form-group">
                     <label for="title">Choose a title  : </label>
                     <input  
-                        @change.prevent="showEvent"
                         v-validate="'required'" 
                         type="text" 
                         v-model="photo.title" 
@@ -62,14 +61,27 @@
       </div>
 
       <h3>View Photo</h3>  <!-- ---------------------------------------------- Section: Get All photos -->
-      <div class="todos">
+      <div class="photos">
         <div v-for="photo in allPhotos" 
              :key="photo.id"
              class="photo-container">
+              <!-- <h4>{{photo}}</h4> -->
+
+              <div>
+                <span> {{photo.title}}</span>
+                <span> {{photo.ownerId}}</span>
+                <!-- <span> {{photo.imageUrl}}</span> -->
+                <!-- <span> {{photo.owner.firstName}}</span> -->
+                <!-- <span> {{photo.owner.firstName}}</span> -->
+
+
+              </div>
               <img :src="photo.imageUrl" 
                    :alt='"picture of " + photo.title'
                    class="photos">
-        </div> <!-- ----------------------------------------------------- -->
+              <br><hr><br>
+        </div> 
+        <!-- ----------------------------------------------------- -->
       </div> 
   </div>
 </template>
@@ -83,7 +95,7 @@ export default {
     name: 'Home',
     data() {
         return {
-          photo: new Photo(''),
+          photo: new Photo('', ''),
           loading: false,
           title:'',
           message:'',
@@ -99,12 +111,23 @@ export default {
     },
 
     methods: {
-      
-      ...mapActions(['fetchAllPhotosAction', 'addOnePhotoAction']),
 
-      showEvent(event) {
-        console.log(event);
-      },
+      ...mapActions(['fetchAllPhotosAction'/* , 'addOnePhotoAction' */]),
+
+
+      //   setInterval(() => { 
+      //     console.log("hello refresh one") }, 3000)
+      // })
+
+      // setInterval(()=> { console.log("refresh photos : "); this.fetchAllPhotosAction()}, 5000),
+
+
+      // refreshPhotos: ()=> {
+      //   setInterval(()=> {
+      //     console.log("hello refresh ");
+      //     this.fetchAllPhotosAction()
+      //     }, 1000)
+      // },
 
       onFileSelect(event) {
         this.selectedFile =  event.target.files[0];
@@ -125,13 +148,16 @@ export default {
             this.loading = false;
             this.$refs.imageFile.value = '';
             this.$refs.title.value = '';
+            // this.photo.title = '';
 
           } catch(error) {
-                this.loading = false;
-                this.photo.title ='';
-                this.message = (error.response && error.response.data) || error.message || error.toString();
+              this.loading = false;
+              this.photo.title ='';
+              this.$refs.title.value = '';
+              this.message = (error.response && error.response.data) || error.message || error.toString();
             }
       },
+
       // addOnePhoto() { //  // BACK UP ###
       //   this.loading = true;
       //   this.$validator.validateAll()
@@ -142,7 +168,7 @@ export default {
       //           return;
       //       }
 
-      //       if(this.photo.title ) {       addOnePhotoAction
+      //       if(this.photo.title ) {     //addOnePhotoAction
       //         this.$store.dispatch("photo/addOnePhotoAction", this.photo)
       //         .then(() => {
       //             this.fetchAllPhotosAction()
@@ -161,8 +187,7 @@ export default {
       // },
 
 
-
-      // onUpload() { // BACK UP: OK <<<<-----
+      // addOnePhoto() { // BACK UP: OK <<<<-----
       //   this.loading = true;
       //   this.$validator.validateAll()
       //   .then( isValid => {
@@ -181,10 +206,10 @@ export default {
       //       if(this.photo.title ) {
       //         axios.post( 'http://localhost:4200/api/photos', data, { headers: authHeader() }, config )
       //         .then(() => {
-      //             this.fetchAllPhotosAction()
       //             this.loading = false;
       //             this.$refs.imageFile.value = '';
       //             this.$refs.title.value = '';
+      //             this.fetchAllPhotosAction()
       //           },
       //             error => {
       //               this.loading = false;
@@ -201,7 +226,12 @@ export default {
 
     created() {
       this.fetchAllPhotosAction();
-      },
+    },
+
+    mounted() {
+      // setInterval(()=> { console.log("refresh photos : "); this.fetchAllPhotosAction()}, 5000) 
+    }
+
 };
 
 </script>
