@@ -16,7 +16,7 @@ module.exports = {
       },
     
       title: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING(90),
         allowNull: false,
         required: true,
         validate: {

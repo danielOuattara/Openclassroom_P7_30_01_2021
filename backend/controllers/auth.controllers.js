@@ -80,7 +80,10 @@ exports.signout = (req, res) => {
     .then( user => {
         if (!user) {
              return res.status(404).json({ Error: "User unknown!"});
-      }
+        }
+        if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+           return res.status(403).json({ Error : "Non Authorized !" })  
+        }
         user.destroy()
         .then(() => res.status(200).json("Account successfully deleted !"))
         .catch((error) => res.status(403).json({ Error: error.message }));

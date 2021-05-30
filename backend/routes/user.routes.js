@@ -6,7 +6,7 @@ const controller = require("./../controllers/user.controllers.js");
 
 router.get("/userboard" , authJwt, controller.userBoard);
 router.get("/adminboard", authJwt, checks.admin, controller.adminBoard);
-router.get("/:userUuid" , authJwt, /* checks.userKnown, */ controller.getOneUser);
+router.get("/:userUuid" , authJwt, controller.getOneUser);
 router.get("/"          , authJwt, checks.admin, controller.getAllUsers);
 router.put("/:userUuid" , authJwt, checks.ownerOrAdmin, multer, controller.updateUser);
 

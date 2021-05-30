@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     
       title: {
-        type: DataTypes.STRING(30),
+        type: DataTypes.STRING(90),
         allowNull: false,
         required: true,
         validate: {
@@ -61,10 +61,10 @@ module.exports = (sequelize, DataTypes) => {
         required: true,
         validate: {
           notEmpty: { msg: "iamgeUrl can not be empty"},
-          // againstInjection(imageUrl) {
-          //   const pattern =  /[\[\]<>=0]+/gi;  // do not trust user input !
-          //   if ( pattern.test(imageUrl) ) throw new Error("Fill in text Invalid !");  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
-          // },
+          againstInjection(imageUrl) {
+            const pattern =  /<>=01+/gi;  // do not trust user input !
+            if ( pattern.test(imageUrl) ) throw new Error("Fill in text Invalid !");  //  Restriction from  using characters:  [ \ [ \ ] < > = 0 ]
+          },
         },
       },
 

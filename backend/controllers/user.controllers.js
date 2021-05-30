@@ -41,7 +41,7 @@ exports.getOneUser = (req, res) => {
     })
     .then( user  => {
       if (!user) {
-         return res.status(404).json({ Error: "User unknown !"});
+         return res.status(404).json("User unknown !");
       }
       return res.status(200).json(user);
     })
@@ -52,19 +52,23 @@ exports.getOneUser = (req, res) => {
 
 exports.getAllUsers = (req, res) => {
   User.findAll( {
-    // include: ['photos', 'comments', 'likes'],
-      include: [ 
-        {
-          model: Photo,
-          as: 'photos',
-          include: [
-            { model: Like, as:'likes'}, 
-            { model: Comment, as:'comments'},
-          ]
-        }
-      ]
+      // include: [ 
+      //   {
+      //     model: Photo,
+      //     as: 'photos',
+      //     include: [
+      //       { model: Like, as:'likes'}, 
+      //       { model: Comment, as:'comments'},
+      //     ]
+      //   }
+      // ]
   })
-  .then( users => res.status(200).json(users))
+  .then( users =>  {
+    if (!users) {
+      return res.status(404).json("No User Found !");
+    }
+    res.status(200).json(users)
+  })
   .catch( error => res.status(400).json( {error: error.message} ));
 }
 
@@ -162,16 +166,16 @@ exports.updateUser =  async (req, res) => {
       // const userObject = req.file ? req.body.user ? fullData: avatarOnly : textOnly;
 
       // console.log( "userObject = ",  userObject);
-      console.log( "userObject = ",  userObject);
+      // console.log( "userObject = ",  userObject);
 
       // if ( Object.entries(userObject).length === 0 && userObject.constructor === Object) {
       //     return res.status(400).json({Error: "Nothing provided. Nothing to update. Try again !"})
       // }
+
       const user = await User.findOne( { where: { uuid: req.params.userUuid }} );
       if (!user) {
           return res.status(404).json({ Error: "User unknown !"});
       }
-
       if(req.file) {
 
           if(req.body.user && !user.avatar) {
@@ -218,7 +222,6 @@ exports.updateUser =  async (req, res) => {
       //         await user.update( userObject)
       //         res.status(201).json( "User data & photo successfully updated ! ")
           
-
       //     } else if (!req.body.user) {
       //         const filename = user.avatar.split('/avatars/')[1];
       //         fs.unlink(`images/avatars/${filename}`, (err) => {
@@ -227,7 +230,6 @@ exports.updateUser =  async (req, res) => {
       //         await user.update( userObject)
       //         res.status(201).json( "Photo successfully updated ! ")
           
-
       //     } else {
       //         const filename = user.avatar.split('/avatars/')[1];
       //         fs.unlink(`images/avatars/${filename}`, (err) => {
@@ -236,9 +238,6 @@ exports.updateUser =  async (req, res) => {
       //         await user.update(userObject)
       //             res.status(201).json( "User data & photo successfully updated ! ")
       //     }
-
-
-
 
       // } else {
       //     await user.update(userObject)
