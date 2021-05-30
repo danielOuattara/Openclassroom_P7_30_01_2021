@@ -11,7 +11,7 @@ const email = (req, res, next) => {
     }
     next();
 }
-// -----------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 
 const duplicateUser = async (req, res, next) => {
     try {
@@ -56,30 +56,6 @@ const roles = (req, res, next) => {
     }
     next();
 }
-
-// --------------------------------------------------------------------------
-
-const emailOrUsername = (req, res, next) => {
-    if (!req.body.emailOrUsername) {
-        return res.status(400).json("Error : Provide email OR username");
-    }
-    next();
-}
-// ------------------------------------------------------------------------------
-
-const userKnown = async (req, res, next) => {
-    try {
-        const user = await User.findOne({ where : {uuid: req.params.userUuid }});
-        if (!user) {
-            return res.status(404).json({ Error: "User unknown TEST !"});
-        }
-        next();
-    } 
-    catch(err) { 
-        err => res.status(500).json(err.message)
-    }
-}
-
 // ------------------------------------------------------------------------------
 
 const ownerOrAdmin = async (req, res, next) => {
@@ -105,15 +81,11 @@ const admin = (req, res, next) => {
 
 // ------------------------------------------------------------------------------
 
-
-
 const checks = {
     email,
-    emailOrUsername,
     password,
     duplicateUser,
     roles, 
-    userKnown,
     ownerOrAdmin,
     admin,
 };

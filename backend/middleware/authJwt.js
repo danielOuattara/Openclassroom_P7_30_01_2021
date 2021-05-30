@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
             return res.status(401).json("Token not provided !");
         }
         jwt.verify( token, config.secret, (err, decoded) => {
-            if(err) return res.status(401).json({ Error : "Unauthorized !"});
+            if(err) return res.status(401).json("Unauthorized !");
             req.userUuid = decoded.uuid;
             req.userId = decoded.id;
             req.userRoles = decoded.userRoles;
@@ -20,8 +20,4 @@ module.exports = async (req, res, next) => {
     catch(err) { 
         err => res.status(401).json(err.message)
     }
- 
 };
-
-
-//test

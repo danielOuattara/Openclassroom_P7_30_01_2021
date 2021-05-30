@@ -34,6 +34,9 @@ exports.signin =  async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
+        if (!req.body.emailOrUsername) {
+            return res.status(400).json("Error : Provide email OR username");
+        }
         const user = await User.findOne({ 
             where: { [Op.or]: [
                         {username: req.body.emailOrUsername}, 
@@ -44,23 +47,15 @@ exports.login = async (req, res) => {
         if(!user)  {
             return res.status(401).json("Login failed, try again !");
         }
-
         const validPassword = await bcrypt.compare( req.body.password, user.password);
         if(!validPassword) {
             return res.status(401).json("Login failed, try again !");
         }
-        
         const authorities = [];
         const roles = await user.getRoles();
-        
         for (const role of roles) {
             authorities.push("ROLE_" + role.name.toUpperCase());
         }
-
-        // for (let i = 0; i < roles.length; i++) {
-        //     authorities.push("ROLE_" + roles[i].name.toUpperCase());
-        // }
-
         const token = jwt.sign(
             {
                 uuid: user.uuid,
@@ -70,12 +65,7 @@ exports.login = async (req, res) => {
             config.secret,
             {expiresIn: '12h'}
         )
-        res.status(201).json({
-            user,
-            uuid: user.uuid,
-            // roles: authorities,
-            accessToken: token
-        });
+        res.status(201).json({ accessToken: token });
         } 
     catch(err) {
         return res.status(401).json(err.message);
@@ -88,6 +78,9 @@ exports.signout = (req, res) => {
     
     User.findOne({ where: { uuid: req.params.userUuid } })
     .then( user => {
+        if (!user) {
+             return res.status(404).json({ Error: "User unknown!"});
+      }
         user.destroy()
         .then(() => res.status(200).json("Account successfully deleted !"))
         .catch((error) => res.status(403).json({ Error: error.message }));
@@ -97,5 +90,5 @@ exports.signout = (req, res) => {
 
 //-------------------------------------------------------------------------------------------------
 
-
+exports.logout = (req, res) => {}
 

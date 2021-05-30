@@ -24,18 +24,18 @@ exports.addPhoto = (req, res)=> {
 exports.getAllPhoto = (req, res) => {
   Photo.findAll({
     where: {}, 
-        include: [
-          {
-            model: Comment,
-            as: 'comments',
-            include: [{model: User, as: 'owners'}]
-          }, 
-          {
-            model: Like,
-            as: 'likes',
-            include: [{model: User, as: 'owners'}]
-        },
-      ],
+    include: [
+      {
+        model: Comment,
+        as: 'comments',
+        include: [{model: User, as: 'owners'}]
+      }, 
+      {
+        model: Like,
+        as: 'likes',
+        include: [{model: User, as: 'owners'}]
+      },
+    ],
 
     order: [
       ['createdAt', 'DESC']
