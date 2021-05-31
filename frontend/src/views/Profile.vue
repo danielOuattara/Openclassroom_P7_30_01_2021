@@ -7,33 +7,19 @@
       </h3>
     </div>
 
-    <div>
-        <button @click="fetchUser">Click to fecth user</button>
-        <ul>
-          <li v-for=" item, index in user" :key='index'>
-              {{user.item}}
-          </li>
-        </ul>
+    <div class="profil-container">
+        <img 
+          class="user-avatar"
+          :src="userData.avatar" 
+          :alt="userData.firstName + ' ' + userData.lastName + ' picture'"
+        >
+        <h2>FirstName :  {{userData.firstName}}</h2>
+        <h2> LastName : {{userData.lastName}} </h2>
+        <p> About me: {{userData.aboutMe}} </p>
     </div>
 
-
-
-    <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p>
-    <p>
-      <strong>Id:</strong>
-      {{currentUser.id}}
-    </p>
-    <p>
-      <strong>Email:</strong>
-      {{currentUser.email}}
-    </p>
-    <strong>Authorities:</strong>
-    <ul>
-      <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
-    </ul>
+    <button @click="updateUser">Update profile</button>
+    <button @click="deleteUser">Delete account</button>
 
   </div>
 </template>
@@ -48,6 +34,8 @@ export default {
   data() {
     return {
       message: '',
+      user: '',
+      photos: this.userData.photos,
     }
   },
 
@@ -72,18 +60,38 @@ export default {
     async fetchUser() { 
         try{ 
             const userUuid = this.currentUser.uuid; 
-            console.log("hello");      
-            await this.$store.dispatch("user/fetchUserAction", userUuid)
+            console.log(userUuid)
+            await this.$store.dispatch("fetchUserAction", userUuid)
         } catch(error) {
             this.message = (error.response && error.response.data) || error.message || error.toString();
         }
     },
 
+    async updateUser() {
+      try {"hello"} catch(err) { "hello"}
+    },
 
 
+    async deleteUser() {
+      try {"hello"} catch(err) { "hello"}
+    }
 
-   },
+  },
 
-  created() { }
+  created() {
+    // this.fetchUserAction();
+    this.fetchUser()
+   }
 };
 </script>
+
+
+<style scoped>
+.profile-container {
+  display: grid;
+}
+
+.user-avatar {
+  max-width: 20vw;
+}
+</style>

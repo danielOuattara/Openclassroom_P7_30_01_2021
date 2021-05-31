@@ -60,7 +60,13 @@
             </form>
       </div>
 
-      <h3>View Photo</h3>  <!-- ---------------------------------------------- Section: Get All photos -->
+
+      <!-- ============================================= Section: Get All photos ===== -->
+
+
+
+
+      <h3>View Photo</h3>  
       <div class="photos">
         <div v-for="photo in allPhotos" 
              :key="photo.id"
@@ -68,9 +74,11 @@
               <!-- <h4>{{photo}}</h4> -->
 
               <div>
-                <span> {{photo.title}}</span>
-                <span> {{photo.ownerId}}</span>
-                <!-- <span> {{photo.imageUrl}}</span> -->
+                <div>{{photo.title}}</div>
+                <div>{{photo.ownerId}}</div>
+                <div>{{photo.imageUrl}}</div>
+                <div>{{photo.comments}}</div>
+
                 <!-- <span> {{photo.owner.firstName}}</span> -->
                 <!-- <span> {{photo.owner.firstName}}</span> -->
 
@@ -112,7 +120,7 @@ export default {
 
     methods: {
 
-      ...mapActions(['fetchAllPhotosAction'/* , 'addOnePhotoAction' */]),
+      ...mapActions(['fetchAllPhotosAction', 'addOnePhotoAction']),
 
 
       //   setInterval(() => { 
@@ -143,7 +151,7 @@ export default {
                 return;
             }
             
-            await this.$store.dispatch("photo/addOnePhotoAction", this.photo)
+            await this.$store.dispatch("addOnePhotoAction", this.photo)
             await this.fetchAllPhotosAction()
             this.loading = false;
             this.$refs.imageFile.value = '';

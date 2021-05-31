@@ -5,9 +5,7 @@
        <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" alt=""/>
 
         <form name="form" @submit.prevent="handleSignin">
-
             <div v-if="!successful">
-
                 <div class="form-group">
                     <label for="email">Email : </label>
                     <input v-model="user.email" 
@@ -84,8 +82,9 @@ export default {
                 if (isValid) {
                     this.$store.dispatch('auth/signin', this.user)
                     .then( data => {
-                            this.message = data.message;
+                            this.message = data;
                             this.successful = true;
+                            // this.$router.push("/login");
                         },
                         error => {
                             this.message = (error.response && error.response.data) || error.message || error.toString();

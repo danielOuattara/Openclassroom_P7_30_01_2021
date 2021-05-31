@@ -4,37 +4,39 @@
 import axios from "axios";
 import authHeader from "./auth.header.js";
 
-const API_URL = "http://localhost:4200/api/photos/:photoUuid/comments";
-const API_URL_2 = "http://localhost:4200/api/photos/:userUuid/comments";
+// const API_URL = "http://localhost:4200/api/photos/:photoUuid/comments";
+// const API_URL_2 = "http://localhost:4200/api/photos/:userUuid/comments";
+
+const API_URL = "http://localhost:4200/api/photos/";
 
 class PhotoCommentsService {
     
-    createComment() {
-        return axios.post(API_URL , { headers: authHeader() })
+    createComment(photoUuid) {
+        return axios.post(API_URL + `/${photoUuid}/comments` , { headers: authHeader() })
     }
     
-    getAllPhotoComments() {
-        return axios.get(API_URL , { headers: authHeader() })
+    getAllPhotoComments(photoUuid) {
+        return axios.get(API_URL + `/${photoUuid}/comments` , { headers: authHeader() })
     }
 
-    getOneComment() {
-        return axios.get(API_URL + "/:commentUuid", { headers: authHeader() })
+    getOneComment(photoUuid, commentUuid) {
+        return axios.get(API_URL + `/${photoUuid}/comments/${commentUuid}`, { headers: authHeader() })
     }
 
-    updateOneComment() {
-        return axios.put(API_URL + "/:commentUuid", { headers: authHeader() })
+    updateOneComment(photoUuid, commentUuid) {
+        return axios.put(API_URL + `/${photoUuid}/comments/${commentUuid}`, { headers: authHeader() })
     }
 
-    deleteOneComment() {
-        return axios.delete(API_URL + "/:commentUuid", { headers: authHeader() })
+    deleteOneComment(photoUuid, commentUuid) {
+        return axios.delete(API_URL + `/${photoUuid}/comments/${commentUuid}`, { headers: authHeader() })
     }
 
-    deleteAllCommentsFromOnePhoto() {
-        return axios.delete(API_URL + "/", { headers: authHeader() })
+    deleteAllCommentsFromOnePhoto(photoUuid) {
+        return axios.delete(API_URL + `/${photoUuid}/comments`, { headers: authHeader() })
     }
 
-    deleteAllCommentsFromOneUser() {
-        return axios.delete(API_URL_2 , { headers: authHeader() })
+    deleteAllCommentsFromOneUser(userUuid) {
+        return axios.delete(API_URL + `user/${userUuid}/comments`, { headers: authHeader() })
     }
 }
 

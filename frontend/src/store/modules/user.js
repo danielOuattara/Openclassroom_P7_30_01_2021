@@ -13,10 +13,10 @@ export const user = {
 
     actions: {
 
-        async fetchUserAction( {commit}, uuid) {
+        async fetchUserAction( {commit}, userUuid) {
             try {
-
-                const user = await userService.getOneUser(uuid);
+                console.log(userUuid);
+                const user = await userService.getOneUser(userUuid);
                 commit('fetchUserMutation', user.data);
                 return await Promise.resolve(user.data);
             }      

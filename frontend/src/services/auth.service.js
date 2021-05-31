@@ -40,8 +40,8 @@ class AuthService {
         })
     }
 
-    signout () { 
-         return axios.delete(API_URL + "/:userUuid", { headers: authHeader() })
+    signout (userUuid) { 
+         return axios.delete(API_URL + `/${userUuid}`, { headers: authHeader() })
     }  
 }
 

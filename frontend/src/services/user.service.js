@@ -18,16 +18,16 @@ class UserService {
         return axios.get(API_URL + "/adminboard", { headers: authHeader() });
     }
 
-    getOneUser() {
-        return axios.get(API_URL + "/:userUuid", { headers: authHeader() })
+    getOneUser(userUuid) {
+        return axios.get(API_URL + `/${userUuid}`, { headers: authHeader() })
     }
 
     getAllUsers() {
         return axios.get(API_URL + "/", { headers: authHeader() })
     }
 
-    updateOneUser() {
-        return axios.put(API_URL + "/:userUuid ", { headers: authHeader() })
+    updateOneUser(userUuid) {
+        return axios.put(API_URL + `/${userUuid}` , { headers: authHeader() })
     }
 
     searchUsers() {}  // ## TODO

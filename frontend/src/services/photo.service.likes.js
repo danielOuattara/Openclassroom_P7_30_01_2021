@@ -9,12 +9,12 @@ const API_URL = "http://localhost:4200/api/photos";
 
 class PhotoLikesService {
     
-    photoLikes() {
-        return axios.post(API_URL + "/:photoUuid/likes", { headers: authHeader() })
+    photoLikes(photoUuid) {
+        return axios.post(API_URL + `/${photoUuid}/likes`, { headers: authHeader() })
     }
 
-    photoLikesCounting() {
-        return axios.get(API_URL + "/:photoUuid/likes", { headers: authHeader() })
+    photoLikesCounting(photoUuid) {
+        return axios.get(API_URL + `/${photoUuid}/likes`, { headers: authHeader() })
     }
 }
 

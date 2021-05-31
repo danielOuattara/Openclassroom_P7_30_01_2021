@@ -69,7 +69,7 @@ export const photo = {
 
         async fetchAllPhotosAction( {commit}) {
             try {
-                const photos = await photoService.getAllPhoto();
+                const photos = await photoService.getAllPhotos();
                 commit('getAllPhotosMutation', photos.data);
                 return await Promise.resolve(photos.data);
             } catch (err) {

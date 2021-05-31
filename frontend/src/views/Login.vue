@@ -3,7 +3,6 @@
         <div class="card card-container">
             <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" alt="">
             <form name="form" @submit.prevent="handleLogin">
-
                 <div class="form-group">
                     <label for="emailOrUsername">Username OR email : </label>
                     <input  type="text" 
@@ -17,7 +16,6 @@
                             role="alert"> Email OR Username required !
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="password">Password : </label>
                     <input type="password" 
@@ -25,11 +23,12 @@
                            v-validate="'required'" 
                            class="form-control" 
                            name="password"/>
-                    <div class="alert alert-danger" 
-                         v-if="errors.has('password')" 
-                         role="alert"> Password is required !</div>
-                </div>
 
+                    <div   class="alert alert-danger" 
+                           v-if="errors.has('password')" 
+                           role="alert"> Password is required !
+                    </div>
+                </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" :disabled="loading">
                         <span v-show="loading" 
@@ -37,7 +36,6 @@
                         <span class="">Login</span>
                     </button>
                 </div>
-
                 <div class="form-group">
                     <div v-if="message" 
                          class="alert alert-danger" 
@@ -49,7 +47,6 @@
 </template>
 
 <script>
-
 import User from './../models/user.js';
 export default {
     name: "Login",
@@ -60,26 +57,22 @@ export default {
             message: ''
         };
     },
-
     computed: {
         loggedIn() {
             return this.$store.state.auth.status.loggedIn;
         }
     },
-
     created() {
         if (this.loggedIn) {
             this.$router.push("/profile");
         }
     },
-
     methods: {
-        
         async handleLogin() {
             try {
                 this.loading = true;
                 const isValid = await this.$validator.validateAll();
-                if(!isValid) {
+                if (!isValid) {
                     this.loading = false;
                     return;
                 }
@@ -92,28 +85,6 @@ export default {
                 this.message = (error.response && error.response.data) || error.message || error.toString();
            }
         },
-
-        // handleLogin() {  // OLD VERSION
-        //     this.loading = true;
-        //     this.$validator.validateAll()
-        //     .then( isValid => {
-        //         if(!isValid) {
-        //             this.loading = false;
-        //             return;
-        //         }
-        //         if (this.user.emailOrUsername && this.user.password) {
-        //             this.$store.dispatch("auth/loginAction", this.user)
-        //             .then(() => {
-        //                     this.$router.push("/home");
-        //                 },
-        //                 error => {
-        //                     this.loading = false;
-        //                     this.message = (error.response && error.response.data) || error.message || error.toString();
-        //                 }
-        //             );
-        //         }
-        //     });
-        // }
     }
 };
 </script>

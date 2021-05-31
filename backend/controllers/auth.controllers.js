@@ -19,10 +19,10 @@ exports.signin =  async (req, res) => {
                 }
             });
             await user.setRoles(roles);
-            res.status(200).send("User was registered successfully!")  
+            res.status(200).send("User registered successfully!")  
         } else {
             await user.setRoles([1])
-            res.status(200).send("User was registered successfully!") 
+            res.status(200).send("User registered successfully!") 
         }
     }
     catch(err){
@@ -65,7 +65,10 @@ exports.login = async (req, res) => {
             config.secret,
             {expiresIn: '12h'}
         )
-        res.status(201).json({ accessToken: token });
+        res.status(201).json({ 
+            accessToken: token, 
+            uuid:  user.uuid
+        });
         } 
     catch(err) {
         return res.status(401).send(err.message);
