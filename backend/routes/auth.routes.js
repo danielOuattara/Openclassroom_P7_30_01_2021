@@ -6,7 +6,8 @@ const controller = require("./../controllers/auth.controllers.js");
 //----------------------------------------------------------------------------
 
 router.post("/signin", checks.email, checks.duplicateUser, checks.password, checks.roles , controller.signin );
-router.post("/login" , checks.password, controller.login)
 router.delete("/signout/:userUuid", authJwt, controller.signout );
+// router.delete("/logout/:userUuid" , checks.password, controller.login) // TODO
+router.post("/login" , checks.password, controller.login)
 
 module.exports = router ;

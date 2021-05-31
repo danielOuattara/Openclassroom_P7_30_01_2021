@@ -12,7 +12,8 @@ class PhotoCommentsService {
     createComment() {
         return axios.post(API_URL , { headers: authHeader() })
     }
-    getAllPhotoComment() {
+    
+    getAllPhotoComments() {
         return axios.get(API_URL , { headers: authHeader() })
     }
 
@@ -28,11 +29,11 @@ class PhotoCommentsService {
         return axios.delete(API_URL + "/:commentUuid", { headers: authHeader() })
     }
 
-    deleteAllCommentFromOnePhoto() {
+    deleteAllCommentsFromOnePhoto() {
         return axios.delete(API_URL + "/", { headers: authHeader() })
     }
 
-    deleteAllCommentFromOneUser() {
+    deleteAllCommentsFromOneUser() {
         return axios.delete(API_URL_2 , { headers: authHeader() })
     }
 }

@@ -58,20 +58,6 @@ const roles = (req, res, next) => {
 }
 // ------------------------------------------------------------------------------
 
-const ownerOrAdmin = async (req, res, next) => {
-    try {
-        const user = await User.findOne({ where : {uuid: req.params.userUuid }});
-        if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-            return res.status(403).json({ Error : "Non Authorized !" })  
-        }
-        next();
-    } 
-    catch(err) { 
-        err => res.status(500).json(err.message)
-    }
-}
-// ------------------------------------------------------------------------------
-
 const admin = (req, res, next) => {
         if(!req.userRoles.includes("ROLE_ADMIN")){
             return res.status(403).json({ Error : "Non Authorized !" })  
@@ -86,7 +72,6 @@ const checks = {
     password,
     duplicateUser,
     roles, 
-    ownerOrAdmin,
     admin,
 };
 

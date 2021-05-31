@@ -19,14 +19,14 @@ exports.signin =  async (req, res) => {
                 }
             });
             await user.setRoles(roles);
-            res.status(200).json("User was registered successfully!")  
+            res.status(200).send("User was registered successfully!")  
         } else {
             await user.setRoles([1])
-            res.status(200).json("User was registered successfully!") 
+            res.status(200).send("User was registered successfully!") 
         }
     }
     catch(err){
-        return res.status(400).json({ Error : err.message})
+        return res.status(400).send(err.message)
     }
 }
 
@@ -35,7 +35,7 @@ exports.signin =  async (req, res) => {
 exports.login = async (req, res) => {
     try {
         if (!req.body.emailOrUsername) {
-            return res.status(400).json("Error : Provide email OR username");
+            return res.status(400).send("Provide email OR username");
         }
         const user = await User.findOne({ 
             where: { [Op.or]: [
@@ -45,11 +45,11 @@ exports.login = async (req, res) => {
             }
         })
         if(!user)  {
-            return res.status(401).json("Login failed, try again !");
+            return res.status(401).send("Login failed, try again !");
         }
         const validPassword = await bcrypt.compare( req.body.password, user.password);
         if(!validPassword) {
-            return res.status(401).json("Login failed, try again !");
+            return res.status(401).send("Login failed, try again !");
         }
         const authorities = [];
         const roles = await user.getRoles();
@@ -68,9 +68,14 @@ exports.login = async (req, res) => {
         res.status(201).json({ accessToken: token });
         } 
     catch(err) {
-        return res.status(401).json(err.message);
+        return res.status(401).send(err.message);
     }
 }
+
+//-------------------------------------------------------------------------------------------------
+
+exports.logout = (req, res) => {}  // TODO
+
 
 //-------------------------------------------------------------------------------------------------
 
@@ -80,19 +85,18 @@ exports.signout = (req, res) => {
     User.findOne({ where: { uuid: req.params.userUuid } })
     .then( user => {
         if (!user) {
-             return res.status(404).json({ Error: "User unknown!"});
+             return res.status(404).send("User unknown!");
         }
         if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-           return res.status(403).json({ Error : "Non Authorized !" })  
+           return res.status(403).send("Non Authorized !")  
         }
         user.destroy()
-        .then(() => res.status(200).json("Account successfully deleted !"))
-        .catch((error) => res.status(403).json({ Error: error.message }));
+        .then(() => res.status(200).send("Account successfully deleted !"))
+        .catch((error) => res.status(404).send(error.message));
     })
-    .catch( error => res.status(500).json( { Error: error.message} )) 
+    .catch( error => res.status(500).send(error.message)) 
 }
 
 //-------------------------------------------------------------------------------------------------
 
-exports.logout = (req, res) => {}
 

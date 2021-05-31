@@ -10,7 +10,9 @@ module.exports = async (req, res, next) => {
             return res.status(401).json("Token not provided !");
         }
         jwt.verify( token, config.secret, (err, decoded) => {
-            if(err) return res.status(401).json("Unauthorized !");
+            if(err) {
+                return res.status(401).send("Unauthorized !");
+            }
             req.userUuid = decoded.uuid;
             req.userId = decoded.id;
             req.userRoles = decoded.userRoles;

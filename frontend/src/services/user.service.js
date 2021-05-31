@@ -22,7 +22,7 @@ class UserService {
         return axios.get(API_URL + "/:userUuid", { headers: authHeader() })
     }
 
-    getAllUser() {
+    getAllUsers() {
         return axios.get(API_URL + "/", { headers: authHeader() })
     }
 
@@ -30,7 +30,7 @@ class UserService {
         return axios.put(API_URL + "/:userUuid ", { headers: authHeader() })
     }
 
-    searchUsers() {}  // ## TO DO
+    searchUsers() {}  // ## TODO
 
 }
 

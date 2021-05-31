@@ -18,7 +18,7 @@ class PhotoService {
         return axios.post(API_URL + "/", data, { headers: authHeader() }, config)  
     }
 
-    getAllPhoto() {
+    getAllPhotos() {
         return axios.get(API_URL + "/", { headers: authHeader() });
     }
 
@@ -26,19 +26,23 @@ class PhotoService {
         return axios.get(API_URL + "/:photoUuid", { headers: authHeader() })
     }
 
+    getAllPhotosFromOneUser() {
+        return axios.get(API_URL + "/user/:userUuid", { headers: authHeader() })
+    }
+
     deleteOnePhoto() {
         return axios.delete(API_URL + "/:photoUuid", { headers: authHeader() })
     }
 
-    deleteUserAllPhoto() {
+    userDeleteAllPhotos() {
         return axios.delete(API_URL + "/", { headers: authHeader() })
     }
 
-    deleteAllPhotoFromOneUser() {
+    deleteAllPhotosFromOneUser() {
         return axios.delete(API_URL + "/userUuid", { headers: authHeader() })
     }
 
-    searchPhoto() {}  // TODO !
+    searchPhotos() {}  // TODO !
     
 
 }

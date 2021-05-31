@@ -10,6 +10,7 @@ axios for HTTP requests & reponses:
 */
 
 import axios from "axios";
+import authHeader from "./auth.header.js";
 
 const API_URL = "http://localhost:4200/api/auths/";
 
@@ -28,7 +29,7 @@ class AuthService {
                });
     }
 
-    logout() {
+    logout() {  // TODO:  FUNCTION TO EXPAND
         localStorage.removeItem("user");
     }
 
@@ -38,6 +39,10 @@ class AuthService {
             password: user.password 
         })
     }
+
+    signout () { 
+         return axios.delete(API_URL + "/:userUuid", { headers: authHeader() })
+    }  
 }
 
 export default new AuthService();

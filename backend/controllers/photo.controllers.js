@@ -31,7 +31,7 @@ exports.addPhoto = async (req, res)=> {
 
 //-----------------------------------------------------------------------------------------
 
-exports.getAllPhoto = (req, res) => {
+exports.getAllPhotos = (req, res) => {
   Photo.findAll({
     where: {}, 
     include: [
@@ -84,7 +84,49 @@ exports.getOnePhoto = (req, res) => {
           return res.status(404).json("Photo unknown !");
       }
       res.status(200).json(photo)})
-  .catch( err => res.status(500).json({ message: err.message || ` Server Error ! Try again Soon `}) )
+  .catch( err => res.status(500).json(err.message) )
+}
+//-----------------------------------------------------------------------------------------
+
+exports.getAllPhotosFromOneUser = (req, res) => {
+    User.findOne({ where: { uuid: req.params.userUuid } })
+    .then( user => {
+        if (!user) {
+            return res.status(404).json("User unknown !");        
+        }
+        Photo.findAll({
+          where: { ownerId: user.id },
+          order: [
+              ['createdAt', 'DESC']
+          ],
+          include: [
+            {
+              model: Comment,
+              as: 'comments',
+              include: [{model: User, as: 'owner'}],
+              order: [
+                  ['createdAt', 'DESC']
+              ],
+            }, 
+            {
+              model: Like,
+              as: 'likes',
+              include: [{model: User, as: 'owner'}],
+              order: [
+                  ['createdAt', 'DESC']
+              ],
+            },
+          ],
+        })
+        .then( photos =>  {
+            if (!photos) {
+              return res.status(404).send("No photo(s) found !");
+            }
+            res.status(200).json(photos)});
+    })
+    .catch( err => {
+      return res.status(500).json(err.message)
+    })
 }
 
 // -----------------------------------------------------------------------------------------
@@ -133,7 +175,7 @@ exports.userDeleteAllPhotos = async (req, res) => {
 
 // ----------------------------------------------------------------------------------------------
 
-exports.deleteAllPhotoFromOneUser = async (req, res) => {
+exports.deleteAllPhotosFromOneUser = async (req, res) => {
     try {
       const user = await User.findOne( {where: { uuid: req.params.userUuid}})
       if(!user) {

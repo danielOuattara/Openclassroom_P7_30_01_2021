@@ -8,6 +8,7 @@ router.get("/userboard" , authJwt, controller.userBoard);
 router.get("/adminboard", authJwt, checks.admin, controller.adminBoard);
 router.get("/:userUuid" , authJwt, controller.getOneUser);
 router.get("/"          , authJwt, checks.admin, controller.getAllUsers);
-router.put("/:userUuid" , authJwt, checks.ownerOrAdmin, multer, controller.updateUser);
+router.put("/:userUuid" , authJwt, multer, controller.updateUser);
+// router.get("/searchUsers?="  , authJwt,  controller.searchUsers);  // TODO
 
 module.exports = router;
