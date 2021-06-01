@@ -60,7 +60,6 @@ export default {
     async fetchUser() { 
         try{ 
             const userUuid = this.currentUser.uuid; 
-            console.log(userUuid)
             await this.$store.dispatch("fetchUserAction", userUuid)
         } catch(error) {
             this.message = (error.response && error.response.data) || error.message || error.toString();

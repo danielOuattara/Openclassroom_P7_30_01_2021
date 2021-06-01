@@ -1,68 +1,16 @@
 
-// BACK UP : WORKING !
-// import photoService from "./../../services/photo.service";
 
-//   const state = {
-//         photos: [ ],
-//     };
-
-//   const getters = {
-//         allPhotos:(state) => state.photos,
-//     };
-
-//    const  actions = {
-
-//         async fetchAllPhotosAction( {commit}) {
-//             try {
-//                 const photos = await photoService.getAllPhoto();
-//                 commit('getAllPhotosMutation', photos.data);
-//                 return await Promise.resolve(photos.data);
-//             } catch (err) {
-//                 commit("errGetAllPhotosMutation");
-//                 return Promise.reject(err);
-//             }
-//         },
-              
-//         async addOnePhotoAction( {commit}, title, image) {
-//             try {
-//                 const photos = await photoService.addPhoto(title, image);
-//                 commit('addOnePhotoMutation', photos.data);
-//                 return await Promise.resolve(photos.data);
-//             } catch (err) {
-//                 commit("errAddOnePhoto");
-//                 return Promise.reject(err);
-//             }
-//         },
-//     };
-
-//     const mutations = {
-
-//         getAllPhotosMutation: (state, photos) => state.photos = photos,
-//         errGetAllPhotosMutation: (state) => state.photos = [],
-
-//         addOnePhotoMutation:(state, photo) => state.photos.unshift(photo),
-//         errAddOnePhoto: (state) => state.photos,
-//     };
-
-
-// export default {
-//   state,
-//   getters,
-//   actions,
-//   mutations
-// };
-
-
-// BACKUP : WORKING!
 import photoService from "./../../services/photo.service";
 
 export const photo = {
     state: {
         photos: [ ],
+        userPhotos: []
     },
 
     getters: {
         allPhotos:(state) => state.photos,
+        userAllPhotos: (state) => state.userPhotos
     },
 
     actions: {
@@ -70,6 +18,17 @@ export const photo = {
         async fetchAllPhotosAction( {commit}) {
             try {
                 const photos = await photoService.getAllPhotos();
+                commit('fetchAllPhotosMutation', photos.data);
+                return await Promise.resolve(photos.data);
+            } catch (err) {
+                commit("errFetchAllPhotosMutation");
+                return Promise.reject(err);
+            }
+        },
+
+        async fetchUserAllPhotosAction( {commit}) {
+            try {
+                const photos = await photoService.getAllPhotosFromOneUser();
                 commit('getAllPhotosMutation', photos.data);
                 return await Promise.resolve(photos.data);
             } catch (err) {
@@ -78,25 +37,27 @@ export const photo = {
             }
         },
         
-          //  addOnePhotoAction      
-        async addOnePhotoAction( {commit}, title, image) {
-            try {
-                const photos = await photoService.addPhoto(title, image);
-                commit('addOnePhotoMutation', photos.data);
-                return await Promise.resolve(photos.data);
-            } catch (err) {
-                commit("errAddOnePhoto");
-                return Promise.reject(err);
-            }
-        },
+        // async addOnePhotoAction( {commit}, data) {
+        //     try {
+        //         const photo = await photoService.addPhoto(data);
+        //         commit('addOnePhotoMutation', photo);
+        //         return await Promise.resolve(photo);
+        //     } catch (err) {
+        //         commit("errAddOnePhoto");
+        //         return Promise.reject(err);
+        //     }
+        // },
     },
 
     mutations: {
 
-        getAllPhotosMutation: (state, photos) => state.photos = photos,
-        errGetAllPhotosMutation: (state) => state.photos = [],
+        fetchAllPhotosMutation: (state, photos) => state.photos = photos,
+        errFetchAllPhotosMutation: (state) => state.photos = [],
 
-        addOnePhotoMutation:(state, photo) => state.photos.unshift(photo),
-        errAddOnePhoto: (state) => state.photos,
+        // addOnePhotoMutation:(state, photo) => state.photos.unshift(photo),
+        // errAddOnePhoto: (state) => state.photos,
+
+        fetchUserAllPhotosMutation: (state, photos) => state.userPhotos = photos,
+        errFetchUserAllPhotosMutation: (state) => state.userPhotos = [],
     }
 }

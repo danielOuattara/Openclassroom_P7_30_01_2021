@@ -17,11 +17,11 @@ export const auth =  {
         loginAction( {commit} , user) {
             return AuthService.login(user)
                 .then( user => {
-                    commit("loginSuccess", user);
+                    commit("loginSuccessMutation", user);
                     return Promise.resolve(user);
                     },
                     error => {
-                        commit("loginFailure");
+                        commit("loginFailureMutation");
                         return Promise.reject(error);
                     }
                 );  
@@ -48,12 +48,12 @@ export const auth =  {
 
     mutations: {
         
-        loginSuccess(state, user) {
+        loginSuccessMutation(state, user) {
             state.status.loggedIn = true;
             state.user = user;
         },
 
-        loginFailure(state) {
+        loginFailureMutation(state) {
             state.status.loggedIn = false;
             state.user = null;
         },
