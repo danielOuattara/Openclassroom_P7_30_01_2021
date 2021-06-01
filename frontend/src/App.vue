@@ -39,7 +39,7 @@ export default {
 #app-globale {
     min-height: 100vh;
     background: linear-gradient(to left top, rgba(6, 33, 77, 0.8), rgba(15, 34, 64, 0.2))!important;
-    position: relative;
+    /* position: relative; */
 }
 
 </style>

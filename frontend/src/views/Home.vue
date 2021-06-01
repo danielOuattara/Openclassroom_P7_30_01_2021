@@ -3,10 +3,8 @@
     <div class="jumbotron">
       <h3>Wall of photo</h3>
     </div>
-
       <AddPhoto />
       <ShowAllPhotos />
- 
   </div>
 </template>
 
