@@ -67,7 +67,8 @@ exports.login = async (req, res) => {
         )
         res.status(201).json({ 
             accessToken: token, 
-            uuid:  user.uuid
+            uuid:  user.uuid,
+            roles: authorities,
         });
         } 
     catch(err) {

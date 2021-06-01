@@ -3,7 +3,7 @@
   <div class="container">
     <div class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        <strong>{{userData.firstName}}</strong> Profile
       </h3>
     </div>
 
@@ -35,7 +35,7 @@ export default {
     return {
       message: '',
       user: '',
-      photos: this.userData.photos,
+      // photos: this.userData.photos,
     }
   },
 
@@ -55,12 +55,13 @@ export default {
 
   methods: { 
 
-    ...mapActions(['fetchUserAction']),
+    ...mapActions(['fetchOneUserAction']),
 
     async fetchUser() { 
         try{ 
             const userUuid = this.currentUser.uuid; 
-            await this.$store.dispatch("fetchUserAction", userUuid)
+            console.log(userUuid)
+            await this.$store.dispatch("fetchOneUserAction", userUuid)
         } catch(error) {
             this.message = (error.response && error.response.data) || error.message || error.toString();
         }
@@ -78,7 +79,6 @@ export default {
   },
 
   created() {
-    // this.fetchUserAction();
     this.fetchUser()
    }
 };

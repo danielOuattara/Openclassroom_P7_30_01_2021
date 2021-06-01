@@ -82,7 +82,7 @@ export default {
         },
 
         showAdminBoard() {
-            if (this.currentUser && this.currentUser.roles) {
+            if (this.currentUser.accessToken && this.currentUser.roles) {
                 return this.currentUser.roles.includes('ROLE_ADMIN');
             }
             return false;
@@ -102,8 +102,6 @@ export default {
 <style scoped>
 
 header {
-    /* min-width: 100vw; */
     background: linear-gradient(to left top, rgba(6, 33, 77, 0.8), rgba(15, 34, 64, 0.2))!important;
-    /* background: red; */
 }
 </style>

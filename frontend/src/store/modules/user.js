@@ -13,21 +13,21 @@ export const user = {
 
     actions: {
 
-        async fetchUserAction( {commit}, userUuid) {
+        async fetchOneUserAction( {commit}, userUuid) {
             try {
-                const user = await userService.getOneUser(userUuid);
-                commit('fetchUserMutation', user.data);
-                return await Promise.resolve(user.data);
+                const oneUser = await userService.getOneUser(userUuid);
+                commit('fetchOneUserMutation', oneUser.data);
+                return  Promise.resolve(oneUser.data);
             }      
             catch(error) {
-                commit("errorFetchUser");
-                return await Promise.reject(error);
+                commit("errorFetchOneUser");
+                return Promise.reject(error);
             }
         }
     },
 
     mutations: {
-        fetchUserMutation: (state, user) => state.user= user,
-        errorFetchUser: (state) => state.user
+        fetchOneUserMutation: (state, oneUser) => state.user= oneUser,
+        errorFetchOneUser: (state) => state.user = {}
     }
 }

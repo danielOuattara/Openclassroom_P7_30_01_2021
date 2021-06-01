@@ -59,8 +59,8 @@
 
 <script>
 import axios from "axios";
-import Photo from './../../models/photo.js';
-import authHeader from "./../../services/auth.header.js";
+import Photo from '../../models/photo.js';
+import authHeader from "../../services/auth.header.js";
 import { mapActions } from 'vuex';
 export default {
     name: 'AddPhoto',
