@@ -32,12 +32,12 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 // import authService from './../../services/auth.service';
-import User from './../../models/user.js';
+// import User from './../../models/user.js';
 export default {
 
     data() {
         return {
-            user = new User(' ', ' ', ' ', ' ', ' ', ' ', ' ')
+            // user = new User(' ', ' ', ' ', ' ', ' ', ' ', ' ')
 
         }
     },

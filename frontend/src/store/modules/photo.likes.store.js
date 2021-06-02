@@ -1,50 +1,49 @@
 
-import photoLikes from "./../../serv";
-import authService from '../../services/auth.service';
+import photoLikesService from "./../../services/photo.likes.services.js";
 
-export const user = {
+export const likes = {
     
     state: {
-        user: {},
+        likesState: {},
     },
 
     getters: {
-        userData:(state) => state.user
+        likesData:(state) => state.likes
     },
 
     actions: {
 
-        async fetchOneUserAction( {commit}, userUuid) {
+        async fetchOnePhotoLikesAction( {commit}, photoUuid) {
             try {
-                const oneUser = await userService.getOneUser(userUuid);
-                commit('fetchOneUserMutation', oneUser.data);
-                return  Promise.resolve(oneUser.data);
+                const photoLikes = await photoLikesService.fetchPhotoLikesCounting(photoUuid);
+                commit('fetchOnePhotoLikesMutation', photoLikes.data);
+                return  Promise.resolve(photoLikes.data);
             }      
             catch(error) {
-                commit("errorFetchOneUser");
+                commit("errorFetchOnePhotoLikesMutation");
                 return Promise.reject(error);
             }
         },
 
-        async deleteUserAccountAction( {commit}, userUuid) {
+        async sendOnePhotoLikesAction( {commit}, photoUuid) {
             try {
-                const oneUser = await authService.signout(userUuid);
-                commit('deleteUserAccountMutation', oneUser.data);
-                return  Promise.resolve(oneUser.data);
+                const photoLikes = await photoLikesService.sendPhotoLikes(photoUuid);
+                commit('sendOnePhotoLikesMutation', photoLikes.data);
+                return  Promise.resolve(photoLikes.data);
             }      
             catch(error) {
-                commit("errorDeleteUserAccountMutation");
+                commit("errorSendOnePhotoLikesMutation");
                 return Promise.reject(error);
             }
-        }
+        },
+
     },
 
     mutations: {
-        fetchOneUserMutation: (state, oneUser) => state.user = oneUser,
-        errorFetchOneUser: (state) => state.user = {},
+        fetchOnePhotoLikesMutation: (state, likes) => state.likesState = likes,
+        errorFetchOnePhotoLikesMutations: (state) => state.likesState = {},
 
-        deleteUserAccountMutation: (state) => state.user = [],
-        errorDeleteUserAccountMutation: (state) => state.user = user
-
+        sendOnePhotoMutation: (state, likes) => state.likesState = likes,
+        errorSendOnePhotoMutations: (state) => state.likesState = {},
     }
 }

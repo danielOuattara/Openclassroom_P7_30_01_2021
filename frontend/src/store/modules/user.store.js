@@ -26,6 +26,10 @@ export const user = {
             }
         },
 
+        async updateUserAccountAction() {
+            
+        },
+
         async deleteUserAccountAction( {commit}, userUuid) {
             try {
                 const oneUser = await authService.signout(userUuid);

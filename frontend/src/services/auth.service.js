@@ -41,8 +41,12 @@ class AuthService {
     }
 
     signout (userUuid) { 
-         return axios.delete(API_URL + `signout/${userUuid}`, { headers: authHeader() })
-    }  
+        return axios.delete(API_URL + `signout/${userUuid}`, { headers: authHeader() })
+    }
+
+    updatePassword(userUuid) {
+        return axios.put(API_URL + `updatepassword/${userUuid}`, { headers: authHeader() })
+    }
 }
 
 export default new AuthService();

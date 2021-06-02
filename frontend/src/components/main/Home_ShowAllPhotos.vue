@@ -84,19 +84,44 @@ export default {
     name: 'ShowAllPhotos',
 
     data() {
-        return {};
+        return {
+          photo: ''
+        };
     },
 
     computed: {
-        ...mapGetters(['allPhotos']),
+        ...mapGetters(['allPhotos', 'likesData']),
     },
 
     methods: {
-        ...mapActions(['fetchAllPhotosAction']),   
+        ...mapActions(['fetchAllPhotosAction', 'fetchOnePhotoLikesAction']), 
+        
+
+        fetchOnePhotoLikes() {
+            try {
+
+              this.allPhotos.forEach( photo => {
+                  const photoUuid = photo.uuid;
+                  this.$store.dispatch("fetchOnePhotoLikesAction", photoUuid)
+              })
+              } catch(error) {
+                this.message = (error.response && error.response.data) || error.message || error.toString();
+            }
+        }
+        
+        // async fetchOnePhotoLikes() {
+        //     try {
+        //         const photoUuid = "da597536-2c6f-41d4-a7cf-df2e7b89779a"
+        //         await this.$store.dispatch("fetchOnePhotoLikesAction", photoUuid)
+        //       } catch(error) {
+        //         this.message = (error.response && error.response.data) || error.message || error.toString();
+        //     }
+        // }
     },
 
     created() {
         this.fetchAllPhotosAction();
+        this.fetchOnePhotoLikes();
     },
 };
 

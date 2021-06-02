@@ -1,27 +1,42 @@
 
 <template>
-  <div class="container">
-    <div class="jumbotron">
-      <h3>
-        <strong>{{userData.firstName}}</strong> Profile
-      </h3>
+  <div class="profile-container">
+
+    <div class="bloc bloc-avatar">
+      <img 
+        class="user-avatar"
+        :src="userData.avatar" 
+        :alt="userData.firstName + ' ' + userData.lastName + ' picture'"/>
+    </div>
+
+    <div class="bloc bloc-infos-user">
+        <p> <b>Username</b> :  {{userData.userName}} 
+            <font-awesome-icon class="icon-edit" icon="edit" />
+        </p>
+        <p> <b>Firstname</b> :  {{userData.firstName}}
+            <font-awesome-icon class="icon-edit" icon="edit" />
+        </p>
+        <p> <b>LastName</b> :  {{userData.lastName}}
+            <font-awesome-icon class="icon-edit" icon="edit" />
+        </p>
+        <p> <b>Email</b> :  {{userData.email}}
+        <font-awesome-icon class="icon-edit" icon="edit" /> 
+        </p>
     </div>
 
 
-    <div class="profil-container">
-        <img 
-          class="user-avatar"
-          :src="userData.avatar" 
-          :alt="userData.firstName + ' ' + userData.lastName + ' picture'"
-        >
-        <h2>FirstName :  {{userData.firstName}}</h2>
-        <h2> LastName : {{userData.lastName}} </h2>
-        <p> About me: {{userData.aboutMe}} </p>
+    <div class="bloc bloc-about-user">
+        <p> <b>About me:</b>: {{userData.aboutMe}} </p>
     </div>
 
-    <DeleteUser />
 
-    <button @click="updateUser">Update profile</button>
+    <div class="bloc bloc-user-modifications">
+      <UpdateUser />
+      <DeleteUser />
+    </div>
+
+
+    <!-- <button @click="updateUser">Update profile</button> -->
 
   </div>
 </template>
@@ -29,12 +44,14 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex';
-import DeleteUser from './../components/main/Profile_DeleteUser'
+import DeleteUser from './../components/main/Profile_DeleteUser';
+import UpdateUser from './../components/main/Profile_UpdateUser';
 export default {
   
   name: 'Profile',
   components: {
-    DeleteUser
+    DeleteUser,
+    UpdateUser
   },
 
   data() {
@@ -83,12 +100,74 @@ export default {
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
 .profile-container {
   display: grid;
+  /* grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); */
+  width: 84vw;
+  margin: auto;
+  margin-top: 30px;
+  padding: 20px;
+  height: auto;
+  border: 1px solid black;
+  background: #c7c7c7;
+  border-radius: 5px;
+  /* grid-template-columns:  auto auto auto auto auto auto; */
+  grid-gap: 10px;
 }
+
+.profile-container > div {
+  background: rgb(228, 228, 228);
+  padding: 5px;
+  border: 2px solid lightblue;
+  border-radius: 5px;
+}
+
+/* ---- CSS Grid */
+.bloc-avatar {
+  grid-column: 1 /span 2;
+  grid-row: 1 /span 2;
+}
+.bloc-infos-user {
+  grid-column: 3 /span 5;
+  grid-row: 1 /span 2;
+}
+.bloc-about-user {
+  grid-column: 3 /span 5;
+  grid-row: 3 /span 2;
+}
+.bloc-user-modifications {
+  grid-column: 3 /span 5;
+  grid-row: 5;
+}
+/* ---- END CSS Grid */
+
 
 .user-avatar {
   max-width: 20vw;
 }
+
+.bloc-user-modifications {
+  display: flex;
+  flex-direction: row ;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.icon-edit {
+  font-size: 16px;
+  color: rgb(169, 169, 169);
+  margin-left: 20px;
+  &:hover{
+    color: rgb(95, 95, 95);
+    cursor: pointer;
+  }
+}
+/* --------------------------------- */
+
+
+
+
+
+
 </style>
