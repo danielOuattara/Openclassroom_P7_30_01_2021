@@ -1,16 +1,16 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#updateModal">
             Update Your Account
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Profile Update</h5>
+                    <h5 class="modal-title" id="updateModalLabel">Profile Update</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -87,8 +87,7 @@ export default {
 
 .modal-body {
     font-size: 2.5vh;
-    color: rgb(136, 8, 8);
-    
+    color: rgb(253, 0, 0);
 }
 
 </style>

@@ -26,9 +26,7 @@ export const user = {
             }
         },
 
-        async updateUserAccountAction() {
-            
-        },
+        async updateUserAccountAction() {"#"},
 
         async deleteUserAccountAction( {commit}, userUuid) {
             try {

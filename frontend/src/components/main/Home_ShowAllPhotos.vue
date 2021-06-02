@@ -1,14 +1,14 @@
 <template>
     <div class="photos-container">
         <h3>Home Photos</h3>
-        <div v-for="photo in allPhotos" :key="photo.id" class="photo-block">
-
+        <div v-for="photo in allPhotos" :key="photo.id" 
+             class="photo-block">
           <div class="bloc bloc-infos-photo-owner">
-            <img  class="onwer-picture" :src="photo.owner.avatar"  style="max-width:70px;"
+            <img class="owner-picture" :src="photo.owner.avatar"  style="max-width:70px;"
                   :alt="'picture profile of ' + photo.owner.firstName + photo.owner.lastName" />
             <div class="owner-name">
-              <p class="onwer-firstName"> {{photo.owner.firstName}}</p>
-              <p class="onwer-lastName">{{photo.owner.lastName}}</p>
+              <p class="onwer-firstName"> firstName:  {{photo.owner.firstName}}</p>
+              <p class="onwer-lastName"> lastName: {{photo.owner.lastName}}</p>
             </div>
           </div>
 
@@ -64,28 +64,31 @@
           </div>
 
           <div class="bloc bloc-comments">
-            <div class="comment-owner-picture">
-              <img src="" alt="">
+            <div class="addComment">
+                <!-- <AddComment v-bind:photoUuid="photoUuid" /> -->
+                <AddComment v-bind:photo="photo" />
             </div>
-            <div class="infos-comment">
-              <p class="comment-owner-name"></p>
-              <p class="comment-date"></p>
-            </div>
-            <p class="comment-content"></p>
-          </div>
 
+            <div class="oldComments">
+  
+            </div>
+          </div>
       </div>
     </div> 
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import AddComment from './Home_ShowAllPhotos_AddComments';
 export default {
     name: 'ShowAllPhotos',
+    components: {
+      AddComment,
+    },
 
     data() {
         return {
-          photo: ''
+          photo: '',
         };
     },
 
@@ -96,7 +99,6 @@ export default {
     methods: {
         ...mapActions(['fetchAllPhotosAction', 'fetchOnePhotoLikesAction']), 
         
-
         fetchOnePhotoLikes() {
             try {
 
@@ -154,14 +156,56 @@ export default {
 
 }
 .photo-block {
-  margin : 30px; 
+  margin: auto;
+  margin-bottom:12px; 
+  width: 90vw;
   border: 1px solid grey;
   border-radius: 8px;
   padding: 20px;
   overflow-x: hidden;
   background: rgb(228, 228, 228);
   box-shadow: 0 0 2px 2px rgba(141, 141, 141, 0.6);
+  display: grid;
+  grid-gap: 5px;
 }
+
+/* --- START Grid Item */
+.bloc-infos-photo-owner{
+  grid-row: 1  ;
+  grid-column: 1 /span 4;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  .owner-picture {
+    margin-right: 8px;
+    background: white;
+  }
+
+}
+
+.bloc-photo-post{
+  grid-row: 2 /span 4;
+  grid-column: 1 /span 4;
+}
+
+.bloc-infos-photo-post{
+  grid-row: 6 /span 7;
+  grid-column: 1 /span 2;
+}
+
+.bloc-likes{
+  grid-row: 6 /span 7;
+  grid-column: 3 /span 2;
+}
+
+.bloc-comments{
+  grid-row: 13 /span 14 ;
+  grid-column: 1 /span 4;
+}
+
+
+/* ---  END Grid Item */
 
 /* styling photo-posts */
 
@@ -170,6 +214,14 @@ export default {
   padding: 5px;
   margin-bottom: 5px;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 580px) {
+  .photo-block {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
 }
 
 

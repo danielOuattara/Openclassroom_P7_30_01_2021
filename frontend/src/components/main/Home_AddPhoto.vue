@@ -115,8 +115,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div.add-photo {
-  background: grey;
-  border: 1px solid red;
+.block-add-photo {
+  background: rgb(213, 213, 213);
+  border: 1px solid rgb(138, 138, 138);
+  padding: 30px;
+  border-radius: 8px;
 }
 </style>

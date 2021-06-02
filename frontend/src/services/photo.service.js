@@ -8,18 +8,16 @@ const API_URL = "http://localhost:4200/api/photos";
 
 class PhotoService {
     
-    // addPhoto(data) {
-    //     const config =  {
-    //         headers : {'Content-Type': 'multipart/form-data' }
-    //     }
-    //     return axios.post(API_URL + "/", {
-    //         title: data.get('title'),
-    //         image: data.get('image')
-    //     }, 
-    //     { headers: authHeader() }, 
-    //     config
-    //     )  
-    // }
+    addPhoto(data) {
+        const config =  {
+            headers : {'Content-Type': 'multipart/form-data' }
+        }
+        return axios.post(API_URL + "/", 
+            { title: data.get('title'), image: data.get('image') }, 
+            { headers: authHeader() }, 
+            config
+        )  
+    }
 
     getAllPhotos() {
         return axios.get(API_URL + "/", { headers: authHeader() });

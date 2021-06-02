@@ -43,7 +43,8 @@
                 <div class="form-group">
                     <div v-if="message" 
                          class="alert alert-danger" 
-                         role="alert">{{message}}</div>
+                         role="alert">{{message}}
+                    </div>
                 </div>
             </form>
             <div>

@@ -38,16 +38,16 @@ export const photo = {
             }
         },
         
-        // async addOnePhotoAction( {commit}, data) {
-        //     try {
-        //         const photo = await photoService.addPhoto(data);
-        //         commit('addOnePhotoMutation', photo);
-        //         return await Promise.resolve(photo);
-        //     } catch (err) {
-        //         commit("errAddOnePhoto");
-        //         return Promise.reject(err);
-        //     }
-        // },
+        async addOnePhotoAction( {commit}, data) {
+            try {
+                const photo = await photoService.addPhoto(data);
+                commit('addOnePhotoMutation', photo);
+                return await Promise.resolve(photo);
+            } catch (err) {
+                commit("errAddOnePhoto");
+                return Promise.reject(err);
+            }
+        },
     },
 
     mutations: {

@@ -103,7 +103,6 @@ export default {
 <style lang="scss" scoped>
 .profile-container {
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); */
   width: 84vw;
   margin: auto;
   margin-top: 30px;
@@ -112,7 +111,6 @@ export default {
   border: 1px solid black;
   background: #c7c7c7;
   border-radius: 5px;
-  /* grid-template-columns:  auto auto auto auto auto auto; */
   grid-gap: 10px;
 }
 
@@ -123,7 +121,7 @@ export default {
   border-radius: 5px;
 }
 
-/* ---- CSS Grid */
+/* ---- CSS Item Grid */
 .bloc-avatar {
   grid-column: 1 /span 2;
   grid-row: 1 /span 2;
@@ -140,7 +138,7 @@ export default {
   grid-column: 3 /span 5;
   grid-row: 5;
 }
-/* ---- END CSS Grid */
+/* ---- END CSS Item Grid */
 
 
 .user-avatar {
@@ -163,6 +161,15 @@ export default {
     cursor: pointer;
   }
 }
+
+@media screen and (max-width: 580px) {
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+}
+
 /* --------------------------------- */
 
 
