@@ -1,6 +1,6 @@
 
 
-import photoService from "./../../services/photo.service";
+import photoService from "../../services/photo.service";
 
 export const photo = {
     

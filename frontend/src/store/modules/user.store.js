@@ -1,6 +1,6 @@
 
 import userService from "../../services/user.service";
-import authService from './../../services/auth.service';
+import authService from '../../services/auth.service';
 
 export const user = {
     

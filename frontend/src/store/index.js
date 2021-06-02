@@ -2,10 +2,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { auth } from "./modules/auth.js";
+import { auth } from "./modules/auth.store.js";
 // import photo from "./modules/photo.js";
-import { photo } from "./modules/photo.js";
-import { user } from "./modules/user.js";
+import { photo } from "./modules/photo.store.js";
+import { user } from "./modules/user.store.js";
 
 Vue.use(Vuex);
 
