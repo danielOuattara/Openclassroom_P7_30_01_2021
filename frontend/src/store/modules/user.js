@@ -1,5 +1,6 @@
 
 import userService from "../../services/user.service";
+import authService from './../../services/auth.service';
 
 export const user = {
     
@@ -23,11 +24,27 @@ export const user = {
                 commit("errorFetchOneUser");
                 return Promise.reject(error);
             }
+        },
+
+        async deleteUserAccountAction( {commit}, userUuid) {
+            try {
+                const oneUser = await authService.signout(userUuid);
+                commit('deleteUserAccountMutation', oneUser.data);
+                return  Promise.resolve(oneUser.data);
+            }      
+            catch(error) {
+                commit("errorDeleteUserAccountMutation");
+                return Promise.reject(error);
+            }
         }
     },
 
     mutations: {
-        fetchOneUserMutation: (state, oneUser) => state.user= oneUser,
-        errorFetchOneUser: (state) => state.user = {}
+        fetchOneUserMutation: (state, oneUser) => state.user = oneUser,
+        errorFetchOneUser: (state) => state.user = {},
+
+        deleteUserAccountMutation: (state) => state.user = [],
+        errorDeleteUserAccountMutation: (state) => state.user = user
+
     }
 }

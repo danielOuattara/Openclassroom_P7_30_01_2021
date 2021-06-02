@@ -1,12 +1,13 @@
 <template>
-<header>
-    <nav class=" _upper-nav navbar navbar-expand-md navbar-dark bg-dark main-nav">
-        <a class="navbar-brand" @click.prevent>
+<header id="header">
+    <nav id="navbar-main" class=" _upper-nav navbar navbar-expand-md navbar-dark bg-dark main-nav">
+        <a class="navbar-brand" tabindex="0" @click.prevent>
             <router-link to="/home">
                 <img src="./../../assets/images/image_Groupomania/icon-left-font-monochrome-white.svg" 
                     style="width:200px" 
                     alt=" image logo Groupomania"
-                />
+                    id="image-logo"
+                    tabindex="0"/>
             </router-link>
         </a>
 
@@ -19,19 +20,18 @@
             <div class="navbar-nav mr-auto" v-if="currentUser">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <router-link to="/home" class="nav-link">
-                            <font-awesome-icon icon="home" />Accueil
+                        <router-link to="/home" class="nav-link" id="nav-link">
+                            <font-awesome-icon icon="home" /> Accueil
                         </router-link>
                     </li>
                     <li v-if="showAdminBoard" class="nav-item">
-                        <router-link to="/admin" 
-                                     class="nav-link">Admin Board
+                        <router-link to="/admin" class="nav-link" id="nav-link">
+                            <font-awesome-icon icon="user-shield" /> Admin
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link v-if="currentUser" 
-                                     to="/user" 
-                                     class="nav-link">User
+                        <router-link v-if="currentUser" to="/user" class="nav-link" id="nav-link"> 
+                            <font-awesome-icon icon="user" /> User Content
                         </router-link>
                     </li>
                 </ul>
@@ -40,33 +40,32 @@
             <div v-if="!currentUser" class="navbar-nav ml-auto">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <router-link to="/signin" class="nav-link">
-                            <font-awesome-icon icon="user-plus" />Signin
+                        <router-link to="/signin" class="nav-link" id="nav-link">
+                            <font-awesome-icon class="font-a-icon" icon="user-plus" /> Signin
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/login" class="nav-link">
-                            <font-awesome-icon icon="sign-in-alt" />Login
+                        <router-link to="/login" class="nav-link" id="nav-link" >
+                            <font-awesome-icon icon="sign-in-alt" /> Login
                         </router-link>
                     </li>
                 </ul>
             </div>
 
             <div v-if="currentUser" class="navbar-nav ml-auto">
-                <ul class="navbar-nav">
+                <ul id="navbar-nav" class="navbar-nav">
                     <li class="nav-item">
-                        <router-link to="/profile" class="nav-link">
-                            <font-awesome-icon icon="user" /> {{ currentUser.username }}
+                        <router-link to="/profile" class="nav-link" id="nav-link">
+                            <font-awesome-icon icon="address-card" /> Profile
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" @click.prevent="logOut">
+                        <a class="nav-link" id="nav-link" href="#" @click.prevent="logOut">
                             <font-awesome-icon icon="sign-out-alt" />LogOut
                         </a>
                     </li>
                 </ul>
             </div>
-
         </div>
     </nav>
 </header>
@@ -98,10 +97,24 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
 
-<style scoped>
-
-header {
-    background: linear-gradient(to left top, rgba(6, 33, 77, 0.8), rgba(15, 34, 64, 0.2))!important;
+#navbar-main {
+    background: linear-gradient(to left top, rgba(16, 33, 80, 0.2), rgba(16, 33, 80, 0.9))!important;
 }
+
+#navbar-nav:hover {
+    padding: -2px;
+}
+
+#nav-link {
+    color: white;
+    &:hover {
+        color: black;
+        background: rgba(33, 33, 80, 0.1);
+        border-radius: 3px;
+        border-bottom: 1px solid white;
+    }
+}
+
 </style>

@@ -36,6 +36,10 @@ exports.getAllPhotos = (req, res) => {
     where: {}, 
     include: [
       {
+        model: User,
+        as: 'owner',
+      }, 
+      {
         model: Comment,
         as: 'comments',
         include: [{model: User, as: 'owner'}]

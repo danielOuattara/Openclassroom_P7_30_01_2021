@@ -18,7 +18,7 @@
                     data-toggle="modal" data-target="#photoModal"/> 
           </div>
           <div v-for="photo, index in userAllPhotos" :key="index">
-            <img :src="photo.imageUrl" alt="">
+            <img :src="photo.imageUrl" alt="photo.title picture">
           </div>
 
 

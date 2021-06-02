@@ -7,6 +7,7 @@
       </h3>
     </div>
 
+
     <div class="profil-container">
         <img 
           class="user-avatar"
@@ -18,8 +19,9 @@
         <p> About me: {{userData.aboutMe}} </p>
     </div>
 
+    <DeleteUser />
+
     <button @click="updateUser">Update profile</button>
-    <button @click="deleteUser">Delete account</button>
 
   </div>
 </template>
@@ -27,9 +29,13 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex';
+import DeleteUser from './../components/main/Profile_DeleteUser'
 export default {
   
   name: 'Profile',
+  components: {
+    DeleteUser
+  },
 
   data() {
     return {
@@ -43,7 +49,6 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     }, 
-
     ...mapGetters(['userData']),
   },
   
@@ -60,7 +65,6 @@ export default {
     async fetchUser() { 
         try{ 
             const userUuid = this.currentUser.uuid; 
-            console.log(userUuid)
             await this.$store.dispatch("fetchOneUserAction", userUuid)
         } catch(error) {
             this.message = (error.response && error.response.data) || error.message || error.toString();
@@ -70,12 +74,6 @@ export default {
     async updateUser() {
       try {"hello"} catch(err) { "hello"}
     },
-
-
-    async deleteUser() {
-      try {"hello"} catch(err) { "hello"}
-    }
-
   },
 
   created() {

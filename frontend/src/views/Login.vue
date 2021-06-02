@@ -1,11 +1,14 @@
 <template>
     <div class="col-md-12">
         <div class="card card-container">
-            <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" alt="">
+            <img id="profile-img" 
+                 src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" 
+                 class="profile-img-card" alt="standard profile icon ">
             <form name="form" @submit.prevent="handleLogin">
                 <div class="form-group">
                     <label for="emailOrUsername">Username OR email : </label>
                     <input  type="text" 
+                            placeholder="entre email OR username ..."
                             v-model="user.emailOrUsername" 
                             v-validate="'required'" 
                             class="form-control" 
@@ -19,6 +22,7 @@
                 <div class="form-group">
                     <label for="password">Password : </label>
                     <input type="password" 
+                           placeholder=" enter a password ..."
                            v-model="user.password" 
                            v-validate="'required'" 
                            class="form-control" 
@@ -42,6 +46,11 @@
                          role="alert">{{message}}</div>
                 </div>
             </form>
+            <div>
+                <router-link to="/signin" class="nav-link" id="nav-link">
+                    <font-awesome-icon icon="user-plus" /> Go to signin ?
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -99,6 +108,7 @@ label {
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
+  border-radius: 8px;
 }
 
 .card {
@@ -122,6 +132,15 @@ label {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+
+.btn-primary {
+    font-size: 24px!important
+}
+
+#nav-link {
+    text-align: right;
+    color:#23923d
 }
 
 </style>

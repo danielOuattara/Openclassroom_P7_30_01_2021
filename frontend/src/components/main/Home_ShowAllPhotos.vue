@@ -1,21 +1,23 @@
 <template>
     <div class="photos-container">
-          <h3>All Photo</h3>
-        <div v-for="photo in allPhotos" 
-             :key="photo.id"
-             class="photo-block">
-              <div>
-                <div>{{photo.title}}</div>
-                <div>{{photo.ownerId}}</div>
-                <div>{{photo.imageUrl}}</div>
-                <div>{{photo.comments}}</div>
-              </div>
+        <h3>Home Photos</h3>
+        <div v-for="photo in allPhotos" :key="photo.id" class="photo-block">
 
-               <img :src="photo.imageUrl" 
-                    :alt='"picture of " + photo.title'
-                    class="photos"
-                    data-toggle="modal" 
-                    data-target="#photoModal"> 
+          <div class="bloc bloc-infos-photo-owner">
+            <img  class="onwer-picture" :src="photo.owner.avatar"  style="max-width:70px;"
+                  :alt="'picture profile of ' + photo.owner.firstName + photo.owner.lastName" />
+            <div class="owner-name">
+              <p class="onwer-firstName"> {{photo.owner.firstName}}</p>
+              <p class="onwer-lastName">{{photo.owner.lastName}}</p>
+            </div>
+          </div>
+
+          <div class="bloc bloc-photo-post" >
+            <img :src="photo.imageUrl" 
+                 :alt='"picture of " + photo.title'
+                 class="photos"
+                 data-toggle="modal" 
+                 data-target="#photoModal"> 
 
                 <!-- Modal -->
                 <!-- <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="phtoModalLabel" aria-hidden="true">
@@ -38,7 +40,39 @@
                     </div>
                   </div>
                 </div> -->
-        </div>
+          </div>
+
+          <div class="bloc bloc-infos-photo-post">
+              <p class="photo-title"> Title: {{photo.title}}</p>
+              <p class="photo-post-date"> 
+                <font-awesome-icon icon="calendar-alt" /> 
+                    {{photo.createdAt.split('T')[0]}}  
+                <font-awesome-icon icon="clock"/>
+                     {{photo.createdAt.substring(11,13)}}H{{photo.createdAt.substring(14,16)}}
+              </p>
+          </div>
+
+          <div class="bloc bloc-likes">
+            <p class="users-likes">
+              <font-awesome-icon icon="thumbs-up"/>
+            </p>
+            <p class="users-dislikes">
+              <font-awesome-icon icon="thumbs-down"/>
+            </p>
+          </div>
+
+          <div class="bloc bloc-comments">
+            <div class="comment-owner-picture">
+              <img src="" alt="">
+            </div>
+            <div class="infos-comment">
+              <p class="comment-owner-name"></p>
+              <p class="comment-date"></p>
+            </div>
+            <p class="comment-content"></p>
+          </div>
+
+      </div>
     </div> 
 </template>
 
@@ -80,7 +114,7 @@ export default {
   transition: transform 200ms;
   &:hover {
     transform: scale(0.98);    
-    box-shadow: 0 0 2px 3px rgba(18, 34, 253, 0.6);
+    box-shadow: 0 0 2px 3px rgba(123, 123, 123, 0.6);
     border-radius: 4px;  /* Rounded border */
   }
 
@@ -94,9 +128,23 @@ export default {
 }
 .photo-block {
   margin : 30px; 
-  border: 1px solid lightblue;
+  border: 1px solid grey;
+  border-radius: 8px;
   padding: 20px;
   overflow-x: hidden;
+  background: rgb(228, 228, 228);
+  box-shadow: 0 0 2px 2px rgba(141, 141, 141, 0.6);
 }
+
+/* styling photo-posts */
+
+.bloc {
+  border: 1px solid grey;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+
 
 </style>

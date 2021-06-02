@@ -13,7 +13,6 @@ import HomeAddPhoto from '../components/main/Home_AddPhoto.vue'
 import HomeShowAllPhotos from '../components/main/Home_ShowAllPhotos.vue'
 export default {
     name: 'Home',
-
     components: {
       HomeAddPhoto,
       HomeShowAllPhotos
@@ -23,9 +22,5 @@ export default {
         return {};
     },
 };
-
 </script>
 
-<style scoped>
-
-</style>

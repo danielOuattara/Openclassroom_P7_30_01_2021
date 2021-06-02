@@ -2,14 +2,17 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
-       <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" alt=""/>
+       <img id="profile-img" 
+            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" 
+            class="profile-img-card" alt="standard profile icon "/>
 
         <form name="form" @submit.prevent="handleSignin">
             <div v-if="!successful">
                 <div class="form-group">
-                    <label for="email">Email : </label>
+                    <label for="email">Enter an e-mail : </label>
                     <input v-model="user.email" 
                            v-validate="'required|email|max:50'" 
+                           placeholder=" enter your email ..."
                            type="email" 
                            class="form-control" 
                            name="email"/>
@@ -20,8 +23,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password : </label>
+                    <label for="password"> Enter a password : </label>
                     <input v-model="user.password" 
+                           placeholder=" enter a password ..."
                            v-validate="'required|min:6|max:40'" 
                            type="password" 
                            class="form-control" 
@@ -33,12 +37,18 @@
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block">Signin</button>
+                    <button class="btn btn-success btn-block">Signin</button>
                 </div>
 
             </div>
 
         </form>
+
+        <div>
+            <router-link to="/login" class="nav-link" id="nav-link">
+                <font-awesome-icon icon="sign-in-alt" /> Go to login ?
+            </router-link>
+        </div>
 
         <div v-if="message" 
              class="alert" 
@@ -84,7 +94,7 @@ export default {
                     .then( data => {
                             this.message = data;
                             this.successful = true;
-                            // this.$router.push("/login");
+                            this.$router.push("/login");
                         },
                         error => {
                             this.message = (error.response && error.response.data) || error.message || error.toString();
@@ -98,8 +108,7 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
 
 label {
   display: block;
@@ -109,6 +118,7 @@ label {
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
+  border-radius: 8px;
 }
 
 .card {
@@ -132,5 +142,12 @@ label {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+.btn-success {
+    font-size: 24px!important
+}
+
+#nav-link {
+    text-align: right;
 }
 </style>

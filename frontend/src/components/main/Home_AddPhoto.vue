@@ -1,6 +1,6 @@
 <template>
-  <div>
-      <h3>Add Photo</h3> <!-- --------------------------------  Section: Add  Photo-->
+  <div class="block-add-photo">
+      <h3>Add some photo</h3> <!-- --------------------------------  Section: Add  Photo-->
         <form name="form" @submit.prevent="addOnePhoto">
                 <div class="form-group">
                     <label for="title">Choose a title  : </label>
@@ -111,9 +111,12 @@ export default {
         }          
       },     
     },
-
 };
-
 </script>
 
-<style scoped> </style>
+<style lang="scss" scoped>
+div.add-photo {
+  background: grey;
+  border: 1px solid red;
+}
+</style>
