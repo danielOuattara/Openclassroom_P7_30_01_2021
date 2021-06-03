@@ -36,5 +36,6 @@ export default {
 #app-globale {
     min-height: 100vh;
     background: linear-gradient(to right top, rgba(26, 59, 111, 0.7), rgba(15, 34, 64, 0.2));
+    /* background: linear-gradient(to right top, rgba(17, 15, 155, 0.344) , rgba(25, 37, 104, 0.686)); */
 }
 </style>

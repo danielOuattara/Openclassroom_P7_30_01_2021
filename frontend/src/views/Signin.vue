@@ -36,6 +36,30 @@
                     </div>
                 </div>
 
+                <div class="form-check">
+                    <input class="form-check-input" 
+                           type="checkbox" 
+                           id="defaultCheck1"
+                           v-validate="'required'"
+                           name='GTU'>
+                    <label class="form-check-label" for="defaultCheck1" >
+                         <span style="font-size:14px">Please, check next to agree with</span>
+                         <router-link style="display:inline; 
+                                             font-size:14px; 
+                                             margin-left:-12px;
+                                             font-weight:600" 
+                                      to="/gtu" 
+                                      class="nav-link" 
+                                      id="nav-link"> GTU
+                        </router-link>
+                    </label>
+
+                    <div  class="alert alert-danger" 
+                          v-if="errors.has('GTU')" 
+                      role="alert"> Please, accept the UCGs
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <button class="btn btn-success btn-block">Signin</button>
                 </div>
@@ -45,14 +69,25 @@
         </form>
 
         <div>
-            <router-link to="/login" class="nav-link" id="nav-link">
-                <font-awesome-icon icon="sign-in-alt" /> Go to login ?
+            <router-link to="/login" class="nav-link" id="nav-link">Switch to login
+                <font-awesome-icon icon="sign-in-alt" /> 
             </router-link>
         </div>
 
         <div v-if="message" 
              class="alert" 
              :class="successful ? 'alert-success' : 'alert-danger'">{{message}}
+        </div>
+
+        <div class="form-check">
+            <router-link style="display:inline; 
+                                font-size:14px; 
+                                margin-left:-10px; 
+                                color:black;
+                                text-decoration: underline dotted blue;"
+                         to="/help-center" class="nav-link" id="nav-link"> 
+                Troubles with registration ? 
+            </router-link>
         </div>
     </div>
   </div>
@@ -116,13 +151,13 @@ label {
 }
 
 .card-container.card {
-  max-width: 350px !important;
+  max-width: 350px;
   padding: 40px 40px;
   border-radius: 8px;
 }
 
 .card {
-  background-color: #f7f7f7;
+  background-color: rgba(247, 247, 247, 0.6);
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
   margin-top: 50px;
@@ -148,6 +183,11 @@ label {
 }
 
 #nav-link {
+    // margin-top: 10px;
     text-align: right;
+}
+
+.form-check {
+    margin:20px 0;
 }
 </style>

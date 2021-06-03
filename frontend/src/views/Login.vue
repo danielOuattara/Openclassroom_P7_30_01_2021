@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block" :disabled="loading">
+                    <button class="btn btn-primary btn-block" style="margin:64px 0px 16px 0" :disabled="loading">
                         <span v-show="loading" 
                               class="spinner-border spinner-border-sm"></span>
                         <span class="">Login</span>
@@ -49,9 +49,28 @@
             </form>
             <div>
                 <router-link to="/signin" class="nav-link" id="nav-link">
-                    <font-awesome-icon icon="user-plus" /> Go to signin ?
+                    Switch to signin <font-awesome-icon icon="user-plus" /> 
                 </router-link>
             </div>
+
+            
+        <div class="form-check">
+            <router-link 
+                    style="display:inline; 
+                           font-size:14px; 
+                           margin-left:-10px;
+                           color:black;
+                           text-decoration: underline dotted blue"
+                    to="/help-center" 
+                    class="nav-link" 
+                    id="nav-link"> 
+                Troubles with login ? 
+            </router-link>
+        </div>
+
+
+
+
         </div>
     </div>
 </template>
@@ -113,7 +132,7 @@ label {
 }
 
 .card {
-  background-color: #f7f7f7;
+  background-color: rgba(247, 247, 247, 0.6);;
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
   margin-top: 50px;
@@ -142,6 +161,9 @@ label {
 #nav-link {
     text-align: right;
     color:#23923d
+}
+.form-check {
+    margin:20px 0;
 }
 
 </style>

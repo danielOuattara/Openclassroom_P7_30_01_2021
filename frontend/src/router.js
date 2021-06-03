@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Signin from './views/Signin.vue';
 import Login from './views/Login.vue';
+import GTU from './views/GTU.vue';
+import Help from './views/Help.vue';
 
 Vue.use(Router);
 
@@ -12,6 +14,8 @@ export const router = new Router({
     { path: '/home'    , name: ''         , component: Home                                   },
     { path: '/login'   , name: ''         , component: Login                                  },
     { path: '/signin'  , name: ''         , component: Signin                                 },
+    { path: '/gtu'     , name: ''         , component: GTU                                    },
+    { path: '/help-center'  , name: ''         , component: Help                                   },
     { path: '/profile' , name: 'profile'  , component: () => import('./views/Profile.vue')    },
     { path: '/admin'   , name: 'admin'    , component: () => import('./views/BoardAdmin.vue') },
     { path: '/user'    , name: 'user'     , component: () => import('./views/BoardUser.vue')  }
@@ -24,7 +28,7 @@ export const router = new Router({
  */
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/signin'  /*, '/home' */];
+    const publicPages = ['/login', '/signin'  /*, '/home' */, '/gtu', '/help-center'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
