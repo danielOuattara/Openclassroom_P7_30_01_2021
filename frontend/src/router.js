@@ -15,10 +15,10 @@ export const router = new Router({
     { path: '/login'   , name: ''         , component: Login                                  },
     { path: '/signin'  , name: ''         , component: Signin                                 },
     { path: '/gtu'     , name: ''         , component: GTU                                    },
-    { path: '/help-center'  , name: ''         , component: Help                                   },
     { path: '/profile' , name: 'profile'  , component: () => import('./views/Profile.vue')    },
     { path: '/admin'   , name: 'admin'    , component: () => import('./views/BoardAdmin.vue') },
-    { path: '/user'    , name: 'user'     , component: () => import('./views/BoardUser.vue')  }
+    { path: '/user'    , name: 'user'     , component: () => import('./views/BoardUser.vue')  },
+    { path: '/help'    , name: ''         , component: Help                                   },
   ]
 });
 

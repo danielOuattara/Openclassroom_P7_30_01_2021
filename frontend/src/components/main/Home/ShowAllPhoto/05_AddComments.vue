@@ -1,38 +1,36 @@
 <template>
-  <form name="form" @submit.prevent="addPhotoComment">
-    <div class="form-group">
-      <label for="value">Comment below : </label>
-      <textarea        name="value"
-        placeholder="enter your comment here..."
-        type="text"
-        cols="30"
-        rows="2"
-        class="form-control"
-        v-model="comment.value"
-        v-validate="'required'"
-      >
-      </textarea>
-      <div class="alert alert-danger" v-if="errors.has('value')" role="alert">
-        An entry is required to post a comment
-      </div>
-    </div>
-    <div class="form-group">
-      <button class="btn btn-outline-primary" :disabled="loading">
-        <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-        <span class="">Post comment</span>
-      </button>
-    </div>
-    <div class="form-group">
-      <div v-if="message" class="alert alert-danger" role="alert">
-        {{ message }}
-      </div>
-    </div>
-  </form>
+  <div class="bloc bloc-add-comment">
+        <form name="form" @submit.prevent="addPhotoComment">
+        <div class="form-group">
+            <label for="value">Comment below : </label>
+            <textarea  name="value" placeholder="enter your comment here..."
+                       type="text" cols="30" rows="2" class="form-control"
+                       v-model="comment.value" v-validate="'required'" >
+            </textarea>
+            <div class="alert alert-danger" 
+                v-if="errors.has('value')" role="alert">
+              An entry is required to post a comment
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-outline-primary" :disabled="loading">
+              <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+              <span class="">Post comment</span>
+            </button>
+        </div>
+        <div class="form-group">
+            <div v-if="message" class="alert alert-danger" role="alert">
+              {{ message }}
+            </div>
+        </div>
+    </form>
+  </div>
+
 </template>
 
 <script>
 import { /* mapGetters, */ mapActions } from "vuex";
-import Comment from "./../../models/comment.js";
+import Comment from "../../../../models/comment.js";
 // import photoCommentService from './../../services/photo.comments.service';
 export default {
   name: "AddComments",
@@ -40,26 +38,14 @@ export default {
 
   data() {
     return {
-      comment: new Comment(""),
+      comment: new Comment(''),
       loading: false,
-      message: "",
+      message: '',
     };
   },
 
   methods: {
     ...mapActions(["addPhotoCommentAction"]),
-
-    // fetchOnePhotoLikes() {
-    //     try {
-
-    //       this.allPhotos.forEach( photo => {
-    //           const photoUuid = photo.uuid;
-    //           this.$store.dispatch("fetchOnePhotoLikesAction", photoUuid)
-    //       })
-    //     } catch(error) {
-    //         this.message = (error.response && error.response.data) || error.message || error.toString();
-    //     }
-    // },
 
     // async addPhotoComment() {  // OK! but NO VueX !
     //     try {
@@ -83,8 +69,7 @@ export default {
     //     }
     // },
 
-    async addPhotoComment() {
-      // USING VueX and Services.
+    async addPhotoComment() {   // USING VueX and Services.
       try {
         this.loading = true;
         const isValid = await this.$validator.validateAll();
@@ -112,4 +97,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.bloc-add-comment { /* STDBY */
+  grid-row: 13 / span 14;
+  grid-column: 1 / span 4;
+}
+
+
+</style>

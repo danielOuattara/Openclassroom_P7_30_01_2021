@@ -5,6 +5,8 @@
       <h3>{{content}}</h3>
     </div>
 
+        <AddPhoto/>
+
         <h3>All Photo</h3>
         <div class="photo-container">
           <div v-for="photo in userAllPhotos" :key="photo.id" class="photo-block">
@@ -30,8 +32,12 @@
 <script>
 import UserService from './../services/user.service.js';
 import {mapGetters, mapActions } from 'vuex';
+import AddPhoto from './../components/main/UserBoard/01_AddPhoto';
 export default {
     name: 'UserBoard',
+    components: {
+      AddPhoto,
+    },
     data() {
         return {
             content: '',

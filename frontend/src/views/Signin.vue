@@ -85,7 +85,7 @@
                                 margin-left:-10px; 
                                 color:black;
                                 text-decoration: underline dotted blue;"
-                         to="/help-center" class="nav-link" id="nav-link"> 
+                         to="/help" class="nav-link" id="nav-link"> 
                 Troubles with registration ? 
             </router-link>
         </div>

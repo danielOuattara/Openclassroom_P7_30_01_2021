@@ -35,8 +35,8 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex';
-import DeleteUser from './../components/main/Profile_DeleteUser';
-import UpdateUser from './../components/main/Profile_UpdateUser';
+import UpdateUser from './../components/main/Profile/Profile_UpdateUser'
+import DeleteUser from './../components/main/Profile/Profile_DeleteUser'
 export default {
   
   name: 'Profile',

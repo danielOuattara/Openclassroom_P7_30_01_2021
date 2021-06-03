@@ -3,19 +3,19 @@
         <div class="jumbotron">
             <h3>Wall of photo</h3>
         </div>
-        <HomeAddPhoto />
-        <HomeShowAllPhotos />
+        <AddPhoto />
+        <ShowAllPhotos />
     </div>
 </template>
 
 <script>
-import HomeAddPhoto from '../components/main/Home_AddPhoto.vue'
-import HomeShowAllPhotos from '../components/main/Home_ShowAllPhotos.vue'
+import AddPhoto from '../components/main/UserBoard/01_AddPhoto';
+import ShowAllPhotos from '../components/main/Home/01_ShowAllPhotos';
 export default {
     name: 'Home',
     components: {
-      HomeAddPhoto,
-      HomeShowAllPhotos
+      AddPhoto,
+      ShowAllPhotos
     },
 
     data() {
@@ -23,4 +23,9 @@ export default {
     },
 };
 </script>
+<style lang="scss" scoped>
+.container {
+    max-width: 800px;
+}
+</style>
 

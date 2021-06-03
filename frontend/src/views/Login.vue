@@ -52,16 +52,14 @@
                     Switch to signin <font-awesome-icon icon="user-plus" /> 
                 </router-link>
             </div>
-
-            
         <div class="form-check">
             <router-link 
                     style="display:inline; 
                            font-size:14px; 
                            margin-left:-10px;
                            color:black;
-                           text-decoration: underline dotted blue"
-                    to="/help-center" 
+                           text-decoration: underline dotted blue;"
+                    to="/help" 
                     class="nav-link" 
                     id="nav-link"> 
                 Troubles with login ? 

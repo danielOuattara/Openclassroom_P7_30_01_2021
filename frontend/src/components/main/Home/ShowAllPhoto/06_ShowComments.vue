@@ -1,5 +1,5 @@
 <template>
-    <div> 
+    <div  class="bloc bloc-show-comment"> 
         <div class="comment-owner-picture">
           <img src="" alt="">
         </div>
@@ -9,6 +9,10 @@
             <!-- <p class="comment-owner-name">{{ comment.owner.firstName + comment.owner.firstName }}</p> -->
             <p class="comment-date"> {{comment.createdAt}}</p>
             <p class="comment-content">{{comment.content}}</p>
+        </div>
+
+        <div class="comment-content">
+
         </div>
     </div>
 </template>
@@ -32,5 +36,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bloc-show-comment { /* STDBY */
+  grid-row: 14 / span 15;
+  grid-column: 1 / span 4;
+  border: 1px solid red;
+}
 
 </style>
