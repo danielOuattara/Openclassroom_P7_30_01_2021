@@ -3,17 +3,16 @@
 
 import axios from "axios";
 import authHeader from "./auth.header.js";
-import comment from './../models/comment.js';
-
-const API_URL = "http://localhost:4200/api/photos/";
+// import comment from './../models/comment.js'
+const API_URL = "http://localhost:4200/api/photos";
 
 class PhotoCommentsService {
 
-    createPhotoComment(photoUuid) {
-        return axios.post(API_URL + `/${photoUuid}/comments` , { 
-            content: comment.content 
-        }, 
-        { headers: authHeader() })
+    createPhotoComment(photoUuid, {...comment}) {
+        return axios.post(API_URL + `/${photoUuid}/comments` , 
+            { content: comment.value }, 
+            { headers: authHeader() }
+        )
     }
     
     getAllPhotoComments(photoUuid) {

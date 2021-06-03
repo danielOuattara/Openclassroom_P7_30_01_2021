@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
-    <div class="jumbotron">
-      <h3>Wall of photo</h3>
+    <div class="container">
+        <div class="jumbotron">
+            <h3>Wall of photo</h3>
+        </div>
+        <HomeAddPhoto />
+        <HomeShowAllPhotos />
     </div>
-      <HomeAddPhoto />
-      <HomeShowAllPhotos />
-  </div>
 </template>
 
 <script>

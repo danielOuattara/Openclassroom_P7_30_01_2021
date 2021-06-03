@@ -1,6 +1,6 @@
 
 const db = require("./../models");
-const { sequelize, User, Role, Photo, Comment, Like } = require('./../models');
+const { User, Photo, Comment } = require('./../models');
 const Op = db.Sequelize.Op;
 const fs = require("fs");
 
@@ -12,6 +12,7 @@ exports.createComment = async (req, res) => {
         if(!photo) {
             return res.status(404).send(`Photo not found`)
         }
+        console.log(req)
         await Comment.create({
             content: req.body.content, 
             ownerId: req.userId, 

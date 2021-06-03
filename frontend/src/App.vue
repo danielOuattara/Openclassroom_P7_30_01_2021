@@ -1,9 +1,9 @@
 <template>
-<div id="app-globale">
-    <Header />
-    <Main/>
-    <Footer v-if="loggedIn"></Footer>
-</div>
+    <div id="app-globale">
+        <Header />
+        <Main/>
+        <Footer v-if="loggedIn"></Footer>
+    </div>
 </template>
 
 <script>

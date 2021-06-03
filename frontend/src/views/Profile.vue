@@ -1,7 +1,6 @@
 
 <template>
   <div class="profile-container">
-
     <div class="bloc bloc-avatar">
       <img 
         class="user-avatar"
@@ -23,21 +22,13 @@
         <font-awesome-icon class="icon-edit" icon="edit" /> 
         </p>
     </div>
-
-
     <div class="bloc bloc-about-user">
         <p> <b>About me:</b>: {{userData.aboutMe}} </p>
     </div>
-
-
     <div class="bloc bloc-user-modifications">
       <UpdateUser />
       <DeleteUser />
     </div>
-
-
-    <!-- <button @click="updateUser">Update profile</button> -->
-
   </div>
 </template>
 
@@ -171,10 +162,5 @@ export default {
 }
 
 /* --------------------------------- */
-
-
-
-
-
 
 </style>
