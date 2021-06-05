@@ -1,18 +1,20 @@
 <template>
-      <div class="bloc bloc-likes">
-        <p class="users-likes">
-          <font-awesome-icon icon="thumbs-up" />
-          <span class="count-likes"> how many likes ?</span>
-        </p>
-        <p class="users-dislikes">
-          <font-awesome-icon icon="thumbs-down" />
-          <span class="count-dislikes"> how many dislikes ?</span>
-        </p>
+      <div class="bloc bloc-photo-likes">
+        <UserLike />
+        <UserDisLike />
+ 
       </div>
 </template>
 
 <script>
+import  UserLike from './PhotoUserLike'
+import  UserDisLike from './PhotoUserDislike'
 export default {
+
+    components: {
+      UserLike,
+      UserDisLike,
+    },
     props: ['photo'],
 
 
@@ -31,8 +33,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .bloc-likes {
-//   grid-row: 6 / span 7;
-//   grid-column: 3 / span 2;
-// }
+
+.user-photo-likes {
+  display: inline-block;
+  margin-right: 25px;
+}
+
+
+.user-photo-dislikes {
+  display: inline-block;
+}
+
 </style>

@@ -16,6 +16,11 @@ module.exports = async (req, res, next) => {
             req.userUuid = decoded.uuid;
             req.userId = decoded.id;
             req.userRoles = decoded.userRoles;
+            endOfTime = decoded.exp;
+            if (decoded.exp - Date.parse(new Date())/1000 === 0) {
+                return res.status(401).send("Token expired, please log again ")
+            }
+            
         });
         next();
     }    

@@ -4,18 +4,18 @@
             <h3>Wall of photo</h3>
         </div>
         <AddPhoto />
-        <ShowAllPhotos />
+        <PhotosWall />
     </div>
 </template>
 
 <script>
 import AddPhoto from '../components/main/UserBoard/01_AddPhoto';
-import ShowAllPhotos from '../components/main/Home/01_ShowAllPhotos';
+import PhotosWall from '../components/main/Home/PhotosWall';
 export default {
     name: 'Home',
     components: {
       AddPhoto,
-      ShowAllPhotos
+      PhotosWall
     },
 
     data() {

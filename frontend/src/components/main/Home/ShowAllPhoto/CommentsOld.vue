@@ -1,14 +1,20 @@
 <template>
-    <div  class="bloc bloc-show-comment"> 
-        <div class="comment-owner-picture">
+    <div v-show="commentToggled" class="bloc bloc-old-comment"> 
+        <!-- <div class="comment-owner-picture">
           <img src="" alt="">
-        </div>
+        </div> -->
         <div class="infos-comment" v-for="comment, index in photo.comments" :key="index" > {{comment.content}}>
 
             <!-- <img :src="comment.onwer.avatar" :alt="comment.owner.firstname + 'picture, onwer of this comment'"> -->
             <!-- <p class="comment-owner-name">{{ comment.owner.firstName + comment.owner.firstName }}</p> -->
+
+            <OwnerAvatar v-bind:comment="comment"/>
+            <!-- <OwnerName v-bind:comment="comment"/> -->
+            <!-- <DateOfPosting v-bind:comment="comment"/> -->
             <p class="comment-date"> {{comment.createdAt}}</p>
             <p class="comment-content">{{comment.content}}</p>
+
+
         </div>
 
         <div class="comment-content">
@@ -18,28 +24,23 @@
 </template>
 
 <script>
+import OwnerAvatar from './OwnerAvatar';
+// import OwnerName from './OwnerName';
+// import DateOfPosting from './DateOfPosting';
 export default {
-    name: 'ShowOnePhotoAllComments',
-    props: ['photo'],
-    data() {
-        return {
+    name: 'OldComments',
+    props: ['photo', 'commentToggled'], 
+    components: {
+        OwnerAvatar
+        // DateOfPosting,
+        // OwnerName,
+    } 
 
-        };
-    },
-
-    computed: {
-    },
-
-    methods: {}
 };
 
 </script>
 
 <style lang="scss" scoped>
-.bloc-show-comment { /* STDBY */
-//   grid-row: 14 / span 15;
-//   grid-column: 1 / span 4;
-//   border: 1px solid red;
-}
+
 
 </style>

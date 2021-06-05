@@ -3,10 +3,6 @@
         <img class="owner-picture" :src="photo.owner.avatar" 
              style="max-width: 70px"  :alt=" 'picture profile of ' + photo.owner.firstName + photo.owner.lastName "
         />
-        <div class="owner-name">
-          <p class="onwer-firstName">firstName: {{ photo.owner.firstName }}</p>
-          <p class="onwer-lastName">lastName: {{ photo.owner.lastName }}</p>
-        </div>
       </div>
 </template>
 
@@ -24,9 +20,9 @@ export default {
 
 <style lang="scss" scoped>
 
-.bloc-infos-photo-owner {
-  grid-row: 1;
-  grid-column: 1 / span 4;
+.bloc-owner-avatar {
+  grid-row: 1 span /2;
+  grid-column: 1 / span 2;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -36,6 +32,5 @@ export default {
     background: white;
   }
 }
-
 
 </style>

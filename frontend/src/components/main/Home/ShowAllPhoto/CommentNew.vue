@@ -1,5 +1,5 @@
 <template>
-  <div class="bloc bloc-add-comment">
+  <div  v-show="commentToggled" class="bloc bloc-new-comment">
         <form name="form" @submit.prevent="addPhotoComment">
         <div class="form-group">
             <label for="value">Comment below : </label>
@@ -30,11 +30,10 @@
 
 <script>
 import { /* mapGetters, */ mapActions } from "vuex";
-import Comment from "../../../../models/comment.js";
 // import photoCommentService from './../../services/photo.comments.service';
 export default {
   name: "AddComments",
-  props: ["photo"],
+  props: ["photo", 'commentToggled'],
 
   data() {
     return {
@@ -98,6 +97,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+
 
 
 </style>

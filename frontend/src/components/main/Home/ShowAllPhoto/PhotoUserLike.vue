@@ -1,13 +1,7 @@
 <template>
-      <div class="bloc bloc-likes">
-        <p class="users-likes">
-          <font-awesome-icon icon="thumbs-up" />
-          <span class="count-likes"> how many likes ?</span>
-        </p>
-        <p class="users-dislikes">
-          <font-awesome-icon icon="thumbs-down" />
-          <span class="count-dislikes"> how many dislikes ?</span>
-        </p>
+      <div class="user-photo-likes">
+          <font-awesome-icon class="thumbs-up" icon="thumbs-up" />
+          <span class="count-likes"> <span> 35 </span></span>
       </div>
 </template>
 
@@ -31,8 +25,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .bloc-likes {
-//   grid-row: 6 / span 7;
-//   grid-column: 3 / span 2;
-// }
+
+.thumbs-up {
+    color: rgb(76, 100, 194);
+    font-size: 20px;
+    &:hover {
+        cursor: pointer;
+    }
+}
 </style>

@@ -60,18 +60,18 @@ exports.login = async (req, res) => {
             {
                 uuid: user.uuid,
                 id: user.id,
-                userRoles: [...authorities]
+                userRoles: [...authorities],
             },
             config.secret,
-            {expiresIn: '12h'}
+            {expiresIn:'12h'}
         )
         res.status(201).json({ 
             accessToken: token, 
             uuid:  user.uuid,
             roles: authorities,
+            // limit: 500,
         });
-        } 
-    catch(err) {
+    } catch(err) {
         return res.status(401).send(err.message);
     }
 }
