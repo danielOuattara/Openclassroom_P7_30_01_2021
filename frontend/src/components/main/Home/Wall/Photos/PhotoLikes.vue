@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import PhotoLikesServices from './../../../../../services/photo.likes.services.js';
+// import PhotoLikesServices from './../../../../../services/photo.likes.services.js';
 export default {
     props: ['photo'],
 
@@ -29,15 +29,15 @@ export default {
           return likesVotes;
       },
 
-      userLike() {
-        const photoUuid = this.photo.uuid;
-        const userUuid = this.currentUser.uuid
-        const like = document.getElementById("thumbs-up");
-        like.addEventListener('click', function() {
-          this.likeClicked = !likeClicked 
-          like.style.color = "green";
-        })
-      },
+      // userLike() {
+      //   const photoUuid = this.photo.uuid;
+      //   const userUuid = this.currentUser.uuid
+      //   const like = document.getElementById("thumbs-up");
+      //   like.addEventListener('click', function() {
+      //     this.likeClicked = !likeClicked 
+      //     like.style.color = "green";
+      //   })
+      // },
     },
 
     mounted() {
