@@ -42,7 +42,10 @@ exports.getAllPhotos = (req, res) => {
       {
         model: Comment,
         as: 'comments',
-        include: [{model: User, as: 'owner'}]
+        include: [{model: User, as: 'owner'}],
+        order: [
+          ['createdAt', 'ASC']
+        ]
       }, 
       {
         model: Like,

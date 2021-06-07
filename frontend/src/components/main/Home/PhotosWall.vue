@@ -13,7 +13,7 @@
                 :data-target="'#photo'+photo.uuid" 
                 aria-expanded="false" :aria-controls="'photo'+photo.uuid"> 
                     Comments :
-              <span class="number-of-comments"> 20</span>
+              <span class="number-of-comments">{{photo.comments.length}}</span>
           </span>
 
           <PhotoLikes v-bind:photo="photo" />

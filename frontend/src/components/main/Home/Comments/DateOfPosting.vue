@@ -1,15 +1,12 @@
 <template>
 <!-- Comment!-->
-        <p class="comment-post-date bloc bloc-date-posting">
-          <!-- <font-awesome-icon icon="calendar-alt" />
-          {{ comment.createdAt.split("T")[0] }}
-          <font-awesome-icon icon="clock" />
-          {{ comment.createdAt.substring(11, 13) }}H{{
-            comment.createdAt.substring(14, 16)
-          }} -->
-          <font-awesome-icon icon="history"/>
+        <span class="comment-post-date bloc bloc-date-posting">
+          <font-awesome-icon icon="history" 
+                             type="button" data-toggle="tooltip" data-placement="top" 
+                             :title="comment.createdAt"/>
+
           {{ this.periodSincePosting}}
-        </p>
+        </span>
 </template>
 
 <script>

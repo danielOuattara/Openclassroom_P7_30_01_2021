@@ -38,6 +38,9 @@ import DateOfPosting from './DateOfPosting';
 import CommentContent from './CommentBody';
 export default {
     name: 'OldComments',
+    data() {
+        return{   }
+    },
     props: ['photo', 'commentToggled'], 
     components: {
         OwnerAvatar,
@@ -61,6 +64,7 @@ export default {
     display: grid;
     border-left: 3px solid grey;
     border-bottom: 1px solid grey;
+    border-radius: 6px ;
     border-bottom-left-radius: 6px;
     // padding: 2px;
     margin: 15px 0;
@@ -98,6 +102,7 @@ export default {
     background-color:rgba(197, 197, 197, 0.576);
     padding: 10px;
     font-size: 14px;
+    margin-right: 14px;
     border-radius: 5px;
 }
 .btn-comment {
