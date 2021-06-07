@@ -9,7 +9,7 @@
     </div>
 
     <div class="bloc bloc-infos-user">
-        <p> <b>Username</b> :  {{userData.userName}} 
+        <p v-if="currentUser.uuid" > <b>Username</b> :  {{userData.userName}}
             <font-awesome-icon class="icon-edit" icon="edit" />
         </p>
         <p> <b>Firstname</b> :  {{userData.firstName}}

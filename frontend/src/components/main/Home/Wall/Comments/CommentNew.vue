@@ -33,7 +33,7 @@ import { /* mapGetters, */ mapActions } from "vuex";
 // import photoCommentService from './../../services/photo.comments.service';
 export default {
   name: "AddComments",
-  props: ["photo", 'commentToggled'],
+  props: ["photo", 'commentToggled','photoTargetted'],
 
   data() {
     return {

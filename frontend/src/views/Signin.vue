@@ -53,21 +53,16 @@
                                       id="nav-link"> GTU
                         </router-link>
                     </label>
-
                     <div  class="alert alert-danger" 
                           v-if="errors.has('GTU')" 
                       role="alert"> Please, accept the UCGs
                     </div>
                 </div>
-
                 <div class="form-group">
                     <button class="btn btn-success btn-block">Signin</button>
                 </div>
-
             </div>
-
         </form>
-
         <div>
             <router-link to="/login" class="nav-link" id="nav-link">Switch to login
                 <font-awesome-icon icon="sign-in-alt" /> 

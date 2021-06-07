@@ -30,7 +30,7 @@
 
 <script>
 import { /* mapGetters, */ mapActions } from "vuex";
-import Comment from "../../../../models/comment.js";
+import Comment from "../../../../../models/comment.js";
 // import photoCommentService from './../../services/photo.comments.service';
 export default {
   name: "AddComments",

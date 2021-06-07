@@ -10,7 +10,7 @@
 
 <script>
 import AddPhoto from '../components/main/UserBoard/01_AddPhoto';
-import PhotosWall from '../components/main/Home/PhotosWall';
+import PhotosWall from '../components/main/Home/Wall/PhotosWall';
 export default {
     name: 'Home',
     components: {
