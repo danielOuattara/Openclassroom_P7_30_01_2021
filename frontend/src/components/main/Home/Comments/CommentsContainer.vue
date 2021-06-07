@@ -1,13 +1,13 @@
 <template>
     <div class="bloc bloc-old-comment"> 
-        <div class="infos-comment" v-for="comment, index in photo.comments" :key="index">
+        <div class="one-comment" v-for="comment, index in photo.comments" :key="index">
             <OwnerAvatar v-bind:comment="comment"/>
             <OwnerName v-bind:comment="comment"/>
             <DateOfPosting v-bind:comment="comment"/>
             <CommentContent v-bind:comment="comment"/>
-            <div class="dropdown dropleft mr-1">
+            <div class="dropdown dropup mr-1">
                 <button type="button" 
-                        class="btn btn-infos dropdown-toggle" 
+                        class="btn btn-infos dropdown-toggle comment-more-options" 
                         id="dropdownMenuOffset" 
                         data-toggle="dropdown" 
                         aria-haspopup="true" aria-expanded="false" 
@@ -57,42 +57,48 @@ export default {
 
 <style lang="scss" scoped>
 
-.infos-comment {
+.one-comment {
     display: grid;
-    border-bottom: 1pX solid blue;
-    padding: 2px;
-    margin-bottom: 5px
+    border-left: 3px solid grey;
+    border-bottom: 1px solid grey;
+    border-bottom-left-radius: 6px;
+    // padding: 2px;
+    margin: 15px 0;
+    position: relative;
+    background: rgb(237, 237, 237)
 }
 .comment-avatar{
-  grid-row: 1;
-  grid-column: 1 / span 1;
-  max-width: 6vw;
-  border: 1px solid gray;
+    grid-row: 1;
+    grid-column: 1 / span 1;
+    max-width: 6vw;
+    border: 1px solid gray;
 }
 .comment-owner-name{
-  grid-row: 1 / span 1;
-  grid-column: 2 ;
-  border: 1px solid gray;
-  width: 80px;
-  font-size: 12px;
-  font-weight: 600;
-  width: 70px;
-  margin-left: -10px;
-  height: 20px;
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 2 ;
+    border-bottom: 1px solid gray;
+    width: 80px;
+    font-size: 12px;
+    font-weight: 700;
+    // width: 70px;
+    height: 20px;
 }
 .comment-post-date {
-  grid-row: 2 / span 1;
-  grid-column: 2 / span 1;
-  border: 1px solid gray;
-  font-size: 12px;
-  width: 70px;
-  margin-left: -10px;
+    grid-row: 1 / span 1;
+    grid-column: 4 / span 1;
+    // border-bottom: 1px solid gray;
+    font-size: 12px;
+    // width: 70px;
+    // margin-left: -10px;
 }
 .comment-content{
-  grid-row: 1 ;
-  grid-column: 3 / span 10;
-  border: 1px solid gray;
-  font-size: 15px;
+    grid-row: 2 ;
+    grid-column: 2 / span 10;
+    // border: 1px solid gray;
+    background-color:rgba(197, 197, 197, 0.576);
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
 }
 .btn-comment {
     font-size: 12px;
@@ -108,31 +114,33 @@ export default {
     }
 }
 .btn-update-comment {
-  grid-row: 5;
-  grid-column: 4 / span 1;
-  margin-left: 20px;
+    // grid-row: 5;
+    // grid-column: 4 / span 1;
+    // margin-left: 20px;
 }
 .btn-delete-comment {
-  grid-row: 5 ;
-  grid-column: 5 / span 1;
+    // grid-row: 5 ;
+    // grid-column: 5 / span 1;
 
 }
 .btn-report-comment {
-  grid-row: 5 ;
-  grid-column: 6 / span 1;
+    // grid-row: 5 ;
+    // grid-column: 6 / span 1;
 
-.dropdown-toggle {
-    background:red;
-    &:hover {
-        background: grey;
-        color: white;
+  .dropdown-toggle {
+        background:red;
+        &:hover {
+            background: grey;
+            color: white;
+        }
     }
-}
 }
 .dropdown-menu{
     width: 50vw;
     height: auto;
 }
+
+.comment-more-options {}
 
 
 </style>

@@ -7,21 +7,21 @@
           <DateOfPosting v-bind:photo="photo"/>
           <Photo v-bind:photo="photo" />
           
-          <span class="bloc-container-toggler btn btn-primary" 
+          <span class="bloc-container-toggler btn btn-success" 
                 type="button" 
                 data-toggle="collapse" 
                 :data-target="'#photo'+photo.uuid" 
                 aria-expanded="false" :aria-controls="'photo'+photo.uuid"> 
-                    Comments : <span>&#x2662;</span>
+                    Comments :
               <span class="number-of-comments"> 20</span>
           </span>
 
           <PhotoLikes v-bind:photo="photo" />
           <PhotoDisLikes v-bind:photo="photo"/>
 
-          <div class="collapse" :id="'photo'+photo.uuid">
-              <CommentNew v-bind:photo="photo"/>
+          <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
               <CommentsOldContainer v-bind:photo="photo"/>
+              <CommentNew v-bind:photo="photo"/>
           </div>
       </div>
   </div>
@@ -91,6 +91,7 @@ export default {
   display: grid;
   grid-gap: 5px;
 }
+
 /* --- START Grid Item */
 .bloc-avatar {
   grid-row: 1 / span 2;
@@ -132,8 +133,14 @@ export default {
   border-radius: 5px;
   &:hover {
     cursor: pointer;
-    background: rgb(238, 144, 144);
+    background: grey;
   }
+}
+
+/* -------- comment styling */
+.bloc-comment-collapsable {
+  grid-row: 8 ;
+  grid-column: 1 / span 6;
 }
 .btn-thumbs {
   // color: rgb(153, 153, 153);
@@ -152,9 +159,9 @@ export default {
     background: rgb(209, 15, 15);
   }
 .thumbs {
-  color: rgb(28, 44, 160);
+  // color: rgb(28, 44, 160);
   &:hover {
-    color: rgb(12, 158, 48);
+    // color: rgb(12, 158, 48);
   }
 }
 }
@@ -168,17 +175,18 @@ export default {
 }
 .output{
   font-size: 16px!important;
-  color: red
+  // color: red
 }
 .bloc-new-comment { /* STDBY */
   grid-row: 8 / span 4;
   grid-column: 1 / span 6;
-  border: 3px solid green;
+  // border: 1px solid green;
+  margin: 7px 0;
 }
 .bloc-old-comment { /* STDBY */
   grid-row: 12 / span 5;
   grid-column: 1 / span 6;
-  border: 4px solid red;
+  // border: 1px solid red;
 }
 
 
