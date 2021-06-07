@@ -1,7 +1,7 @@
 <template>
     <button class="btn-thumbs thumbs-up">
         <font-awesome-icon icon="thumbs-up" class="thumbs thumbs-likes"/>
-        <span class="output likes-output">{{countingLikes()}}</span>
+        <span class="output likes-output"> {{countingLikes()}} </span>
     </button>
 </template>
 

@@ -32,7 +32,7 @@
 <script>
 import UserService from './../services/user.service.js';
 import {mapGetters, mapActions } from 'vuex';
-import AddPhoto from './../components/main/UserBoard/01_AddPhoto';
+import AddPhoto from './../components/main/AddPhoto.vue';
 export default {
     name: 'UserBoard',
     components: {

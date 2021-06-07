@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import AddPhoto from '../components/main/UserBoard/01_AddPhoto';
+import AddPhoto from '../components/main/AddPhoto.vue';
 import PhotosWall from '../components/main/Home/PhotosWall';
 export default {
     name: 'Home',

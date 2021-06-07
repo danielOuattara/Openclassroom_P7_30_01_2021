@@ -2,9 +2,9 @@
     <div class="bloc bloc-photo-post">
         <img :src="photo.imageUrl" :alt="'picture of ' + photo.title" 
              class="photos" data-toggle="modal" 
-             :data-target="'#'+photo.uuid" />
+             :data-target="'#photo'+photo.uuid" />
         <!-- Modal -->
-        <div class="modal fade" :id="photo.uuid" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+        <div class="modal fade" :id="'photo'+photo.uuid" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">

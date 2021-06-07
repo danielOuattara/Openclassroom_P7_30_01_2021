@@ -1,7 +1,6 @@
 <template>
-    <div v-show="commentToggled" class="bloc bloc-old-comment"> 
-        <div class="infos-comment" v-for="comment, index in photo.comments" 
-                                   :key="index">
+    <div class="bloc bloc-old-comment"> 
+        <div class="infos-comment" v-for="comment, index in photo.comments" :key="index">
             <OwnerAvatar v-bind:comment="comment"/>
             <OwnerName v-bind:comment="comment"/>
             <DateOfPosting v-bind:comment="comment"/>
@@ -33,10 +32,10 @@
 </template>
 
 <script>
-import OwnerAvatar from './OwnerAvatar';
+import OwnerAvatar from './OwnerAvatar.vue'
 import OwnerName from './OwnerName';
 import DateOfPosting from './DateOfPosting';
-import CommentContent from './CommentOldBody';
+import CommentContent from './CommentBody';
 export default {
     name: 'OldComments',
     props: ['photo', 'commentToggled'], 

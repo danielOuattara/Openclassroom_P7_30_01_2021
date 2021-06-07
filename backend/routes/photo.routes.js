@@ -9,7 +9,7 @@ const controllerComments = require("../controllers/photo.comments.controllers.js
 router.post("/",  authJwt, multer, controller.addPhoto);
 router.get("/",   authJwt, controller.getAllPhotos);
 router.get("/:photoUuid",    authJwt, controller.getOnePhoto);
-router.get("/user/:userUuid",  authJwt, controller.getAllPhotosFromOneUser);
+// router.get("/user/:userUuid",  authJwt, controller.getAllPhotosFromOneUser); // USEFULL ???
 router.delete("/:photoUuid", authJwt, controller.deleteOnePhoto);
 router.delete("/",  authJwt, controller.userDeleteAllPhotos);
 router.delete("/user/:userUuid",  authJwt, controller.deleteAllPhotosFromOneUser);

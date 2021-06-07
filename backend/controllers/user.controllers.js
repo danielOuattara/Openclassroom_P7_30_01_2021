@@ -73,7 +73,18 @@ exports.getAllUsers = (req, res) => {
           ],
           include: [
             { model: Like, as:'likes'}, 
-            { model: Comment, as:'comments'},
+            { 
+              model: Comment, 
+              as:'comments',
+              order: [ ['createdAt', 'DESC']
+            ],
+              include:[
+                {
+                  model: User,
+                  as:'owner'
+                }
+              ]
+            },
           ]
         }, 
       ],

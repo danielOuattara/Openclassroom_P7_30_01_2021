@@ -5,8 +5,7 @@
 
 <script>
 export default {
-  name: "ShowAllPhotos",
-    props: ["photo", "comment"],
+  props: ["photo"],
 
   data() {
     return {

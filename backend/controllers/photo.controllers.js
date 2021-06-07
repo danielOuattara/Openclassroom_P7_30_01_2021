@@ -92,46 +92,46 @@ exports.getOnePhoto = (req, res) => {
 }
 //-----------------------------------------------------------------------------------------
 
-exports.getAllPhotosFromOneUser = (req, res) => {
-    User.findOne({ where: { uuid: req.params.userUuid } })
-    .then( user => {
-        if (!user) {
-            return res.status(404).json("User unknown !");        
-        }
-        Photo.findAll({
-          where: { ownerId: user.id },
-          order: [
-              ['createdAt', 'DESC']
-          ],
-          include: [
-            {
-              model: Comment,
-              as: 'comments',
-              include: [{model: User, as: 'owner'}],
-              order: [
-                  ['createdAt', 'DESC']
-              ],
-            }, 
-            {
-              model: Like,
-              as: 'likes',
-              include: [{model: User, as: 'owner'}],
-              order: [
-                  ['createdAt', 'DESC']
-              ],
-            },
-          ],
-        })
-        .then( photos =>  {
-            if (!photos) {
-              return res.status(404).send("No photo(s) found !");
-            }
-            res.status(200).json(photos)});
-    })
-    .catch( err => {
-      return res.status(500).json(err.message)
-    })
-}
+// exports.getAllPhotosFromOneUser = (req, res) => {  // USEFUL ???
+//     User.findOne({ where: { uuid: req.params.userUuid } })
+//     .then( user => {
+//         if (!user) {
+//             return res.status(404).json("User unknown !");        
+//         }
+//         Photo.findAll({
+//           where: { ownerId: user.id },
+//           order: [
+//               ['createdAt', 'DESC']
+//           ],
+//           include: [
+//             {
+//               model: Comment,
+//               as: 'comments',
+//               include: [{model: User, as: 'owner'}],
+//               order: [
+//                   ['createdAt', 'DESC']
+//               ],
+//             }, 
+//             {
+//               model: Like,
+//               as: 'likes',
+//               include: [{model: User, as: 'owner'}],
+//               order: [
+//                   ['createdAt', 'DESC']
+//               ],
+//             },
+//           ],
+//         })
+//         .then( photos =>  {
+//             if (!photos) {
+//               return res.status(404).send("No photo(s) found !");
+//             }
+//             res.status(200).json(photos)});
+//     })
+//     .catch( err => {
+//       return res.status(500).json(err.message)
+//     })
+// }
 
 // -----------------------------------------------------------------------------------------
 

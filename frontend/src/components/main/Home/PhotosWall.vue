@@ -1,40 +1,43 @@
 <template>
   <div class="photos-container">
-      <div v-for="photo in allPhotos" :key="photo.id" class="photo-bloc">
+      <div v-for="photo in allPhotos" :key="photo.uuid" class="photo-bloc">
           <OwnerAvatar v-bind:photo="photo"/>
           <OwnerName v-bind:photo="photo"/>
           <PhotoTitle v-bind:photo="photo"/>
           <DateOfPosting v-bind:photo="photo"/>
           <Photo v-bind:photo="photo" />
-          <font-awesome-icon class="bloc-container-toggler" 
-                              icon="comment-alt"
-                              @click="commentToggled=!commentToggled" 
-                              :id='"#"+photo.uuid' />
+          
+          <span class="bloc-container-toggler btn btn-primary" 
+                type="button" 
+                data-toggle="collapse" 
+                :data-target="'#photo'+photo.uuid" 
+                aria-expanded="false" :aria-controls="'photo'+photo.uuid"> 
+                    Comments : <span>&#x2662;</span>
+              <span class="number-of-comments"> 20</span>
+          </span>
 
-            <PhotoLikes v-bind:photo="photo" />
-            <PhotoDisLikes v-bind:photo="photo"/>
-            <CommentNew v-show="photo.uuid" 
-                        v-bind:photo="photo"
-                        v-bind:commentToggled="commentToggled" />
-            
-            <CommentsOldContainer v-show="photo.uuid"
-                                  v-bind:photo="photo"
-                                  v-bind:commentToggled="commentToggled" />
+          <PhotoLikes v-bind:photo="photo" />
+          <PhotoDisLikes v-bind:photo="photo"/>
+
+          <div class="collapse" :id="'photo'+photo.uuid">
+              <CommentNew v-bind:photo="photo"/>
+              <CommentsOldContainer v-bind:photo="photo"/>
+          </div>
       </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import OwnerAvatar   from './Photos/OwnerAvatar';
-import OwnerName     from './Photos/OwnerName';
-import PhotoTitle    from './Photos/PhotoTitle';
-import DateOfPosting from './Photos/DateOfPosting';
-import Photo  from './Photos/Photo';
-import PhotoLikes from './Photos/PhotoLikes'
-import PhotoDisLikes from './Photos/PhotoDisLikes'
-import CommentNew    from './Comments/CommentNew';
-import CommentsOldContainer   from './Comments/CommentsOldContainer';
+import OwnerAvatar   from './photos/OwnerAvatar.vue';
+import OwnerName     from './photos/OwnerName';
+import PhotoTitle    from './photos/PhotoTitle';
+import DateOfPosting from './photos/DateOfPosting';
+import Photo         from './photos/Photo';
+import PhotoLikes    from './photos/PhotoLikes'
+import PhotoDisLikes from './photos/PhotoDisLikes'
+import CommentNew    from './new_comments/CommentNew';
+import CommentsOldContainer   from './comments/CommentsContainer';
 
 export default {
   name: "ShowAllPhotos",
@@ -54,7 +57,6 @@ export default {
   data() {
     return {
       commentToggled: false,
-      
     };
   },
 
@@ -121,16 +123,17 @@ export default {
   grid-row: 7 / span 1;
   grid-column: 2 / span 2;
   margin-top: 15px;
-  background: blue;
-  color: red;
-  padding: 3px;
+  // background: grey;
+  margin-left: -60px;
+  font-size: 14px!important;
+  width: 30vw;
+  padding: 2px;
+  border-bottom:1px dotted black;
+  border-radius: 5px;
   &:hover {
     cursor: pointer;
+    background: rgb(238, 144, 144);
   }
-  color:grey;
-  font-size:30px;
-  border:1px solid black;
-  padding: 2px;
 }
 .btn-thumbs {
   // color: rgb(153, 153, 153);
