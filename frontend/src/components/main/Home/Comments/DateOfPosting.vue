@@ -29,7 +29,6 @@ export default {
             const oneMonth  = 30 * oneDay; 
             const oneYear   = 12 * oneMonth;
             const dateOfPost = Date.parse(this.dateOfPost);
-            console.log(typeof this.props)
 
             const now = Date.parse(new Date());
             const deltaNowToPostInSeconds = (now - dateOfPost) / 1000;

@@ -1,6 +1,6 @@
 
 export default class Like {
-    constructor( value) {                     
+    constructor (value) {                     
         this.value = value;
     }
 }

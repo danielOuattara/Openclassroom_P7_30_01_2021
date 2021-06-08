@@ -13,17 +13,17 @@ export const likes = {
 
     actions: {
 
-        async fetchOnePhotoLikesAction( {commit}, photoUuid) {
-            try {
-                const photoLikes = await photoLikesService.fetchPhotoLikesCounting(photoUuid);
-                commit('fetchOnePhotoLikesMutation', photoLikes.data);
-                return  Promise.resolve(photoLikes.data);
-            }      
-            catch(error) {
-                commit("errorFetchOnePhotoLikesMutation");
-                return Promise.reject(error);
-            }
-        },
+        // async fetchOnePhotoLikesAction( {commit}, photoUuid) {
+        //     try {
+        //         const photoLikes = await photoLikesService.fetchPhotoLikesCounting(photoUuid);
+        //         commit('fetchOnePhotoLikesMutation', photoLikes.data);
+        //         return  Promise.resolve(photoLikes.data);
+        //     }      
+        //     catch(error) {
+        //         commit("errorFetchOnePhotoLikesMutation");
+        //         return Promise.reject(error);
+        //     }
+        // },
 
         async sendOnePhotoLikesAction( {commit}, photoUuid) {
             try {
@@ -40,8 +40,8 @@ export const likes = {
     },
 
     mutations: {
-        fetchOnePhotoLikesMutation: (state, likes) => state.likesState = likes,
-        errorFetchOnePhotoLikesMutations: (state) => state.likesState = {},
+        // fetchOnePhotoLikesMutation: (state, likes) => state.likesState = likes,
+        // errorFetchOnePhotoLikesMutations: (state) => state.likesState = {},
 
         sendOnePhotoMutation: (state, likes) => state.likesState = likes,
         errorSendOnePhotoMutations: (state) => state.likesState = {},
