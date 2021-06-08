@@ -1,34 +1,34 @@
 
 <template>
   <div class="profile-container">
-    <div class="bloc bloc-avatar">
-      <img 
-        class="user-avatar"
-        :src="userData.avatar" 
-        :alt="userData.firstName + ' ' + userData.lastName + ' picture'"/>
+      <img class="user-avatar"
+           :src="userData.avatar" 
+           :alt="userData.firstName + ' ' + userData.lastName + ' picture'"/>
+      <span  class="username" v-if="currentUser.uuid" > <b>Username</b> : </span>
+      <span  class="username-value"> {{userData.userName}}  </span>
+      <span class="firstname"> <b>Firstname</b> : </span>
+      <span class="firstname-value"> {{userData.firstName}} </span>
+      <span class="lastname"> <b>LastName</b> : </span>
+      <span class="lastname-value"> {{userData.lastName}} </span>
+      <span class="email"> <b>Email</b> : </span>
+      <span class="email-value">{{userData.email}} </span>
+      <!-- <span class="about-user">  </span> -->
+      <span class="about-user-value"> <b>About me:</b>:{{userData.aboutMe}} </span>
+
+          <button class="btn btn-primary btn-update-collapser" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Update Profile
+    </button>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+        <UserUpdateForm/>
+      </div>
     </div>
 
-    <div class="bloc bloc-infos-user">
-        <p v-if="currentUser.uuid" > <b>Username</b> :  {{userData.userName}}
-            <font-awesome-icon class="icon-edit" icon="edit" />
-        </p>
-        <p> <b>Firstname</b> :  {{userData.firstName}}
-            <font-awesome-icon class="icon-edit" icon="edit" />
-        </p>
-        <p> <b>LastName</b> :  {{userData.lastName}}
-            <font-awesome-icon class="icon-edit" icon="edit" />
-        </p>
-        <p> <b>Email</b> :  {{userData.email}}
-        <font-awesome-icon class="icon-edit" icon="edit" /> 
-        </p>
-    </div>
-    <div class="bloc bloc-about-user">
-        <p> <b>About me:</b>: {{userData.aboutMe}} </p>
-    </div>
-    <div class="bloc bloc-user-modifications">
-      <UpdateUser />
-      <DeleteUser />
-    </div>
+    <!-- <div class="bloc bloc-user-modifications"> -->
+      <UpdateUser class="update-user-component" />
+      <DeleteUser  class="delete-user-component"/>
+    <!-- </div> -->
+
   </div>
 </template>
 
@@ -36,13 +36,15 @@
 
 import { mapGetters, mapActions } from 'vuex';
 import UpdateUser from './../components/main/Profile/Profile_UpdateUser'
+import UserUpdateForm from './../components/main/Profile/UserUpdateForm.vue'
 import DeleteUser from './../components/main/Profile/Profile_DeleteUser'
 export default {
   
   name: 'Profile',
   components: {
     DeleteUser,
-    UpdateUser
+    UpdateUser,
+    UserUpdateForm,
   },
 
   data() {
@@ -50,6 +52,7 @@ export default {
       message: '',
       user: '',
       // photos: this.userData.photos,
+      aboutMeVisible: false,
     }
   },
 
@@ -102,63 +105,69 @@ export default {
   border: 1px solid black;
   background: #c7c7c7;
   border-radius: 5px;
-  grid-gap: 10px;
+  // grid-gap: 10px;
+  // grid-template-rows: repeat(10, 0.2fr);
+  // grid-template-columns: repeat(10, 0.2fr);
 }
-
-.profile-container > div {
-  background: rgb(228, 228, 228);
-  padding: 5px;
-  border: 2px solid lightblue;
-  border-radius: 5px;
+.user-avatar{
+  grid-row: 1 / span 1 ;
+  grid-column: 1 / span 1 ;
 }
-
-/* ---- CSS Item Grid */
-.bloc-avatar {
-  grid-column: 1 /span 2;
-  grid-row: 1 /span 2;
+.about-user-value{
+  grid-row: 1 / span 1 ;
+  grid-column: 2 / span 1 ;
 }
-.bloc-infos-user {
-  grid-column: 3 /span 5;
-  grid-row: 1 /span 2;
+.username {
+  grid-row: 3 / span 1 ;
+  grid-column: 1 / span 1;
 }
-.bloc-about-user {
-  grid-column: 3 /span 5;
-  grid-row: 3 /span 2;
+.username-value {
+  grid-row: 3 / span 1 ;
+  grid-column: 2 / span 1;
 }
-.bloc-user-modifications {
-  grid-column: 3 /span 5;
-  grid-row: 5;
+.firstname {
+  grid-row: 4 / span 1 ;
+  grid-column: 1 / span 1;
 }
-/* ---- END CSS Item Grid */
-
-
+.firstname-value {
+  grid-row: 4 / span 1 ;
+  grid-column: 2 / span 1;
+}
+.lastname {
+  grid-row: 5 / span 1 ;
+  grid-column: 1 / span 1;
+}
+.lastname-value {
+  grid-row: 5 / span 1 ;
+  grid-column: 2 / span 1;
+}
+.email {
+  grid-row: 6 / span 1 ;
+  grid-column: 1 / span 1;
+}
+.email-value {
+  grid-row: 6 / span 1 ;
+  grid-column:  2/ span 1;
+}
 .user-avatar {
   max-width: 20vw;
 }
-
-.bloc-user-modifications {
-  display: flex;
-  flex-direction: row ;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
+.update-user-component {
+  grid-row: 7 / span 1 ;
+  grid-column:  1 / span 2;
 }
-
-.icon-edit {
-  font-size: 16px;
-  color: rgb(169, 169, 169);
-  margin-left: 20px;
-  &:hover{
-    color: rgb(95, 95, 95);
-    cursor: pointer;
-  }
+.delete-user-component {
+  grid-row: 8 / span 1 ;
+  grid-column:  1 / span 2 ;
 }
+.btn-update-collapser {
+  grid-row: 9 / span 1 ;
+  grid-column:  1 / span 2 ;
+}
+#collapseExample {
+  grid-row: 10   ;
+  grid-column:  1 / span 2 ;
 
-@media screen and (max-width: 580px) {
-  .profile-container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
 }
 
 /* --------------------------------- */

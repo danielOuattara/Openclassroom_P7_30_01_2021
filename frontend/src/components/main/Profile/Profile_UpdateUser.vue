@@ -53,18 +53,6 @@ export default {
     methods: {
         ...mapActions(['updateUserAccountAction']),  
 
-        // async deleteUserAccount() {
-        //     try {
-        //         const userUuid = this.currentUser.uuid;
-        //         console.log(userUuid);
-        //         await authService.signout(userUuid);
-        //         authService.logout();
-        //         this.$router.push("/login");
-        //     } catch(error) {
-        //     this.message = (error.response && error.response.data) || error.message || error.toString();
-        //     }
-        // },
-
         async updateUserAccount() {
             try {
                 const userUuid = this.currentUser.uuid;

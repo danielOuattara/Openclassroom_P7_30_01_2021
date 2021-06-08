@@ -8,22 +8,7 @@
     <AddPhoto/>
 
     <h3>All Photo</h3>
-    <div class="photo-container">
-      <div v-for="photo in userData.photos" :key="photo.uuid" class="photo-block">
-        <div>
-          <div>{{photo.title}}</div>
-          <div>{{photo.ownerId}}</div>
-          <div>{{photo.imageUrl}}</div>
-          <div>{{photo.comments}}</div>
-        </div>
-            <img :src="photo.imageUrl"  :alt='"picture of " + photo.title' class="photos"
-                data-toggle="modal" data-target="#photoModal"/> 
-      </div>
-      <!-- <div v-for="photo, index in userAllPhotos" :key="index">
-        <img :src="photo.imageUrl" alt="photo.title picture">
-      </div> -->
-    </div>
-
+      <PhotosWall/>
   </div>
 </template>
 
@@ -31,10 +16,12 @@
 import UserService from './../services/user.service.js';
 import {mapGetters, mapActions } from 'vuex';
 import AddPhoto from './../components/main/AddPhoto.vue';
+import PhotosWall from './../components/main/Home/PhotosWall.vue';
 export default {
     name: 'UserBoard',
     components: {
       AddPhoto,
+      PhotosWall
     },
     data() {
         return {

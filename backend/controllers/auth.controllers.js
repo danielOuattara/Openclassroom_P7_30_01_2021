@@ -112,11 +112,11 @@ exports.updatePassword =  async(req, res) => {
         if(user.id !== req.userId){
             return res.status(403).send("Non Authorized !")  
         }
-        const oldPassword = await bcrypt.compare( req.body.password, user.password);
+        const oldPassword = await bcrypt.compare( req.body.oldPassword, user.password);
         if(!oldPassword) {
             return res.status(403).send(" Non Unauthorized");
         }
-        const newPassword = await bcrypt.hash(req.body.password, 11);
+        const newPassword = await bcrypt.hash(req.body.newPassword, 11);
         await user.update({ password: newPassword})
         return  res.status(200).send("Password successfully updated !")
     }catch(err) {
