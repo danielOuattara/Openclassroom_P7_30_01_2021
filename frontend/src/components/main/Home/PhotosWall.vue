@@ -18,6 +18,27 @@
 
           <PhotoLikes v-bind:photo="photo" />
 
+          <div class="dropdown dropup">
+              <button type="button" 
+                    class="btn btn-infos dropdown-toggle comment-more-options" 
+                    id="dropdownMenuOffset" 
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" aria-expanded="false" >Options
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+                    <button v-show="photo.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                            class=" btn-comment btn-delete-comment">
+                        Delete
+                    </button>
+                    <button class=" btn-comment btn-report-comment">
+                        Report
+                    </button>
+                </div>
+            </div>
+
+
+
+
           <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
               <CommentsOldContainer v-bind:photo="photo"/>
               <CommentNew v-bind:photo="photo"/>
@@ -59,6 +80,10 @@ export default {
 
   computed: {
     ...mapGetters(["allPhotos", "likesData"]),
+    
+    currentUser() {
+            return this.$store.state.auth.user;
+        }
   },
 
   methods: {
@@ -98,26 +123,22 @@ export default {
     grid-column: 1 / span 2;
     margin-right: 8px;
     background: white;
-    border: 1px solid grey;
 }
 .bloc-owner-name {
     grid-row: 1 / span 1;
     grid-column: 2 / span 2;
     font-weight: 700;
     font-size: 12px;
-    border: 1px solid grey;
 }
 .bloc-date-posting {
     grid-row: 1 / span 1;
     grid-column: 4 / span 3;
     font-size: 12px;
-    border: 1px solid grey;
 }
 .bloc-photo-title {
     grid-row: 2 / span 1;
     grid-column: 2 / span 4;
     font-size: 16px;
-    border: 1px solid grey;
     font-weight: 600;
 }
 .bloc-photo-post {
@@ -126,12 +147,12 @@ export default {
 }
 .bloc-container-toggler {
     grid-row: 7 / span 1;
-    grid-column: 2 / span 2;
-    margin-top: 15px;
-    margin-left: -60px;
+    grid-column: 1/ span 2;
+    margin-top: 35px;
     font-size: 14px!important;
-    width: 30vw;
-    padding: 2px;
+    height: 35px;
+    // width: 30vw;
+    // padding: 2px;
     // border-bottom:1px dotted black;
     border-radius: 5px;
     &:hover {
@@ -158,6 +179,54 @@ export default {
     grid-column: 1 / span 6;
     // border: 1px solid red;
 }
+
+#dropdownMenuOffset {
+    grid-row: 1 /span 1 ;
+    grid-column: 7/ span 1;
+    // border: 1px solid ;
+    padding: 0px;
+    margin-right: -20px;
+    font-size: 20px;
+    font-size: 14px;
+    &:hover{
+        border: 1px solid grey;
+    }
+
+} 
+
+.dropdown-menu{
+    width: 50vw;
+    height: auto;
+
+    // border: 1px solid green;
+    &:hover {
+        border: 1px solid grey;
+    }
+}
+
+.dropdown-toggle {
+      font-size: 12px;
+      &:hover {
+          background: grey;
+          color: white;
+      }
+  }
+
+.btn-comment {
+    font-size: 12px;
+    // margin-right: 20px;
+    border-style: none;
+    border-radius: 5px;
+    padding: 3px 12px;
+    background: rgb(255, 255, 255);
+    font-weight: 600;
+    &:hover {
+        background: rgb(100, 100, 100);
+        color: white
+    }
+}
+
+
 
 
 /* ---  END Grid Item */

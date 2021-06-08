@@ -8,7 +8,7 @@ export const likes = {
     },
 
     getters: {
-        likesData:(state) => state.likes
+        likesData:(state) => state.likesState
     },
 
     actions: {
@@ -25,9 +25,9 @@ export const likes = {
         //     }
         // },
 
-        async sendOnePhotoLikesAction( {commit}, photoUuid) {
+        async sendOnePhotoLikesAction( {commit}, data) {
             try {
-                const photoLikes = await photoLikesService.sendPhotoLikes(photoUuid);
+                const photoLikes = await photoLikesService.sendPhotoLikes(data);
                 commit('sendOnePhotoLikesMutation', photoLikes.data);
                 return  Promise.resolve(photoLikes.data);
             }      
@@ -43,7 +43,7 @@ export const likes = {
         // fetchOnePhotoLikesMutation: (state, likes) => state.likesState = likes,
         // errorFetchOnePhotoLikesMutations: (state) => state.likesState = {},
 
-        sendOnePhotoMutation: (state, likes) => state.likesState = likes,
-        errorSendOnePhotoMutations: (state) => state.likesState = {},
+        sendOnePhotoLikesMutation: (state, likes) => state.likesState = likes,
+        errorSendOnePhotoLikesMutation: (state) => state.likesState = {},
     }
 }

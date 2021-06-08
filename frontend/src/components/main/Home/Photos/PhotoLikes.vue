@@ -1,10 +1,11 @@
 <template>
 
 <div class="bloc-likes">
-
-    <button class=' btn-thumbs thumbs-up' 
+<!-- Before tEsting !!! -->
+    <button class='btn-thumbs thumbs-up' 
             :disabled="disLikeBtnClicked"
-            @click="likeBtnClicked=!likeBtnClicked, disLikeBtnInactive=!disLikeBtnInactive"
+            @click="likeBtnClicked=!likeBtnClicked, disLikeBtnInactive=!disLikeBtnInactive, onBtnDisLikeClick"
+            id="thumbs-up" type="button"
             data-toggle="tooltip" data-placement="top" title="Like photo">
         <font-awesome-icon icon="thumbs-up" class="thumbs thumbs-likes"/>
         <span class="output likes-output"> {{countingLikes()}} </span>
@@ -12,15 +13,15 @@
     <!-- <p>{{this.likeBtnClicked}}</p>
     <p>{{this.disLikeBtnInactive}}</p> -->
 
-
     <button class="btn-thumbs thumbs-down" 
             :disabled="likeBtnClicked" 
-            @click="disLikeBtnClicked=!disLikeBtnClicked, likeBtnInactive=!likeBtnInactive"
-            id="thumbs-up"
+            @click="disLikeBtnClicked=!disLikeBtnClicked, likeBtnInactive=!likeBtnInactive, onBtnDisLikeClick"
+            id="thumbs-down" type="button"
             data-toggle="tooltip" data-placement="top" title="Dislike photo">
         <font-awesome-icon icon="thumbs-down" class=" thumbs thumbs-dislikes" />
         <span class="output dislikes-output"> {{countingDisLikes()}} </span>
     </button>
+
     <!-- <p>{{this.disLikeBtnClicked}}</p>
     <p>{{this.likeBtnInactive}}</p> -->
 
@@ -40,7 +41,6 @@ export default {
 
           likeBtnClicked: false,
           disLikeBtnClicked: false,
-          // disabled: false,
           
           likeBtnInactive: false,
           disLikeBtnInactive: false,
@@ -81,50 +81,58 @@ export default {
           return disLikesVotes;
       },
 
-      async onPhotoLikes() {
-        try {
-            const data = { uuid: this.getPhotoUuid, value: 1}
-            await this.$store.dispatch("sendOnePhotoLikesAction", data)
-          } catch(error) {
-            this.message = (error.response && error.response.data) || error.message || error.toString();
-          }
-      },
-
-      async onPhotoDisLikes() {
-        try {
-            const data = { uuid: this.getPhotoUuid, value: -1}            
-            await this.$store.dispatch("sendOnePhotoLikesAction", data)
-          } catch(error) {
-            this.message = (error.response && error.response.data) || error.message || error.toString();
-          }
-      },
-
-
-      async onBtnLikeClick() {
-        try {
-
+      async onBtnLikeClick() {   
+          console.log(this.likeBtnClicked);
           if(!this.likeBtnClicked) {
-            this.likeBtnClicked = true;
-            this.disLikeBtnInactive = true;
-
-
-
-
+              try {
+                //   this.likeBtnClicked = true;
+                //   this.disLikeBtnInactive = true;
+                  // document.getElementById("thumbs-up").classList.add("")
+                  this.like = {value: 1}            
+                  await this.$store.dispatch("sendOnePhotoLikesAction", this.like)
+              } catch(error) {
+                    this.message = (error.response && error.response.data) || error.message || error.toString();
+              }
           }
-
-            const data = { uuid: this.getPhotoUuid, value: -1}            
-            await this.$store.dispatch("sendOnePhotoLikesAction", data)
-        } catch(error) {
-            this.message = (error.response && error.response.data) || error.message || error.toString();
+          if(this.likeBtnClicked) {
+              try {
+                //   this.likeBtnClicked = false;
+                //   this.disLikeBtnInactive = false;
+                  document.getElementById("thumbs-up").classList.add(".btn-thumbs")
+                  this.like = { value: -1}   
+                  const data = {photoUuid: this.getPhotoUuid, value: -1 }         
+                  await this.$store.dispatch("sendOnePhotoLikesAction", {data})
+              } catch(error) {
+                    this.message = (error.response && error.response.data) || error.message || error.toString();
+              }
           }
-
-
-
       },
 
 
-
-
+      async onBtnDisLikeClick() {
+          if(!this.disLikeBtnClicked) {
+              try {
+                  this.disLikeBtnClicked = true;
+                  this.likeBtnInactive = true;
+                  // document.getElementById("thumbs-up").classList.add("")
+                  this.like = { photoUuid: this.getPhotoUuid, value: -1}            
+                  await this.$store.dispatch("sendOnePhotoLikesAction", this.like)
+              } catch(error) {
+                    this.message = (error.response && error.response.data) || error.message || error.toString();
+              }
+          }
+          if(this.likeBtnClicked) {
+              try {
+                  this.disLikeBtnClicked = false;
+                  this.likeBtnInactive = false;
+                  document.getElementById("thumbs-down").classList.add(".btn-thumbs")
+                  const data = { uuid: this.getPhotoUuid, value: 1}            
+                  await this.$store.dispatch("sendOnePhotoLikesAction", data)
+              } catch(error) {
+                    this.message = (error.response && error.response.data) || error.message || error.toString();
+              }
+          }
+      },
 
     },
 
@@ -157,7 +165,7 @@ export default {
 .thumbs-up {
     grid-row: 7 / span 1;
     grid-column: 4 / span 1;
-    &:hover{
+    &:active:hover{
         border-bottom: 3px solid blue;
         cursor: pointer;
         padding: -2px 10px;
@@ -191,8 +199,9 @@ button.thumbs-down:disabled {
 button.thumbs-down:focus {
   background: #d6a606;
   border-bottom: 3px solid rgb(255, 89, 0);
-  
 }
+
+
 
 
 

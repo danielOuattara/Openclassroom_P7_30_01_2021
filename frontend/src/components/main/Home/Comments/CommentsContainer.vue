@@ -5,13 +5,13 @@
             <OwnerName v-bind:comment="comment"/>
             <DateOfPosting v-bind:comment="comment"/>
             <CommentContent v-bind:comment="comment"/>
-            <div class="dropdown dropup mr-1">
+            <div class="dropdown dropup">
                 <button type="button" 
                         class="btn btn-infos dropdown-toggle comment-more-options" 
                         id="dropdownMenuOffset" 
                         data-toggle="dropdown" 
                         aria-haspopup="true" aria-expanded="false" 
-                        data-offset="10,20">&#8942;
+                        >Options
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                     <button v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
@@ -110,7 +110,7 @@ export default {
     // margin-right: 20px;
     border-style: none;
     border-radius: 5px;
-    padding: 0px 8px;
+    padding: 3px 12px;
     background: rgb(255, 255, 255);
     font-weight: 600;
     &:hover {
@@ -133,7 +133,7 @@ export default {
     // grid-column: 6 / span 1;
 
   .dropdown-toggle {
-        background:red;
+        font-size: 12px;
         &:hover {
             background: grey;
             color: white;
@@ -143,8 +143,26 @@ export default {
 .dropdown-menu{
     width: 50vw;
     height: auto;
+
+    // border: 1px solid green;
+    &:hover {
+        border: 1px solid grey;
+    }
 }
 
+#dropdownMenuOffset {
+    grid-row: 1 /span 1 ;
+    grid-column: 10 / span 1;
+    // border: 1px solid ;
+    padding: 0px;
+    margin-right: -20px;
+    font-size: 20px;
+    font-size: 14px;
+    &:hover{
+        border: 1px solid grey;
+    }
+
+} 
 .comment-more-options {}
 
 
