@@ -5,26 +5,24 @@
       <h3>{{content}}</h3>
     </div>
 
-        <AddPhoto/>
+    <AddPhoto/>
 
-        <h3>All Photo</h3>
-        <div class="photo-container">
-          <div v-for="photo in userAllPhotos" :key="photo.id" class="photo-block">
-            <div>
-              <div>{{photo.title}}</div>
-              <div>{{photo.ownerId}}</div>
-              <div>{{photo.imageUrl}}</div>
-              <div>{{photo.comments}}</div>
-            </div>
-               <img :src="photo.imageUrl"  :alt='"picture of " + photo.title' class="photos"
-                    data-toggle="modal" data-target="#photoModal"/> 
-          </div>
-          <div v-for="photo, index in userAllPhotos" :key="index">
-            <img :src="photo.imageUrl" alt="photo.title picture">
-          </div>
-
-
+    <h3>All Photo</h3>
+    <div class="photo-container">
+      <div v-for="photo in userData.photos" :key="photo.uuid" class="photo-block">
+        <div>
+          <div>{{photo.title}}</div>
+          <div>{{photo.ownerId}}</div>
+          <div>{{photo.imageUrl}}</div>
+          <div>{{photo.comments}}</div>
         </div>
+            <img :src="photo.imageUrl"  :alt='"picture of " + photo.title' class="photos"
+                data-toggle="modal" data-target="#photoModal"/> 
+      </div>
+      <!-- <div v-for="photo, index in userAllPhotos" :key="index">
+        <img :src="photo.imageUrl" alt="photo.title picture">
+      </div> -->
+    </div>
 
   </div>
 </template>
@@ -46,32 +44,31 @@ export default {
     },
 
     mounted() {
-        // UserService.getUserBoard()
-        // .then( response => {
-        //   this.content = response.data ,
-        //   error => this.content =  (error.response && error.response.data) || error.message || error.toString()
-        // })
+        UserService.getUserBoard()
+        .then( response => {
+          this.content = response.data ,
+          error => this.content =  (error.response && error.response.data) || error.message || error.toString()
+        })
     },
 
     computed: {
-          ...mapGetters(['userAllPhotos']),
-          currentUser() {
-      return this.$store.state.auth.user;
-    }, 
+      ...mapGetters(['userData']),
+      
+      currentUser() {
+          return this.$store.state.auth.user;
+      }, 
     },
-
-    
 
     methods: {
 
-      ...mapActions(['fetchUserAllPhotosAction']),
+      ...mapActions(['fetchOneUserAction']),
 
 
       async fetchUserAllPhotos() { 
           try{ 
               const userUuid = this.currentUser.uuid; 
               console.log(userUuid);
-              await this.$store.dispatch("fetchUserAllPhotosAction", userUuid)
+              await this.$store.dispatch("fetchOneUserAction", userUuid)
           } catch(error) {
               this.message = (error.response && error.response.data) || error.message || error.toString();
           }
@@ -80,10 +77,11 @@ export default {
 
     created() {
       UserService.getUserBoard()
-        .then( response => {
-          this.content = response.data ,
-          error => this.content =  (error.response && error.response.data) || error.message || error.toString()
-        })
+      .then( response => {
+        this.content = response.data ,
+        error => this.content =  (error.response && error.response.data) || error.message || error.toString()
+      }),
+
       this.fetchUserAllPhotos();
     }
 };

@@ -2,7 +2,7 @@
 const { User, Photo, Like, Comment } = require('./../models');
 const fs = require("fs");
 
-// --------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------
 
 exports.userBoard = (req, res) =>  {
   return res.status(200).send("User Content !"); 
@@ -34,16 +34,13 @@ exports.getOneUser = (req, res) => {
           model: Like,
           as: 'likes',
           include: [{ model: Photo, as:'photo' } ],
-          order: [
-            ['createdAt', 'DESC']
-          ],
         },
         {
           model: Comment,
           as: 'comments',
           include: [{ model: Photo, as:'photo' } ],
           order: [
-            ['createdAt', 'DESC']
+            ['createdAt', 'ASC']
           ],
         }
       ]

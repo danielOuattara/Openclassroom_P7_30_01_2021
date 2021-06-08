@@ -195,9 +195,8 @@ export default {
 } 
 
 .dropdown-menu{
-    width: 50vw;
+    // width: 50vw;
     height: auto;
-
     // border: 1px solid green;
     &:hover {
         border: 1px solid grey;
