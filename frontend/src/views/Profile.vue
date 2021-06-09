@@ -202,12 +202,12 @@ export default {
   margin: 0 2rem;
   text-align: center;
   padding: 0.25rem 2rem;
-  // margin: auto;
-  border: 1px solid blue;
+  background: rgb(0, 138, 0);
+  color: white;
   &:hover{
-      background: rgb(255, 255, 255);
+      border: 2px solid white;
       border-radius: 0.25rem;
-      color: black
+      padding: 2px;
     }
 }
 #user-update {
@@ -226,11 +226,12 @@ export default {
   padding: 0.25rem 2rem;
   text-align: center;
   // margin: auto;
-  border: 1px solid blue;
+  background: rgb(25, 0, 255);
+  color: white;
   &:hover{
-      background: rgb(255, 255, 255);
+      border: 2px solid white;
       border-radius: 0.25rem;
-      color: black
+      padding: 2px;
   }
 }
  #password-update {
@@ -242,18 +243,20 @@ export default {
 .account-delete-collapser {
   grid-row: 13   ;
   grid-column:  1 / span 2 ;
-  color: red;
   font-size: 1rem;
   display: inline;
   margin: 0 2rem;
   padding: 0.25rem;
   text-align: center;
   // margin: auto;
-  border: 1px solid red;
-  &:hover{
-      background: red;
-      border-radius: 0.25rem;
+  // border: 1px solid red;
+      background: rgb(220, 0, 0);
       color: white;
+  &:hover{
+      border-radius: 0.25rem;
+      background: rgb(255, 0, 0);
+      border: 2px solid white;
+      padding: 2px;
   }
 }
  #account-delete {

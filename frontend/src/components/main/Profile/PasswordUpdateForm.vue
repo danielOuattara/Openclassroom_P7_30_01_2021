@@ -57,12 +57,6 @@
                     <span class="">Update password</span>
                 </button>
             </div>
-            <!-- <div class="form-group">
-                <div v-if="message" 
-                        class="alert alert-danger" 
-                        role="alert">{{message}}
-                </div>
-            </div> -->
         </form>
 
         <div v-if="message" 
@@ -88,9 +82,7 @@ export default {
         };
     },
     computed: {
-        loggedIn() {
-            return this.$store.state.auth.status.loggedIn;
-        },
+
         currentUser() {
             return this.$store.state.auth.user;
         },
@@ -107,14 +99,10 @@ export default {
                     this.loading = false;
                     return;
                 }
-
+                
                 const userUuid = this.currentUser.uuid;
-                console.log(userUuid),
-                console.log(this.passwords.passwordOld)
-                console.log(this.passwords.password)
                 const data = { userUuid, ...this.passwords}
                 const response = await this.$store.dispatch("auth/updatePasswordAction", data)
-                // this.$router.push("/home");
                 this.message = response;
                 this.successful = true;
                 this.loading = false;

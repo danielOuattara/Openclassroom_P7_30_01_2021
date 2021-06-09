@@ -2,7 +2,6 @@
     <div class="password-update-form">
         <h2>Delete your account</h2>
         <form name="form" @submit.prevent="deleteUserAccount">
-        <!-- <form name="form" @click.prevent="" data-toggle="modal" data-target="#deleteModal" > -->
             <div class="form-group">
                 <label for="password">Password : </label>
                 <input type="password" 
@@ -24,38 +23,12 @@
                 </button>
             </div>
             <div class="form-group">
-                <div v-if="message" 
-                        class="alert alert-danger" 
-                        role="alert">{{message}}
-                </div>
+            <div v-if="message" 
+                class="alert" 
+                :class="successful ? 'alert-success' : 'alert-danger'">{{message}}
+            </div>
             </div>
         </form>
-
-        <!-- Button trigger modal -->
-        <!-- <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteModal">
-            Delete your Account
-        </button> -->
-
-         <!-- Modal -->
-        <!-- <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Your Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Confirm ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" @submit.prevent="deleteUserAccount" data-dismiss="modal">Delete</button>
-                </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 </template>
 
@@ -66,6 +39,8 @@ export default {
         return {
             user: new User(''),
             loading: false,
+            submitted: false,
+            successful: false,
             message: '',
         };
     },
@@ -73,12 +48,18 @@ export default {
         currentUser() {
             return this.$store.state.auth.user;
         },
+        
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
+        }
     }, 
 
     methods: { 
 
          async deleteUserAccount() {
             try {
+                this.message = '';
+                this.submitted = true;
                 this.loading = true;
                 const isValid = await this.$validator.validateAll();
                 if (!isValid) {
@@ -86,13 +67,16 @@ export default {
                     return;
                 }
                 const userUuid = this.currentUser.uuid;
-                console.log(userUuid),
-                console.log(this.user.password)
-                if(this.user.password) {
-                    await this.$store.dispatch("auth/signoutAction", this.user, userUuid)
+                const data = { userUuid, ...this.user};
+                const response = await this.$store.dispatch("auth/signoutAction", data);
+                this.message = response;
+                this.successful = true;
+                this.loading = false;
+                setTimeout(function() {
                     localStorage.removeItem("user");
                     this.$router.push("/signin");
-                }
+                }, 1500);
+            
             } catch(error) {
             this.message = (error.response && error.response.data) || error.message || error.toString();
             }

@@ -45,8 +45,8 @@ export const auth =  {
             );
         },
 
-        signoutAction( {commit}, userUuid, user) {
-            return AuthService.signout(userUuid, user)
+        signoutAction( {commit}, data) {
+            return AuthService.signout(data.userUuid, data)
             .then( response => {
                 commit("signoutSuccessMutation");
                 return Promise.resolve(response.data);
@@ -59,12 +59,6 @@ export const auth =  {
         },
 
         updatePasswordAction( {commit}, data) {
-                // console.log(userUuid),
-                console.table(data);
-                // const passwords = {...data.passwordOld, ...data.password};
-                // const passwords = {...data};
-
-            // return AuthService.updatePassword(data.userUuid, passwords)
             return AuthService.updatePassword(data.userUuid, data)
             .then( response => {
                 commit("updatePasswordSuccessMutation");

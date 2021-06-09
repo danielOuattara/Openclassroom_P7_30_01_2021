@@ -40,25 +40,23 @@ class AuthService {
         })
     }
 
-    signout (userUuid, user) { 
-        console.log(userUuid);
-        console.log(user.password);
-    
-        return axios.delete(API_URL + `signout/${userUuid}`, 
-        { password: user.password }, 
-        { headers: authHeader() })
+    signout (userUuid, data) {  
+        console.table(data);
+        console.log(userUuid)
+        return axios.delete(API_URL + `signout/${userUuid}`, { 
+                password: data.password 
+            }, 
+            { headers: authHeader() }
+        )
     }
 
     updatePassword(userUuid, data) {
-        console.log(" from  servcie : ",userUuid)
-        console.log(data)
-        console.log(data.oldPassword)
-        console.log(data.password)
         return axios.put(API_URL + `updatepassword/${userUuid}`, { 
-            passwordOld: data.passwordOld,
-            password: data.password 
-        },
-        { headers: authHeader() })
+                passwordOld: data.passwordOld,
+                password: data.password 
+            },
+            { headers: authHeader()  }
+        )
     }
 }
 

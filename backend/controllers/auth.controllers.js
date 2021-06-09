@@ -84,6 +84,7 @@ exports.logout = (req, res) => {}  // TODO
 //-------------------------------------------------------------------------------------------------
 
 exports.signout = async (req, res) => { 
+    console.log(req);
     try {
         const user = await User.findOne({ where: { uuid: req.params.userUuid } })
         if (!user) {
@@ -108,7 +109,6 @@ exports.signout = async (req, res) => {
 //-------------------------------------------------------------------------------------------------
 
 exports.updatePassword =  async(req, res) => { 
-    console.log (req)
     try {
         const user = await User.findOne({ where: { uuid: req.params.userUuid } })
         if (!user) {
