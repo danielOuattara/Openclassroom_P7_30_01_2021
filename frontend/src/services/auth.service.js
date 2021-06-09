@@ -41,8 +41,6 @@ class AuthService {
     }
 
     signout (userUuid, data) {  
-        console.table(data);
-        console.log(userUuid)
         return axios.delete(API_URL + `signout/${userUuid}`, { 
                 password: data.password 
             }, 

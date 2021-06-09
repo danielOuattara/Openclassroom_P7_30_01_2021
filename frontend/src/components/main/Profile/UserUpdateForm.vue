@@ -82,23 +82,22 @@
                 </div>
 
                 <div class="form-group">
-                    <p type="button" class="btn-send-form" :disabled="loading">
+                    <button class="btn btn-primary btn-block"  :disabled="loading">
                         <span v-show="loading" 
-                              class="spinner-border spinner-border-sm"></span>
-                        <span class="">Send Update</span>
-                    </p>
-                </div>
-                <div class="form-group">
-                    <div v-if="message" 
-                         class="alert alert-danger" 
-                         role="alert">{{message}}
-                    </div>
+                                class="spinner-border spinner-border-sm"></span>
+                        <span class="">Update password</span>
+                    </button>
                 </div>
             </form>
+            <div v-if="message" 
+                class="alert" 
+                :class="successful ? 'alert-success' : 'alert-danger'">{{message}}
+            </div>
     </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import User from './../../../models/user';
 export default {
     name: "Login",
@@ -106,7 +105,11 @@ export default {
         return {
             user: new User('','','','','','','',''),
             loading: false,
-            message: ''
+            submitted: false,
+            successful: false,
+            selectedFile: '',
+            message: '',
+
         };
     },
     computed: {
@@ -120,12 +123,15 @@ export default {
     },
 
     methods: {
+        ...mapActions(["updateUserAction"]),
 
         onFileSelect(event) {
             this.selectedFile = event.target.files[0];
         },
         async userUpdate() {
             try {
+                this.message = '';
+                this.submitted = true;
                 this.loading = true;
                 const isValid = await this.$validator.validateAll();
                 if (!isValid) {
@@ -133,14 +139,18 @@ export default {
                     return;
                 }
 
-                const data = new FormData();
-                data.append("image", this.selectedFile, this.selectedFile.name);
+                const userUuid = this.currentUser.uuid;
+                // const file = new FormData();
+                // file.append("image", this.selectedFile, this.selectedFile.name);
                 // const config = {
                 //     header: { "Content-Type": "multipart/form-data" },
                 // };
-
-
-                await this.$store.dispatch("userUpdate", this.user)
+                const data = { userUuid, ...this.user,/* ...file, config */ }
+                console.table(data);
+                const response = await this.$store.dispatch("updateUserAction", data);
+                this.message = response;
+                this.successful = true;
+                this.loading = false;
             } catch(error) {
                 this.loading = false;
                 this.message = (error.response && error.response.data) || error.message || error.toString();

@@ -25,8 +25,15 @@ class UserService {
         return axios.get(API_URL + "/", { headers: authHeader() })
     }
 
-    updateOneUser(userUuid) {
-        return axios.put(API_URL + `/${userUuid}` , { headers: authHeader() })
+    updateOneUser(userUuid, data) {
+        return axios.put(API_URL + `/${userUuid}` ,{
+                firstname: data.firstname,
+                lastname:  data.lastname,
+                username:  data.username,
+                // email:     data.email,
+                aboutMe:   data.aboutMe,
+            }, { headers: authHeader() }
+        )
     }
 
     searchUsers() {}  // ## TODO
