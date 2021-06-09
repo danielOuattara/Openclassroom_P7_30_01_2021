@@ -1,27 +1,12 @@
 <template>
     <div class="password-update-form">
-        <h2>Update your password</h2>
+        <h2>Delete your account</h2>
         <form name="form" @submit.prevent="handlePasswordUpdate">
-
-            <div class="form-group">
-                <label for="oldPassword">Old Password : </label>
-                <input  type="password" 
-                        v-validate="'required|min:6|max:40'" 
-                        placeholder="enter the old password "
-                        v-model="password.oldPassword" 
-                        class="form-control" 
-                        name="oldPassword"/>
-
-                <div    class="alert alert-danger" 
-                        v-if="errors.has('oldPassword')" 
-                        role="alert"> The old password is required !
-                </div>
-            </div>
 
             <div class="form-group">
                 <label for="password">Password : </label>
                 <input type="password" 
-                        placeholder=" enter your new password..."
+                        placeholder=" enter your password..."
                         v-model="password.password" 
                         v-validate="'required|min:6|max:40'" 
                         class="form-control" 
@@ -33,28 +18,12 @@
                         role="alert"> The new password is required !
                 </div>
             </div>
-
-            <div class="form-group">
-                <label for="passwordConfirm">Confirm password : </label>
-                <input type="password" 
-                        placeholder=" enter again your new password..."
-                        v-model="password.passwordConfirm" 
-                        v-validate="'required|min:6|max:40|confirmed:password'" 
-                        data-vv-as="password" 
-                        class="form-control" 
-                        name="passwordConfirm"/>
-
-                <div   class="alert alert-danger" 
-                        v-if="errors.has('passwordConfirm')" 
-                        role="alert"> The new password must be confirmed !
-                </div>
-            </div>
             
             <div class="form-group">
                 <button class="btn btn-primary btn-block"  :disabled="loading">
                     <span v-show="loading" 
                             class="spinner-border spinner-border-sm"></span>
-                    <span class="">Update password</span>
+                    <span class="">Delete my account</span>
                 </button>
             </div>
             <div class="form-group">
@@ -107,16 +76,25 @@ export default {
 </script>
 
 
-<style lan="scss" scoped>
+<style lang="scss" scoped>
+
 label {
   display: block;
-  margin-top: 10px;
+  margin: 1rem 0;
 }
 h2 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     padding: 0 1.5rem;
-    border-bottom: 2px solid grey;
+    border-bottom: 2px solid rgb(255, 0, 0);
     margin: 1rem 0 2rem 0;
+    color: red;
+    display: inline-block;
 }
+
+.btn-primary { }
+
+/* .form-check {
+    margin:20px 0;
+} */
 
 </style>

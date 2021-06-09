@@ -83,23 +83,37 @@ exports.logout = (req, res) => {}  // TODO
 
 //-------------------------------------------------------------------------------------------------
 
-exports.signout = (req, res) => { 
-    console.log(req);
-    
-    User.findOne({ where: { uuid: req.params.userUuid } })
-    .then( user => {
+exports.signout = async (req, res) => { 
+    try {
+        const user = await User.findOne({ where: { uuid: req.params.userUuid } })
         if (!user) {
-             return res.status(404).send("User unknown!");
+            return res.status(404).send("User unknown!");
         }
-        if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-           return res.status(403).send("Non Authorized !")  
+        else if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+            return res.status(403).send("Non Authorized !")  
         }
-        user.destroy()
-        .then(() => res.status(200).send("Account successfully deleted !"))
-        .catch((error) => res.status(404).send(error.message));
-    })
-    .catch( error => res.status(500).send(error.message)) 
+        
+        const passwordConfirm = await bcrypt.compare(req.body.password, user.password);
+        if(!passwordConfirm) {
+            return res.status(403).send("Non Authorized !")  
+        }
+        await user.destroy()
+            .then(() => res.status(200).send("Account successfully deleted !"))
+        }
+    catch(err){ 
+        return res.status(500).send(err.message)}
+
+
+
+
+  
+
+
+
+
+  
 }
+
 
 //-------------------------------------------------------------------------------------------------
 

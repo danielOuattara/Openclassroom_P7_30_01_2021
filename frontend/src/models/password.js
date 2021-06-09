@@ -1,8 +1,7 @@
 
 export default class Password {
-    constructor( passwordOld, passwordNewOne, passwordNewTwo ) {
+    constructor( passwordOld, password ) {
         this.passwordOld = passwordOld;
-        this.passwordNewOne = passwordNewOne;
-        this.passwordNewTwo = passwordNewTwo;
+        this.password = password;
     }
 }

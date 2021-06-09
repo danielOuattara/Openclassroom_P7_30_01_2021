@@ -40,8 +40,10 @@ class AuthService {
         })
     }
 
-    signout (userUuid) { 
-        return axios.delete(API_URL + `signout/${userUuid}`, { headers: authHeader() })
+    signout (userUuid, password) { 
+        return axios.delete(API_URL + `signout/${userUuid}`, 
+        { password: password.password }, 
+        { headers: authHeader() })
     }
 
     updatePassword(userUuid) {

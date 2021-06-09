@@ -1,7 +1,7 @@
 <template>
     <div class="user-update-form">
+        <h2>Update your profile</h2>
             <form name="form" @submit.prevent="handleUserUpdate">
-
                 <div class="form-group">
                     <label for="firstname">Firstname : </label>
                     <input  type="text" 
@@ -82,11 +82,11 @@
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block" :disabled="loading">
+                    <p type="button" class="btn-send-form" :disabled="loading">
                         <span v-show="loading" 
                               class="spinner-border spinner-border-sm"></span>
                         <span class="">Send Update</span>
-                    </button>
+                    </p>
                 </div>
                 <div class="form-group">
                     <div v-if="message" 
@@ -95,6 +95,65 @@
                     </div>
                 </div>
             </form>
+
+            <!-- Button trigger modal -->
+            <!-- <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#updateModal">
+                Update Your Account
+            </button> -->
+
+            <!-- Modal -->
+            <!-- <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">Profile Update</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                        <div class="modal-body">
+                            Confirm ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-success" @submit.prevent="handleUserUpdate" data-dismiss="modal">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 </template>
 
@@ -114,11 +173,7 @@ export default {
             return this.$store.state.auth.status.loggedIn;
         }
     },
-    // created() {
-    //     if (this.loggedIn) {
-    //         this.$router.push("/profile");
-    //     }
-    // },
+
     methods: {
         async handleUserUpdate() {
             try {
@@ -128,7 +183,7 @@ export default {
                     this.loading = false;
                     return;
                 }
-                    await this.$store.dispatch("auth/loginAction", this.user)
+                    await this.$store.dispatch("loginAction", this.user)
             } catch(error) {
                 this.loading = false;
                 this.message = (error.response && error.response.data) || error.message || error.toString();
@@ -138,52 +193,34 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
 
-<style scoped>
+h2 {
+    font-size: 1.5rem;
+    padding: .25rem;
+    margin: 1rem 0 2rem 0;
+    border-bottom: 2px solid grey;
+}
 label {
   display: block;
-  margin-top: 10px;
+//   margin: 1rem 0;
+
 }
 
-.card-container.card {
-  max-width: 350px !important;
-  padding: 40px 40px;
-  border-radius: 8px;
+
+.btn-send-form {
+    font-size: 20px;
+    display: inline;
+    margin: 0 2rem;
+    padding: 0.25rem 2rem;
+    // margin: auto;
+    border-bottom: 2px dotted grey;
+    &:hover{
+        border-bottom: none;
+        background: rgba(255, 0, 0, 0.392);
+        border-radius: 0.5rem;
+    }
 }
 
-.card {
-  background-color: rgba(247, 247, 247, 0.6);;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
-
-.btn-primary {
-    font-size: 24px!important
-}
-
-#nav-link {
-    text-align: right;
-    color:#23923d
-}
-.form-check {
-    margin:20px 0;
-}
 
 </style>

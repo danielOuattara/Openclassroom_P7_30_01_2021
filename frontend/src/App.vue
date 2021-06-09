@@ -1,8 +1,8 @@
 <template>
     <div id="app-globale">
-        <Header />
-        <Main/>
-        <Footer v-if="loggedIn"></Footer>
+        <Header class="header"/>
+        <Main class="main"/>
+        <Footer class="footer" v-if="loggedIn"></Footer>
     </div>
 </template>
 
@@ -35,9 +35,17 @@ export default {
     box-sizing: border-box;
 }
 #app-globale {
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    min-height: 100%;
     background: linear-gradient(to right top, rgba(26, 59, 111, 0.7), rgba(15, 34, 64, 0.2));
     /* background: linear-gradient(to right top, rgba(26, 100, 38, 0.3), rgba(15, 100, 50, 0.8)); */
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+.main {
+    /* min-height: 75vh; */
+    margin-top: 3rem;
+    margin-bottom: 20rem;
 }
 
 </style>

@@ -4,30 +4,53 @@
       <img class="user-avatar"
            :src="userData.avatar" 
            :alt="userData.firstName + ' ' + userData.lastName + ' picture'"/>
-      <span  class="username" v-if="currentUser.uuid" > <b>Username</b> : </span>
-      <span  class="username-value"> {{userData.userName}}  </span>
+      <span class="username" v-if="currentUser.uuid" > <b>Username</b> : </span>
+      <span class="username-value"> {{userData.userName}}  </span>
       <span class="firstname"> <b>Firstname</b> : </span>
       <span class="firstname-value"> {{userData.firstName}} </span>
       <span class="lastname"> <b>LastName</b> : </span>
       <span class="lastname-value"> {{userData.lastName}} </span>
       <span class="email"> <b>Email</b> : </span>
       <span class="email-value">{{userData.email}} </span>
-      <!-- <span class="about-user">  </span> -->
-      <span class="about-user-value"> <b>About me:</b>:{{userData.aboutMe}} </span>
-
-          <button class="btn btn-primary btn-update-collapser" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        Update Profile
-    </button>
-    <div class="collapse" id="collapseExample">
-      <div class="card card-body">
-        <UserUpdateForm/>
+      <span class="about-user-value"> <b>About me :</b> {{userData.aboutMe}} </span>
+      <p class="user-update-collapser" 
+         type="button" 
+         data-toggle="collapse" data-target="#user-update" 
+         aria-expanded="false" aria-controls="user-update">
+          Update Profile
+      </p>
+      <div class="collapse" id="user-update">
+          <div class="card card-body">
+            <UserUpdateForm/>
+          </div>
       </div>
-    </div>
 
-    <!-- <div class="bloc bloc-user-modifications"> -->
-      <UpdateUser class="update-user-component" />
-      <DeleteUser  class="delete-user-component"/>
-    <!-- </div> -->
+
+      <p class="password-update-collapser" 
+              type="button" 
+              data-toggle="collapse" data-target="#password-update" 
+              aria-expanded="false" aria-controls="password-update">
+          Update Password
+      </p>
+      <div class="collapse" id="password-update">
+          <div class="card card-body">
+              <PasswordUpdateForm />
+          </div>
+      </div>
+
+
+      <p class="account-delete-collapser" 
+              type="button" 
+              data-toggle="collapse" data-target="#account-delete" 
+              aria-expanded="false" aria-controls="account-delete">
+          Delete account
+      </p>
+      <div class="collapse" id="account-delete">
+          <div class="card card-body">
+              <UserDeleteAccountForm />
+          </div>
+      </div>
+
 
   </div>
 </template>
@@ -35,16 +58,19 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex';
-import UpdateUser from './../components/main/Profile/Profile_UpdateUser'
-import UserUpdateForm from './../components/main/Profile/UserUpdateForm.vue'
-import DeleteUser from './../components/main/Profile/Profile_DeleteUser'
+import UserUpdateForm from './../components/main/Profile/UserUpdateForm.vue';
+// import DeleteUser from './../components/main/Profile/Profile_DeleteUser.vue';
+import PasswordUpdateForm from './../components/main/Profile/PasswordUpdateForm.vue';
+import UserDeleteAccountForm from './../components/main/Profile/UserDeleteAccountForm.vue';
 export default {
   
   name: 'Profile',
   components: {
-    DeleteUser,
-    UpdateUser,
+    // DeleteUser,
+    // UpdateUser,
     UserUpdateForm,
+    PasswordUpdateForm,
+    UserDeleteAccountForm,
   },
 
   data() {
@@ -105,21 +131,27 @@ export default {
   border: 1px solid black;
   background: #c7c7c7;
   border-radius: 5px;
-  // grid-gap: 10px;
+  grid-gap: 10px;
   // grid-template-rows: repeat(10, 0.2fr);
   // grid-template-columns: repeat(10, 0.2fr);
 }
 .user-avatar{
   grid-row: 1 / span 1 ;
   grid-column: 1 / span 1 ;
+  border-bottom: 2px solid rgb(0, 0, 255);
+  padding-bottom: 1rem;
 }
 .about-user-value{
   grid-row: 1 / span 1 ;
   grid-column: 2 / span 1 ;
+  font-size: 0.85rem;
+  // margin-left: 1rem;
+  text-align: justify;
 }
 .username {
   grid-row: 3 / span 1 ;
   grid-column: 1 / span 1;
+  // margin-top: 2rem
 }
 .username-value {
   grid-row: 3 / span 1 ;
@@ -148,6 +180,7 @@ export default {
 .email-value {
   grid-row: 6 / span 1 ;
   grid-column:  2/ span 1;
+  margin-bottom: 2rem;
 }
 .user-avatar {
   max-width: 20vw;
@@ -160,14 +193,72 @@ export default {
   grid-row: 8 / span 1 ;
   grid-column:  1 / span 2 ;
 }
-.btn-update-collapser {
+.user-update-collapser {
   grid-row: 9 / span 1 ;
   grid-column:  1 / span 2 ;
+ font-size: 1rem;
+  color: blue;
+  display: inline;
+  margin: 0 2rem;
+  text-align: center;
+  padding: 0.25rem 2rem;
+  // margin: auto;
+  border: 1px solid blue;
+  &:hover{
+      background: rgb(255, 255, 255);
+      border-radius: 0.25rem;
+      color: black
+    }
 }
-#collapseExample {
+#user-update {
   grid-row: 10   ;
   grid-column:  1 / span 2 ;
+  margin: 1rem 0;
+}
 
+.password-update-collapser {
+  color: blue;
+  grid-row: 11   ;
+  grid-column:  1 / span 2 ;
+  font-size: 1rem;
+  display: inline;
+  margin: 0 2rem;
+  padding: 0.25rem 2rem;
+  text-align: center;
+  // margin: auto;
+  border: 1px solid blue;
+  &:hover{
+      background: rgb(255, 255, 255);
+      border-radius: 0.25rem;
+      color: black
+  }
+}
+ #password-update {
+  grid-row: 12   ;
+  grid-column:  1 / span 2 ;
+  
+}
+
+.account-delete-collapser {
+  grid-row: 13   ;
+  grid-column:  1 / span 2 ;
+  color: red;
+  font-size: 1rem;
+  display: inline;
+  margin: 0 2rem;
+  padding: 0.25rem;
+  text-align: center;
+  // margin: auto;
+  border: 1px solid red;
+  &:hover{
+      background: red;
+      border-radius: 0.25rem;
+      color: white;
+  }
+}
+ #account-delete {
+  grid-row: 14   ;
+  grid-column:  1 / span 2 ;
 }
 
 /* --------------------------------- */
