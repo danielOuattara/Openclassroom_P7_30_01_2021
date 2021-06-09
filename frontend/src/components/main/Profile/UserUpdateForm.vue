@@ -1,7 +1,7 @@
 <template>
     <div class="user-update-form">
         <h2>Update your profile</h2>
-            <form name="form" @submit.prevent="handleUserUpdate">
+            <form name="form" @submit.prevent="userUpdate">
                 <div class="form-group">
                     <label for="firstname">Firstname : </label>
                     <input  type="text" 
@@ -50,7 +50,7 @@
                             name="email"/>
                     <div    class="alert alert-danger" 
                             v-if="errors.has('email')" 
-                            role="alert"> Valid email is required !
+                            role="alert"> email must be valid
                     </div>
                 </div>
 
@@ -95,65 +95,6 @@
                     </div>
                 </div>
             </form>
-
-            <!-- Button trigger modal -->
-            <!-- <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#updateModal">
-                Update Your Account
-            </button> -->
-
-            <!-- Modal -->
-            <!-- <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="updateModalLabel">Profile Update</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                        <div class="modal-body">
-                            Confirm ?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-success" @submit.prevent="handleUserUpdate" data-dismiss="modal">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
 </template>
 
@@ -171,11 +112,19 @@ export default {
     computed: {
         loggedIn() {
             return this.$store.state.auth.status.loggedIn;
-        }
+        },
+
+        currentUser() {
+            return this.$store.state.auth.user;
+        },
     },
 
     methods: {
-        async handleUserUpdate() {
+
+        onFileSelect(event) {
+            this.selectedFile = event.target.files[0];
+        },
+        async userUpdate() {
             try {
                 this.loading = true;
                 const isValid = await this.$validator.validateAll();
@@ -183,7 +132,15 @@ export default {
                     this.loading = false;
                     return;
                 }
-                    await this.$store.dispatch("loginAction", this.user)
+
+                const data = new FormData();
+                data.append("image", this.selectedFile, this.selectedFile.name);
+                // const config = {
+                //     header: { "Content-Type": "multipart/form-data" },
+                // };
+
+
+                await this.$store.dispatch("userUpdate", this.user)
             } catch(error) {
                 this.loading = false;
                 this.message = (error.response && error.response.data) || error.message || error.toString();

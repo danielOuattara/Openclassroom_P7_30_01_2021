@@ -103,38 +103,29 @@ exports.signout = async (req, res) => {
     catch(err){ 
         return res.status(500).send(err.message)}
 
-
-
-
-  
-
-
-
-
-  
 }
-
 
 //-------------------------------------------------------------------------------------------------
 
 exports.updatePassword =  async(req, res) => { 
+    console.log (req)
     try {
         const user = await User.findOne({ where: { uuid: req.params.userUuid } })
         if (!user) {
             return res.status(404).send("User unknown!");
         }
-        if(user.id !== req.userId){
+        else if(user.id !== req.userId){
             return res.status(403).send("Non Authorized !")  
         }
-        const oldPassword = await bcrypt.compare( req.body.oldPassword, user.password);
-        if(!oldPassword) {
-            return res.status(403).send(" Non Unauthorized");
+        const passwordOld = await bcrypt.compare( req.body.passwordOld, user.password);
+        if(!passwordOld) {
+            return res.status(403).send(" Non Unauthorized !");
         }
-        const newPassword = await bcrypt.hash(req.body.newPassword, 11);
+        const newPassword = await bcrypt.hash(req.body.password, 11);
         await user.update({ password: newPassword})
         return  res.status(200).send("Password successfully updated !")
     }catch(err) {
-        return res.status(500).send(error.message)
+        return res.status(500).send(err.message)
     } 
 }
 

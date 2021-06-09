@@ -1,19 +1,19 @@
 <template>
     <div class="password-update-form">
         <h2>Update your password</h2>
-        <form name="form" @submit.prevent="handlePasswordUpdate">
+        <form name="form" @submit.prevent="updatePassword">
 
             <div class="form-group">
-                <label for="oldPassword">Old Password : </label>
+                <label for="passwordOld">Old Password : </label>
                 <input  type="password" 
                         v-validate="'required|min:6|max:40'" 
                         placeholder="enter the old password "
-                        v-model="password.oldPassword" 
+                        v-model="passwords.passwordOld" 
                         class="form-control" 
-                        name="oldPassword"/>
+                        name="passwordOld"/>
 
                 <div    class="alert alert-danger" 
-                        v-if="errors.has('oldPassword')" 
+                        v-if="errors.has('passwordOld')" 
                         role="alert"> The old password is required !
                 </div>
             </div>
@@ -22,7 +22,7 @@
                 <label for="password">Password : </label>
                 <input type="password" 
                         placeholder=" enter your new password..."
-                        v-model="password.password" 
+                        v-model="passwords.password" 
                         v-validate="'required|min:6|max:40'" 
                         class="form-control" 
                         ref="password"
@@ -30,7 +30,7 @@
 
                 <div   class="alert alert-danger" 
                         v-if="errors.has('password')" 
-                        role="alert"> The new password is required !
+                        role="alert"> new password is required
                 </div>
             </div>
 
@@ -38,7 +38,7 @@
                 <label for="passwordConfirm">Confirm password : </label>
                 <input type="password" 
                         placeholder=" enter again your new password..."
-                        v-model="password.passwordConfirm" 
+                        v-model="passwordConfirm" 
                         v-validate="'required|min:6|max:40|confirmed:password'" 
                         data-vv-as="password" 
                         class="form-control" 
@@ -46,7 +46,7 @@
 
                 <div   class="alert alert-danger" 
                         v-if="errors.has('passwordConfirm')" 
-                        role="alert"> The new password must be confirmed !
+                        role="alert"> Passwords must be identical!
                 </div>
             </div>
             
@@ -57,13 +57,18 @@
                     <span class="">Update password</span>
                 </button>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <div v-if="message" 
                         class="alert alert-danger" 
                         role="alert">{{message}}
                 </div>
-            </div>
+            </div> -->
         </form>
+
+        <div v-if="message" 
+             class="alert" 
+             :class="successful ? 'alert-success' : 'alert-danger'">{{message}}
+        </div>
 
     </div>
 </template>
@@ -74,33 +79,49 @@ export default {
     name: "Login",
     data() {
         return {
-            password: new Password('','',''),
+            passwords: new Password('',''),
             loading: false,
-            message: ''
+            submitted: false,
+            successful: false,
+            message: '',
+            passwordConfirm: '',
         };
     },
     computed: {
         loggedIn() {
             return this.$store.state.auth.status.loggedIn;
-        }
+        },
+        currentUser() {
+            return this.$store.state.auth.user;
+        },
     },
 
     methods: {
-        async handlePasswordUpdate() {
-        //     try {
-        //         this.loading = true;
-        //         const isValid = await this.$validator.validateAll();
-        //         if (!isValid) {
-        //             this.loading = false;
-        //             return;
-        //         }
-        //         if (this.user.emailOrUsername && this.user.password) {
-        //             await this.$store.dispatch("auth/loginAction", this.user)
-        //         }
-        //     } catch(error) {
-        //         this.loading = false;
-        //         this.message = (error.response && error.response.data) || error.message || error.toString();
-        //    }
+        async updatePassword() {
+            try {
+                this.message = '';
+                this.submitted = true;
+                this.loading = true;
+                const isValid = await this.$validator.validateAll();
+                if (!isValid) {
+                    this.loading = false;
+                    return;
+                }
+
+                const userUuid = this.currentUser.uuid;
+                console.log(userUuid),
+                console.log(this.passwords.passwordOld)
+                console.log(this.passwords.password)
+                const data = { userUuid, ...this.passwords}
+                const response = await this.$store.dispatch("auth/updatePasswordAction", data)
+                // this.$router.push("/home");
+                this.message = response;
+                this.successful = true;
+                this.loading = false;
+            } catch(error) {
+                this.loading = false;
+                this.message = (error.response && error.response.data) || error.message || error.toString();
+           }
         },
     }
 };

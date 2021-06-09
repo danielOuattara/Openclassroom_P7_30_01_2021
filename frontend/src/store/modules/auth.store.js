@@ -56,6 +56,25 @@ export const auth =  {
                     return Promise.reject(error);
                 }                
             );
+        },
+
+        updatePasswordAction( {commit}, data) {
+                // console.log(userUuid),
+                console.table(data);
+                // const passwords = {...data.passwordOld, ...data.password};
+                // const passwords = {...data};
+
+            // return AuthService.updatePassword(data.userUuid, passwords)
+            return AuthService.updatePassword(data.userUuid, data)
+            .then( response => {
+                commit("updatePasswordSuccessMutation");
+                return Promise.resolve(response.data);
+                },
+                error => {
+                    commit( "updatePasswordFailureMutation");
+                    return Promise.reject(error);
+                }                
+            );
         }
     },
 
@@ -65,32 +84,40 @@ export const auth =  {
             state.status.loggedIn = true;
             state.user = user;
         },
-
         loginFailureMutation(state) {
             state.status.loggedIn = false;
             state.user = null;
         },
+
 
         logout(state) {
             state.status.loggedIn = false;
             state.user = null;
         },
 
+
         signinSuccess(state) {
             state.status.loggedIn = false;
         },
-
         signinFailure(state) {
             state.status.loggedIn = false;
         },
 
+
         signoutSuccessMutation(state) {
             state.status.loggedIn = false;
         },
-
         signoutFailureMutation(state) {
             state.status.loggedIn = true;
-        }
+        },
+
+        
+        updatePasswordSuccessMutation(state) {
+            state.status.loggedIn = true;
+        },
+        updatePasswordFailureMutation(state) {
+            state.status.loggedIn = true;
+        }        
 
     }
 }

@@ -49,10 +49,16 @@ class AuthService {
         { headers: authHeader() })
     }
 
-    updatePassword(userUuid, user) {
-        return axios.put(API_URL + `updatepassword/${userUuid}`,
-        { password: user.password },
-         { headers: authHeader() })
+    updatePassword(userUuid, data) {
+        console.log(" from  servcie : ",userUuid)
+        console.log(data)
+        console.log(data.oldPassword)
+        console.log(data.password)
+        return axios.put(API_URL + `updatepassword/${userUuid}`, { 
+            passwordOld: data.passwordOld,
+            password: data.password 
+        },
+        { headers: authHeader() })
     }
 }
 
