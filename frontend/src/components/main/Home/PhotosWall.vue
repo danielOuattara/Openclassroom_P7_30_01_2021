@@ -18,7 +18,7 @@
 
           <PhotoLikes v-bind:photo="photo" />
 
-          <div class="dropdown dropup">
+          <div class="dropdown dropleft">
               <button type="button" 
                     class="btn btn-infos dropdown-toggle comment-more-options" 
                     id="dropdownMenuOffset" 
@@ -35,10 +35,6 @@
                     </button>
                 </div>
             </div>
-
-
-
-
           <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
               <CommentsOldContainer v-bind:photo="photo"/>
               <CommentNew v-bind:photo="photo"/>
@@ -109,12 +105,11 @@ export default {
     margin: 12px 0;
     border: 1px solid grey;
     border-radius: 8px;
-    padding: 20px;
-    overflow-x: hidden;
+    padding: 0.5rem;
     background: rgb(228, 228, 228);
     box-shadow: 0 0 2px 2px rgba(141, 141, 141, 0.6);
     display: grid;
-    grid-gap: 5px;
+    grid-gap: 0.25rem;
 }
 
 /* --- START Grid Item */
@@ -148,8 +143,8 @@ export default {
 .bloc-container-toggler {
     grid-row: 7 / span 1;
     grid-column: 1/ span 2;
-    margin-top: 35px;
-    font-size: 14px!important;
+    margin-top: 0.5rem;
+    font-size: 1rem;
     height: 35px;
     // width: 30vw;
     // padding: 2px;
@@ -186,12 +181,11 @@ export default {
     // border: 1px solid ;
     padding: 0px;
     margin-right: -20px;
-    font-size: 20px;
+    // font-size: 20px;
     font-size: 14px;
     &:hover{
-        border: 1px solid grey;
+        border: 1px solid rgb(139, 34, 191);
     }
-
 } 
 
 .dropdown-menu{

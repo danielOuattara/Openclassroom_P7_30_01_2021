@@ -16,15 +16,15 @@ export const auth =  {
     actions: {
         loginAction( {commit} , user) {
             return AuthService.login(user)
-                .then( user => {
-                    commit("loginSuccessMutation", user);
-                    return Promise.resolve(user);
-                    },
-                    error => {
-                        commit("loginFailureMutation");
-                        return Promise.reject(error);
-                    }
-                );  
+            .then( user => {
+                commit("loginSuccessMutation", user);
+                return Promise.resolve(user);
+                },
+                error => {
+                    commit("loginFailureMutation");
+                    return Promise.reject(error);
+                }
+            );  
         },
 
         logout( {commit}) {
@@ -34,15 +34,28 @@ export const auth =  {
 
         signin( {commit}, user) {
             return AuthService.signin(user)
-                .then( response => {
-                    commit("signinSuccess");
-                    return Promise.resolve(response.data);
-                    },
-                    error => {
-                        commit( "signinFailure");
-                        return Promise.reject(error);
-                    }                
-                );
+            .then( response => {
+                commit("signinSuccess");
+                return Promise.resolve(response.data);
+                },
+                error => {
+                    commit( "signinFailure");
+                    return Promise.reject(error);
+                }                
+            );
+        },
+
+        signoutAction( {commit}, userUuid, user) {
+            return AuthService.signout(userUuid, user)
+            .then( response => {
+                commit("signoutSuccessMutation");
+                return Promise.resolve(response.data);
+                },
+                error => {
+                    commit( "signoutFailureMutation");
+                    return Promise.reject(error);
+                }                
+            );
         }
     },
 
@@ -69,6 +82,14 @@ export const auth =  {
 
         signinFailure(state) {
             state.status.loggedIn = false;
+        },
+
+        signoutSuccessMutation(state) {
+            state.status.loggedIn = false;
+        },
+
+        signoutFailureMutation(state) {
+            state.status.loggedIn = true;
         }
 
     }

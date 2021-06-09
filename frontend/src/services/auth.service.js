@@ -18,15 +18,15 @@ class AuthService {
 
     login(user) {
         return axios.post(API_URL + "login", { 
-                emailOrUsername: user.emailOrUsername, 
-                password: user.password 
-            })
-            .then( response => {
-                if (response.data.accessToken) {
-                    localStorage.setItem("user", JSON.stringify(response.data))
-                }
-                return response.data;
-               });
+            emailOrUsername: user.emailOrUsername, 
+            password: user.password 
+        })
+        .then( response => {
+            if (response.data.accessToken) {
+                localStorage.setItem("user", JSON.stringify(response.data))
+            }
+            return response.data;
+            });
     }
 
     logout() {  // TODO:  FUNCTION TO EXPAND
@@ -40,14 +40,19 @@ class AuthService {
         })
     }
 
-    signout (userUuid, password) { 
+    signout (userUuid, user) { 
+        console.log(userUuid);
+        console.log(user.password);
+    
         return axios.delete(API_URL + `signout/${userUuid}`, 
-        { password: password.password }, 
+        { password: user.password }, 
         { headers: authHeader() })
     }
 
-    updatePassword(userUuid) {
-        return axios.put(API_URL + `updatepassword/${userUuid}`, { headers: authHeader() })
+    updatePassword(userUuid, user) {
+        return axios.put(API_URL + `updatepassword/${userUuid}`,
+        { password: user.password },
+         { headers: authHeader() })
     }
 }
 

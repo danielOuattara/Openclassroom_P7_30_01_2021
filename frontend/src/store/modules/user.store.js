@@ -28,9 +28,9 @@ export const user = {
 
         async updateUserAccountAction() {"#"},
 
-        async deleteUserAccountAction( {commit}, userUuid) {
+        async deleteUserAccountAction( {commit}, userUuid, {user}) {
             try {
-                const oneUser = await authService.signout(userUuid);
+                const oneUser = await authService.signout(userUuid, {user});
                 commit('deleteUserAccountMutation', oneUser.data);
                 return  Promise.resolve(oneUser.data);
             }      

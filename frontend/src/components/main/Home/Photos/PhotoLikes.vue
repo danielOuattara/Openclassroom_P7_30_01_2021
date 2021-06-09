@@ -150,37 +150,39 @@ export default {
 
 .bloc-likes {
     grid-row: 7 / span 1;
-    grid-column: 3 / span 3;
+    grid-column: 4 / span 3;
     // border: 1px solid grey;
     display: inline-block;
 }
 .btn-thumbs {
-    font-size: 15px;
+    font-size: 1rem;
     border-style: none;
     // border-radius: 5px;
     color: grey;
-    margin: 15px 10px 0;
-    padding: 0 10px;
+    margin:  10px 0.5rem;
+    padding: 0.1rem 0.55rem;
 }
 .thumbs-up {
     grid-row: 7 / span 1;
-    grid-column: 4 / span 1;
-    &:active:hover{
-        border-bottom: 3px solid blue;
+    grid-column: 3 / span 1;
+    &:hover{
         cursor: pointer;
-        padding: -2px 10px;
+        background: black;
+        color: white;
     }
 }
 .thumbs-down {
     grid-row: 7 / span 1;
-    grid-column: 6 / span 1;
+    grid-column: 4 / span 1;
     &:hover{
-        border-bottom: 3px solid rgb(255, 89, 0);
         cursor: pointer;
+        background: black;
+        color: white;
+
     }
 }
 .output{
-    font-size: 16px!important;
+    font-size: 1rem;
 }
 
 
@@ -190,7 +192,7 @@ button.thumbs-up:disabled {
 button.thumbs-up:focus {
   background: rgba(14, 66, 163, 0.576);
   color: white;
-  border-bottom: 3px solid blue;
+  border-bottom: 1px solid blue;
 }
 
 button.thumbs-down:disabled {
@@ -198,11 +200,7 @@ button.thumbs-down:disabled {
 }
 button.thumbs-down:focus {
   background: #d6a606;
-  border-bottom: 3px solid rgb(255, 89, 0);
+  border-bottom: 1px solid rgb(255, 89, 0);
 }
-
-
-
-
 
 </style>

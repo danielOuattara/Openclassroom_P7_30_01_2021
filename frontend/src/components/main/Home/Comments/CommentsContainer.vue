@@ -10,6 +10,7 @@
                         class="btn btn-infos dropdown-toggle comment-more-options" 
                         id="dropdownMenuOffset" 
                         data-toggle="dropdown" 
+                        data-offset="-60,0"
                         aria-haspopup="true" aria-expanded="false" 
                         >Options
                 </button>
