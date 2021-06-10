@@ -49,14 +49,15 @@
         <div v-if="message" 
             class="alert" 
             :class="successful ? 'alert-success' : 'alert-danger'">{{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
         </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import Photo from "../../models/photo.js";
-import authHeader from "../../services/auth.header.js";
 import { mapActions } from "vuex";
 export default {
     name: "AddPhoto",
@@ -85,40 +86,6 @@ export default {
           console.log(this.selectedFile)
         },
 
-      async addOnePhoto() {
-        // BACK UP: OK <<<<-----
-        try {
-            this.message = '';
-            this.submitted = true;
-            this.loading = true;
-            const isValid = await this.$validator.validateAll();
-            if (!isValid) {
-              this.loading = false;
-              this.photo.title = "";
-              return;
-            }
-            const data = new FormData();
-            data.append("title", this.photo.title);
-            data.append("image", this.selectedFile, this.selectedFile.name);
-            const config = {
-              header: { "Content-Type": "multipart/form-data" },
-            };
-            const response = await axios.post( "http://localhost:4200/api/photos", data, { 
-              headers: authHeader() },
-              config );
-            this.loading = false;
-            this.message = response.data;
-            this.successful = true;
-            this.$refs.imageFile.value = "";
-            this.$refs.title.value = "";
-            this.fetchAllPhotosAction();
-        } catch (err) {
-              this.loading = false;
-              this.photo.title = "";
-              this.message =
-              (err.response && err.response.data) || err.message || err.toString();
-        }
-      },
 
       async addPhoto() {
           try {
