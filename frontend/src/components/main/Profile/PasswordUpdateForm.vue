@@ -2,7 +2,6 @@
     <div class="password-update-form">
         <h2>Update your password</h2>
         <form name="form" @submit.prevent="updatePassword">
-
             <div class="form-group">
                 <label for="passwordOld">Old Password : </label>
                 <input  type="password" 
@@ -59,9 +58,11 @@
             </div>
         </form>
 
-        <div v-if="message" 
-             class="alert" 
-             :class="successful ? 'alert-success' : 'alert-danger'">{{message}}
+        <div v-if="message"  class="alert" 
+             :class="successful ? 'alert-success' : 'alert-danger'">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> {{message}}
         </div>
 
     </div>
@@ -98,13 +99,16 @@ export default {
                     this.loading = false;
                     return;
                 }
-                
                 const userUuid = this.currentUser.uuid;
                 const data = { userUuid, ...this.passwords}
                 const response = await this.$store.dispatch("auth/updatePasswordAction", data)
                 this.message = response;
                 this.successful = true;
                 this.loading = false;
+                // this.passwordConfirm = '';
+                // this.passwords.password = '';
+                // this.passwords.passwordOld = '';
+
             } catch(error) {
                 this.loading = false;
                 this.message = (error.response && error.response.data) || error.message || error.toString();

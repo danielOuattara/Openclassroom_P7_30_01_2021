@@ -34,7 +34,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block" style="margin:64px 0px 16px 0" :disabled="loading">
+                    <button class="btn btn-primary btn-block" 
+                            style="margin:64px 0px 16px 0" 
+                            :disabled="loading">
                         <span v-show="loading" 
                               class="spinner-border spinner-border-sm"></span>
                         <span class="">Login</span>
@@ -100,10 +102,10 @@ export default {
                     this.loading = false;
                     return;
                 }
-                if (this.user.emailOrUsername && this.user.password) {
+                // if (this.user.emailOrUsername && this.user.password) {
                     await this.$store.dispatch("auth/loginAction", this.user)
                     this.$router.push("/home");
-                }
+                // }
             } catch(error) {
                 this.loading = false;
                 this.message = (error.response && error.response.data) || error.message || error.toString();
@@ -150,7 +152,7 @@ label {
 }
 
 .btn-primary {
-    font-size: 24px!important
+    font-size: 22px!important
 }
 
 #nav-link {

@@ -42,6 +42,7 @@ export default {
             submitted: false,
             successful: false,
             message: '',
+            password:'',
         };
     },
     computed: {
@@ -72,13 +73,14 @@ export default {
                 this.message = response;
                 this.successful = true;
                 this.loading = false;
-                setTimeout(function() {
-                    localStorage.removeItem("user");
-                    this.$router.push("/signin");
-                }, 1500);
+                localStorage.removeItem("user");
+                setTimeout(()=> {
+                    this.$router.push('/signin');
+                }, 1000);
             
             } catch(error) {
-            this.message = (error.response && error.response.data) || error.message || error.toString();
+                this.loading = false;
+                this.message = (error.response && error.response.data) || error.message || error.toString();
             }
         }
      },

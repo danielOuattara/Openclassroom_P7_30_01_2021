@@ -5,34 +5,34 @@
        <img id="profile-img" 
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" 
             class="profile-img-card" alt="standard profile icon "/>
-
         <form name="form" @submit.prevent="handleSignin">
-            <div v-if="!successful">
                 <div class="form-group">
                     <label for="email">Enter an e-mail : </label>
-                    <input v-model="user.email" 
+                    <input type="email"
                            v-validate="'required|email|max:50'" 
                            placeholder=" enter your email ..."
-                           type="email" 
+                           v-model="user.email"  
                            class="form-control" 
                            name="email"/>
-                    <div v-if="submitted && errors.has('email')" 
-                         class="alert-danger" >
+
+                    <div    v-if="submitted && errors.has('email')" 
+                            class="alert alert-danger" >
                             {{errors.first('email')}}
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="password"> Enter a password : </label>
-                    <input v-model="user.password" 
+                    <input type="password" 
                            placeholder=" enter a password ..."
-                           v-validate="'required|min:6|max:40'" 
-                           type="password" 
+                           v-model="user.password" 
+                           v-validate="'required|min:6|max:40'"  
                            class="form-control" 
                            name="password" />
-                    <div v-if="submitted && errors.has('password')" 
-                         class="alert-danger">
-                            {{errors.first('password')}}
+                    
+                    <div  v-if="submitted && errors.has('password')" 
+                          class="alert alert-danger">
+                          {{errors.first('password')}}
                     </div>
                 </div>
 
@@ -41,7 +41,7 @@
                            type="checkbox" 
                            id="defaultCheck1"
                            v-validate="'required'"
-                           name='GTU'>
+                           name='gtu'>
                     <label class="form-check-label" for="defaultCheck1" >
                          <span style="font-size:14px">Please, check next to agree with</span>
                          <router-link style="display:inline; 
@@ -54,14 +54,19 @@
                         </router-link>
                     </label>
                     <div  class="alert alert-danger" 
-                          v-if="errors.has('GTU')" 
+                          v-if="errors.has('gtu')" 
                       role="alert"> Please, accept the UCGs
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-success btn-block">Signin</button>
+                    <button class="btn btn-success btn-block"
+                             style=""
+                             :disabled="loading">
+                        <span v-show="loading" 
+                              class="spinner-border spinner-border-sm"></span>
+                        <span class="">Signin</span>
+                    </button>
                 </div>
-            </div>
         </form>
         <div>
             <router-link to="/login" class="nav-link" id="nav-link">Switch to login
@@ -95,9 +100,10 @@ export default {
     data() {
         return {
             user: new User('', ''),
+            loading: false,
             submitted: false,
             successful: false,
-            message: ''
+            message: '',
         };
     },
 
@@ -114,25 +120,31 @@ export default {
     },
 
     methods: {
-        handleSignin() {
-            this.message = '';
-            this.submitted = true;
-            this.$validator.validate()
-            .then(isValid => {
-                if (isValid) {
-                    this.$store.dispatch('auth/signin', this.user)
-                    .then( data => {
-                            this.message = data;
-                            this.successful = true;
-                            this.$router.push("/login");
-                        },
-                        error => {
-                            this.message = (error.response && error.response.data) || error.message || error.toString();
-                            this.successful = false;
-                        }
-                    );
+        async handleSignin() {
+            try {
+                this.message = '';
+                this.submitted = true;
+                this.loading = true;
+                const isValid = await this.$validator.validateAll();
+                if (!isValid) {
+                    this.loading = false;
+                    return;
                 }
-            });
+                const response = await this.$store.dispatch('auth/signin', this.user)
+                this.message = response;
+                this.successful = true;
+                this.loading = false;
+                setTimeout(()=> {
+                    this.$router.push("/login");
+                }, 1500)
+
+            } catch(err){
+                this.message = (err.response && err.response.data) || err.message || err.toString();
+                this.successful = false;
+                this.loading = false;
+            }
+
+
         }
     }
 };
@@ -174,7 +186,7 @@ label {
   border-radius: 50%;
 }
 .btn-success {
-    font-size: 24px!important
+    font-size: 22px!important
 }
 
 #nav-link {

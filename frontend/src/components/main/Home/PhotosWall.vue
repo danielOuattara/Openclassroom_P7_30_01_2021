@@ -13,7 +13,9 @@
                 :data-target="'#photo'+photo.uuid" 
                 aria-expanded="false" :aria-controls="'photo'+photo.uuid"> 
                     Comments :
-              <span class="number-of-comments">{{photo.comments.length}}</span>
+              <span v-if="photo.comments.length" class="number-of-comments">{{photo.comments.length}}
+              </span>
+              <span v-else class="number-of-comments"> 0 </span>
           </span>
 
           <PhotoLikes v-bind:photo="photo" />
@@ -26,7 +28,7 @@
                     aria-haspopup="true" aria-expanded="false" >Options
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                    <button v-show="photo.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                    <button v-if="photo.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                             class=" btn-comment btn-delete-comment">
                         Delete
                     </button>
@@ -55,7 +57,7 @@ import CommentNew    from './new_comments/CommentNew';
 import CommentsOldContainer   from './comments/CommentsContainer';
 
 export default {
-  name: "ShowAllPhotos",
+  name: "PhotosWall",
   components: {
 
     OwnerAvatar,

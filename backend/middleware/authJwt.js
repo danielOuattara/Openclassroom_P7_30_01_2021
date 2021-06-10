@@ -19,8 +19,7 @@ module.exports = async (req, res, next) => {
             endOfTime = decoded.exp;
             if (decoded.exp - Date.parse(new Date())/1000 === 0) {
                 return res.status(401).send("Token expired, please log again ")
-            }
-            
+            }  
         });
         next();
     }    

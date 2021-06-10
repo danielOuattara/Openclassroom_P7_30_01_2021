@@ -123,7 +123,7 @@ exports.updatePassword =  async(req, res) => {
         }
         const newPassword = await bcrypt.hash(req.body.password, 11);
         await user.update({ password: newPassword})
-        return  res.status(200).send("Password successfully updated !")
+        return res.status(200).send("Password successfully updated !")
     }catch(err) {
         return res.status(500).send(err.message)
     } 
