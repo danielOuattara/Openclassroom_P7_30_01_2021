@@ -8,14 +8,14 @@ const API_URL = "http://localhost:4200/api/photos";
 
 class PhotoService {
     
-    addPhoto(data) {
-        const config =  {
-            headers : {'Content-Type': 'multipart/form-data' }
-        }
+    addPhoto(formData) {
+        const config = {
+            header: { "Content-Type": "multipart/form-data" },
+        };
         return axios.post(API_URL + "/", 
-            { title: data.get('title'), image: data.get('image') }, 
+            formData, 
             { headers: authHeader() }, 
-            config
+             config
         )  
     }
 

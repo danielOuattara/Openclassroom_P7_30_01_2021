@@ -38,9 +38,9 @@ export const photo = {
             }
         },
         
-        async addOnePhotoAction( {commit}, data) {
+        async addOnePhotoAction( {commit}, formData) {
             try {
-                const photo = await photoService.addPhoto(data);
+                const photo = await photoService.addPhoto(formData);
                 commit('addOnePhotoMutation', photo);
                 return await Promise.resolve(photo);
             } catch (err) {
@@ -55,8 +55,8 @@ export const photo = {
         fetchAllPhotosMutation: (state, photos) => state.allPhotos = photos,
         errFetchAllPhotosMutation: (state) => state.allPhotos = [],
 
-        // addOnePhotoMutation:(state, photo) => state.photos.unshift(photo),
-        // errAddOnePhoto: (state) => state.photos,
+        addOnePhotoMutation:(state, photo) => state.allPhotos = photo,
+        errAddOnePhoto: (state) => state.allPhotos = [],
 
         fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
         errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],

@@ -22,7 +22,7 @@ exports.addPhoto = async (req, res)=> {
         }
 
         await Photo.create( {...image, ownerId: req.userId } )
-        return res.status(200).json({message: 'Photo Successsfully Posted !'})
+        return res.status(200).send('Photo Successsfully Posted !')
 
     } catch(err) {
       res.status(400).json(err.message)

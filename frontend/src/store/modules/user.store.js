@@ -38,15 +38,6 @@ export const user = {
                 }                
             );
         }
-
-
-
-
-
-
-
-
-
     },
 
     mutations: {
