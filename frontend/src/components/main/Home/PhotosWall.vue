@@ -53,7 +53,7 @@ import PhotoTitle    from './photos/PhotoTitle';
 import DateOfPosting from './photos/DateOfPosting';
 import Photo         from './photos/Photo';
 import PhotoLikes    from './photos/PhotoLikes'
-import AddPhotoComment  from './comments/AddPhotoComment.vue';
+import AddPhotoComment  from '../AddPhotoComment.vue';
 import CommentsOldContainer   from './comments/CommentsContainer';
 
 export default {
