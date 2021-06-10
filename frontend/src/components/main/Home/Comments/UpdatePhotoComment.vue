@@ -1,11 +1,13 @@
 <template>
-  <div class="bloc bloc-new-comment">
-        <form name="form" @submit.prevent="addPhotoComment">
+  <div class="bloc bloc-update-photo-comment">
+        <form name="form" @submit.prevent="updatePhotoComment">
         <div class="form-group">
             <label for="value">Comment below : </label>
-            <textarea  name="value" placeholder="enter your comment here..."
-                       type="text" cols="30" rows="2" class="form-control"
-                       v-model="comment.value" v-validate="'required'" >
+            <textarea  name="value" 
+                       type="text" 
+                       class="form-control"
+                       v-model="comment.value" 
+                       v-validate="'required'" >
             </textarea>
             <div class="alert alert-danger" 
                 v-if="errors.has('value')" role="alert">
@@ -30,7 +32,6 @@
 
 <script>
 import { /* mapGetters, */ mapActions } from "vuex";
-// import photoCommentService from './../../services/photo.comments.service';
 export default {
   name: "AddComments",
   props: ["photo"],
@@ -76,14 +77,10 @@ export default {
           this.loading = false;
           return;
         }
-        if (this.comment.value) {
-          await this.$store.dispatch(
-            "addPhotoCommentAction",
-            this.photo.uuid,
-            this.comment
-          );
-          this.loading = false;
-        }
+        const photoUuid = this.photo.uuid;
+        const data = {photoUuid, ...this.comment }
+        await this.$store.dispatch("addPhotoCommentAction", data);
+        this.loading = false;
       } catch (error) {
         this.loading = false;
         this.message =

@@ -1,6 +1,6 @@
 
 export default class Photo {
-    constructor( value ) {                     
-        this.value = value;
+    constructor( content ) {                     
+        this.content = content;
     }
 }

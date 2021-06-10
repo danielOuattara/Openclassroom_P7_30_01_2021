@@ -39,7 +39,7 @@
             </div>
           <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
               <CommentsOldContainer v-bind:photo="photo"/>
-              <CommentNew v-bind:photo="photo"/>
+              <AddPhotoComment v-bind:photo="photo"/>
           </div>
       </div>
   </div>
@@ -53,7 +53,7 @@ import PhotoTitle    from './photos/PhotoTitle';
 import DateOfPosting from './photos/DateOfPosting';
 import Photo         from './photos/Photo';
 import PhotoLikes    from './photos/PhotoLikes'
-import CommentNew    from './new_comments/CommentNew';
+import AddPhotoComment  from './comments/AddPhotoComment.vue';
 import CommentsOldContainer   from './comments/CommentsContainer';
 
 export default {
@@ -66,7 +66,7 @@ export default {
     DateOfPosting,
     Photo,
     PhotoLikes,
-    CommentNew,
+    AddPhotoComment,
     CommentsOldContainer
   },
 

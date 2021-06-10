@@ -4,7 +4,7 @@ import photoCommentService from './../../services/photo.comments.service.js';
 export const photoComments =  {
 
     state : {
-        photoComments: {},
+        allCommentsForOnePhoto: [],
     },
 
     getters: {
@@ -13,30 +13,21 @@ export const photoComments =  {
 
     actions: {
 
-        async addPhotoCommentAction({commit}, photoUuid, comment) {
+        async addPhotoCommentAction({commit}, data) {
             try {
-                const oneComment = await photoCommentService.createPhotoComment(photoUuid, comment);
-                commit('addPhotoCommentMutation', oneComment.data);
-                return Promise.resolve(oneComment.data);
+                const comment = await photoCommentService.createPhotoComment(data.photoUuid, data);
+                commit('addPhotoCommentMutation', comment.data);
+                return Promise.resolve(comment.data);
             } catch(err) {
                 commit('errorAddPhotoCommentMutation');
                 return Promise.reject(err);
             }
         },
-
     },
 
     mutations: {
-        addPhotoCommentMutations: (state, oneComment) => state.photoComments = oneComment,
-        errorAddPhotoCommentMutation: (state) => state.photoComment = [],
-
+        addPhotoCommentMutation: (state, comment) => state.allCommentsForOnePhoto = comment,
+        errorAddPhotoCommentMutation: (state) => state.allCommentsForOnePhoto = [],
     },
-
-
-
-
-
-
-
 
 }
