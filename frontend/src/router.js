@@ -3,8 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Signin from './views/Signin.vue';
 import Login from './views/Login.vue';
-import GTU from './views/GTU.vue';
-import Help from './views/Help.vue';
+
 
 Vue.use(Router);
 
@@ -14,11 +13,11 @@ export const router = new Router({
     { path: '/home'    , name: ''         , component: Home                                   },
     { path: '/login'   , name: ''         , component: Login                                  },
     { path: '/signin'  , name: ''         , component: Signin                                 },
-    { path: '/gtu'     , name: ''         , component: GTU                                    },
     { path: '/profile' , name: 'profile'  , component: () => import('./views/Profile.vue')    },
     { path: '/admin'   , name: 'admin'    , component: () => import('./views/BoardAdmin.vue') },
     { path: '/user'    , name: 'user'     , component: () => import('./views/BoardUser.vue')  },
-    { path: '/help'    , name: ''         , component: Help                                   },
+    { path: '/gtu'     , name: 'gtu'      , component: () => import('./views/GTU.vue')        },
+    { path: '/help'    , name: 'help'     , component: () => import('./views/Help.vue')       },
   ]
 });
 

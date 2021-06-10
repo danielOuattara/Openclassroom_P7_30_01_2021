@@ -43,7 +43,7 @@
                            v-validate="'required'"
                            name='gtu'>
                     <label class="form-check-label" for="defaultCheck1" >
-                         <span style="font-size:14px">Please, check next to agree with</span>
+                         <span style="font-size:14px">Please, check-in to agree with</span>
                          <router-link style="display:inline; 
                                              font-size:14px; 
                                              margin-left:-12px;
@@ -83,9 +83,11 @@
             <router-link style="display:inline; 
                                 font-size:14px; 
                                 margin-left:-10px; 
+                                padding-bottom: 0.5rem;
                                 color:black;
-                                text-decoration: underline dotted blue;"
-                         to="/help" class="nav-link" id="nav-link"> 
+                                border-bottom: 2px dotted blue;"
+                         to="/help" 
+                         class="nav-link"> 
                 Troubles with registration ? 
             </router-link>
         </div>

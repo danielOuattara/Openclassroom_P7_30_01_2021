@@ -62,8 +62,7 @@
                             color:black;
                             text-decoration: underline dotted blue;"
                         to="/help" 
-                        class="nav-link" 
-                        id="nav-link"> 
+                        class="nav-link" > 
                     Troubles with login ? 
                 </router-link>
             </div>
