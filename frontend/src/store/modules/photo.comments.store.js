@@ -4,11 +4,12 @@ import photoCommentService from './../../services/photo.comments.service.js';
 export const photoComments =  {
 
     state : {
-        allCommentsForOnePhoto: [],
+        // allCommentsOnePhoto: [],
     },
 
     getters: {
-        allPhotoCommments: (state) => state.photoComment,
+        // allPhotoCommments: (state) => state.photoComment,
+        // allCommentsOnePhoto: (state) => state.allCommentsOnePhoto,
     },
 
     actions: {
@@ -34,6 +35,17 @@ export const photoComments =  {
                 return Promise.reject(err);
             }
         },
+
+        // async getAllCommentsForOnePhotoAction({commit}, photoUuid ) {
+        //     try {
+        //         const comments = await photoCommentService.getAllCommentsForOnePhoto(photoUuid);
+        //         commit('getAllCommentsForOnePhotoMutation', comments.data);
+        //         return Promise.resolve(comments.data);
+        //     } catch(err) {
+        //         commit('errgetAllCommentsForOnePhotoMutation');
+        //         return Promise.reject(err);
+        //     }
+        // },
     },
 
     mutations: {
@@ -42,6 +54,13 @@ export const photoComments =  {
 
         deletePhotoCommentMutation: (state) => state.allCommentsForOnePhoto = [],
         errDeletePhotoCommentMutation: (state, comment) => state.allCommentsForOnePhoto = comment,
+
+
+        // getAllCommentsForOnePhotoMutation: (state, comments) => state.allCommentsOnePhoto = comments,
+        // errgetAllCommentsForOnePhotoMutation: (state) => state.allCommentsOnePhoto = []
+
+
+
     },
 
 }

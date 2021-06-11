@@ -8,7 +8,7 @@
                        type="text" 
                        cols="30" rows="2" 
                        class="form-control"
-                       v-model="comment.value" 
+                       v-model="comment.content" 
                        v-validate="'required'" >
             </textarea>
             <div class="alert alert-danger" 
@@ -36,7 +36,7 @@
 import { /* mapGetters, */ mapActions } from "vuex";
 export default {
   name: "AddComments",
-  props: ["photo"],
+  props: ["photoUuid"],
 
   data() {
     return {
@@ -47,29 +47,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["addPhotoCommentAction"]),
-
-    // async addPhotoComment() {  // OK! but NO VueX !
-    //     try {
-    //         console.log(this.comment.content);
-    //         console.table(this.comment);
-    //         console.log(this.photo.uuid)
-    //         this.loading = true;
-    //         const isValid = await this.$validator.validateAll();
-    //         if (!isValid) {
-    //             this.loading = false;
-    //             return;
-    //         }
-    //         const photoUuid = this.photo.uuid;
-    //         if (this.comment.content && photoUuid) {
-    //             await photoCommentService.createPhotoComment(photoUuid, this.comment);
-    //             this.loading = false;
-    //         }
-    //     } catch(error) {
-    //           this.loading = false;
-    //           this.message = (error.response && error.response.data) || error.message || error.toString();
-    //     }
-    // },
+    ...mapActions([ "addPhotoCommentAction", "fetchAllPhotosAction" ]),
 
     async addPhotoComment() {   // USING VueX and Services.
       try {
@@ -79,13 +57,13 @@ export default {
           this.loading = false;
           return;
         }
-        const photoUuid = this.photo.uuid;
+        const photoUuid = this.photoUuid;
         const data = {photoUuid, ...this.comment }
         await this.$store.dispatch("addPhotoCommentAction", data);
         this.loading = false;
+        this.fetchAllPhotosAction();
       } catch (error) {
         this.loading = false;
-        this.message =
           (error.response && error.response.data) ||
           error.message ||
           error.toString();

@@ -10,7 +10,7 @@ export const photo = {
 
     getters: {
         allPhotos:(state) => state.allPhotos,
-        userAllPhotos: (state) => state.oneUserPhotos
+        userAllPhotos: (state) => state.oneUserPhotos,
     },
 
     actions: {

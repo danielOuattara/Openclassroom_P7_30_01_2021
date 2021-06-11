@@ -14,7 +14,7 @@
 
             <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
                 <CommentsWall v-bind:photo="photo"/>
-                <AddPhotoComment v-bind:photo="photo"/>
+                <AddPhotoComment v-bind:photoUuid="photo.uuid"/>
             </div>
         </div>
     </div>

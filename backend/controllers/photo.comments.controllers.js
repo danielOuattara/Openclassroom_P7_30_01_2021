@@ -12,7 +12,6 @@ exports.createComment = async (req, res) => {
         if(!photo) {
             return res.status(404).send(`Photo not found`)
         }
-        console.log(req)
         await Comment.create({
             content: req.body.content, 
             ownerId: req.userId, 
@@ -36,7 +35,7 @@ exports.getPhotoAllComments = (req, res) => {
         where: { photoId: photo.id },
         include: ["owner", 'photo'],
         order: [
-            ['createdAt', 'DESC']
+            ['createdAt', 'ASC']
           ],
       })
       .then( comments => res.status(200).json(comments))
