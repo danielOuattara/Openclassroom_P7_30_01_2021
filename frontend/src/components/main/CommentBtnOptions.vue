@@ -6,17 +6,21 @@
                 data-toggle="dropdown" 
                 data-offset="-60,0"
                 aria-haspopup="true" aria-expanded="false" 
-                >Options
+                > Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-            <button v-show="item.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+            <button v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                     class=" btn-comment-options btn-update-comment">
                 Update
-            </button>
-            <button v-show="item.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                    class=" btn-comment-options btn-delete-comment">
-                Delete
-            </button>
+                    </button>
+
+            <DeletePhotoComment 
+                class=" btn-comment-options btn-delete-comment"
+                v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"
+                v-bind:commentUuid="comment.uuid"
+                v-bind:photoUuid="photoUuid" />
+
+
             <button class=" btn-comment-options btn-report-comment">
                 Report
             </button>
@@ -25,13 +29,27 @@
 </template>
 
 <script>
+
+import DeletePhotoComment from './DeletePhotoComment.vue';
+
+
 export default {
-    props: ['item'],
+
+    props: ['comment','photoUuid'],
+
+    components: {
+        DeletePhotoComment,
+    },
 
     computed: {
         currentUser() {
             return this.$store.state.auth.user;
-        }
+        },
+
+        received() {
+            return this.props;
+        },
+
     },
     
 }

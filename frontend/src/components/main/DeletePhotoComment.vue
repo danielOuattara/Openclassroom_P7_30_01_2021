@@ -1,12 +1,15 @@
 <template>
-    <button @click="deletePhotoComment">Delete</button>
+    <button type="button" 
+            @click="deletePhotoComment"  
+        >Delete
+    </button>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 export default {
     name: "DeletePhotoComment",
-    props: ['photo'],
+    props: ['commentUuid','photoUuid'],
     data() {
         return {
             loading: false,
@@ -15,46 +18,66 @@ export default {
             successful: false,
         };
     },
-    computed: {
-        currentUser() {
-            return this.$store.state.auth.user;
-        },
+    // computed: {
+    //     currentUser() {
+    //         return this.$store.state.auth.user;
+    //     },
 
-        photo() {
-          return this.props.photo;
-        },
+        // photo() {
+        //   return this.props.photo;
+        // },
 
-        comment() {
-          return this.props.photo.comments;
-        }
-    },
+        // comment() {
+        //   return this.props.photo.comments;
+        // }
+    // },
 
     methods: {
         ...mapActions(["deletePhotoCommentAction", "fetchOnePhotoCommentsAction"]),
 
 
-      async deletePhotoComment() {
+        async deletePhotoComment() {
           try {
               this.message = '';
               this.submitted = true;
               this.loading = true;
-              const photoUuid = this.photo.uuid;
-              const commentUuid = this.comment.uuid;
-              data= {photoUuid, commentUuid}
-
+              const photoUuid = this.photoUuid;
+              const commentUuid = this.commentUuid;
+              const data= {photoUuid, commentUuid}
+              console.table(data)
               const response = await this.$store.dispatch("deletePhotoCommentAction", data);
               this.message = response.data;
               this.successful = true;
               this.loading = false;
               this.fetchAllPhotosAction();
+              this.fetchOnePhotoCommentsAction();
           } catch(error) {
               this.loading = false;
               this.message = (error.response && error.response.data) || error.message || error.toString();
           }
-      },
+        },
 
   },
 };
 </script>
 
-<style lang="scss" scoped> </style>
+<style lang="scss" scoped>
+
+button {
+    font-size: 0.8rem;
+    margin-right: 0.1rem;
+    // margin-left: 0.25rem;
+    border-style: none;
+    background: rgb(255, 255, 255);
+    font-weight: 600;
+    border-radius: 3px;
+    padding: 0.25rem 0.25rem!important;
+    border: 1px solid rgb(100, 100, 100)!important;
+    color: #000;
+    &:hover {
+        background: rgb(100, 100, 100);
+        color: white
+    }
+}
+
+ </style>

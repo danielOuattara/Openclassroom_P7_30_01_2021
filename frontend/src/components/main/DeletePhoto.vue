@@ -1,12 +1,12 @@
 <template>
-    <button @click="deletePhoto">Delete</button>
+    <button  type="button" 
+             @click="deletePhoto">Delete</button>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 export default {
-    name: "DeletePhoto",
-    props: ['photo'],
+    props: ['photoUuid'],
     data() {
         return {
             loading: false,
@@ -20,7 +20,7 @@ export default {
             return this.$store.state.auth.user;
         },
         photo() {
-          return this.props.photo;
+          return this.props.photoUuid;
         }
     },
 
@@ -38,8 +38,7 @@ export default {
               this.message = '';
               this.submitted = true;
               this.loading = true;
-              const photoUuid = this.photo.uuid;
-
+              const photoUuid = this.photoUuid;
               const response = await this.$store.dispatch("deleteOnePhotoAction", photoUuid);
               this.message = response.data;
               this.successful = true;

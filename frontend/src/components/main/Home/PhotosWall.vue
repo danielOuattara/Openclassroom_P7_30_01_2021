@@ -9,7 +9,8 @@
             <CommentsToggler v-bind:item="photo"/>
 
             <PhotoLikes v-bind:item="photo" />
-            <PhotoBtnOptions v-bind:item="photo"/>
+            <PhotoBtnOptions v-bind:photoOwnerUuid="photo.owner.uuid"
+                             v-bind:photoUuid="photo.uuid"   />
 
             <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
                 <CommentsWall v-bind:photo="photo"/>

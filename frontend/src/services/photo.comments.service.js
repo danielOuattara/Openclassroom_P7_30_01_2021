@@ -15,7 +15,7 @@ class PhotoCommentsService {
         )
     }
     
-    getAllPhotoComments(photoUuid) {
+    getAllCommentsForOnePhoto(photoUuid) {
         return axios.get(API_URL + `/${photoUuid}/comments` , { headers: authHeader() })
     }
 

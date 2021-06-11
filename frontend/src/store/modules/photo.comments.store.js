@@ -26,7 +26,7 @@ export const photoComments =  {
 
         async deletePhotoCommentAction({commit}, data ) {
             try {
-                const comment = await photoCommentService.createPhotoComment(data.photoUuid, data.commentuuid);
+                const comment = await photoCommentService.deleteOneComment(data.photoUuid, data.commentUuid);
                 commit('deletePhotoCommentMutation', comment.data);
                 return Promise.resolve(comment.data);
             } catch(err) {

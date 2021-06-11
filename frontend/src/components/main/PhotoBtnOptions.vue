@@ -8,20 +8,31 @@
             Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-            <button v-if="item.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                    class=" btn-options-photo btn-delete-photo">
-                Delete
-            </button>
+                <DeletePhoto 
+                    v-if="photoOwnerUuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                    class=" btn-options-photo btn-delete-photo"
+                    v-bind:photoUuid="photoUuid"/>
+
+
             <button class=" btn-options-photo btn-report-photo">
                 Report
             </button>
+
+
+
         </div>
     </div>
 </template>
 
 <script>
+import DeletePhoto from './DeletePhoto';
 export default {
-    props: ['item'],
+    props: ['photoOwnerUuid', 'photoUuid'],
+
+    components: {
+        DeletePhoto,
+
+    },
 
     computed: {
         currentUser() {

@@ -83,21 +83,27 @@ exports.updateOneComment = (req, res) => {
 }
 // ------------------------------------------------------------------------------------------------
 
-exports.deleteOneComment = (req, res) => {
-    Comment.findOne({ where: {uuid: req.params.commentUuid}})
-    .then( comment => {
+exports.deleteOneComment = async (req, res) => {
+    try {
+        const photo = await Photo.findOne({ where: {uuid: req.params.photoUuid}})
+        if (!photo) {
+            return res.status(404).send(`Photo not found `)
+        }
+        const comment =  await  Comment.findOne({ where: {uuid: req.params.commentUuid}})
         if (!comment) {
-          return res.status(404).send(`Comment not found `)
+            return res.status(404).send(`Comment not found `)
         }
-        if(comment.ownerId!== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-          return res.status(403).sen("Access Denied ! ")  
+        else if(comment.ownerId!== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+            return res.status(403).sen("Access Denied ! ")  
         }
-        comment.destroy()
-        .then(() => res.status(201).send("Comment successfully deleted !"))
-        .catch( err => res.status(401).send(err.message)) 
-    })
-    .catch( err => res.status(500).send(err.message))
+        await comment.destroy()
+        res.status(201).send("Comment successfully deleted !")        
+    } catch(err){
+        return res.status(401).send(err.message) 
+    } 
 }
+
+
 
 // ----------------------------------------------------------------------------------------
 

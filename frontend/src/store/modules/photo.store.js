@@ -1,5 +1,4 @@
 
-
 import photoService from "../../services/photo.service";
 
 export const photo = {
@@ -55,7 +54,7 @@ export const photo = {
                 commit('deleteOnePhotoMutation', photo);
                 return await Promise.resolve(photo);
             } catch (err) {
-                commit("errdeleteOnePhotoMutation");
+                commit("errDeleteOnePhotoMutation");
                 return Promise.reject(err);
             }
         },
@@ -73,6 +72,6 @@ export const photo = {
         errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
 
         deleteOnePhotoMutation:(state) => state.allPhotos = [],
-        errdeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
+        errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
     }
 }

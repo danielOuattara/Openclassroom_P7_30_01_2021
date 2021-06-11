@@ -46,13 +46,13 @@
                 </button>
               </div>
         </form>
-        <div v-if="message" 
+        <!-- <div v-if="message" 
             class="alert" 
             :class="successful ? 'alert-success' : 'alert-danger'">{{message}}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-        </div>
+        </div> -->
   </div>
 </template>
 
@@ -66,7 +66,7 @@ export default {
             photo: new Photo(""),
             loading: false,
             title: "",
-            message: "",
+            // message: "",
             selectedFile: "",
             submitted: false,
             successful: false,
@@ -86,10 +86,9 @@ export default {
           console.log(this.selectedFile)
         },
 
-
       async addPhoto() {
           try {
-              this.message = '';
+              // this.message = '';
               this.submitted = true;
               this.loading = true;
               const isValid = await this.$validator.validateAll();
@@ -100,14 +99,8 @@ export default {
               const formData = new FormData();
               formData.append("title", this.photo.title);
               formData.append("image", this.selectedFile, this.selectedFile.name);
-              console.table(formData);
-
-              for(var pair of formData.entries()) {
-                  console.log(pair[0]+ ', '+ pair[1]);
-              }
-              console.log("hello")
-              const response = await this.$store.dispatch("addOnePhotoAction", formData);
-              this.message = response.data;
+              await this.$store.dispatch("addOnePhotoAction", formData);
+              // this.message = response.data;
               this.successful = true;
               this.loading = false;
               this.fetchAllPhotosAction();
@@ -116,7 +109,6 @@ export default {
               this.message = (error.response && error.response.data) || error.message || error.toString();
           }
       },
-
   },
 };
 </script>

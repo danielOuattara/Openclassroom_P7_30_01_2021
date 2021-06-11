@@ -2,11 +2,11 @@
     <div class="bloc bloc-old-comment"> 
         <div class="one-comment" v-for="comment, index in photo.comments" :key="index">
             <OwnerAvatar v-bind:item="comment"/>
-            <OwnerName v-bind:item="comment"
-                        v-bind:action="nameInitializer"/>
+            <OwnerName v-bind:item="comment"/>
             <DateOfPosting v-bind:item="comment"/>
             <CommentContent v-bind:item="comment"/>
-            <CommentBtnOptions v-bind:item="comment" />
+            <CommentBtnOptions v-bind:comment="comment"
+                               v-bind:photoUuid="photo.uuid" />
 
         </div>
     </div>
