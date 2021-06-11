@@ -1,36 +1,60 @@
 <template>
-    <div class="photos-container">
-        <div v-for="photo in allPhotos" :key="photo.uuid" class="photo-bloc">
-            <OwnerAvatar v-bind:item="photo"/>
-            <OwnerName v-bind:item="photo"/>
-            <PhotoTitle v-bind:item="photo"/>
-            <DateOfPosting v-bind:item="photo"/>
-            <Photo v-bind:item="photo" />
-            <CommentsToggler v-bind:item="photo"/>
+  <div class="photos-container">
+      <div v-for="photo in allPhotos" :key="photo.uuid" class="photo-bloc">
+          <OwnerAvatar v-bind:photo="photo"/>
+          <OwnerName v-bind:photo="photo"/>
+          <PhotoTitle v-bind:photo="photo"/>
+          <DateOfPosting v-bind:photo="photo"/>
+          <Photo v-bind:photo="photo" />
+          
+          <span class="bloc-container-toggler btn btn-success" 
+                type="button" 
+                data-toggle="collapse" 
+                :data-target="'#photo'+photo.uuid" 
+                aria-expanded="false" :aria-controls="'photo'+photo.uuid"> 
+                    Comments :
+              <span v-if="photo.comments.length" class="number-of-comments">{{photo.comments.length}}
+              </span>
+              <span v-else class="number-of-comments"> 0 </span>
+          </span>
 
-            <PhotoLikes v-bind:item="photo" />
-            <PhotoBtnOptions v-bind:item="photo"/>
+          <PhotoLikes v-bind:photo="photo" />
 
-            <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
-                <CommentsWall v-bind:photo="photo"/>
-                <AddPhotoComment v-bind:photo="photo"/>
+          <div class="dropdown dropleft">
+              <button type="button" 
+                    class="btn btn-infos dropdown-toggle comment-more-options" 
+                    id="dropdownMenuOffset" 
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" aria-expanded="false" >Options
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+                    <button v-if="photo.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                            class=" btn-comment btn-delete-comment">
+                        Delete
+                    </button>
+                    <button class=" btn-comment btn-report-comment">
+                        Report
+                    </button>
+                </div>
             </div>
-        </div>
-    </div>
+          <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
+              <CommentsOldContainer v-bind:photo="photo"/>
+              <AddPhotoComment v-bind:photo="photo"/>
+          </div>
+      </div>
+  </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import OwnerAvatar   from './../OwnerAvatar.vue';
-import OwnerName     from './../OwnerName.vue';
-import PhotoTitle    from './../PhotoTitle';
-import DateOfPosting from './../DateOfPosting';
-import Photo         from './../Photo';
-import CommentsToggler from './../CommentsToggler';
-import PhotoLikes    from './../PhotoLikes'
-import PhotoBtnOptions from './../PhotoBtnOptions.vue'
+import OwnerAvatar   from './photos/OwnerAvatar.vue';
+import OwnerName     from './photos/OwnerName';
+import PhotoTitle    from './photos/PhotoTitle';
+import DateOfPosting from './photos/DateOfPosting';
+import Photo         from './photos/Photo';
+import PhotoLikes    from './photos/PhotoLikes'
 import AddPhotoComment  from '../AddPhotoComment.vue';
-import CommentsWall   from './comments/CommentsWall.vue';
+import CommentsOldContainer   from './comments/CommentsContainer';
 
 export default {
   name: "PhotosWall",
@@ -41,11 +65,9 @@ export default {
     PhotoTitle,
     DateOfPosting,
     Photo,
-    CommentsToggler,
     PhotoLikes,
-    PhotoBtnOptions,
     AddPhotoComment,
-    CommentsWall,
+    CommentsOldContainer
   },
 
   data() {
@@ -183,21 +205,21 @@ export default {
           background: grey;
           color: white;
       }
-}
+  }
 
-// .btn-comment {
-//     font-size: 12px;
-//     // margin-right: 20px;
-//     border-style: none;
-//     border-radius: 5px;
-//     padding: 3px 12px;
-//     background: rgb(255, 255, 255);
-//     font-weight: 600;
-//     &:hover {
-//         background: rgb(100, 100, 100);
-//         color: white
-//     }
-// }
+.btn-comment {
+    font-size: 12px;
+    // margin-right: 20px;
+    border-style: none;
+    border-radius: 5px;
+    padding: 3px 12px;
+    background: rgb(255, 255, 255);
+    font-weight: 600;
+    &:hover {
+        background: rgb(100, 100, 100);
+        color: white
+    }
+}
 
 
 

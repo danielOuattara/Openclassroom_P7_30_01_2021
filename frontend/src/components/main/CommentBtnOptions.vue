@@ -1,0 +1,72 @@
+<template>
+    <div class="dropdown dropup">
+        <button type="button" 
+                class="btn btn-infos dropdown-toggle comment-more-options" 
+                id="dropdownMenuOffset" 
+                data-toggle="dropdown" 
+                data-offset="-60,0"
+                aria-haspopup="true" aria-expanded="false" 
+                >Options
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+            <button v-show="item.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                    class=" btn-comment-options btn-update-comment">
+                Update
+            </button>
+            <button v-show="item.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                    class=" btn-comment-options btn-delete-comment">
+                Delete
+            </button>
+            <button class=" btn-comment-options btn-report-comment">
+                Report
+            </button>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    props: ['item'],
+
+    computed: {
+        currentUser() {
+            return this.$store.state.auth.user;
+        }
+    },
+    
+}
+</script>
+
+<style lang="scss" >
+
+.comment-more-options {
+      font-size: 14px!important;
+      &:hover {
+          background: rgb(100, 100, 100)!important;
+          color: white!important;
+      }
+}
+
+.dropdown-menu {
+    // padding-left: 0.25rem;
+    padding: 0rem;
+
+}
+.btn-comment-options {
+    font-size: 0.8rem;
+    margin-right: 0.1rem;
+    // margin-left: 0.25rem;
+    border-style: none;
+    background: rgb(255, 255, 255);
+    font-weight: 600;
+    border-radius: 3px;
+    padding: 0.25rem 0.25rem!important;
+    border: 1px solid rgb(100, 100, 100)!important;
+    color: #000;
+    &:hover {
+        background: rgb(100, 100, 100);
+        color: white
+    }
+}
+
+</style>
