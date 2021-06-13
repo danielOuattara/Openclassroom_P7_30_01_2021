@@ -1,32 +1,7 @@
 <template>
-  <div class="bloc bloc-update-photo-comment">
-        <form name="form" @submit.prevent="updatePhotoComment">
-        <div class="form-group">
-            <label for="value">Comment below : </label>
-            <textarea  name="value" 
-                       type="text" 
-                       class="form-control"
-                       v-model="comment.value" 
-                       v-validate="'required'" >
-            </textarea>
-            <div class="alert alert-danger" 
-                v-if="errors.has('value')" role="alert">
-              An entry is required to post a comment
-            </div>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-outline-primary" :disabled="loading">
-              <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-              <span class="">Post comment</span>
-            </button>
-        </div>
-        <div class="form-group">
-            <div v-if="message" class="alert alert-danger" role="alert">
-              {{ message }}
-            </div>
-        </div>
-    </form>
-  </div>
+    <button type="button" @click="updatePhotoComment">
+        Update
+    </button>
 
 </template>
 
@@ -45,7 +20,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["addPhotoCommentAction"]),
+    ...mapActions(["updatePhotoCommentAction"]),
 
     // async addPhotoComment() {  // OK! but NO VueX !
     //     try {
@@ -69,7 +44,7 @@ export default {
     //     }
     // },
 
-    async addPhotoComment() {   // USING VueX and Services.
+    async updatePhotoComment() {   // USING VueX and Services.
       try {
         this.loading = true;
         const isValid = await this.$validator.validateAll();
@@ -79,7 +54,7 @@ export default {
         }
         const photoUuid = this.photo.uuid;
         const data = {photoUuid, ...this.comment }
-        await this.$store.dispatch("addPhotoCommentAction", data);
+        await this.$store.dispatch("updatePhotoCommentAction", data);
         this.loading = false;
       } catch (error) {
         this.loading = false;

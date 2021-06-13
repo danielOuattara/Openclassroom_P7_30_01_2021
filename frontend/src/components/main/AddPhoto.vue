@@ -7,41 +7,41 @@
                 <label for="title">Choose a title : </label>
                 <input  v-validate="'required'"  
                         type="text" 
+                        placeholder="choose a title"
                         v-model="photo.title"
                         class="form-control" 
                         ref="title" 
                         name="title"/>
-                <div class="alert alert-danger" v-if="errors.has('title')" role="alert">
-                     A title is required
+                <div class="alert alert-danger" 
+                     v-if="errors.has('title')" role="alert">
+                    A title is required
                 </div>
               </div>
 
               <div class="form-group">
                 <!-- <label for="filename" id="file-label"> choose a file ... : </label> -->
                 <!-- next: hide input area, replace it by button -->
-                <input 
-                    id="file" 
-                    type="file" 
-                    v-validate="'required'" 
-                    accept="image/*"
-                    class="form-control input-photo" 
-                    name="file" 
-                    @change="onFileSelect" 
-                    ref="imageFile" />
+                <input id="file" 
+                       type="file" 
+                       v-validate="'required'" 
+                       accept="image/*"
+                       class="form-control input-photo" 
+                       name="file" 
+                       @change="onFileSelect" 
+                       ref="imageFile" />
                 <!-- <button @click="$refs.imageFile.click()"> Pick an image</button> -->
-                <div 
-                  class="alert alert-danger" v-if="errors.has('file')" 
-                  role="alert">
+                
+                <div class="alert alert-danger" 
+                     v-if="errors.has('file')" role="alert">
                     An image required to submit a new photo
                 </div>
               </div>
 
               <div class="form-group">
                 <button class="btn btn-primary btn-block" :disabled="loading">
-                  <span
-                    v-show="loading"
-                    class="spinner-border spinner-border-sm"
-                  ></span>
+                  <span v-show="loading"
+                        class="spinner-border spinner-border-sm">
+                  </span>
                   <span class="">Post photo</span>
                 </button>
               </div>
@@ -83,7 +83,6 @@ export default {
 
         onFileSelect(event) {
           this.selectedFile = event.target.files[0];
-          console.log(this.selectedFile)
         },
 
       async addPhoto() {
@@ -103,7 +102,7 @@ export default {
               // this.message = response.data;
               this.successful = true;
               this.loading = false;
-              this.fetchAllPhotosAction();
+              await this.fetchAllPhotosAction();
           } catch(error) {
               this.loading = false;
               this.message = (error.response && error.response.data) || error.message || error.toString();

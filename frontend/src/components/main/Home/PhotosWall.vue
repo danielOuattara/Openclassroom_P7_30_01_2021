@@ -30,8 +30,8 @@ import Photo         from './../Photo';
 import CommentsToggler from './../CommentsToggler';
 import PhotoLikes    from './../PhotoLikes'
 import PhotoBtnOptions from './../PhotoBtnOptions.vue'
-import AddPhotoComment  from '../AddPhotoComment.vue';
 import CommentsWall   from './comments/CommentsWall.vue';
+import AddPhotoComment  from '../AddPhotoComment.vue';
 
 export default {
   name: "PhotosWall",
@@ -67,7 +67,11 @@ export default {
     ...mapActions(["fetchAllPhotosAction", "fetchOnePhotoLikesAction"]),
   },
 
-  created() {
+//   created() {
+//     this.fetchAllPhotosAction();
+//   },
+
+  mounted() {
     this.fetchAllPhotosAction();
   },
 

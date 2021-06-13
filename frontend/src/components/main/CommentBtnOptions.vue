@@ -5,32 +5,30 @@
                 id="dropdownMenuOffset" 
                 data-toggle="dropdown" 
                 data-offset="-60,0"
-                aria-haspopup="true" aria-expanded="false" 
-                > Options
+                aria-haspopup="true" aria-expanded="false" > 
+            Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-            <button v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                    class=" btn-comment-options btn-update-comment">
-                Update
-                    </button>
 
-            <DeletePhotoComment 
-                class=" btn-comment-options btn-delete-comment"
-                v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"
-                v-bind:commentUuid="comment.uuid"
-                v-bind:photoUuid="photoUuid" />
+            <UpdatePhotoComment v-if="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                                class=" btn-comment-options btn-update-comment"  />
 
+            <DeletePhotoComment class=" btn-comment-options btn-delete-comment"
+                                v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"
+                                v-bind:commentUuid="comment.uuid"
+                                v-bind:photoUuid="photoUuid" />
 
-            <button class=" btn-comment-options btn-report-comment">
-                Report
-            </button>
+            <ReportPhotoComment class=" btn-comment-options btn-report-comment"/>
+            
         </div>
     </div>
 </template>
 
 <script>
 
+import UpdatePhotoComment from './UpdatePhotoComment.vue';
 import DeletePhotoComment from './DeletePhotoComment.vue';
+import ReportPhotoComment from './ReportPhotoComment.vue';
 
 
 export default {
@@ -38,7 +36,9 @@ export default {
     props: ['comment','photoUuid'],
 
     components: {
+        UpdatePhotoComment,
         DeletePhotoComment,
+        ReportPhotoComment,
     },
 
     computed: {

@@ -2,7 +2,7 @@
     <div id="app-globale">
         <Header class="header"/>
         <Main class="main"/>
-        <Footer class="footer" v-if="loggedIn"></Footer>
+        <Footer class="footer" v-if="loggedIn" />
     </div>
 </template>
 

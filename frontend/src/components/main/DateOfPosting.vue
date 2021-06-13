@@ -1,15 +1,15 @@
 <template>
         <p class="bloc bloc-date-posting">
-          <!-- <font-awesome-icon icon="calendar-alt" />
-          {{ item.createdAt.split("T")[0] }}
-          <font-awesome-icon icon="clock" />
-          {{ item.createdAt.substring(11, 13) }}H{{
-            item.createdAt.substring(14, 16)
-          }} -->
-          <font-awesome-icon icon="history"
-          type="button" data-toggle="tooltip" data-placement="top" 
-                             :title="item.createdAt"/>
-          {{ this.periodSincePosting}}
+            <!-- <font-awesome-icon icon="calendar-alt" />
+            {{ item.createdAt.split("T")[0] }}
+            <font-awesome-icon icon="clock" />
+            {{ item.createdAt.substring(11, 13) }}H{{
+                item.createdAt.substring(14, 16)
+            }} -->
+            <font-awesome-icon icon="history"
+                               type="button" data-toggle="tooltip" data-placement="top" 
+                               :title="item.createdAt"/>
+            {{ this.periodSincePosting}}
         </p>
 </template>
 
@@ -38,7 +38,8 @@ export default {
             const deltaNowToPostInSeconds = (now - dateOfPost) / 1000;
 
             if (deltaNowToPostInSeconds < oneMinute) {
-                this.periodSincePosting = ' Just Now';
+                // this.periodSincePosting = ' Just Now';
+                this.periodSincePosting = deltaNowToPostInSeconds +' second(s)';
             } else if (deltaNowToPostInSeconds >= oneMinute && deltaNowToPostInSeconds < oneHour) {
                 if (deltaNowToPostInSeconds / oneMinute == 1) {
                     this.periodSincePosting = ' 1 minute !';
@@ -73,7 +74,7 @@ export default {
         },
     },
 
-    mounted() {
+    created() {
         this.extractPostingPeriod();
     }
 }

@@ -1,6 +1,8 @@
 <template>
     <button  type="button" 
-             @click="deletePhoto">Delete</button>
+             @click="reportPhoto">
+        Report
+    </button>
 </template>
 
 <script>
@@ -25,7 +27,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["deleteOnePhotoAction", "fetchAllPhotosAction"]),
+        ...mapActions(["reportOnePhotoAction", "fetchAllPhotosAction"]),
 
         // onFileSelect(event) {
         //   this.selectedFile = event.target.files[0];
@@ -33,17 +35,17 @@ export default {
         // },
 
 
-      async deletePhoto() {
+      async reportPhoto() {
           try {
               this.message = '';
               this.submitted = true;
               this.loading = true;
               const photoUuid = this.photoUuid;
-              const response = await this.$store.dispatch("deleteOnePhotoAction", photoUuid);
+              const response = await this.$store.dispatch("reportOnePhotoAction", photoUuid);
               this.message = response.data;
               this.successful = true;
               this.loading = false;
-              await this.fetchAllPhotosAction();
+              this.fetchAllPhotosAction();
           } catch(error) {
               this.loading = false;
               this.message = (error.response && error.response.data) || error.message || error.toString();

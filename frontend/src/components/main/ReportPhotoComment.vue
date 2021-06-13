@@ -1,14 +1,14 @@
 <template>
     <button type="button" 
-            @click="deletePhotoComment"  
-        >Delete
+            @click="reportPhotoComment" >
+        Report
     </button>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 export default {
-    name: "DeletePhotoComment",
+    name: "ReportPhotoComment",
     props: ['commentUuid','photoUuid'],
     data() {
         return {
@@ -33,10 +33,10 @@ export default {
     // },
 
     methods: {
-        ...mapActions(["deletePhotoCommentAction", "fetchAllPhotosAction"]),
+        ...mapActions(["reportPhotoCommentAction", "fetchAllPhotosAction"]),
 
 
-        async deletePhotoComment() {
+        async reportPhotoComment() {
           try {
               this.message = '';
               this.submitted = true;
@@ -44,8 +44,9 @@ export default {
               const photoUuid = this.photoUuid;
               const commentUuid = this.commentUuid;
               const data= {photoUuid, commentUuid}
-              const response = await this.$store.dispatch("deletePhotoCommentAction", data);
-              await this.fetchAllPhotosAction();
+              console.table(data)
+              const response = await this.$store.dispatch("reportPhotoCommentAction", data);
+              this.fetchAllPhotosAction();
               this.message = response.data;
               this.successful = true;
               this.loading = false;
