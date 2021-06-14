@@ -1,7 +1,7 @@
 <template>
-        <p v-if="item.owner.firstName && item.owner.lastName" 
+        <p v-if="item.firstName && item.lastName" 
            class="bloc-owner-name bloc">
-            {{ item.owner.firstName + " " + item.owner.lastName }}
+            {{ item.firstName + " " + item.lastName }}
         </p>
         
         <p v-else class="bloc-owner-name bloc">New user</p>
@@ -9,7 +9,15 @@
 
 <script>
 export default {
-  props: ["item"],
+  // props: ["item"],
+  props: {
+      item: {
+        type: Object,
+        default: () => { 
+          return {} 
+        }
+      }
+  },
 
   data() {
     return {

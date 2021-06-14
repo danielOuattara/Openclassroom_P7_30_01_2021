@@ -1,11 +1,11 @@
 <template>
-        <p class=" bloc bloc-photo-title"> {{ item.title }}</p>
+        <p class=" bloc bloc-photo-title"> {{item}}</p>
 </template>
 
 <script>
 export default {
   name: "PhotoTitle",
-    props: ["item"],
+  props: ["item"],
 };
 </script>
 

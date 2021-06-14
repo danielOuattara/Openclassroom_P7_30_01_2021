@@ -1,25 +1,31 @@
 <template>
         <p class="bloc bloc-date-posting">
-            <!-- <font-awesome-icon icon="calendar-alt" />
-            {{ item.createdAt.split("T")[0] }}
-            <font-awesome-icon icon="clock" />
-            {{ item.createdAt.substring(11, 13) }}H{{
-                item.createdAt.substring(14, 16)
-            }} -->
-            <font-awesome-icon icon="history"
-                               type="button" data-toggle="tooltip" data-placement="top" 
-                               :title="item.createdAt"/>
-            {{ this.periodSincePosting}}
+          <!-- <font-awesome-icon icon="calendar-alt" />
+          {{ item.createdAt.split("T")[0] }}
+          <font-awesome-icon icon="clock" />
+          {{ item.createdAt.substring(11, 13) }}H{{
+            item.createdAt.substring(14, 16)
+          }} -->
+          <font-awesome-icon icon="history"
+          type="button" data-toggle="tooltip" data-placement="top" 
+                             :title="item"/>
+          {{ this.periodSincePosting}}
         </p>
 </template>
 
 <script>
 export default {
-    props: ['item'],
+    // props: ['item'],
+    props: {
+        item: {
+            type: String,
+            default: ''
+        },
+    },
 
     data() {
         return {
-            dateOfPost: this.item.createdAt,
+            dateOfPost: this.item,
             periodSincePosting: '',
         }
     },
@@ -74,7 +80,7 @@ export default {
         },
     },
 
-    created() {
+    mounted() {
         this.extractPostingPeriod();
     }
 }

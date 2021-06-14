@@ -59,7 +59,6 @@
 
 import { mapGetters, mapActions } from 'vuex';
 import UserUpdateForm from './../components/main/Profile/UserUpdateForm.vue';
-// import DeleteUser from './../components/main/Profile/Profile_DeleteUser.vue';
 import PasswordUpdateForm from './../components/main/Profile/PasswordUpdateForm.vue';
 import UserDeleteAccountForm from './../components/main/Profile/UserDeleteAccountForm.vue';
 export default {

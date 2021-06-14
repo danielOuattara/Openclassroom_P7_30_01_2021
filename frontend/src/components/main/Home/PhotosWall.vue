@@ -1,17 +1,18 @@
 <template>
     <div class="photos-container">
         <div v-for="photo in allPhotos" :key="photo.uuid" class="photo-bloc">
-            <OwnerAvatar v-bind:item="photo"/>
-            <OwnerName v-bind:item="photo"/>
-            <PhotoTitle v-bind:item="photo"/>
-            <DateOfPosting v-bind:item="photo"/>
+            <OwnerAvatar v-bind:item="photo.owner"/>
+            <OwnerName v-bind:item="photo.owner"/>
+            <PhotoTitle v-bind:item="photo.title"/>
+            <DateOfPosting v-bind:item="photo.createdAt"/>
             <Photo v-bind:item="photo" />
-            <CommentsToggler v-bind:item="photo"/>
+            <CommentsToggler v-bind:item="photo.uuid"
+                             v-bind:comments="photo.comments"/>
+            <!-- <PhotoLikes v-bind:item="photo" /> -->
 
-            <PhotoLikes v-bind:item="photo" />
-            <PhotoBtnOptions v-bind:photoOwnerUuid="photo.owner.uuid"
-                             v-bind:photoUuid="photo.uuid"   />
 
+            <PhotoBtnOptions v-bind:photoOwner="photo.owner"
+                             v-bind:photoUuid="photo.uuid"/>
             <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
                 <CommentsWall v-bind:photo="photo"/>
                 <AddPhotoComment v-bind:photoUuid="photo.uuid"/>
@@ -28,7 +29,7 @@ import PhotoTitle    from './../PhotoTitle';
 import DateOfPosting from './../DateOfPosting';
 import Photo         from './../Photo';
 import CommentsToggler from './../CommentsToggler';
-import PhotoLikes    from './../PhotoLikes'
+// import PhotoLikes    from './../PhotoLikes'
 import PhotoBtnOptions from './../PhotoBtnOptions.vue'
 import CommentsWall   from './comments/CommentsWall.vue';
 import AddPhotoComment  from '../AddPhotoComment.vue';
@@ -43,10 +44,10 @@ export default {
     DateOfPosting,
     Photo,
     CommentsToggler,
-    PhotoLikes,
+    // PhotoLikes,
     PhotoBtnOptions,
-    AddPhotoComment,
     CommentsWall,
+    AddPhotoComment,
   },
 
   data() {
@@ -67,17 +68,12 @@ export default {
     ...mapActions(["fetchAllPhotosAction", "fetchOnePhotoLikesAction"]),
   },
 
-//   created() {
-//     this.fetchAllPhotosAction();
-//   },
-
   mounted() {
     this.fetchAllPhotosAction();
   },
 
-  update() {
-    this.fetchAllPhotosAction();
-  }
+
+
 };
 </script>
 

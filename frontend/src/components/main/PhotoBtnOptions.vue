@@ -9,14 +9,11 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
 
-                <DeletePhoto v-if="photoOwnerUuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                <DeletePhoto v-if="photoOwner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                              class=" btn-options-photo btn-delete-photo"
                              v-bind:photoUuid="photoUuid"/>
 
                 <ReportPhoto class=" btn-options-photo btn-report-photo"/>
-
-
-
         </div>
     </div>
 </template>
@@ -25,7 +22,20 @@
 import DeletePhoto from './DeletePhoto';
 import ReportPhoto from './ReportPhoto';
 export default {
-    props: ['photoOwnerUuid', 'photoUuid'],
+    // props: ['photoOwnerUuid', 'photoUuid'],
+
+    props: {
+        photoUuid: {
+            type: String,
+            default: ''
+        },
+        photoOwner: {
+            type: Object,
+            default: () => { 
+            return {} 
+            }
+        },
+    },
 
     components: {
         DeletePhoto,
@@ -42,22 +52,25 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss"  >
 
 .photo-options {
       font-size: 14px!important;
       &:hover {
           background: rgb(100, 100, 100)!important;
-          color: white!important;
+        //   color: white!important;
       }
 }
 
+.dropdown-menu {
+    min-width: 10rem!important
+}
 
 .btn-options-photo {
     font-size: 0.8rem;
-    margin-right: 0.5rem;
-    margin-left: 0.5rem;
-    border-style: none;
+    margin-right: 0.4rem;
+    margin-left: 0.4rem;
+    border: 1px solid grey;
     background: rgb(255, 255, 255);
     font-weight: 600;
     border-radius: 3px;

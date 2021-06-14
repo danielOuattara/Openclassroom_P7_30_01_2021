@@ -9,17 +9,13 @@
             Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-
             <UpdatePhotoComment v-if="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                                 class=" btn-comment-options btn-update-comment"  />
-
             <DeletePhotoComment class=" btn-comment-options btn-delete-comment"
                                 v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"
                                 v-bind:commentUuid="comment.uuid"
                                 v-bind:photoUuid="photoUuid" />
-
             <ReportPhotoComment class=" btn-comment-options btn-report-comment"/>
-            
         </div>
     </div>
 </template>
@@ -30,17 +26,13 @@ import UpdatePhotoComment from './UpdatePhotoComment.vue';
 import DeletePhotoComment from './DeletePhotoComment.vue';
 import ReportPhotoComment from './ReportPhotoComment.vue';
 
-
 export default {
-
     props: ['comment','photoUuid'],
-
     components: {
         UpdatePhotoComment,
         DeletePhotoComment,
         ReportPhotoComment,
     },
-
     computed: {
         currentUser() {
             return this.$store.state.auth.user;
@@ -51,7 +43,6 @@ export default {
         },
 
     },
-    
 }
 </script>
 
@@ -67,7 +58,7 @@ export default {
 
 .dropdown-menu {
     // padding-left: 0.25rem;
-    padding: 0rem;
+    // padding: 0rem;
 
 }
 .btn-comment-options {

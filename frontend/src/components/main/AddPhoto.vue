@@ -7,7 +7,7 @@
                 <label for="title">Choose a title : </label>
                 <input  v-validate="'required'"  
                         type="text" 
-                        placeholder="choose a title"
+                        placeholder="enter a photo title ..."
                         v-model="photo.title"
                         class="form-control" 
                         ref="title" 
@@ -28,12 +28,13 @@
                        class="form-control input-photo" 
                        name="file" 
                        @change="onFileSelect" 
+                       placeholder="choose a file"
                        ref="imageFile" />
                 <!-- <button @click="$refs.imageFile.click()"> Pick an image</button> -->
                 
                 <div class="alert alert-danger" 
                      v-if="errors.has('file')" role="alert">
-                    An image required to submit a new photo
+                    A image file is required to submit a new photo
                 </div>
               </div>
 
@@ -46,19 +47,17 @@
                 </button>
               </div>
         </form>
-        <!-- <div v-if="message" 
-            class="alert" 
-            :class="successful ? 'alert-success' : 'alert-danger'">{{message}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-        </div> -->
   </div>
 </template>
 
 <script>
 import Photo from "../../models/photo.js";
 import { mapActions } from "vuex";
+import axios from "axios";
+// import Photo from './../models/photo.js';
+import authHeader from "./../../services/auth.header";
+
+
 export default {
     name: "AddPhoto",
     data() {
@@ -66,9 +65,8 @@ export default {
             photo: new Photo(""),
             loading: false,
             title: "",
-            // message: "",
             selectedFile: "",
-            submitted: false,
+            // submitted: false,
             successful: false,
         };
     },
@@ -87,8 +85,7 @@ export default {
 
       async addPhoto() {
           try {
-              // this.message = '';
-              this.submitted = true;
+              // this.submitted = true;
               this.loading = true;
               const isValid = await this.$validator.validateAll();
               if (!isValid) {
@@ -99,15 +96,70 @@ export default {
               formData.append("title", this.photo.title);
               formData.append("image", this.selectedFile, this.selectedFile.name);
               await this.$store.dispatch("addOnePhotoAction", formData);
-              // this.message = response.data;
               this.successful = true;
               this.loading = false;
-              await this.fetchAllPhotosAction();
+              this.fetchAllPhotosAction();
+              this.$validator.reset();
+              this.photo.title= ''
           } catch(error) {
               this.loading = false;
               this.message = (error.response && error.response.data) || error.message || error.toString();
           }
       },
+
+
+      addPhoto2() { // BACK UP: OK <<<<-----
+
+        this.loading = true;
+        this.$validator.validateAll()
+        .then( isValid => {
+            if(!isValid) {
+                this.loading = false;
+                return;
+            }
+            const data = new FormData();
+            data.append('title', this.photo.title)
+            data.append('image', this.selectedFile, this.selectedFile.name)
+            const config =  {
+              header : {
+                  'Content-Type': 'multipart/form-data'
+              }
+            }
+            axios.post(
+              'http://localhost:4200/api/photos',  
+              data, 
+              { headers: authHeader() },
+              config,
+            )
+            .then( () => {
+                this.loading = false;
+                this.fetchAllPhotosAction()
+              },
+                error => {
+                  this.loading = false;
+                  this.photo.title ='';
+                  this.input.value= '';
+
+                  this.message = (error.response && error.response.data) || error.message || error.toString();
+                }
+            )
+        });
+      },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   },
 };
 </script>
