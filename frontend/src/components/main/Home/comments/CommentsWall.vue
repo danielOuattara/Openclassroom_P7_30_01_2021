@@ -1,9 +1,9 @@
 <template>
     <div class="bloc bloc-old-comment"> 
         <div class="one-comment" v-for="comment, index in photo.comments" :key="index">
-            <OwnerAvatar v-bind:item="comment"/>
-            <OwnerName v-bind:item="comment"/>
-            <DateOfPosting v-bind:item="comment"/>
+            <OwnerAvatar v-bind:item="comment.owner"/>
+            <OwnerName v-bind:item="comment.owner"/>
+            <DateOfPosting v-bind:item="comment.createdAt"/>
             <CommentContent v-bind:item="comment"/>
             <CommentBtnOptions v-bind:comment="comment"
                                v-bind:photoUuid="photo.uuid" />
@@ -19,7 +19,7 @@ import DateOfPosting from './../../DateOfPosting';
 import CommentBtnOptions from './../../CommentBtnOptions.vue';
 import CommentContent from './../../CommentContent';
 export default {
-    name: 'OldComments',
+    name: 'CommentsWall',
     data() {
         return{   }
     },
