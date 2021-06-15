@@ -53,15 +53,15 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     firstName: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(60),
     },
 
     lastName: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(60),
     },
 
     username: { 
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(60),
       allowNull: true,
       unique: true,
       validate: {
@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     email: { 
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(60),
       required: true,
       unique: true,
       allowNull:false,
