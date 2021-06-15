@@ -10,6 +10,10 @@ const jwt = require("jsonwebtoken");
 
 exports.signin =  async (req, res) => {
     try {
+        const oldUser = await User.findOne({ where : {email: req.body.email }});
+        if (oldUser) {
+            return res.status(400).send("Choose another email.");
+        }
         const hash = await bcrypt.hash(req.body.password, 11);
         const user = await User.create({ email: req.body.email, password: hash })
         if (req.body.roles) {
@@ -34,9 +38,6 @@ exports.signin =  async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-        if (!req.body.emailOrUsername) {
-            return res.status(400).send("Provide email OR username");
-        }
         const user = await User.findOne({ 
             where: { [Op.or]: [
                         {username: req.body.emailOrUsername}, 
@@ -47,26 +48,35 @@ exports.login = async (req, res) => {
         if(!user)  {
             return res.status(401).send("Login failed, try again !");
         }
+        if(user.token) {
+            return res.status(401).send("User already connected !")
+        }
+
         const validPassword = await bcrypt.compare( req.body.password, user.password);
         if(!validPassword) {
             return res.status(401).send("Login failed, try again !");
         }
+
         const authorities = [];
         const roles = await user.getRoles();
         for (const role of roles) {
             authorities.push("ROLE_" + role.name.toUpperCase());
         }
-        const token = jwt.sign(
-            {
+
+        const token = jwt.sign({
                 uuid: user.uuid,
                 id: user.id,
                 userRoles: [...authorities],
             },
             config.secret,
             {expiresIn:'12h'}
-        )
+        );
+        const cryptoken = await bcrypt.hash(token,7);
+        await user.update({token});
+        await user.update({cryptoken});
+
         res.status(201).json({ 
-            accessToken: token, 
+            accessToken: cryptoken, 
             uuid:  user.uuid,
             roles: authorities,
             // limit: 500,
@@ -78,7 +88,24 @@ exports.login = async (req, res) => {
 
 //-------------------------------------------------------------------------------------------------
 
-exports.logout = (req, res) => {}  // TODO
+exports.logout = async (req, res) => {
+
+    try {
+        const user = await User.findOne( { where: { uuid: req.params.userUuid } });
+        if (!user) {
+            return res.status(404).send("User unknown !");
+        }
+        if (user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")) {
+            return res.status(403).send("Non Authorized !")  
+        }
+    
+        await user.update({token: null, cryptoken: null})
+        res.status(200).send("Clear to logout !")
+
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}  // TODO
 
 
 //-------------------------------------------------------------------------------------------------

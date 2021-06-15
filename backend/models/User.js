@@ -102,6 +102,14 @@ module.exports = (sequelize, DataTypes) => {
     aboutMe:    {
       type: DataTypes.STRING,
     },
+          
+    token: {
+      type: DataTypes.STRING,
+    },
+
+    cryptoken: {
+      type: DataTypes.STRING,
+    },
   }, 
   
   {

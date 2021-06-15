@@ -56,7 +56,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
 
-      aboutMe:    {
+      aboutMe: {
         type: Sequelize.STRING,
       },
 

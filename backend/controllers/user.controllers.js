@@ -108,7 +108,7 @@ exports.updateUser =  async (req, res) => {
           :  
           {...req.body } 
         
-          console.table(userObject); // TO DELETE
+          // console.table(userObject); // TO DELETE
 
         const user = await User.findOne( { where: { uuid: req.params.userUuid }} );
         if (!user) {
@@ -125,7 +125,7 @@ exports.updateUser =  async (req, res) => {
             }  
             else if (req.body.user && user.avatar) {
                 const filename = user.avatar.split('/avatars/')[1];
-                console.log("------------->", filename);
+                // console.log("------------->", filename);
                 fs.unlink(`images/avatars/${filename}`, (err) => {
                   if(err) throw err;
                 })
@@ -134,13 +134,13 @@ exports.updateUser =  async (req, res) => {
             }
 
             else if (!req.body.user && !user.avatar) {
-                console.log( "userObject = " , userObject)
+                // console.log( "userObject = " , userObject)
                 await user.update( userObject)
                 res.status(201).send(" Newly photo successfully updated !")
             } 
 
             else if (!req.body.user && user.avatar) {
-                console.log( "userObject = " , userObject)
+                // console.log( "userObject = " , userObject)
                 const filename = user.avatar.split('/avatars/')[1];
                 fs.unlink(`images/avatars/${filename}`, (err) => {
                   if(err) throw err;
