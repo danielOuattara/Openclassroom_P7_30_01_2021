@@ -2,7 +2,7 @@
 const ROLES = require("../models").ROLES;
 const { User } = require('../models');
 const validator = require("node-email-validation");
-
+const config = require('../config/auth.config.js');
 // -----------------------------------------------------------------------------
 
 const email = (req, res, next) => {
@@ -44,6 +44,10 @@ const password = (req, res, next) => {
 const roles = (req, res, next) => {
     try {    
         if(req.body.roles) {
+            // const specialPassword = "1_superPassword!";
+            if( !req.body.special || req.body.special != config.specialRolePassword) {
+                return res.status(401).send("Not authorized for special role attribution")
+            }
             for (let i = 0; i < req.body.roles.length; i++) {
                 if (!ROLES.includes(req.body.roles[i])) {
                     return res.status(400).json(`Error :  Role = '${req.body.roles[i]}' doesn't exist`)

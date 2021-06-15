@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo( User, {
         foreignKey: "ownerId",
         as: 'owner',
+        onDelete: 'CASCADE',
       })
 
       this.hasMany(Comment, { 

@@ -13,12 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(Role, {
         through: "user_roles",
         foreignKey: "userId",
-        otherKey: "roleId"
+        otherKey: "roleId",
+ 
       });
 
       this.hasMany(Photo, { 
         foreignKey: 'ownerId', 
         as: 'photos',
+        onDelete: 'CASCADE',
       });
 
       this.hasMany(Comment, { 
