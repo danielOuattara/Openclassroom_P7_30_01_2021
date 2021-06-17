@@ -89,11 +89,18 @@ export default {
     },
 
     methods: {
-        logOut() {
-            this.$store.dispatch('auth/logout');
-            this.$router.push('/login');
+        async logOut() {
+            try{
+                const userUuid = this.currentUser.uuid
+                await this.$store.dispatch('auth/logout', userUuid);
+                localStorage.removeItem("user");
+                this.$router.push('/login');
+            } catch (error) {
+                    (error.response && error.response.data) || error.message || error.toString();
+                }
         }
     }
+
 };
 </script>
 

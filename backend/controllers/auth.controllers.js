@@ -10,10 +10,6 @@ const jwt = require("jsonwebtoken");
 
 exports.signin =  async (req, res) => {
     try {
-        const oldUser = await User.findOne({ where : {email: req.body.email }});
-        if (oldUser) {
-            return res.status(400).send("Choose another email.");
-        }
         const hash = await bcrypt.hash(req.body.password, 11);
         const user = await User.create({ email: req.body.email, password: hash })
         if (req.body.roles) {
@@ -39,7 +35,8 @@ exports.signin =  async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const user = await User.findOne({ 
-            where: { [Op.or]: [
+            where: { 
+                [Op.or]: [
                         {username: req.body.emailOrUsername}, 
                         {email: req.body.emailOrUsername} 
                 ] 
@@ -69,17 +66,15 @@ exports.login = async (req, res) => {
                 userRoles: [...authorities],
             },
             config.secret,
-            {expiresIn:'12h'}
+            {expiresIn:'2h'}
         );
-        const cryptoken = await bcrypt.hash(token,7);
         await user.update({token});
-        await user.update({cryptoken});
 
         res.status(201).json({ 
-            accessToken: cryptoken, 
+            accessToken: token, 
             uuid:  user.uuid,
             roles: authorities,
-            // limit: 500,
+            exp: '2h'
         });
     } catch(err) {
         return res.status(401).send(err.message);
@@ -89,9 +84,8 @@ exports.login = async (req, res) => {
 //-------------------------------------------------------------------------------------------------
 
 exports.logout = async (req, res) => {
-
     try {
-        const user = await User.findOne( { where: { uuid: req.params.userUuid } });
+        const user = await User.findOne({ where: { uuid: req.params.userUuid } });
         if (!user) {
             return res.status(404).send("User unknown !");
         }
@@ -99,13 +93,13 @@ exports.logout = async (req, res) => {
             return res.status(403).send("Non Authorized !")  
         }
     
-        await user.update({token: null, cryptoken: null})
+        await user.update({token: null})
         res.status(200).send("Clear to logout !")
 
     } catch (err) {
         return res.status(500).send(err.message)
     }
-}  // TODO
+}
 
 
 //-------------------------------------------------------------------------------------------------

@@ -107,9 +107,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
 
-    cryptoken: {
-      type: DataTypes.STRING,
-    },
+    // cryptoken: {
+    //   type: DataTypes.STRING,
+    // },
   }, 
   
   {

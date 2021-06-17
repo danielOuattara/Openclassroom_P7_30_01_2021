@@ -21,6 +21,12 @@ export default {
     data() {
         return {};
     },
+
+    computed: { 
+        currentUser() {
+            return this.$store.state.auth.user;
+       }, 
+    },
 };
 </script>
 <style lang="scss" scoped>

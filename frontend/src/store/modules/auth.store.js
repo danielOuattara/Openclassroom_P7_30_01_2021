@@ -27,9 +27,16 @@ export const auth =  {
             );  
         },
 
-        logout( {commit}) {
-            AuthService.logout();
-            commit("logout");
+        logout( {commit}, userUuid) {
+           return AuthService.logout(userUuid)
+           .then( response =>{
+               commit("logout");
+               return Promise.resolve(response.data)
+           })
+           .catch( error =>{
+               commit("errorLogout");
+               return Promise.reject(error)
+           })
         },
 
         signin( {commit}, user) {
@@ -80,13 +87,17 @@ export const auth =  {
         },
         loginFailureMutation(state) {
             state.status.loggedIn = false;
-            state.user = null;
+            state.user = true;
         },
 
 
         logout(state) {
             state.status.loggedIn = false;
             state.user = null;
+        },
+        errorLogout(state) {
+            state.status.loggedIn = true;
+            state.user = initialState;
         },
 
 

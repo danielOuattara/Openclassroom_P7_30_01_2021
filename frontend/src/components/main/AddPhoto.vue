@@ -53,9 +53,9 @@
 <script>
 import Photo from "../../models/photo.js";
 import { mapActions } from "vuex";
-import axios from "axios";
+// import axios from "axios";
 // import Photo from './../models/photo.js';
-import authHeader from "./../../services/auth.header";
+// import authHeader from "./../../services/auth.header";
 
 
 export default {
@@ -108,43 +108,43 @@ export default {
       },
 
 
-      addPhoto2() { // BACK UP: OK <<<<-----
+      // addPhoto2() { // BACK UP: OK <<<<-----
 
-        this.loading = true;
-        this.$validator.validateAll()
-        .then( isValid => {
-            if(!isValid) {
-                this.loading = false;
-                return;
-            }
-            const data = new FormData();
-            data.append('title', this.photo.title)
-            data.append('image', this.selectedFile, this.selectedFile.name)
-            const config =  {
-              header : {
-                  'Content-Type': 'multipart/form-data'
-              }
-            }
-            axios.post(
-              'http://localhost:4200/api/photos',  
-              data, 
-              { headers: authHeader() },
-              config,
-            )
-            .then( () => {
-                this.loading = false;
-                this.fetchAllPhotosAction()
-              },
-                error => {
-                  this.loading = false;
-                  this.photo.title ='';
-                  this.input.value= '';
+      //   this.loading = true;
+      //   this.$validator.validateAll()
+      //   .then( isValid => {
+      //       if(!isValid) {
+      //           this.loading = false;
+      //           return;
+      //       }
+      //       const data = new FormData();
+      //       data.append('title', this.photo.title)
+      //       data.append('image', this.selectedFile, this.selectedFile.name)
+      //       const config =  {
+      //         header : {
+      //             'Content-Type': 'multipart/form-data'
+      //         }
+      //       }
+      //       axios.post(
+      //         'http://localhost:4200/api/photos',  
+      //         data, 
+      //         { headers: authHeader() },
+      //         config,
+      //       )
+      //       .then( () => {
+      //           this.loading = false;
+      //           this.fetchAllPhotosAction()
+      //         },
+      //           error => {
+      //             this.loading = false;
+      //             this.photo.title ='';
+      //             this.input.value= '';
 
-                  this.message = (error.response && error.response.data) || error.message || error.toString();
-                }
-            )
-        });
-      },
+      //             this.message = (error.response && error.response.data) || error.message || error.toString();
+      //           }
+      //       )
+      //   });
+      // },
 
 
 

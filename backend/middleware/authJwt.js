@@ -1,4 +1,4 @@
-
+const { User, Role } = require('./../models');
 const jwt = require('jsonwebtoken');
 const config = require('../config/auth.config.js');
 
@@ -9,21 +9,28 @@ module.exports = async (req, res, next) => {
         if(!token)  {
             return res.status(401).json("Token not provided !");
         }
-        jwt.verify( token, config.secret, (err, decoded) => {
+        jwt.verify( token, config.secret,  async (err, decoded) => {
             if(err) {
                 return res.status(401).send("Unauthorized !");
             }
+            console.table(decoded)
             req.userUuid = decoded.uuid;
             req.userId = decoded.id;
             req.userRoles = decoded.userRoles;
-            endOfTime = decoded.exp;
-            if (decoded.exp - Date.parse(new Date())/1000 === 0) {
-                return res.status(401).send("Token expired, please log again ")
-            }  
+            const endOfTime = decoded.exp;
+            console.log(endOfTime * 1000 - Date.parse(new Date()))
+
+            const user = await User.findOne({
+                where: { uuid :req.userUuid}
+            })
+            if(!user.token || user.token !== token) {
+                return res.status(401).send("Unauthorized !");
+            }
         });
         next();
     }    
     catch(err) { 
-        err => res.status(401).json(err.message)
+        return res.status(401).json(err.message)
     }
 };
+

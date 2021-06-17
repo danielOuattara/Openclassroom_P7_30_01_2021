@@ -22,9 +22,6 @@ export default {
             return this.$store.state.auth.status.loggedIn;
         }
     },
-
-    
-
 };
 </script>
 

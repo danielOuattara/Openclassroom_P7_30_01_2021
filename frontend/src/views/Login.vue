@@ -33,6 +33,7 @@
                            role="alert"> Password is required !
                     </div>
                 </div>
+
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" 
                             style="margin:64px 0px 16px 0" 
@@ -77,21 +78,22 @@ export default {
     name: "Login",
     data() {
         return {
-            user: new User('',''),
+            user: new User('', ''),
             loading: false,
             message: ''
         };
     },
+    //------------------------------------------------------
     computed: {
         loggedIn() {
             return this.$store.state.auth.status.loggedIn;
-        }
+        },
+
+        currentUser() {
+            return this.$store.state.auth.user;
+       },
     },
-    created() {
-        if (this.loggedIn) {
-            this.$router.push("/profile");
-        }
-    },
+
     methods: {
         async handleLogin() {
             try {
@@ -101,15 +103,39 @@ export default {
                     this.loading = false;
                     return;
                 }
-                // if (this.user.emailOrUsername && this.user.password) {
-                    await this.$store.dispatch("auth/loginAction", this.user)
-                    this.$router.push("/home");
-                // }
+                await this.$store.dispatch("auth/loginAction", this.user)
+                this.$router.push("/home");
+                this.handleSessionExpiration();
             } catch(error) {
                 this.loading = false;
                 this.message = (error.response && error.response.data) || error.message || error.toString();
            }
         },
+
+        handleSessionExpiration() {
+            const timeToExpiration = parseInt(this.currentUser.exp.slice(0,1)) * 3600000; // hour(s) to ms
+            // const timeToExpiration = parseInt(this.currentUser.exp.slice(0,1)) * 5000; // hour(s) to ms
+            const alertTime = timeToExpiration - 1000
+            setTimeout(function() {
+                alert("You will be disconnected, time over")
+            }, alertTime)
+            setTimeout( this.logout , timeToExpiration )
+        },
+
+        async logout() {
+            try{
+                const userUuid = this.currentUser.uuid
+                await this.$store.dispatch('auth/logout', userUuid);
+                localStorage.removeItem("user");
+                this.$router.push('/login');
+            } catch (error) {
+                    (error.response && error.response.data) || error.message || error.toString();
+            }
+        },
+
+
+
+
     }
 };
 </script>
