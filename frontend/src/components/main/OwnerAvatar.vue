@@ -1,13 +1,13 @@
 <template>
-        <img v-if="item.avatar && item.firstName && item.lastName" 
+        <img v-if="item.avatar" 
              class=" bloc bloc-avatar" 
              :src="item.avatar" 
-             :alt="'picture profile of ' + item.firstName + item.lastName "/>
+             :alt="'picture profile of '+ ' ' + item.firstName + ' ' + item.lastName + ' ' + item.uuid "/>
 
         <img v-else 
              class=" bloc bloc-avatar" 
              src="./../../assets/images/generic-profile_360_360.jpg"
-             alt='picture profile of new user'/>
+             alt='picture profile of new user --' + item.uuid/>
 </template>
 
 <script>

@@ -90,7 +90,7 @@ export default {
     background: rgb(228, 228, 228);
     box-shadow: 0 0 2px 2px rgba(141, 141, 141, 0.6);
     display: grid;
-    grid-gap: 0.25rem;
+    grid-gap: 0.15rem;
 }
 
 /* --- START Grid Item */

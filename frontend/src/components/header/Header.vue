@@ -52,20 +52,20 @@
                 </ul>
             </div>
 
-            <!-- <div v-if="currentUser" class="navbar-nav ml-auto">
+            <div v-if="currentUser" class="navbar-nav ml-auto">
                 <ul id="navbar-nav" class="navbar-nav">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <router-link to="/profile" class="nav-link" >
                             <font-awesome-icon icon="address-card" /> Profile
                         </router-link>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link"  href="#" @click.prevent="logOut">
                             <font-awesome-icon icon="sign-out-alt" />LogOut
                         </a>
                     </li>
                 </ul>
-            </div> -->
+            </div>
         </div>
     </nav>
 </header>

@@ -1,116 +1,77 @@
 
 <template>
-  <div class="container">
-      <div class="profile-container">
-      <img class="user-avatar"
-           :src="userData.avatar" 
-           :alt="userData.firstName + ' ' + userData.lastName + ' picture'"/>
-      <span class="username" v-if="currentUser.uuid" > <b>Username</b> : </span>
-      <span class="username-value"> {{userData.userName}}  </span>
-      <span class="firstname"> <b>Firstname</b> : </span>
-      <span class="firstname-value"> {{userData.firstName}} </span>
-      <span class="lastname"> <b>LastName</b> : </span>
-      <span class="lastname-value"> {{userData.lastName}} </span>
-      <span class="email"> <b>Email</b> : </span>
-      <span class="email-value">{{userData.email}} </span>
-      <span class="about-user-value"> <b>About me :</b> {{userData.aboutMe}} </span>
-      <p class="user-update-collapser" 
-         type="button" 
-         data-toggle="collapse" data-target="#user-update" 
-         aria-expanded="false" aria-controls="user-update">
-          Update Profile
-      </p>
-      <div class="collapse" id="user-update">
-          <div class="card card-body">
-            <UserUpdateForm/>
+  <div class="" style="border: 1px solid red">
+
+    <WallHeader v-bind:userData="userData"/>
+      <!-- <div class="profile-container" >
+          <p class="user-update-collapser" 
+            type="button" 
+            data-toggle="collapse" data-target="#user-update" 
+            aria-expanded="false" aria-controls="user-update">
+              Update Profile</p>
+
+          <div class="collapse" id="user-update">
+              <div class="card card-body">
+                <UserUpdateForm/>
+              </div>
           </div>
-      </div>
 
-
-      <p class="password-update-collapser" 
-              type="button" 
-              data-toggle="collapse" data-target="#password-update" 
-              aria-expanded="false" aria-controls="password-update">
-          Update Password
-      </p>
-      <div class="collapse" id="password-update">
-          <div class="card card-body">
-              <PasswordUpdateForm />
+        <p class="password-update-collapser" 
+                  type="button" 
+                  data-toggle="collapse" data-target="#password-update" 
+                  aria-expanded="false" aria-controls="password-update">
+              Update Password </p>
+          <div class="collapse" id="password-update">
+              <div class="card card-body">
+                  <PasswordUpdateForm />
+              </div>
           </div>
-      </div>
 
-
-      <p class="account-delete-collapser" 
-              type="button" 
-              data-toggle="collapse" data-target="#account-delete" 
-              aria-expanded="false" aria-controls="account-delete">
-          Delete account
-      </p>
-      <div class="collapse" id="account-delete">
-          <div class="card card-body">
-              <UserDeleteAccountForm />
+          <p class="account-delete-collapser" 
+                  type="button" 
+                  data-toggle="collapse" data-target="#account-delete" 
+                  aria-expanded="false" aria-controls="account-delete">
+              Delete account </p>
+          <div class="collapse" id="account-delete">
+              <div class="card card-body">
+                  <UserDeleteAccountForm />
+              </div>
           </div>
-      </div>
-
-
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- <div class="jumbotron"> -->
-      <!-- <h3>{{content}}</h3> -->
-    <!-- </div> -->
-    
+  </div> -->
 
     <AddPhoto/>
 
-    <h3>All Photo</h3>
-      <PhotosWall/>
   </div>
 </template>
 
 <script>
 
-
-
-
 import UserService from './../services/user.service.js';
 import {mapGetters, mapActions } from 'vuex';
+
+import WallHeader from './../components/main/UserBoard/WallHeader.vue';
+// import OwnerAvatar from './../components/main/OwnerAvatar.vue';
+
+
 import AddPhoto from './../components/main/AddPhoto.vue';
-import PhotosWall from './../components/main/Home/PhotosWall.vue';
 
-import UserUpdateForm from '../components/main/UserBoard/UserUpdateForm.vue';
-import PasswordUpdateForm from '../components/main/UserBoard/PasswordUpdateForm.vue';
-import UserDeleteAccountForm from '../components/main/UserBoard/UserDeleteAccountForm.vue';
-
-
-
-
+// import UserUpdateForm from '../components/main/UserBoard/UserUpdateForm.vue';
+// import PasswordUpdateForm from '../components/main/UserBoard/PasswordUpdateForm.vue';
+// import UserDeleteAccountForm from '../components/main/UserBoard/UserDeleteAccountForm.vue';
 
 
 export default {
     name: 'UserBoard',
     components: {
-      AddPhoto,
-      PhotosWall,
+      WallHeader,
+      // OwnerAvatar,
 
-      UserUpdateForm,
-      PasswordUpdateForm,
-      UserDeleteAccountForm,
+
+      AddPhoto,
+
+      // UserUpdateForm,
+      // PasswordUpdateForm,
+      // UserDeleteAccountForm,
     },
     data() {
         return {
@@ -212,14 +173,10 @@ export default {
   overflow-x: hidden;
 }
 
-
-
-
 .profile-container {
   display: grid;
   width: 84vw;
   margin: auto;
-  margin-top: 30px;
   padding: 20px;
   height: auto;
   border: 1px solid black;
@@ -229,13 +186,7 @@ export default {
   // grid-template-rows: repeat(10, 0.2fr);
   // grid-template-columns: repeat(10, 0.2fr);
 }
-.user-avatar{
-  grid-row: 1 / span 1 ;
-  grid-column: 1 / span 1 ;
-  border-bottom: 2px solid rgb(0, 0, 255);
-  padding-bottom: 1rem;
-  
-}
+
 .about-user-value{
   grid-row: 1 / span 1 ;
   grid-column: 2 / span 1 ;
@@ -277,9 +228,7 @@ export default {
   grid-column:  2/ span 1;
   margin-bottom: 2rem;
 }
-.user-avatar {
-  max-width: 20vw;
-}
+
 .update-user-component {
   grid-row: 7 / span 1 ;
   grid-column:  1 / span 2;
