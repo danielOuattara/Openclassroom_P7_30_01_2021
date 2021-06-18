@@ -18,8 +18,11 @@ const multerFilter = (req, file, cb) => {
 const storage = multer.diskStorage({
 
         destination: (req, file, callback) => {
-            if(req.body.event === "avatars")  {
+            if (req.body.event === "avatars")  {
                 callback(null, "images/avatars")
+            }
+            else if (req.body.event === "backgrounds")  {
+                callback(null, "images/backgrounds")
             }
             else {
                 callback(null, "images/photos") 

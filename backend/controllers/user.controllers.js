@@ -97,21 +97,72 @@ exports.getAllUsers = (req, res) => {
 
 // ---------------------------------------------------------------------------------------------------------------
 
-exports.updateUser =  async (req, res) => { 
-  console.log ("req ===>--->",req)
-    try {
-        const userObject = 
-          req.file ? 
-              req.body ?  
-                  {...req.body, avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` }  
-                  :  
-                  { avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` } 
-          :  
-          {...req.body } 
-        
-          console.log(" userObject ==> ", userObject); // TO DELETE
 
-        const user = await User.findOne( { where: { uuid: req.params.userUuid }} );
+exports.updateUserBackgroundImage = async (req, res) => {
+  try {
+    const user = await User.findOne( { where: {uuid : req.params.userUuid}})
+    if (!user) {
+      return res.status(404).send("User unknown !");
+    }
+    if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+      return res.status(403).send("Non Authorized !")  
+    }
+    
+      const userObject =  { backgroundImage : `${req.protocol}://${req.get('host')}/images/backgrounds/${req.file.filename}` }   
+      
+      if (!user.backgroundImage) {
+        await user.update(userObject)
+        res.status(201).send("New background image successfully added !")  
+      }  
+      else {
+        const filename = user.backgroundImage.split('/backgrounds/')[1];
+        fs.unlink(`images/backgrounds/${filename}`, (err) => {
+          if(err) throw err;
+        });
+        await user.update( userObject)
+        res.status(201).send("Background Image successfully updated !")
+      }
+    } catch (err) {
+      return res.status(500).send(err.message) 
+    };
+  }
+  
+// ---------------------------------------------------------------------------------------------------------------
+  
+  exports.updateUserAvatar = async (req, res) => {
+    try {
+      const user = await User.findOne( { where: {uuid : req.params.userUuid}})
+      if (!user) {
+        return res.status(404).send("User unknown !");
+      }
+      if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+        return res.status(403).send("Non Authorized !")  
+      }
+      
+      const userObject = { avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` }   
+      
+      if (!user.avatar) {
+        await user.update(userObject)
+        res.status(201).send("Avatar successfully added !")  
+      }  
+      else {
+        const filename = user.avatar.split('/avatars/')[1];
+        fs.unlink(`images/avatars/${filename}`, (err) => {
+          if(err) throw err;
+        });
+        await user.update( userObject)
+        res.status(201).send("Avatar successfully updated !")
+      }
+    } catch (err) {
+      return res.status(500).send(err.message) 
+    };
+  }
+  
+// ---------------------------------------------------------------------------------------------------------------
+  
+  exports.updateUserInfos = async (req, res) => {
+    try {
+        const user = await User.findOne({ where: { uuid: req.params.userUuid } });
         if (!user) {
             return res.status(404).send("User unknown !");
         }
@@ -119,101 +170,12 @@ exports.updateUser =  async (req, res) => {
               return res.status(403).send("Non Authorized !")  
         }
 
-        if(req.file) {
-            if (req.body && !user.avatar) {
-                await user.update(userObject)
-                res.status(201).json("New data & newly photo successfully updated !")  
-            }  
-            else if (req.body && user.avatar) {
-                const filename = user.avatar.split('/avatars/')[1];
-                console.log("------------->", filename);
-                fs.unlink(`images/avatars/${filename}`, (err) => {
-                  if(err) throw err;
-                })
-                await user.update( userObject)
-                res.status(201).send("New data & Changed Photo successfully updated !")
-            }
-
-            else if (!req.body && !user.avatar) {
-                await user.update( userObject)
-                res.status(201).send(" Newly photo successfully updated !")
-            } 
-
-            else if (!req.body && user.avatar) {
-                const filename = user.avatar.split('/avatars/')[1];
-                fs.unlink(`images/avatars/${filename}`, (err) => {
-                  if(err) throw err;
-                })
-                await user.update( userObject)
-                res.status(201).send("Changed photo successfully updated !")
-            } 
-        } else {
-            await user.update(userObject)
-            return res.status(201).send("New data successfully updated !");
-        }
-  } catch(err) {
-    return res.status(400).json({ Error: err.message})
-  }
+        const userObject = {...req.body}  
+        await user.update(userObject)
+        res.status(201).json("Infos successfully updated !")  
+    } catch(err) {
+        return res.status(400).json({ Error: err.message})
+    }
 }
-//-----------------------------------------------------------------------------------------------------
 
-// exports.updateUser =  async (req, res) => { 
-//     try {
-//         const userObject = 
-//           req.file ? 
-//               req.body.user ?  
-//                   {...JSON.parse(req.body.user), avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` }  
-//                   :  
-//                   { avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` } 
-//           :  
-//           {...req.body } 
-        
-//           console.log(userObject); // TO DELETE
 
-//         const user = await User.findOne( { where: { uuid: req.params.userUuid }} );
-//         if (!user) {
-//             return res.status(404).send("User unknown !");
-//         }
-//         if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-//               return res.status(403).send("Non Authorized !")  
-//         }
-
-//         if(req.file) {
-//             if (req.body.user && !user.avatar) {
-//                 await user.update(userObject)
-//                 res.status(201).json("New data & newly photo successfully updated !")  
-//             }  
-//             else if (req.body.user && user.avatar) {
-//                 const filename = user.avatar.split('/avatars/')[1];
-//                 // console.log("------------->", filename);
-//                 fs.unlink(`images/avatars/${filename}`, (err) => {
-//                   if(err) throw err;
-//                 })
-//                 await user.update( userObject)
-//                 res.status(201).send("New data & Changed Photo successfully updated !")
-//             }
-
-//             else if (!req.body.user && !user.avatar) {
-//                 // console.log( "userObject = " , userObject)
-//                 await user.update( userObject)
-//                 res.status(201).send(" Newly photo successfully updated !")
-//             } 
-
-//             else if (!req.body.user && user.avatar) {
-//                 // console.log( "userObject = " , userObject)
-//                 const filename = user.avatar.split('/avatars/')[1];
-//                 fs.unlink(`images/avatars/${filename}`, (err) => {
-//                   if(err) throw err;
-//                 })
-//                 await user.update( userObject)
-//                 res.status(201).send("Changed photo successfully updated !")
-//             } 
-//         } else {
-//             await user.update(userObject)
-//             return res.status(201).send("New data successfully updated !");
-//         }
-//   } catch(err) {
-//     return res.status(400).json({ Error: err.message})
-//   }
-// }
-// //-----------------------------------------------------------------------------------------------------

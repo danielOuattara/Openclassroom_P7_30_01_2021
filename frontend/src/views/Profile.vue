@@ -58,15 +58,14 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex';
-import UserUpdateForm from './../components/main/Profile/UserUpdateForm.vue';
-import PasswordUpdateForm from './../components/main/Profile/PasswordUpdateForm.vue';
-import UserDeleteAccountForm from './../components/main/Profile/UserDeleteAccountForm.vue';
+import UserUpdateForm from '../components/main/UserBoard/UserUpdateForm.vue';
+import PasswordUpdateForm from '../components/main/UserBoard/PasswordUpdateForm.vue';
+import UserDeleteAccountForm from '../components/main/UserBoard/UserDeleteAccountForm.vue';
 export default {
   
   name: 'Profile',
   components: {
-    // DeleteUser,
-    // UpdateUser,
+
     UserUpdateForm,
     PasswordUpdateForm,
     UserDeleteAccountForm,
@@ -74,42 +73,42 @@ export default {
 
   data() {
     return {
-      message: '',
-      user: '',
+      // message: '',
+      // user: '',
       // photos: this.userData.photos,
-      aboutMeVisible: false,
+      // aboutMeVisible: false,
     }
   },
 
-  computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    }, 
-    ...mapGetters(['userData']),
-  },
+  // computed: {
+    // currentUser() {
+    //   return this.$store.state.auth.user;
+    // }, 
+    // ...mapGetters(['userData']),
+  // },
   
-  mounted() {
-    if (!this.currentUser) {
-      this.$router.push('/login');
-    }
-  },
+  // mounted() {
+  //   if (!this.currentUser) {
+  //     this.$router.push('/login');
+  //   }
+  // },
 
   methods: { 
 
-    ...mapActions(['fetchOneUserAction']),
+    // ...mapActions(['fetchOneUserAction']),
 
-    async fetchUser() { 
-        try{ 
-            const userUuid = this.currentUser.uuid; 
-            await this.$store.dispatch("fetchOneUserAction", userUuid)
-        } catch(error) {
-            this.message = (error.response && error.response.data) || error.message || error.toString();
-        }
-    },
+    // async fetchUser() { 
+    //     try{ 
+    //         const userUuid = this.currentUser.uuid; 
+    //         await this.$store.dispatch("fetchOneUserAction", userUuid)
+    //     } catch(error) {
+    //         this.message = (error.response && error.response.data) || error.message || error.toString();
+    //     }
+    // },
 
-    async updateUser() {
-      try {"hello"} catch(err) { "hello"}
-    },
+    // async updateUser() {
+    //   try {"hello"} catch(err) { "hello"}
+    // },
   },
 
   created() {
@@ -120,149 +119,150 @@ export default {
 
 
 <style lang="scss" scoped>
-.profile-container {
-  display: grid;
-  width: 84vw;
-  margin: auto;
-  margin-top: 30px;
-  padding: 20px;
-  height: auto;
-  border: 1px solid black;
-  background: #c7c7c7;
-  border-radius: 5px;
-  grid-gap: 10px;
-  // grid-template-rows: repeat(10, 0.2fr);
-  // grid-template-columns: repeat(10, 0.2fr);
-}
-.user-avatar{
-  grid-row: 1 / span 1 ;
-  grid-column: 1 / span 1 ;
-  border-bottom: 2px solid rgb(0, 0, 255);
-  padding-bottom: 1rem;
-  
-}
-.about-user-value{
-  grid-row: 1 / span 1 ;
-  grid-column: 2 / span 1 ;
-  font-size: 0.85rem;
-  // margin-left: 1rem;
-  text-align: justify;
-}
-.username {
-  grid-row: 3 / span 1 ;
-  grid-column: 1 / span 1;
-  // margin-top: 2rem
-}
-.username-value {
-  grid-row: 3 / span 1 ;
-  grid-column: 2 / span 1;
-}
-.firstname {
-  grid-row: 4 / span 1 ;
-  grid-column: 1 / span 1;
-}
-.firstname-value {
-  grid-row: 4 / span 1 ;
-  grid-column: 2 / span 1;
-}
-.lastname {
-  grid-row: 5 / span 1 ;
-  grid-column: 1 / span 1;
-}
-.lastname-value {
-  grid-row: 5 / span 1 ;
-  grid-column: 2 / span 1;
-}
-.email {
-  grid-row: 6 / span 1 ;
-  grid-column: 1 / span 1;
-}
-.email-value {
-  grid-row: 6 / span 1 ;
-  grid-column:  2/ span 1;
-  margin-bottom: 2rem;
-}
-.user-avatar {
-  max-width: 20vw;
-}
-.update-user-component {
-  grid-row: 7 / span 1 ;
-  grid-column:  1 / span 2;
-}
-.delete-user-component {
-  grid-row: 8 / span 1 ;
-  grid-column:  1 / span 2 ;
-}
-.user-update-collapser {
-  grid-row: 9 / span 1 ;
-  grid-column:  1 / span 2 ;
- font-size: 1rem;
-  color: blue;
-  display: inline;
-  margin: 0 2rem;
-  text-align: center;
-  padding: 0.25rem 2rem;
-  background: rgb(0, 138, 0);
-  color: white;
-  &:hover{
-      border: 2px solid white;
-      border-radius: 0.25rem;
-      padding: 2px;
-    }
-}
-#user-update {
-  grid-row: 10   ;
-  grid-column:  1 / span 2 ;
-  margin: 1rem 0;
-}
 
-.password-update-collapser {
-  color: blue;
-  grid-row: 11   ;
-  grid-column:  1 / span 2 ;
-  font-size: 1rem;
-  display: inline;
-  margin: 0 2rem;
-  padding: 0.25rem 2rem;
-  text-align: center;
-  // margin: auto;
-  background: rgb(25, 0, 255);
-  color: white;
-  &:hover{
-      border: 2px solid white;
-      border-radius: 0.25rem;
-      padding: 2px;
-  }
-}
- #password-update {
-  grid-row: 12   ;
-  grid-column:  1 / span 2 ;
+// .profile-container {
+//   display: grid;
+//   width: 84vw;
+//   margin: auto;
+//   margin-top: 30px;
+//   padding: 20px;
+//   height: auto;
+//   border: 1px solid black;
+//   background: #c7c7c7;
+//   border-radius: 5px;
+//   grid-gap: 10px;
+//   // grid-template-rows: repeat(10, 0.2fr);
+//   // grid-template-columns: repeat(10, 0.2fr);
+// }
+// .user-avatar{
+//   grid-row: 1 / span 1 ;
+//   grid-column: 1 / span 1 ;
+//   border-bottom: 2px solid rgb(0, 0, 255);
+//   padding-bottom: 1rem;
   
-}
+// }
+// .about-user-value{
+//   grid-row: 1 / span 1 ;
+//   grid-column: 2 / span 1 ;
+//   font-size: 0.85rem;
+//   // margin-left: 1rem;
+//   text-align: justify;
+// }
+// .username {
+//   grid-row: 3 / span 1 ;
+//   grid-column: 1 / span 1;
+//   // margin-top: 2rem
+// }
+// .username-value {
+//   grid-row: 3 / span 1 ;
+//   grid-column: 2 / span 1;
+// }
+// .firstname {
+//   grid-row: 4 / span 1 ;
+//   grid-column: 1 / span 1;
+// }
+// .firstname-value {
+//   grid-row: 4 / span 1 ;
+//   grid-column: 2 / span 1;
+// }
+// .lastname {
+//   grid-row: 5 / span 1 ;
+//   grid-column: 1 / span 1;
+// }
+// .lastname-value {
+//   grid-row: 5 / span 1 ;
+//   grid-column: 2 / span 1;
+// }
+// .email {
+//   grid-row: 6 / span 1 ;
+//   grid-column: 1 / span 1;
+// }
+// .email-value {
+//   grid-row: 6 / span 1 ;
+//   grid-column:  2/ span 1;
+//   margin-bottom: 2rem;
+// }
+// .user-avatar {
+//   max-width: 20vw;
+// }
+// .update-user-component {
+//   grid-row: 7 / span 1 ;
+//   grid-column:  1 / span 2;
+// }
+// .delete-user-component {
+//   grid-row: 8 / span 1 ;
+//   grid-column:  1 / span 2 ;
+// }
+// .user-update-collapser {
+//   grid-row: 9 / span 1 ;
+//   grid-column:  1 / span 2 ;
+//  font-size: 1rem;
+//   color: blue;
+//   display: inline;
+//   margin: 0 2rem;
+//   text-align: center;
+//   padding: 0.25rem 2rem;
+//   background: rgb(0, 138, 0);
+//   color: white;
+//   &:hover{
+//       border: 2px solid white;
+//       border-radius: 0.25rem;
+//       padding: 2px;
+//     }
+// }
+// #user-update {
+//   grid-row: 10   ;
+//   grid-column:  1 / span 2 ;
+//   margin: 1rem 0;
+// }
 
-.account-delete-collapser {
-  grid-row: 13   ;
-  grid-column:  1 / span 2 ;
-  font-size: 1rem;
-  display: inline;
-  margin: 0 2rem;
-  padding: 0.25rem;
-  text-align: center;
-  // margin: auto;
-  // border: 1px solid red;
-      background: rgb(220, 0, 0);
-      color: white;
-  &:hover{
-      border-radius: 0.25rem;
-      background: rgb(255, 0, 0);
-      border: 2px solid white;
-      padding: 2px;
-  }
-}
- #account-delete {
-  grid-row: 14   ;
-  grid-column:  1 / span 2 ;
-}
+// .password-update-collapser {
+//   color: blue;
+//   grid-row: 11   ;
+//   grid-column:  1 / span 2 ;
+//   font-size: 1rem;
+//   display: inline;
+//   margin: 0 2rem;
+//   padding: 0.25rem 2rem;
+//   text-align: center;
+//   // margin: auto;
+//   background: rgb(25, 0, 255);
+//   color: white;
+//   &:hover{
+//       border: 2px solid white;
+//       border-radius: 0.25rem;
+//       padding: 2px;
+//   }
+// }
+//  #password-update {
+//   grid-row: 12   ;
+//   grid-column:  1 / span 2 ;
+  
+// }
+
+// .account-delete-collapser {
+//   grid-row: 13   ;
+//   grid-column:  1 / span 2 ;
+//   font-size: 1rem;
+//   display: inline;
+//   margin: 0 2rem;
+//   padding: 0.25rem;
+//   text-align: center;
+//   // margin: auto;
+//   // border: 1px solid red;
+//       background: rgb(220, 0, 0);
+//       color: white;
+//   &:hover{
+//       border-radius: 0.25rem;
+//       background: rgb(255, 0, 0);
+//       border: 2px solid white;
+//       padding: 2px;
+//   }
+// }
+//  #account-delete {
+//   grid-row: 14   ;
+//   grid-column:  1 / span 2 ;
+// }
 
 /* --------------------------------- */
 

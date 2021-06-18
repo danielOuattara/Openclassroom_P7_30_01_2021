@@ -31,7 +31,7 @@
                     </li>
                     <li class="nav-item">
                         <router-link v-if="currentUser" to="/user" class="nav-link" > 
-                            <font-awesome-icon icon="user" /> User Content
+                            <font-awesome-icon icon="user" /> User Board
                         </router-link>
                     </li>
                 </ul>
@@ -52,7 +52,7 @@
                 </ul>
             </div>
 
-            <div v-if="currentUser" class="navbar-nav ml-auto">
+            <!-- <div v-if="currentUser" class="navbar-nav ml-auto">
                 <ul id="navbar-nav" class="navbar-nav">
                     <li class="nav-item">
                         <router-link to="/profile" class="nav-link" >
@@ -65,7 +65,7 @@
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
     </nav>
 </header>

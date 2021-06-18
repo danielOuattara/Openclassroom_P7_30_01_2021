@@ -8,7 +8,9 @@ router.get("/userboard" , authJwt, controller.userBoard);
 router.get("/adminboard", authJwt, checks.admin, controller.adminBoard);
 router.get("/:userUuid" , authJwt, controller.getOneUser);
 router.get("/"          , authJwt, checks.admin, controller.getAllUsers);
-router.put("/:userUuid" , authJwt, multer, controller.updateUser);
+router.put("/infos/:userUuid" , authJwt, multer, controller.updateUserInfos);
+router.put("/avatar/:userUuid/" , authJwt, multer, controller.updateUserAvatar);
+router.put("/backgroundimage/:userUuid/" , authJwt, multer, controller.updateUserBackgroundImage);
 // router.get("/searchUsers?="  , authJwt,  controller.searchUsers);  // TODO
 
 module.exports = router;
