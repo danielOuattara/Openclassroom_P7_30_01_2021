@@ -116,12 +116,7 @@ export default {
         handleSessionExpiration() {
             const timeToExpiration = parseInt(this.currentUser.exp.slice(0,1)) * 3600000; // hour(s) to ms
             // const timeToExpiration = parseInt(this.currentUser.exp.slice(0,1)) * 5000; // hour(s) to ms
-            const alertTime = timeToExpiration - 1000
-            setTimeout(function() {
-                alert("You will be disconnected, time over")
-            }, alertTime)
             setTimeout( this.logout , timeToExpiration );
-
         },
 
         async logout() {

@@ -96,6 +96,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
 
+    backgroundImage: {
+      type: DataTypes.STRING,
+    },
+
     aboutMe:    {
       type: DataTypes.STRING,
     },
@@ -103,10 +107,6 @@ module.exports = (sequelize, DataTypes) => {
     token: {
       type: DataTypes.STRING,
     },
-
-    // cryptoken: {
-    //   type: DataTypes.STRING,
-    // },
   }, 
   
   {

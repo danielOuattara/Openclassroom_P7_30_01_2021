@@ -139,6 +139,7 @@ export default {
   grid-column: 1 / span 1 ;
   border-bottom: 2px solid rgb(0, 0, 255);
   padding-bottom: 1rem;
+  
 }
 .about-user-value{
   grid-row: 1 / span 1 ;
