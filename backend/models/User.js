@@ -66,9 +66,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(60),
       allowNull: true,
       unique: true,
-      validate: {
-        msg: "This username is already in use, please choose anoyther one."
-      }
     },
 
     email: { 

@@ -5,13 +5,13 @@
         <form name="form" @submit.prevent="addPhoto">
               <div class="form-group">
                 <label for="title">Choose a title : </label>
-                <input  v-validate="'required'"  
-                        type="text" 
-                        placeholder="enter a photo title ..."
-                        v-model="photo.title"
-                        class="form-control" 
-                        ref="title" 
-                        name="title"/>
+                <input v-validate="'required'"  
+                       type="text" 
+                       placeholder="enter a photo title ..."
+                       v-model="photo.title"
+                       class="form-control" 
+                       ref="title" 
+                       name="title"/>
                 <div class="alert alert-danger" 
                      v-if="errors.has('title')" role="alert">
                     A title is required
@@ -19,7 +19,7 @@
               </div>
 
               <div class="form-group">
-                <!-- <label for="filename" id="file-label"> choose a file ... : </label> -->
+                <label for="filename" id="file-label"> choose a photo : </label>
                 <!-- next: hide input area, replace it by button -->
                 <input id="file" 
                        type="file" 
@@ -52,28 +52,15 @@
 
 <script>
 import Photo from "../../models/photo.js";
-import { mapActions } from "vuex";
-// import axios from "axios";
-// import Photo from './../models/photo.js';
-// import authHeader from "./../../services/auth.header";
-
-
+import { mapActions} from "vuex";
 export default {
     name: "AddPhoto",
     data() {
         return {
             photo: new Photo(""),
             loading: false,
-            title: "",
             selectedFile: "",
-            // submitted: false,
-            successful: false,
         };
-    },
-    computed: {
-        currentUser() {
-            return this.$store.state.auth.user;
-        }
     },
 
     methods: {
@@ -85,81 +72,37 @@ export default {
 
       async addPhoto() {
           try {
-              // this.submitted = true;
               this.loading = true;
               const isValid = await this.$validator.validateAll();
               if (!isValid) {
                   this.loading = false;
                   return;
               }
+
+              console.log("this.selectedFile  = ", this.selectedFile)
+              console.log("this.selectedFile.name  = ", this.selectedFile.name)
+
               const formData = new FormData();
               formData.append("title", this.photo.title);
               formData.append("image", this.selectedFile, this.selectedFile.name);
+              // for(var pair of formData.entries()) {
+              //   console.log(pair[0]+ ', '+ pair[1]);
+              // }
               await this.$store.dispatch("addOnePhotoAction", formData);
-              this.successful = true;
               this.loading = false;
               this.fetchAllPhotosAction();
               this.$validator.reset();
               this.photo.title= ''
+              this.clearInputFileAfterSubmit();
           } catch(error) {
               this.loading = false;
               this.message = (error.response && error.response.data) || error.message || error.toString();
           }
       },
 
-
-      // addPhoto2() { // BACK UP: OK <<<<-----
-
-      //   this.loading = true;
-      //   this.$validator.validateAll()
-      //   .then( isValid => {
-      //       if(!isValid) {
-      //           this.loading = false;
-      //           return;
-      //       }
-      //       const data = new FormData();
-      //       data.append('title', this.photo.title)
-      //       data.append('image', this.selectedFile, this.selectedFile.name)
-      //       const config =  {
-      //         header : {
-      //             'Content-Type': 'multipart/form-data'
-      //         }
-      //       }
-      //       axios.post(
-      //         'http://localhost:4200/api/photos',  
-      //         data, 
-      //         { headers: authHeader() },
-      //         config,
-      //       )
-      //       .then( () => {
-      //           this.loading = false;
-      //           this.fetchAllPhotosAction()
-      //         },
-      //           error => {
-      //             this.loading = false;
-      //             this.photo.title ='';
-      //             this.input.value= '';
-
-      //             this.message = (error.response && error.response.data) || error.message || error.toString();
-      //           }
-      //       )
-      //   });
-      // },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      clearInputFileAfterSubmit() {
+        document.getElementById("file").value = '';
+      }
   },
 };
 </script>

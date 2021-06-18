@@ -106,6 +106,7 @@ export default {
                 await this.$store.dispatch("auth/loginAction", this.user)
                 this.$router.push("/home");
                 this.handleSessionExpiration();
+
             } catch(error) {
                 this.loading = false;
                 this.message = (error.response && error.response.data) || error.message || error.toString();
@@ -119,7 +120,8 @@ export default {
             setTimeout(function() {
                 alert("You will be disconnected, time over")
             }, alertTime)
-            setTimeout( this.logout , timeToExpiration )
+            setTimeout( this.logout , timeToExpiration );
+
         },
 
         async logout() {
@@ -129,7 +131,8 @@ export default {
                 localStorage.removeItem("user");
                 this.$router.push('/login');
             } catch (error) {
-                    (error.response && error.response.data) || error.message || error.toString();
+                // localStorage.removeItem("user");
+                (error.response && error.response.data) || error.message || error.toString();
             }
         },
 

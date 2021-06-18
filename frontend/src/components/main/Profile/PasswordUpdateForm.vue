@@ -9,7 +9,8 @@
                         placeholder="enter the old password "
                         v-model="passwords.passwordOld" 
                         class="form-control" 
-                        name="passwordOld"/>
+                        name="passwordOld"
+                        id="passwordOld"/>
 
                 <div    class="alert alert-danger" 
                         v-if="errors.has('passwordOld')" 
@@ -25,7 +26,8 @@
                         v-validate="'required|min:6|max:40'" 
                         class="form-control" 
                         ref="password"
-                        name="password"/>
+                        name="password"
+                        id="password"/>
 
                 <div   class="alert alert-danger" 
                         v-if="errors.has('password')" 
@@ -41,7 +43,8 @@
                         v-validate="'required|min:6|max:40|confirmed:password'" 
                         data-vv-as="password" 
                         class="form-control" 
-                        name="passwordConfirm"/>
+                        name="passwordConfirm"
+                        id="passwordConfirm"/>
 
                 <div   class="alert alert-danger" 
                         v-if="errors.has('passwordConfirm')" 
@@ -70,6 +73,8 @@
 
 <script>
 import Password from '../../../models/password';
+import { mapActions} from "vuex";
+
 export default {
     name: "Login",
     data() {
@@ -89,6 +94,8 @@ export default {
     },
 
     methods: {
+        ...mapActions(["fetchOneUserAction"]),
+
         async updatePassword() {
             try {
                 this.message = '';
@@ -102,12 +109,14 @@ export default {
                 const userUuid = this.currentUser.uuid;
                 const data = { userUuid, ...this.passwords}
                 const response = await this.$store.dispatch("auth/updatePasswordAction", data)
-                this.message = response;
                 this.successful = true;
                 this.loading = false;
-                // this.passwordConfirm = '';
-                // this.passwords.password = '';
-                // this.passwords.passwordOld = '';
+                this.fetchOneUserAction(userUuid);
+                this.$validator.reset();
+                this.passwordConfirm = '';
+                this.passwords.password = '';
+                this.passwords.passwordOld = '';
+                this.message = response;
 
             } catch(error) {
                 this.loading = false;

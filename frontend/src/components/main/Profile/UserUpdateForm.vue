@@ -3,7 +3,7 @@
         <h2>Update your profile</h2>
             <form name="form" @submit.prevent="userUpdate">
                 <div class="form-group">
-                    <label for="firstname">Firstname : </label>
+                    <label for="firstName">Firstname : </label>
                     <input  type="text" 
                             placeholder="enter your firstname ..."
                             v-model="user.firstName" 
@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="lastname">Lastname : </label>
+                    <label for="lastName">Lastname : </label>
                     <input  type="text" 
                             placeholder="enter your lastname ..."
                             v-model="user.lastName" 
@@ -57,9 +57,11 @@
                 <div class="form-group">
                     <label for="avatar">Choose an avatar : </label>
                     <input  type="file" 
-                            placeholder="choose an avatar ..."
+                            accept="image/*"
                             class="form-control" 
-                            name="avatar"/>
+                            name="avatar"
+                            @change="onFileSelect"/>
+
                     <div    class="alert alert-danger" 
                             v-if="errors.has('avatar')" 
                             role="alert"> Error with avatar !
@@ -67,7 +69,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="value">About you : </label>
+                    <label for="aboutMe">About you : </label>
                     <textarea  name="aboutMe" 
                                placeholder="what about you ?"
                                type="text" 
@@ -85,7 +87,7 @@
                     <button class="btn btn-primary btn-block"  :disabled="loading">
                         <span v-show="loading" 
                                 class="spinner-border spinner-border-sm"></span>
-                        <span class="">Update password</span>
+                        <span class="">Update profile </span>
                     </button>
                 </div>
             </form>
@@ -106,13 +108,12 @@ export default {
     name: "Login",
     data() {
         return {
-            user: new User('','','','','','','',''),
+            user: new User("", "", "", "", "", "", ""),
             loading: false,
             submitted: false,
             successful: false,
             selectedFile: '',
             message: '',
-
         };
     },
     computed: {
@@ -131,6 +132,7 @@ export default {
         onFileSelect(event) {
             this.selectedFile = event.target.files[0];
         },
+
         async userUpdate() {
             try {
                 this.message = '';
@@ -141,15 +143,37 @@ export default {
                     this.loading = false;
                     return;
                 }
-
                 const userUuid = this.currentUser.uuid;
-                // const file = new FormData();
-                // file.append("image", this.selectedFile, this.selectedFile.name);
-                // const config = {
-                //     header: { "Content-Type": "multipart/form-data" },
-                // };
-                const data = { userUuid, ...this.user,/* ...file, config */ }
-                console.table(data);
+                const formData = new FormData();
+                const config = {
+                        header: { "Content-Type": "multipart/form-data" }
+                };
+
+                if( this.user.firstName) {
+                    formData.append("firstName", this.user.firstName);
+                }
+                if( this.user.lastName) {
+                    formData.append("lastName", this.user.lastName);
+                }
+                if( this.user.email) {
+                    formData.append("email", this.user.email);
+                }
+                if( this.user.aboutMe) {
+                    formData.append("aboutMe", this.user.aboutMe);
+                }
+                if( this.user.username) {
+                    formData.append("userName", this.user.username);
+                }
+                if(this.selectedFile) {
+                    formData.append("event", "avatars"); 
+                    formData.append("image", this.selectedFile, this.selectedFile.name); 
+                }
+        
+                for(var pair of formData.entries()) {
+                    console.log(pair[0]+ ', '+ pair[1]);
+                }
+
+                const data = { userUuid, formData, config }
                 const response = await this.$store.dispatch("updateUserAction", data);
                 this.message = response;
                 this.successful = true;

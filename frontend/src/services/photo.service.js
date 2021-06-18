@@ -12,11 +12,7 @@ class PhotoService {
         const config = {
             header: { "Content-Type": "multipart/form-data" },
         };
-        return axios.post(API_URL + "/", 
-            formData, 
-            { headers: authHeader() }, 
-             config
-        )  
+        return axios.post(API_URL + "/", formData, { headers: authHeader() }, config )  
     }
 
     getAllPhotos() {

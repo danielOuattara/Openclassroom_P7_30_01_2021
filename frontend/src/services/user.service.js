@@ -26,14 +26,10 @@ class UserService {
     }
 
     updateOneUser(userUuid, data) {
-        return axios.put(API_URL + `/${userUuid}` ,{
-                firstname: data.firstname,
-                lastname:  data.lastname,
-                username:  data.username,
-                // email:     data.email,
-                aboutMe:   data.aboutMe,
-            }, { headers: authHeader() }
-        )
+        return axios.put(API_URL + `/${userUuid}`, 
+        data.formData,  
+        { headers: authHeader() }, 
+        data.config )
     }
 
     searchUsers() {}  // ## TODO

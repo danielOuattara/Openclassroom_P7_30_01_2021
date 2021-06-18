@@ -13,13 +13,9 @@ module.exports = async (req, res, next) => {
             if(err) {
                 return res.status(401).send("Unauthorized !");
             }
-            console.table(decoded)
             req.userUuid = decoded.uuid;
             req.userId = decoded.id;
             req.userRoles = decoded.userRoles;
-            const endOfTime = decoded.exp;
-            console.log(endOfTime * 1000 - Date.parse(new Date()))
-
             const user = await User.findOne({
                 where: { uuid :req.userUuid}
             })

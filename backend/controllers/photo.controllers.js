@@ -7,6 +7,7 @@ const fs = require("fs");
 //-----------------------------------------------------------------------------------------
 
 exports.addPhoto = async (req, res)=> {
+  console.log(req)
     try {
         const image = { 
           title: req.body.title, 

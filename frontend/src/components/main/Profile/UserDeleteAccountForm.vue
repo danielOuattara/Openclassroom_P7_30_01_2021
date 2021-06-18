@@ -76,7 +76,7 @@ export default {
                 localStorage.removeItem("user");
                 setTimeout(()=> {
                     this.$router.push('/signin');
-                }, 1000);
+                }, 1500);
             
             } catch(error) {
                 this.loading = false;
