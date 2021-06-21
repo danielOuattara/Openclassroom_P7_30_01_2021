@@ -1,8 +1,6 @@
 <template>
-    <div class="container">
-        <div class="jumbotron">
-            <h3>Wall of photo</h3>
-        </div>
+    <div class="home">
+
         <AddPhoto />
         <PhotosWall />
     </div>
@@ -20,8 +18,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.container {
-    max-width: 800px;
+.home{
+    max-width: 90vw;
+    margin: auto;
 }
 </style>
 

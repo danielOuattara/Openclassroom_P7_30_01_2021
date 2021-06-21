@@ -1,6 +1,5 @@
 <template>
     <div class="password-update-form">
-        <h2>Delete your account</h2>
         <form name="form" @submit.prevent="deleteUserAccount">
             <div class="form-group">
                 <label for="password">Password : </label>
@@ -16,12 +15,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <button class="btn btn-danger btn-block"   data-toggle="modal" data-target="#deleteModal"  :disabled="loading">
+                <button class="btn btn-danger btn-block" :disabled="loading">
                     <span v-show="loading" 
                             class="spinner-border spinner-border-sm"></span>
-                    <span class=""> confirm </span>
+                    <span class=""> confirm 
+                    </span>
                 </button>
             </div>
+            <input type="reset" class="btn btn-outline-info btn-block" value="Reset">
             <div class="form-group">
             <div v-if="message" 
                 class="alert" 
@@ -37,6 +38,7 @@ import User from '../../../models/user';
 export default {
     data() {
         return {
+            visible:false,
             user: new User(''),
             loading: false,
             submitted: false,
@@ -70,6 +72,7 @@ export default {
                 const userUuid = this.currentUser.uuid;
                 const data = { userUuid, ...this.user};
                 const response = await this.$store.dispatch("auth/signoutAction", data);
+                this.$validator.reset();
                 this.message = response;
                 this.successful = true;
                 this.loading = false;
@@ -80,6 +83,8 @@ export default {
             
             } catch(error) {
                 this.loading = false;
+                 this.$validator.reset();
+                this.password= ''
                 this.message = (error.response && error.response.data) || error.message || error.toString();
             }
         }
@@ -93,27 +98,12 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
 
 label {
   display: block;
   margin: 1rem 0;
 }
-h2 {
-    font-size: 1.2rem;
-    padding: 0 1.5rem;
-    border-bottom: 2px solid rgb(255, 0, 0);
-    margin: 1rem 0 2rem 0;
-    color: red;
-    display: inline-block;
-}
-
-.btn-primary { }
-
-/* .form-check {
-    margin:20px 0;
-} */
 
 .modal-body {
     font-size: 2.5vh;

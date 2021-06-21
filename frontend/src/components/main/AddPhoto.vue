@@ -19,7 +19,11 @@
               </div>
 
               <div class="form-group">
-                <label for="filename" id="file-label"> choose a photo : </label>
+                <label for="filename" 
+                       id="image-label" 
+                       @click="$refs.imageFile.click()"
+                       type="button"
+                        class= "btn btn-info btn-block"> Click to choose a photo <font-awesome-icon id="icon-add-photo" icon="camera-retro" /> </label>
                 <!-- next: hide input area, replace it by button -->
                 <input id="file" 
                        type="file" 
@@ -27,10 +31,10 @@
                        accept="image/*"
                        class="form-control input-photo" 
                        name="file" 
+                       style="display:none"
                        @change="onFileSelect" 
                        placeholder="choose a file"
                        ref="imageFile" />
-                <!-- <button @click="$refs.imageFile.click()"> Pick an image</button> -->
                 
                 <div class="alert alert-danger" 
                      v-if="errors.has('file')" role="alert">
@@ -43,7 +47,7 @@
                   <span v-show="loading"
                         class="spinner-border spinner-border-sm">
                   </span>
-                  <span class="">Post photo</span>
+                  <span class="">Post photo  <font-awesome-icon id="icon-paper-plane" icon="paper-plane" /></span>
                 </button>
               </div>
         </form>
@@ -109,9 +113,20 @@ export default {
 
 <style lang="scss" scoped>
 .block-add-photo {
+  margin-top: 1rem;
   background: rgb(213, 213, 213);
   border: 1px solid rgb(138, 138, 138);
-  padding: 30px;
+  padding: 1rem 2rem;
   border-radius: 8px;
+}
+#icon-add-photo{
+  margin-left: 1rem;
+}
+#icon-add-photo{
+  margin-left: 1rem;
+}
+
+#icon-paper-plane{
+  margin-left: 1rem;
 }
 </style>

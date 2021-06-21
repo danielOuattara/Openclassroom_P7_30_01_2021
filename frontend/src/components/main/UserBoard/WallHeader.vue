@@ -1,124 +1,65 @@
 <template>
-    <section class="wall-header">
-        <div class="background-image" v-if="userData.backgroundImage" v-bind:style="{backgroundImage:`url(${userData.backgroundImage})`}"></div>
-        <div class="background-image" v-else v-bind:style="{'background-image': 'url(' + require('@/assets/images/icon.png') + ')'}"></div>
+    <section class="wall-header" >
+         <UserBackgroundImage/>
+         <UserPortrait/>
+         <UserInfos/>
+         <UserSpecialOptions/>
 
-         <img v-if="userData.avatar" 
-              class="user-avatar"
-              :src="userData.avatar" 
-              :alt="userData.firstName + ' ' + userData.lastName + ' picture'"
-              data-toggle="modal"
-              :data-target="'#avatar'+ userData.uuid"/>
-              <i class="fas fa-camera-retro"></i>
-              <font-awesome-icon id="icon-camera-retro" icon="camera-retro" />
-
-
-        <!-- Modal -->
-        <div class="modal fade" :id="'avatar'+userData.uuid" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close btn " data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body photo-modal">
-                          <img :src="userData.avatar" 
-                               :alt='"picture of " + userData.uuid' 
-                               class="image-modal"/>               
-                    </div>
-                    <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="user-infos">
-
-          <span class="username-value"><b>Username :</b> {{userData.username}}  </span>
-
-          <span class="name-value">  {{userData.firstName + ' ' + userData.lastName}} </span>
-  
-          <span class="email-value"> <b>email :</b> {{userData.email}} </span>
-          
-          <span class="about-me-value"> <b>About me :</b> {{userData.aboutMe}} </span>
-        </div>
-
+           <!-- <UserUpdateAvatar  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                       class=" btn-comment-options btn-update-comment"  />
+    <UserUpdateBackgroundImage  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                                class=" btn-comment-options btn-update-comment"  /> -->
     </section>
-    
 </template>
 
 <script>
-export default {
-    props: {
-        userData: {
-            type: Object,
-            default: () => { 
-                return {}
-            }
-        }
+import {mapGetters} from 'vuex';
+import UserBackgroundImage from './UserBackgroundImage.vue';
+import UserPortrait from './UserPortrait.vue';
+import UserInfos from './UserInfos.vue';
+import UserSpecialOptions from './UserSpecialOptions.vue'
+ export default {
+    components: {
+      UserBackgroundImage,
+      UserPortrait,
+      UserInfos,
+      UserSpecialOptions
     },
 
-    components: { },
-
     computed: {
-     
+      ...mapGetters(['userData']),
       currentUser() {
           return this.$store.state.auth.user;
       }, 
-    },
-    
+    }, 
 }
 </script>
 
 
-<style lang="scss" scoped>
-.wall-header{
-    min-width: 100vw;
-    height: 50vh;
+<style lang="scss">
+.wall-header {
     position: relative;
+    min-height: 60vh;
+    border-bottom: 1px solid grey;
+    padding-bottom: 2rem;
 
 }
-.background-image{
-    // min-width: 100%;
-    height: 60%;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
+
 .user-infos{
-    height: 40%;
-    // border: 2px solid black;
-    // position: relative;
+    height: 30%;
     display: grid;
-}
-
-.user-avatar{
-//   grid-row: 1 / span 1 ;
-//   grid-column: 1 / span 1 ;
-  padding-bottom: 1rem;
-  max-width: 20vw; 
-  position: absolute;
-  bottom: 8rem;
-  left: 40%;
-  border-radius: 50% ;
-  cursor: pointer;
-}
-
-.image-modal {
-    max-width:100%; 
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 100%; 
+    max-width: 80vw;
+    margin: auto;
+    padding-top: 1rem;
+    gap: 1rem;
 }
 
 #icon-camera-retro{
-    font-size: 24px;
-    color: rgb(80, 80, 80);
+    font-size: 20px;
+    color: rgb(100, 100, 100);
     position: absolute;
     right: 25%;
-    bottom: 9rem;
+    top: 17rem;
     cursor: pointer;
 }
 
@@ -144,6 +85,20 @@ export default {
     grid-row: 4 ;
     grid-column: 1 ;
     font-size: 0.95rem;
+}
+
+#password-update {
+    width: 85%;
+    margin: auto;
+    margin-top: 1rem;
+    z-index: 2;
+}
+#account-delete{
+    width: 85%;
+    margin: auto;
+    margin-top: 1rem;
+    z-index: 2;
+
 }
       
 </style>

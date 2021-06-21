@@ -1,5 +1,5 @@
 <template>
-    <div class="user-update-form">
+    <div class="user-update-form" v-if="formToggler">
         <h2>Update your profile</h2>
             <form name="form" @submit.prevent="userUpdate">
                 <div class="form-group">
@@ -55,20 +55,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="avatar">Choose an avatar : </label>
-                    <input  type="file" 
-                            accept="image/*"
-                            class="form-control" 
-                            name="avatar"
-                            @change="onFileSelect"/>
-
-                    <div    class="alert alert-danger" 
-                            v-if="errors.has('avatar')" 
-                            role="alert"> Error with avatar !
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label for="aboutMe">About you : </label>
                     <textarea  name="aboutMe" 
                                placeholder="what about you ?"
@@ -87,7 +73,7 @@
                     <button class="btn btn-primary btn-block"  :disabled="loading">
                         <span v-show="loading" 
                                 class="spinner-border spinner-border-sm"></span>
-                        <span class="">Update profile </span>
+                        <span class="">Update profile <font-awesome-icon id="icon-paper-plane-user-data" icon="paper-plane" /></span>
                     </button>
                 </div>
             </form>
@@ -106,6 +92,7 @@ import { mapActions } from "vuex";
 import User from '../../../models/user';
 export default {
     name: "Login",
+    props:['formToggler'],
     data() {
         return {
             user: new User("", "", "", "", "", "", ""),
@@ -196,11 +183,10 @@ h2 {
     border-bottom: 2px solid grey;
 }
 label {
-  display: block;
+//   display: block;
 //   margin: 1rem 0;
 
 }
-
 
 .btn-send-form {
     font-size: 20px;
@@ -214,6 +200,10 @@ label {
         background: rgba(255, 0, 0, 0.392);
         border-radius: 0.5rem;
     }
+}
+
+#icon-paper-plane-user-data{
+  margin-left: 1rem;
 }
 
 

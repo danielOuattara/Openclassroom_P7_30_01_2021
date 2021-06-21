@@ -27,12 +27,6 @@ export default {
     methods: {
         ...mapActions(["deleteOnePhotoAction", "fetchAllPhotosAction"]),
 
-        // onFileSelect(event) {
-        //   this.selectedFile = event.target.files[0];
-        //   console.log(this.selectedFile)
-        // },
-
-
       async deletePhoto() {
           try {
               this.message = '';

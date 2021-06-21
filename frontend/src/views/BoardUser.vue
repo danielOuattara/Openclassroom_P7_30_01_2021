@@ -1,47 +1,14 @@
 
 <template>
-  <div class="" style="border: 1px solid red">
+  <section class="user-board">
+  
+    <WallHeader/>
 
-    <WallHeader v-bind:userData="userData"/>
-      <!-- <div class="profile-container" >
-          <p class="user-update-collapser" 
-            type="button" 
-            data-toggle="collapse" data-target="#user-update" 
-            aria-expanded="false" aria-controls="user-update">
-              Update Profile</p>
-
-          <div class="collapse" id="user-update">
-              <div class="card card-body">
-                <UserUpdateForm/>
-              </div>
-          </div>
-
-        <p class="password-update-collapser" 
-                  type="button" 
-                  data-toggle="collapse" data-target="#password-update" 
-                  aria-expanded="false" aria-controls="password-update">
-              Update Password </p>
-          <div class="collapse" id="password-update">
-              <div class="card card-body">
-                  <PasswordUpdateForm />
-              </div>
-          </div>
-
-          <p class="account-delete-collapser" 
-                  type="button" 
-                  data-toggle="collapse" data-target="#account-delete" 
-                  aria-expanded="false" aria-controls="account-delete">
-              Delete account </p>
-          <div class="collapse" id="account-delete">
-              <div class="card card-body">
-                  <UserDeleteAccountForm />
-              </div>
-          </div>
-  </div> -->
+  
 
     <AddPhoto/>
 
-  </div>
+  </section>
 </template>
 
 <script>
@@ -50,28 +17,20 @@ import UserService from './../services/user.service.js';
 import {mapGetters, mapActions } from 'vuex';
 
 import WallHeader from './../components/main/UserBoard/WallHeader.vue';
-// import OwnerAvatar from './../components/main/OwnerAvatar.vue';
+// import UserUpdateAvatar from './UserUpdateAvatar.vue';
 
+// import UserUpdateInfos from './UserUpdateInfos.vue';
 
 import AddPhoto from './../components/main/AddPhoto.vue';
-
-// import UserUpdateForm from '../components/main/UserBoard/UserUpdateForm.vue';
-// import PasswordUpdateForm from '../components/main/UserBoard/PasswordUpdateForm.vue';
-// import UserDeleteAccountForm from '../components/main/UserBoard/UserDeleteAccountForm.vue';
-
-
 export default {
     name: 'UserBoard',
     components: {
       WallHeader,
-      // OwnerAvatar,
-
-
       AddPhoto,
+      // UserUpdateAvatar ,
+      // UserBackgroundImage,
+      // UserUpdateInfos,
 
-      // UserUpdateForm,
-      // PasswordUpdateForm,
-      // UserDeleteAccountForm,
     },
     data() {
         return {
@@ -85,17 +44,13 @@ export default {
 
     mounted() {
         UserService.getUserBoard();
-        // .then( response => {
-        //   this.content = response.data 
-        // })
-        // .catch(error) {
-        //   return this.content =  (error.response && error.response.data) || error.message || error.toString()
-        // }
         
-      // if (!this.currentUser) {
-      // this.$router.push('/login');
+      if (!this.currentUser) {
+        this.$router.push('/login');
+      }
 
     },
+
 
     computed: {
       ...mapGetters(['userData']),
@@ -104,21 +59,11 @@ export default {
           return this.$store.state.auth.user;
       }, 
     },
+      
 
     methods: {
 
       ...mapActions(['fetchOneUserAction']),
-
-
-      async fetchUserAllPhotos() { 
-          try{ 
-              const userUuid = this.currentUser.uuid; 
-              console.log(userUuid);
-              await this.$store.dispatch("fetchOneUserAction", userUuid)
-          } catch(error) {
-              this.message = (error.response && error.response.data) || error.message || error.toString();
-          }
-      },
 
       async fetchUser() { 
         try{ 
@@ -132,19 +77,17 @@ export default {
 
     created() {
       UserService.getUserBoard()
-      // .then( response => {
-      //   this.content = response.data ,
-      //   error => this.content =  (error.response && error.response.data) || error.message || error.toString()
-      // }),
-
-      this.fetchUserAllPhotos();
-        this.fetchUser();
-      
+      this.fetchUser();
     }
 };
 </script>
 
 <style lang="scss" scoped>
+.block-add-photo{
+    max-width: 90vw;
+    margin: auto;
+    margin-top: 1rem;
+}
 .photos {
   display: block;
   margin-left: auto;
@@ -157,13 +100,6 @@ export default {
     box-shadow: 0 0 2px 3px rgba(18, 34, 253, 0.6);
     border-radius: 4px;  /* Rounded border */
   }
-
-// .photo-modal {
-//   width: 90vw;
-//   display: block;
-//   margin-left: auto;
-//   margin-right: auto;
-// }
 
 }
 .photo-block {
@@ -183,8 +119,6 @@ export default {
   background: #c7c7c7;
   border-radius: 5px;
   grid-gap: 10px;
-  // grid-template-rows: repeat(10, 0.2fr);
-  // grid-template-columns: repeat(10, 0.2fr);
 }
 
 .about-user-value{

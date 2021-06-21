@@ -1,6 +1,5 @@
 <template>
-    <div class="password-update-form">
-        <h2>Update your password</h2>
+    <section class="password-update-form">
         <form name="form" @submit.prevent="updatePassword">
             <div class="form-group">
                 <label for="passwordOld">Old Password : </label>
@@ -58,6 +57,8 @@
                             class="spinner-border spinner-border-sm"></span>
                     <span class="">Update password</span>
                 </button>
+
+                <input type="reset" class="btn btn-success btn-block" value="Reset">
             </div>
         </form>
 
@@ -68,7 +69,7 @@
             </button> {{message}}
         </div>
 
-    </div>
+    </section>
 </template>
 
 <script>
@@ -76,9 +77,9 @@ import Password from '../../../models/password';
 import { mapActions} from "vuex";
 
 export default {
-    name: "Login",
     data() {
         return {
+            visible: false,
             passwords: new Password('',''),
             loading: false,
             submitted: false,
@@ -107,8 +108,8 @@ export default {
                     return;
                 }
                 const userUuid = this.currentUser.uuid;
-                const data = { userUuid, ...this.passwords}
-                const response = await this.$store.dispatch("auth/updatePasswordAction", data)
+                const data = { userUuid, ...this.passwords};
+                const response = await this.$store.dispatch("auth/updatePasswordAction", data);
                 this.successful = true;
                 this.loading = false;
                 this.fetchOneUserAction(userUuid);
@@ -127,17 +128,11 @@ export default {
 };
 </script>
 
-
 <style lan="scss" scoped>
 label {
   display: block;
   margin-top: 10px;
 }
-h2 {
-    font-size: 1.25rem;
-    padding: 0 1.5rem;
-    border-bottom: 2px solid grey;
-    margin: 1rem 0 2rem 0;
-}
+
 
 </style>

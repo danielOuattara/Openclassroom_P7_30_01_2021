@@ -65,7 +65,7 @@ export const photo = {
         fetchAllPhotosMutation: (state, photos) => state.allPhotos = photos,
         errFetchAllPhotosMutation: (state) => state.allPhotos = [],
 
-        addOnePhotoMutation:(state, photo) => state.allPhotos.unshift(photo),
+        addOnePhotoMutation:(state, photo) => state.allPhotos =photo,
         errAddOnePhoto: (state) => state.allPhotos = [],
         
         fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
