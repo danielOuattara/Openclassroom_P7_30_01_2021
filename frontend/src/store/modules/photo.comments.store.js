@@ -36,6 +36,17 @@ export const photoComments =  {
             }
         },
 
+        async createCommentReportAction({commit}, data) {
+             try {
+                 const report = await photoCommentService.createCommentReportAction(data.photoUuid, data.commentUuid, data.message);
+                 commit('createCommentReportMutation', report);
+                 return Promise.resolve(report);
+             } catch (err) {
+                 commit("errCreateCommentReportMutation");
+                 return Promise.reject(err); 
+             }
+         }
+
         // async getAllCommentsForOnePhotoAction({commit}, photoUuid ) {
         //     try {
         //         const comments = await photoCommentService.getAllCommentsForOnePhoto(photoUuid);
@@ -54,6 +65,11 @@ export const photoComments =  {
 
         deletePhotoCommentMutation: (state) => state.allCommentsForOnePhoto = [],
         errDeletePhotoCommentMutation: (state, comment) => state.allCommentsForOnePhoto = comment,
+
+        
+        createCommentReportMutation:(state, report) => state.CommentReport = report,
+        errcreateCommentReportMutation: (state) => state.CommentReport = []
+        
 
 
         // getAllCommentsForOnePhotoMutation: (state, comments) => state.allCommentsOnePhoto = comments,

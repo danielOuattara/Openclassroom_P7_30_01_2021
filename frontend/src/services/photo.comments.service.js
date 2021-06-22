@@ -17,6 +17,13 @@ class PhotoCommentsService {
     deleteOneComment(photoUuid, commentUuid) {
         return axios.delete(API_URL + `/${photoUuid}/comments/${commentUuid}`, { headers: authHeader() })
     }
+
+    // createCommentReport(photoUuid, commentUuid, formData) {
+    //     return axios.post(API_URL + `/${photoUuid/commentUuid}/report`, formData, { headers: authHeader() })
+    // }
+
+
+
     
     // getAllCommentsForOnePhoto(photoUuid) {
     //     return axios.get(API_URL + `/${photoUuid}/comments` , { headers: authHeader() })

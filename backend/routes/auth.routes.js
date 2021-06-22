@@ -9,6 +9,5 @@ router.post("/signin", checks.roles, checks.duplicateEmail, checks.email, checks
 router.delete("/signout/:userUuid", authJwt, controller.signout );
 router.post("/login", checks.emailOrUsername, checks.password, controller.login)
 router.put("/logout/:userUuid", authJwt, controller.logout) ;
-router.put("/updatepassword/:userUuid", authJwt, controller.updatePassword);
 
 module.exports = router ;

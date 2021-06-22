@@ -20,6 +20,13 @@ class PhotoService {
     deleteOnePhoto(photoUuid) {
         return axios.delete(API_URL + `/${photoUuid}`, { headers: authHeader() })
     }
+    
+    createPhotoReport(photoUuid, data) {
+        return axios.post(API_URL + `/${photoUuid}/report`, 
+        {message: data.message }, 
+        { headers: authHeader() })
+    }
+
 
     // getOnePhoto(photoUuid) {
     //     return axios.get(API_URL + `/${photoUuid}`, { headers: authHeader() })
@@ -39,8 +46,8 @@ class PhotoService {
     // }
 
     // searchPhotos() {}  // TODO !
-    
 
+    
 }
 
 export default new PhotoService();

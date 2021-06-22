@@ -6,6 +6,7 @@ export const photo = {
     state: {
         allPhotos: [ ],
         oneUserPhotos: [ ],
+        photoReport: [ ],
     },
 
     getters: {
@@ -46,6 +47,17 @@ export const photo = {
                 return Promise.reject(err);
             }
         },
+        
+         async createPhotoReportAction({commit}, data) {
+             try {
+                 const report = await photoService.createPhotoReportAction(data.photoUuid, data.message);
+                 commit('createPhotoReportMutation', report);
+                 return Promise.resolve(report);
+             } catch (err) {
+                 commit("errCreatePhotoReportMutation");
+                 return Promise.reject(err); 
+             }
+         }
 
 
         // async fetchUserAllPhotosAction( {commit}, userUuid) {
@@ -71,6 +83,9 @@ export const photo = {
 
         deleteOnePhotoMutation:(state) => state.allPhotos = [],
         errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
+
+        createPhotoReportMutation:(state, report) => state.photoReport = report,
+        errcreatePhotoReportMutation: (state) => state.photoReport = []
         
         // fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
         // errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
