@@ -1,6 +1,6 @@
 
 const db = require("./../models");
-const { User, Photo, Comment } = require('./../models');
+const { User, Photo, Comment, CommentsReports } = require('./../models');
 const Op = db.Sequelize.Op;
 const fs = require("fs");
 
@@ -46,6 +46,29 @@ exports.deleteOneComment = async (req, res) => {
     } 
 }
 
+//----------------------------------------------------------------------------------------
+
+exports.createCommentReport = async (req, res) => {
+    try {
+        const photo = await Photo.findOne( { where: { uuid: req.params.photoUuid } });
+        if (!photo) {
+          return res.status(404).send(" Photo unknown !");
+        }
+        const comment = await Photo.findOne( { where: { uuid: req.params.comentUuid } });
+        if (!comment) {
+          return res.status(404).send("Comment unknown !");
+        }
+
+        await CommentsReports.create({
+          ownerId: req.userId,
+          commentId: comment.id,
+          message: req.body.message
+        })
+        return res.status(200).send(`Report successfully received, thank you !`)
+    } catch(err) {
+      return res.status(403).json(err.message )
+    }
+}
 
 // ------------------------------------------------------------------------------------------------
 // exports.getPhotoAllComments = (req, res) => {

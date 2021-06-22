@@ -29,7 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
     },
-    message: DataTypes.STRING
+    message:  {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
+    }
   }, {
     sequelize,
     modelName: 'PhotosReports',
