@@ -22,12 +22,24 @@ exports.getOneUser = (req, res) => {
         {
           model: Photo,
           as: 'photos',
-          include: [
-            { model: Like, as:'likes'}, 
-            { model: Comment, as:'comments'},
-          ],
           order: [
             ['createdAt', 'DESC']
+          ],
+          include: [
+            { 
+              model: Comment, 
+              as:'comments',
+              order: [
+                ['createdAt', 'ASC']
+              ], 
+              include: [
+                {
+                  model: User,
+                  as: 'owner'
+                } 
+              ]
+            },
+            { model: Like, as:'likes'}, 
           ],
         },
         {
@@ -38,9 +50,18 @@ exports.getOneUser = (req, res) => {
         {
           model: Comment,
           as: 'comments',
-          include: [{ model: Photo, as:'photo' } ],
           order: [
             ['createdAt', 'ASC']
+          ],
+          include: [
+            { 
+              model: Photo, 
+              as:'photo' 
+            },
+            {
+              model: User,
+              as: 'owner'
+            } 
           ],
         }
       ]

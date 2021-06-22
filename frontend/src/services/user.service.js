@@ -25,8 +25,8 @@ class UserService {
         return axios.get(API_URL + "/", { headers: authHeader() })
     }
 
-    updateOneUser(userUuid, data) {
-        return axios.put(API_URL + `/${userUuid}`, 
+    updateUserInfos(userUuid, data) {
+        return axios.put(API_URL + `/infos/${userUuid}`, 
         data.formData,  
         { headers: authHeader() }, 
         data.config )

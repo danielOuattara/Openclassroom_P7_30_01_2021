@@ -35,6 +35,9 @@ exports.addPhoto = async (req, res)=> {
 exports.getAllPhotos = (req, res) => {
   Photo.findAll({
     where: {}, 
+    order: [
+      ['createdAt', 'DESC']
+    ],
     include: [
       {
         model: User,
@@ -55,9 +58,6 @@ exports.getAllPhotos = (req, res) => {
       },
     ],
 
-    order: [
-      ['createdAt', 'DESC']
-    ],
   })
   .then( photos => res.status(200).json(photos))
   .catch( err => res.status(500).json(err.message));

@@ -10,7 +10,6 @@
                              v-bind:comments="photo.comments"/>
             <!-- <PhotoLikes v-bind:item="photo" /> -->
 
-
             <PhotoBtnOptions v-bind:photoOwner="photo.owner"
                              v-bind:photoUuid="photo.uuid"/>
             <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
@@ -68,11 +67,9 @@ export default {
     ...mapActions(["fetchAllPhotosAction", "fetchOnePhotoLikesAction"]),
   },
 
-  mounted() {
+  created() {
     this.fetchAllPhotosAction();
   },
-
-
 
 };
 </script>

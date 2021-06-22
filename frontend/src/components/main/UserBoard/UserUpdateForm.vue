@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions} from "vuex";
 import User from '../../../models/user';
 export default {
     name: "Login",
@@ -150,21 +150,14 @@ export default {
                 }
                 if( this.user.username) {
                     formData.append("userName", this.user.username);
-                }
-                if(this.selectedFile) {
-                    formData.append("event", "avatars"); 
-                    formData.append("image", this.selectedFile, this.selectedFile.name); 
-                }
-        
-                for(var pair of formData.entries()) {
-                    console.log(pair[0]+ ', '+ pair[1]);
-                }
-
+                }        
                 const data = { userUuid, formData, config }
                 const response = await this.$store.dispatch("updateUserAction", data);
                 this.message = response;
+                await this.$store.dispatch("fetchOneUserAction", userUuid)
                 this.successful = true;
                 this.loading = false;
+
             } catch(error) {
                 this.loading = false;
                 this.message = (error.response && error.response.data) || error.message || error.toString();

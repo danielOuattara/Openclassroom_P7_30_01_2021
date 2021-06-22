@@ -23,12 +23,15 @@
                        id="image-label" 
                        @click="$refs.imageFile.click()"
                        type="button"
-                        class= "btn btn-info btn-block"> Click to choose a photo <font-awesome-icon id="icon-add-photo" icon="camera-retro" /> </label>
+                       class= "btn btn-info btn-block"> 
+                    Click to choose a photo 
+                    <font-awesome-icon id="icon-add-photo" icon="camera-retro" /> 
+                </label>
                 <!-- next: hide input area, replace it by button -->
                 <input id="file" 
                        type="file" 
                        v-validate="'required'" 
-                       accept="image/*"
+                       accept="image/jpg image/jpeg image/png"
                        class="form-control input-photo" 
                        name="file" 
                        style="display:none"
@@ -47,7 +50,9 @@
                   <span v-show="loading"
                         class="spinner-border spinner-border-sm">
                   </span>
-                  <span class="">Post photo  <font-awesome-icon id="icon-paper-plane" icon="paper-plane" /></span>
+                  <span class="">Post photo  
+                    <font-awesome-icon id="icon-paper-plane" icon="paper-plane" />
+                  </span>
                 </button>
               </div>
         </form>
@@ -82,16 +87,9 @@ export default {
                   this.loading = false;
                   return;
               }
-
-              console.log("this.selectedFile  = ", this.selectedFile)
-              console.log("this.selectedFile.name  = ", this.selectedFile.name)
-
               const formData = new FormData();
               formData.append("title", this.photo.title);
               formData.append("image", this.selectedFile, this.selectedFile.name);
-              // for(var pair of formData.entries()) {
-              //   console.log(pair[0]+ ', '+ pair[1]);
-              // }
               await this.$store.dispatch("addOnePhotoAction", formData);
               this.loading = false;
               this.fetchAllPhotosAction();

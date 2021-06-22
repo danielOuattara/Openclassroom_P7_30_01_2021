@@ -1,12 +1,9 @@
 
 <template>
-  <section class="user-board">
-  
+  <section class="user-board">  
     <WallHeader/>
-
-  
-
     <AddPhoto/>
+    <UserPhotosWall class="user-photos"/>
 
   </section>
 </template>
@@ -18,20 +15,18 @@ import {mapGetters, mapActions } from 'vuex';
 
 import WallHeader from './../components/main/UserBoard/WallHeader.vue';
 // import UserUpdateAvatar from './UserUpdateAvatar.vue';
-
-// import UserUpdateInfos from './UserUpdateInfos.vue';
-
 import AddPhoto from './../components/main/AddPhoto.vue';
+import UserPhotosWall from './../components/main/UserBoard/UserPhotosWall.vue';
 export default {
     name: 'UserBoard',
     components: {
       WallHeader,
       AddPhoto,
+      UserPhotosWall,
       // UserUpdateAvatar ,
       // UserBackgroundImage,
-      // UserUpdateInfos,
-
     },
+    
     data() {
         return {
             content: '',
@@ -60,9 +55,7 @@ export default {
       }, 
     },
       
-
     methods: {
-
       ...mapActions(['fetchOneUserAction']),
 
       async fetchUser() { 
@@ -242,6 +235,14 @@ export default {
   grid-column:  1 / span 2 ;
 }
 
+
+.user-photos {
+  width: 90%;
+  margin: auto;
+  margin-top: 2rem;
+  border-top: 1px solid grey; 
+  padding-top: 1rem;
+}
 
 
 

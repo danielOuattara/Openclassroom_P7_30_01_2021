@@ -1,7 +1,7 @@
 <template>
     <section class="user-data">        
         <font-awesome-icon  @click="updateToggler" id="edit-user-data" icon="edit" />
-        <div v-if="!formToggler" class="user-infos">
+        <div class="user-infos">
             <span class="username-value"><b>Username :</b> {{userData.username}}  </span>
             <span v-if="userData.firstName && userData.lastName" class="name-value">  {{userData.firstName + ' ' + userData.lastName}} </span>
             <span  v-else class="name-value">New User </span>

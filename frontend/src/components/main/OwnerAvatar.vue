@@ -7,7 +7,7 @@
         <img v-else 
              class=" bloc bloc-avatar" 
              src="./../../assets/images/generic-profile_360_360.jpg"
-             alt='picture profile of new user --' + item.uuid/>
+             alt='picture profile of new user -- uuid identifiant: ' + item.uuid/>
 </template>
 
 <script>

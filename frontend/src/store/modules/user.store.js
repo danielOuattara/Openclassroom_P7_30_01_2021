@@ -16,9 +16,9 @@ export const user = {
 
         async fetchOneUserAction( {commit}, userUuid) {
             try {
-                const oneUser = await userService.getOneUser(userUuid);
-                commit('fetchOneUserMutation', oneUser.data);
-                return  Promise.resolve(oneUser.data);
+                const user = await userService.getOneUser(userUuid);
+                commit('fetchOneUserMutation', user.data);
+                return  Promise.resolve(user.data);
             }      
             catch(error) {
                 commit("errorFetchOneUser");
@@ -27,7 +27,7 @@ export const user = {
         },
 
         updateUserAction( {commit}, data) {
-            return userService.updateOneUser(data.userUuid, data)
+            return userService.updateUserInfos(data.userUuid, data)
             .then( response => {
                 commit("updateUserSuccessMutation");
                 return Promise.resolve(response.data);
@@ -42,7 +42,7 @@ export const user = {
 
     mutations: {
         fetchOneUserMutation: (state, user) => state.user = user,
-        errorFetchOneUser: (state) => state.user = {},
+        errorFetchOneUser: (state) => state.user = [],
 
         updateUserSuccessMutation: (state, user) => state.user = user,
         updateUserFailureMutation: (state) => state.user = {},

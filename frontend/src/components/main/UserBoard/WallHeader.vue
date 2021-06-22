@@ -1,6 +1,6 @@
 <template>
     <section class="wall-header" >
-         <UserBackgroundImage/>
+         <UserBackgroundImage v-bind:userData="userData"/>
          <UserPortrait/>
          <UserInfos/>
          <UserSpecialOptions/>
@@ -50,8 +50,9 @@ import UserSpecialOptions from './UserSpecialOptions.vue'
     display: grid;
     max-width: 80vw;
     margin: auto;
-    padding-top: 1rem;
+    padding: 1rem 0;
     gap: 1rem;
+    border-bottom: 1px solid grey;
 }
 
 #icon-camera-retro{
