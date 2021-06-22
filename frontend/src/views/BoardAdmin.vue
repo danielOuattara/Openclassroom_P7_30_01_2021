@@ -10,7 +10,7 @@
 <script>
 import UserService from './../services/user.service.js';
 export default {
-    name: 'User',
+    name: 'BoardAdmin',
     data() {
         return {
             content: ''
@@ -20,7 +20,9 @@ export default {
     mounted() {
         UserService.getAdminBoard()
           .then( response => this.content = response.data ,
-                  error => this.content =  (error.response && error.response.data) || error.message || error.toString()
+                  error => this.content =  (error.response && error.response.data) || 
+                                            error.message || 
+                                            error.toString()
           );
     }
 };

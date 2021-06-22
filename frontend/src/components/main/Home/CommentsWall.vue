@@ -7,17 +7,16 @@
             <CommentContent v-bind:item="comment"/>
             <CommentBtnOptions v-bind:comment="comment"
                                v-bind:photoUuid="photo.uuid" />
-
         </div>
     </div>
 </template>
 
 <script>
-import OwnerAvatar from '../../OwnerAvatar.vue'
-import OwnerName from './../../OwnerName';
-import DateOfPosting from './../../DateOfPosting';
-import CommentBtnOptions from './../../CommentBtnOptions.vue';
-import CommentContent from './../../CommentContent';
+import OwnerAvatar from './../../main/global_components/OwnerAvatar.vue'
+import OwnerName from './../../main/global_components/OwnerName';
+import DateOfPosting from './../../main/global_components/DateOfPosting';
+import CommentBtnOptions from './../../main/global_components/CommentBtnOptions.vue';
+import CommentContent from './../../main/global_components/CommentContent';
 export default {
     name: 'CommentsWall',
     data() {

@@ -1,13 +1,15 @@
 <template>
     <div class="photos-container">
-        <div v-for="photo in allPhotos" :key="photo.uuid" class="photo-bloc">
+      <h2>Publications</h2>
+      <!-- {{allPhotos}} -->
+        <article v-for="photo in allPhotos" :key="photo.uuid" class="photo-bloc">
             <OwnerAvatar v-bind:item="photo.owner"/>
             <OwnerName v-bind:item="photo.owner"/>
             <PhotoTitle v-bind:item="photo.title"/>
             <DateOfPosting v-bind:item="photo.createdAt"/>
             <Photo v-bind:item="photo" />
             <CommentsToggler v-bind:item="photo.uuid"
-                             v-bind:comments="photo.comments"/>
+                             v-bind:comments="photo.comments"/> 
             <!-- <PhotoLikes v-bind:item="photo" /> -->
 
             <PhotoBtnOptions v-bind:photoOwner="photo.owner"
@@ -16,22 +18,24 @@
                 <CommentsWall v-bind:photo="photo"/>
                 <AddPhotoComment v-bind:photoUuid="photo.uuid"/>
             </div>
-        </div>
+        </article>
     </div>
+
+
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import OwnerAvatar   from './../OwnerAvatar.vue';
-import OwnerName     from './../OwnerName.vue';
-import PhotoTitle    from './../PhotoTitle';
-import DateOfPosting from './../DateOfPosting';
-import Photo         from './../Photo';
-import CommentsToggler from './../CommentsToggler';
-// import PhotoLikes    from './../PhotoLikes'
-import PhotoBtnOptions from './../PhotoBtnOptions.vue'
-import CommentsWall   from './comments/CommentsWall.vue';
-import AddPhotoComment  from '../AddPhotoComment.vue';
+import OwnerAvatar   from './../global_components/OwnerAvatar.vue';
+import OwnerName     from './../global_components/OwnerName.vue';
+import PhotoTitle    from './../global_components/PhotoTitle';
+import DateOfPosting from './../global_components/DateOfPosting';
+import Photo         from './../global_components/Photo';
+import CommentsToggler from './../global_components/CommentsToggler';
+// import PhotoLikes    from './../global_components/PhotoLikes';
+import PhotoBtnOptions from './../global_components/PhotoBtnOptions.vue';
+import CommentsWall   from './CommentsWall.vue';
+import AddPhotoComment  from '../global_components/AddPhotoComment.vue';
 
 export default {
   name: "PhotosWall",
@@ -56,21 +60,24 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["allPhotos", "likesData"]),
+    ...mapGetters(["allPhotos", /* "likesData" */]),
     
     currentUser() {
-            return this.$store.state.auth.user;
-        }
+        return this.$store.state.auth.user;
+    }
   },
 
   methods: {
-    ...mapActions(["fetchAllPhotosAction", "fetchOnePhotoLikesAction"]),
+    ...mapActions(["getAllPhotosAction", /* "fetchOnePhotoLikesAction" */]),
   },
 
   created() {
-    this.fetchAllPhotosAction();
+    this.getAllPhotosAction();
   },
 
+  // mounted() {
+  //     this.getAllPhotosAction();
+  //   },
 };
 </script>
 
@@ -78,14 +85,21 @@ export default {
 * {
   list-style-type: none;
 }
-.photo-bloc {
+
+h2 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid rgb(199, 199, 199);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+article.photo-bloc {
     margin: auto;
-    margin: 12px 0;
+    margin: 2rem 0;
     border: 1px solid grey;
-    border-radius: 8px;
-    padding: 0.5rem;
-    background: rgb(228, 228, 228);
-    box-shadow: 0 0 2px 2px rgba(141, 141, 141, 0.6);
+    border-radius: 4px;
+    padding: 1rem;
+    background: rgb(250, 250, 250);
+    // box-shadow: 0 0 2px 2px rgba(141, 141, 141, 0.6);
     display: grid;
     grid-gap: 0.15rem;
 }
@@ -121,17 +135,10 @@ export default {
 .bloc-container-toggler {
     grid-row: 7 / span 1;
     grid-column: 1/ span 2;
-    margin-top: 0.5rem;
-    font-size: 1rem;
-    height: 35px;
-    // width: 30vw;
-    // padding: 2px;
-    // border-bottom:1px dotted black;
-    border-radius: 5px;
-    &:hover {
-        cursor: pointer;
-        background: rgb(0, 146, 29);
-    }
+    font-size: 0.9rem;
+    padding: 1rem 0 0.75rem 0;
+    margin-bottom: 1rem;
+    border-bottom:2px dotted blue;
 }
 
 /* -------- comment styling */
@@ -152,36 +159,24 @@ export default {
     grid-column: 1 / span 6;
     // border: 1px solid red;
 }
+ 
 
-#dropdownMenuOffset {
-    grid-row: 1 /span 1 ;
-    grid-column: 7/ span 1;
-    // border: 1px solid ;
-    padding: 0px;
-    margin-right: -20px;
-    // font-size: 20px;
-    font-size: 14px;
-    &:hover{
-        border: 1px solid rgb(139, 34, 191);
-    }
-} 
+// .dropdown-menu{
+//     // width: 50vw;
+//     height: auto;
+//     // border: 1px solid green;
+//     &:hover {
+//         border: 1px solid grey;
+//     }
+// }
 
-.dropdown-menu{
-    // width: 50vw;
-    height: auto;
-    // border: 1px solid green;
-    &:hover {
-        border: 1px solid grey;
-    }
-}
-
-.dropdown-toggle {
-      font-size: 12px;
-      &:hover {
-          background: grey;
-          color: white;
-      }
-}
+// .dropdown-toggle {
+//       font-size: 12px;
+//       &:hover {
+//           background: grey;
+//           color: white;
+//       }
+// }
 
 // .btn-comment {
 //     font-size: 12px;
@@ -204,12 +199,12 @@ export default {
 
 /* styling photo-posts */
 
-.bloc {
+// .bloc {
   // border: 1px solid grey;
   // padding: 5px;
   // margin-bottom: 5px;
   // border-radius: 5px;
-}
+// }
 
 // @media screen and (min-width: 760px) {
 //   .photo-bloc {

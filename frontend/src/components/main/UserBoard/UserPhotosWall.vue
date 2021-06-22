@@ -22,15 +22,15 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import OwnerAvatar from './../../main/OwnerAvatar.vue';
-import OwnerName from './../../main/OwnerName.vue';
-import PhotoTitle from './../../main/PhotoTitle.vue';
-import DateOfPosting from './../../main/DateOfPosting.vue';
-import Photo from './../../main/Photo.vue';
-import CommentsToggler from './../../main/CommentsToggler.vue';
-import PhotoBtnOptions from './../../main/PhotoBtnOptions.vue';
-import CommentsWall from './../../main/Home/comments/CommentsWall.vue';
-import AddPhotoComment from './../../main/AddPhotoComment.vue';
+import OwnerAvatar from '../global_components/OwnerAvatar.vue';
+import OwnerName from '../global_components/OwnerName.vue';
+import PhotoTitle from '../global_components/PhotoTitle.vue';
+import DateOfPosting from '../global_components/DateOfPosting.vue';
+import Photo from '../global_components/Photo.vue';
+import CommentsToggler from '../global_components/CommentsToggler.vue';
+import PhotoBtnOptions from '../global_components/PhotoBtnOptions.vue';
+import CommentsWall from '../Home/CommentsWall.vue';
+import AddPhotoComment from '../global_components/AddPhotoComment.vue';
 
 export default {
     components: {

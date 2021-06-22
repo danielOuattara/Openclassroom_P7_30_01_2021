@@ -8,11 +8,11 @@ const controllerComments = require("../controllers/photo.comments.controllers.js
 
 router.post("/",  authJwt, multer, controller.addPhoto);
 router.get("/",   authJwt, controller.getAllPhotos);
-router.get("/:photoUuid",    authJwt, controller.getOnePhoto);
+// router.get("/:photoUuid",    authJwt, controller.getOnePhoto);
 // router.get("/user/:userUuid",  authJwt, controller.getAllPhotosFromOneUser); // USEFULL ???
 router.delete("/:photoUuid", authJwt, controller.deleteOnePhoto);
-router.delete("/",  authJwt, controller.userDeleteAllPhotos);
-router.delete("/user/:userUuid",  authJwt, controller.deleteAllPhotosFromOneUser);
+// router.delete("/",  authJwt, controller.userDeleteAllPhotos);
+// router.delete("/user/:userUuid",  authJwt, controller.deleteAllPhotosFromOneUser);
 // router.get("/search/:photoUuid",  authJwt, controller.getOnePhoto); // TODO
 
 router.post("/:photoUuid/likes", authJwt, controllerLikes.photoLikes);

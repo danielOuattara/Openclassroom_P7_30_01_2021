@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  // props: ["item"],
+  name: 'OwnerAvatar',
   props: {
       item: {
         type: Object,
@@ -17,11 +17,6 @@ export default {
           return {} 
         }
       }
-  },
-
-  data() {
-    return {
-    };
   },
 };
 </script>

@@ -1,13 +1,3 @@
-/* Authentication service
---------------------------
-
-The service provides three important methods with the help of 
-axios for HTTP requests & reponses:
-
-    login(): POST { username, password } & save JWT to Local Storage
-    logout(): remove JWT from Local Storage
-    signin(): POST { email, password }
-*/
 
 import axios from "axios";
 import authHeader from "./auth.header.js";
@@ -47,15 +37,6 @@ class AuthService {
             headers: authHeader(),
             data: { password: data.password }
         })
-    }
-    
-    updatePassword(userUuid, data) {
-        return axios.put(API_URL + `updatepassword/${userUuid}`, { 
-                passwordOld: data.passwordOld,
-                password: data.password 
-            },
-            { headers: authHeader()  }
-        )
     }
 }
 

@@ -1,9 +1,10 @@
 
 <template>
   <section class="user-board">  
-    <WallHeader/>
-    <AddPhoto/>
-    <UserPhotosWall class="user-photos"/>
+    Userboard
+    <!-- <WallHeader/> -->
+    <!-- <AddPhoto/> -->
+    <!-- <UserPhotosWall class="user-photos"/> -->
 
   </section>
 </template>
@@ -13,43 +14,42 @@
 import UserService from './../services/user.service.js';
 import {mapGetters, mapActions } from 'vuex';
 
-import WallHeader from './../components/main/UserBoard/WallHeader.vue';
+// import WallHeader from './../components/main/UserBoard/WallHeader.vue';
 // import UserUpdateAvatar from './UserUpdateAvatar.vue';
-import AddPhoto from './../components/main/AddPhoto.vue';
-import UserPhotosWall from './../components/main/UserBoard/UserPhotosWall.vue';
+// import UserUpdateInfos from './UserUpdateInfos.vue';
+// import AddPhoto from './../components/main/AddPhoto.vue';
+// import UserPhotosWall from './../components/main/UserBoard/UserPhotosWall.vue';
 export default {
     name: 'UserBoard',
     components: {
-      WallHeader,
-      AddPhoto,
-      UserPhotosWall,
+      // WallHeader,
+      // AddPhoto,
+      // UserPhotosWall,
       // UserUpdateAvatar ,
       // UserBackgroundImage,
+      // UserUpdateInfos,
+
     },
-    
     data() {
         return {
-            content: '',
-            photos: '',
-            user:'',
+            // content: '',
+            // photos: '',
+            // user:'',
          // photos: this.userData.photos,
-            aboutMeVisible: false,
+            // aboutMeVisible: false,
         };
     },
 
     mounted() {
-        UserService.getUserBoard();
-        
+      UserService.getUserBoard();
+
       if (!this.currentUser) {
         this.$router.push('/login');
       }
-
     },
-
 
     computed: {
       ...mapGetters(['userData']),
-      
       currentUser() {
           return this.$store.state.auth.user;
       }, 
@@ -57,7 +57,6 @@ export default {
       
     methods: {
       ...mapActions(['fetchOneUserAction']),
-
       async fetchUser() { 
         try{ 
             const userUuid = this.currentUser.uuid; 

@@ -46,7 +46,7 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped >
 
 .comment-more-options {
       font-size: 14px!important;
@@ -75,6 +75,20 @@ export default {
     &:hover {
         background: rgb(100, 100, 100);
         color: white
+    }
+}
+
+#dropdownMenuOffset {
+    grid-row: 1 /span 1 ;
+    grid-column: 7/ span 1;
+    border: 1px solid grey!important;
+    padding: 0px;
+    margin-right: -20px;
+    // font-size: 20px;
+    font-size: 14px;
+    &:hover{
+        border: 1px solid rgb(139, 34, 191);
+        color: white;
     }
 }
 

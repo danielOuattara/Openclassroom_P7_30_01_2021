@@ -9,10 +9,12 @@ import VeeValidate from "vee-validate";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faUserShield, faHistory, faCommentAlt,faEllipsisV,
-         faAddressCard, faCalendarAlt, faClock, faThumbsUp, faThumbsDown, faEdit, faCameraRetro, faPaperPlane, faChevronDown, faChevronUp} from "@fortawesome/free-solid-svg-icons";
+         faAddressCard, faCalendarAlt, faClock, faThumbsUp, faThumbsDown, faEdit, faCameraRetro, faPaperPlane, 
+         faChevronDown, faChevronUp, faCheckCircle, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 
-library.add( faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faUserShield, faHistory, faCommentAlt,faEllipsisV, faCameraRetro,
-             faAddressCard, faCalendarAlt, faClock, faThumbsUp, faThumbsDown, faEdit, faPaperPlane, faChevronDown,faChevronUp);
+library.add( faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faUserShield, faHistory, faCommentAlt,faEllipsisV, 
+             faCameraRetro, faAddressCard, faCalendarAlt, faClock, faThumbsUp, faThumbsDown, faEdit, faPaperPlane, 
+             faChevronDown,faChevronUp, faCheckCircle, faTimesCircle);
 
 Vue.config.productionTip = false;
 Vue.use(VeeValidate);

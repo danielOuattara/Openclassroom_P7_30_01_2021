@@ -11,7 +11,7 @@
             </router-link>
         </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" aria-label>
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -107,7 +107,7 @@ export default {
 <style lang="scss" scoped>
 
 #navbar-main {
-    background: linear-gradient(to left top, rgba(16, 33, 80, 0.2), rgba(16, 33, 80, 0.9))!important;
+    background: rgba(16, 33, 80, 0.9)!important;
 }
 
 #navbar-nav:hover {
@@ -124,5 +124,8 @@ export default {
         border-radius: 3px;
     }
 }
+ .navbar-toggler-icon {
+     color: white!important;
+ }
 
 </style>

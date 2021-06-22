@@ -6,8 +6,8 @@
 
         <img v-else 
              class=" bloc bloc-avatar" 
-             src="./../../assets/images/generic-profile_360_360.jpg"
-             alt='picture profile of new user -- uuid identifiant: ' + item.uuid/>
+             src="./../../../assets/images/generic-profile_360_360.jpg"
+             :alt="'picture profile of new user -- uuid identifiant' +item.uuid"/>
 </template>
 
 <script>
@@ -20,11 +20,6 @@ export default {
           return {}
         }
       }
-  },
-
-  data() {
-    return {
-    };
   },
 };
 </script>

@@ -5,7 +5,13 @@
 <script>
 export default {
   name: "PhotoTitle",
-  props: ["item"],
+  // props: ["item"],
+      props: {
+        item: {
+            type: String,
+            default: ''
+        },
+    },
 };
 </script>
 

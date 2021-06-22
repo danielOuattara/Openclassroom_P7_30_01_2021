@@ -17,7 +17,7 @@ footer {
     /* position: absolute; */
     bottom: 0;
     min-width: 100vw;
-    background: rgb(68, 68, 68);
+    background:  rgba(16, 33, 80, 0.9)!important;
     padding: 100px;
 }
 

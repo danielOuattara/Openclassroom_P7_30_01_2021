@@ -15,28 +15,6 @@ export const photo = {
 
     actions: {
 
-        async fetchAllPhotosAction( {commit}) {
-            try {
-                const allPhotos = await photoService.getAllPhotos();
-                commit('fetchAllPhotosMutation', allPhotos.data);
-                return await Promise.resolve(allPhotos.data);
-            } catch (err) {
-                commit("errFetchAllPhotosMutation");
-                return Promise.reject(err);
-            }
-        },
-
-        async fetchUserAllPhotosAction( {commit}, userUuid) {
-            try {
-                const photos = await photoService.getAllPhotosFromOneUser(userUuid);
-                commit('fetchUserAllPhotosMutation', photos.data);
-                return await Promise.resolve(photos.data);
-            } catch (err) {
-                commit("errFetchUserAllPhotosMutation");
-                return Promise.reject(err);
-            }
-        },
-        
         async addOnePhotoAction( {commit}, formData) {
             try {
                 const photo = await photoService.addPhoto(formData);
@@ -47,31 +25,53 @@ export const photo = {
                 return Promise.reject(err);
             }
         },
-        
-        async deleteOnePhotoAction( {commit}, photoUuid) {
+        async getAllPhotosAction( {commit}) {
             try {
-                const photo = await photoService.deleteOnePhoto(photoUuid);
-                commit('deleteOnePhotoMutation', photo);
-                return await Promise.resolve(photo);
+                const allPhotos = await photoService.getAllPhotos();
+                commit('getAllPhotosMutation', allPhotos.data);
+                return await Promise.resolve(allPhotos.data);
             } catch (err) {
-                commit("errDeleteOnePhotoMutation");
+                commit("errGetAllPhotosMutation");
                 return Promise.reject(err);
             }
         },
+
+        // async fetchUserAllPhotosAction( {commit}, userUuid) {
+        //     try {
+        //         const photos = await photoService.getAllPhotosFromOneUser(userUuid);
+        //         commit('fetchUserAllPhotosMutation', photos.data);
+        //         return await Promise.resolve(photos.data);
+        //     } catch (err) {
+        //         commit("errFetchUserAllPhotosMutation");
+        //         return Promise.reject(err);
+        //     }
+        // },
+        
+        
+        // async deleteOnePhotoAction( {commit}, photoUuid) {
+        //     try {
+        //         const photo = await photoService.deleteOnePhoto(photoUuid);
+        //         commit('deleteOnePhotoMutation', photo);
+        //         return await Promise.resolve(photo);
+        //     } catch (err) {
+        //         commit("errDeleteOnePhotoMutation");
+        //         return Promise.reject(err);
+        //     }
+        // },
     },
 
     mutations: {
-
-        fetchAllPhotosMutation: (state, photos) => state.allPhotos = photos,
-        errFetchAllPhotosMutation: (state) => state.allPhotos = [],
-
         addOnePhotoMutation:(state, photo) => state.allPhotos =photo,
         errAddOnePhoto: (state) => state.allPhotos = [],
-        
-        fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
-        errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
 
-        deleteOnePhotoMutation:(state) => state.allPhotos = [],
-        errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
+        getAllPhotosMutation: (state, photos) => state.allPhotos = photos,
+        errGetAllPhotosMutation: (state) => state.allPhotos = [],
+
+        
+        // fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
+        // errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
+
+        // deleteOnePhotoMutation:(state) => state.allPhotos = [],
+        // errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
     }
 }

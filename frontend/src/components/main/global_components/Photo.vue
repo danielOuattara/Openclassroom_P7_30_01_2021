@@ -18,7 +18,6 @@
                                class="image-modal"/>               
                     </div>
                     <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                     </div>
                 </div>
             </div>
@@ -30,6 +29,14 @@
 
 export default {
   props: ['item']
+  //   props: {
+  //     item: {
+  //       type: Object,
+  //       default: () => { 
+  //         return {} 
+  //       }
+  //     }
+  // },
 };
 </script>
 
