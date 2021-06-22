@@ -32,15 +32,12 @@ export default {
     box-sizing: border-box;
 }
 #app-globale {
-    min-height: 100%;
-    min-width: 100%;
+    min-height: 100vh;
+    width: 100%;
     background: rgb(240, 240, 240);
     display: grid;
     grid-template-rows: auto 1fr auto;
-}
-.main {
-    /* min-height: 75vh; */
-    margin-bottom: 20rem;
+    grid-template-columns: 1fr;
 }
 
 </style>

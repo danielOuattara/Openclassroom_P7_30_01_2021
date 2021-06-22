@@ -18,22 +18,8 @@ export default {
             successful: false,
         };
     },
-    // computed: {
-    //     currentUser() {
-    //         return this.$store.state.auth.user;
-    //     },
-
-        // photo() {
-        //   return this.props.photo;
-        // },
-
-        // comment() {
-        //   return this.props.photo.comments;
-        // }
-    // },
-
-    methods: {
-        ...mapActions(["deletePhotoCommentAction", "fetchAllPhotosAction"]),
+methods: {
+        ...mapActions(["deletePhotoCommentAction", "getAllPhotosAction"]),
 
 
         async deletePhotoComment() {
@@ -45,7 +31,7 @@ export default {
               const commentUuid = this.commentUuid;
               const data= {photoUuid, commentUuid}
               const response = await this.$store.dispatch("deletePhotoCommentAction", data);
-              await this.fetchAllPhotosAction();
+              await this.getAllPhotosAction();
               this.message = response.data;
               this.successful = true;
               this.loading = false;

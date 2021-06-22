@@ -36,6 +36,18 @@ export const photo = {
             }
         },
 
+        async deleteOnePhotoAction( {commit}, photoUuid) {
+            try {
+                const photo = await photoService.deleteOnePhoto(photoUuid);
+                commit('deleteOnePhotoMutation', photo);
+                return await Promise.resolve(photo);
+            } catch (err) {
+                commit("errDeleteOnePhotoMutation");
+                return Promise.reject(err);
+            }
+        },
+
+
         // async fetchUserAllPhotosAction( {commit}, userUuid) {
         //     try {
         //         const photos = await photoService.getAllPhotosFromOneUser(userUuid);
@@ -48,16 +60,6 @@ export const photo = {
         // },
         
         
-        // async deleteOnePhotoAction( {commit}, photoUuid) {
-        //     try {
-        //         const photo = await photoService.deleteOnePhoto(photoUuid);
-        //         commit('deleteOnePhotoMutation', photo);
-        //         return await Promise.resolve(photo);
-        //     } catch (err) {
-        //         commit("errDeleteOnePhotoMutation");
-        //         return Promise.reject(err);
-        //     }
-        // },
     },
 
     mutations: {
@@ -67,11 +69,11 @@ export const photo = {
         getAllPhotosMutation: (state, photos) => state.allPhotos = photos,
         errGetAllPhotosMutation: (state) => state.allPhotos = [],
 
+        deleteOnePhotoMutation:(state) => state.allPhotos = [],
+        errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
         
         // fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
         // errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
 
-        // deleteOnePhotoMutation:(state) => state.allPhotos = [],
-        // errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
     }
 }

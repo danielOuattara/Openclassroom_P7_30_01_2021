@@ -1,10 +1,10 @@
 <template>
   <div class="bloc bloc-new-comment">
-        <form name="form" @submit.prevent="addPhotoComment">
+      <form name="form" @submit.prevent="addPhotoComment">
         <div class="form-group">
-            <label for="value">Comment below : </label>
-            <textarea  name="value" 
-                       placeholder="enter your comment here..."
+            <label for="value">Comment : </label>
+            <textarea  name="value"  
+                       placeholder="comment here..."
                        type="text" 
                        cols="30" rows="2" 
                        class="form-control"
@@ -16,11 +16,20 @@
               An entry is required to post a comment
             </div>
         </div>
-        <div class="form-group">
-            <button class="btn btn-outline-primary" :disabled="loading">
+        <div class="form-group post-comment" v-show="comment.content">
+            <button class="btn-post-comment" :disabled="loading" >
               <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-              <span class="">Post comment</span>
+              <span class="">
+                Post comment
+                <font-awesome-icon id="icon-paper-plane-comment" icon="paper-plane" />
+              </span>
             </button>
+            <button @click="onCommentReset" class="reset-comment btn btn-dark" type="button" 
+                    v-show="comment.content">
+                Reset
+                <font-awesome-icon id="icon-times-circle-comment" icon="times-circle" />
+            </button>
+    
         </div>
         <div class="form-group">
             <div v-if="message" class="alert alert-danger" role="alert">
@@ -43,11 +52,19 @@ export default {
       comment: new Comment(''),
       loading: false,
       message: '',
+      commentSwtich: false,
     };
   },
 
   methods: {
     ...mapActions([ "addPhotoCommentAction", "getAllPhotosAction" ]),
+
+    onCommentReset() {
+      this.commentSwitch= false;
+      this.comment.content = "";
+      this.$validator.reset();
+      console.log("Hello")
+    },
 
     async addPhotoComment() {   // USING VueX and Services.
       try {
@@ -59,8 +76,10 @@ export default {
         }
         const photoUuid = this.photoUuid;
         const data = {photoUuid, ...this.comment }
+        this.commentSwtich = false;
         await this.$store.dispatch("addPhotoCommentAction", data);
         this.loading = false;
+        this.onCommentReset();
         this.getAllPhotosAction();
       } catch (error) {
         this.loading = false;
@@ -73,7 +92,36 @@ export default {
 
 <style lang="scss" scoped>
 
+.btn-post-comment {
+  border-style: none;
+  border: 1px solid grey;
+  padding: 0.35rem 0.65rem;
+  color: #0048ff;
+  border-radius: 4px;
+  // background: #007bff;
+  // border-radius: 0.25rem;
+}
 
+#icon-paper-plane-comment {
+  margin-left: 0.5rem;
+}
 
+.reset-comment{
+  margin-left: 2rem;
+  // background: black;
+  color:white;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  position: absolute;
+  right: 0;
+}
+
+#icon-times-circle-comment {
+  margin-left: 1rem;
+}
+
+.post-comment{
+  position: relative;
+}
 
 </style>

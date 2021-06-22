@@ -1,19 +1,22 @@
 
 // Now we define a service for accessing data in photo.service.js:
 
-// import axios from "axios";
-// import authHeader from "./auth.header.js";
-// import comment from './../models/comment.js'
-// const API_URL = "http://localhost:4200/api/photos";
+import axios from "axios";
+import authHeader from "./auth.header.js";
+const API_URL = "http://localhost:4200/api/photos";
 
 class PhotoCommentsService {
 
-    // createPhotoComment(photoUuid, data) {
-    //     return axios.post(API_URL + `/${photoUuid}/comments` , 
-    //         { content: data.content }, 
-    //         { headers: authHeader() }
-    //     )
-    // }
+    addPhotoComment(photoUuid, data) {
+        return axios.post(API_URL + `/${photoUuid}/comments` , 
+            { content: data.content }, 
+            { headers: authHeader() }
+        )
+    }
+    
+    deleteOneComment(photoUuid, commentUuid) {
+        return axios.delete(API_URL + `/${photoUuid}/comments/${commentUuid}`, { headers: authHeader() })
+    }
     
     // getAllCommentsForOnePhoto(photoUuid) {
     //     return axios.get(API_URL + `/${photoUuid}/comments` , { headers: authHeader() })
@@ -27,9 +30,6 @@ class PhotoCommentsService {
     //     return axios.put(API_URL + `/${photoUuid}/comments/${commentUuid}`, { headers: authHeader() })
     // }
 
-    // deleteOneComment(photoUuid, commentUuid) {
-    //     return axios.delete(API_URL + `/${photoUuid}/comments/${commentUuid}`, { headers: authHeader() })
-    // }
 
     // deleteAllCommentsFromOnePhoto(photoUuid) {
     //     return axios.delete(API_URL + `/${photoUuid}/comments`, { headers: authHeader() })

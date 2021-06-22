@@ -48,7 +48,7 @@
               </div>
 
               <div class="form-group" v-show="fileSelected || this.photo.title">
-                <span  @click="onReset" type="reset" class="btn btn-dark btn-block">
+                <span @click="onReset" type="button" class="btn btn-dark btn-block">
                   Cancel
                  <font-awesome-icon id="icon-times-circle" icon="times-circle" />
                 </span>

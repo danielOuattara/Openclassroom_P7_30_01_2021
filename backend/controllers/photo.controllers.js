@@ -61,6 +61,28 @@ exports.getAllPhotos = (req, res) => {
   .then( photos => res.status(200).json(photos))
   .catch( err => res.status(500).send(err.message));
 };
+// -----------------------------------------------------------------------------------------
+
+exports.deleteOnePhoto = async (req, res) => {
+    try {
+        const photo = await Photo.findOne( { where: { uuid: req.params.photoUuid } });
+        if (!photo) {
+          return res.status(404).json(" Photo unknown !");
+        }
+        if(photo.ownerId !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+            return res.status(403).json({ Error : "Non Authorized !" })  
+        }
+        const photoName = photo.imageUrl.split('/photos/')[1];
+        fs.unlink(`images/photos/${photoName}`, (err) => {
+          if(err) throw err;
+        })
+        await photo.destroy();
+        res.status(200).json({ message: ` Photo successfully deleted !`})
+        console.log("hello");
+    } catch(err) {
+      return res.status(403).json(err.message )
+    }
+}
 
 //-----------------------------------------------------------------------------------------
 
@@ -136,28 +158,6 @@ exports.getAllPhotos = (req, res) => {
 //     })
 // }
 
-// -----------------------------------------------------------------------------------------
-
-exports.deleteOnePhoto = async (req, res) => {
-    try {
-        const photo = await Photo.findOne( { where: { uuid: req.params.photoUuid } });
-        if (!photo) {
-          return res.status(404).json(" Photo unknown !");
-        }
-        if(photo.ownerId !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-            return res.status(403).json({ Error : "Non Authorized !" })  
-        }
-        const photoName = photo.imageUrl.split('/photos/')[1];
-        fs.unlink(`images/photos/${photoName}`, (err) => {
-          if(err) throw err;
-        })
-        await photo.destroy();
-        res.status(200).json({ message: ` Photo successfully deleted !`})
-        console.log("hello");
-    } catch(err) {
-      return res.status(403).json(err.message )
-    }
-}
 
 // -----------------------------------------------------------------------------------------
 
