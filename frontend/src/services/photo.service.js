@@ -21,10 +21,8 @@ class PhotoService {
         return axios.delete(API_URL + `/${photoUuid}`, { headers: authHeader() })
     }
     
-    createPhotoReport(photoUuid, data) {
-        return axios.post(API_URL + `/${photoUuid}/report`, 
-        {message: data.message }, 
-        { headers: authHeader() })
+    createPhotoReport(photoUuid, message) {
+        return axios.post(API_URL + `/${photoUuid}/report`, {message}, { headers: authHeader() })
     }
 
 

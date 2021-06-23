@@ -8,22 +8,19 @@
             Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-
                 <DeletePhoto v-if="photoOwner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                             class=" btn-options-photo btn-delete-photo"
+                             class="btn-options-photo btn-delete-photo"
                              v-bind:photoUuid="photoUuid"/>
-
-                <ReportPhoto class=" btn-options-photo btn-report-photo"/>
+                <ReportPhotoTrigger class="btn-options-photo btn-report-photo"/>
         </div>
     </div>
 </template>
 
 <script>
 import DeletePhoto from './DeletePhoto';
-import ReportPhoto from './ReportPhoto';
+import ReportPhotoTrigger from './ReportPhotoTrigger';
 export default {
     // props: ['photoOwnerUuid', 'photoUuid'],
-
     props: {
         photoUuid: {
             type: String,
@@ -39,8 +36,7 @@ export default {
 
     components: {
         DeletePhoto,
-        ReportPhoto,
-
+        ReportPhotoTrigger,
     },
 
     computed: {
@@ -48,7 +44,7 @@ export default {
             return this.$store.state.auth.user;
         }
     },
-    
+    methods: {   }
 }
 </script>
 

@@ -15,14 +15,6 @@ export default {
             successful: false,
         };
     },
-    // computed: {
-    //     currentUser() {
-    //         return this.$store.state.auth.user;
-    //     },
-    //     photo() {
-    //       return this.props.photoUuid;
-    //     }
-    // },
 
     methods: {
         ...mapActions(["deleteOnePhotoAction", "getAllPhotosAction"]),

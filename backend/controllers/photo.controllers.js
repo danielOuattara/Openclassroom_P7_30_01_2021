@@ -87,6 +87,7 @@ exports.deleteOnePhoto = async (req, res) => {
 //-----------------------------------------------------------------------------------------
 
 exports.createPhotoReport = async (req, res) => {
+  console.log(req)
     try {
         const photo = await Photo.findOne( { where: { uuid: req.params.photoUuid } });
         if (!photo) {
@@ -98,9 +99,9 @@ exports.createPhotoReport = async (req, res) => {
           photoId: photo.id,
           message: req.body.message
         })
-        return res.status(200).json({ message: ` Report successfully registered, thank you !`})
+        return res.status(200).send(` Report successfully registered, thank you !`)
     } catch(err) {
-      return res.status(403).json(err.message )
+      return res.status(403).send(err.message )
     }
 }
 

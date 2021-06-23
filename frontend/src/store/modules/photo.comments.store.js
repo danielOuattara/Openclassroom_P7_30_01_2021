@@ -13,7 +13,6 @@ export const photoComments =  {
     },
 
     actions: {
-
         async addPhotoCommentAction({commit}, data) {
             try {
                 const comment = await photoCommentService.addPhotoComment(data.photoUuid, data);
@@ -66,17 +65,10 @@ export const photoComments =  {
         deletePhotoCommentMutation: (state) => state.allCommentsForOnePhoto = [],
         errDeletePhotoCommentMutation: (state, comment) => state.allCommentsForOnePhoto = comment,
 
-        
         createCommentReportMutation:(state, report) => state.CommentReport = report,
         errcreateCommentReportMutation: (state) => state.CommentReport = []
-        
-
 
         // getAllCommentsForOnePhotoMutation: (state, comments) => state.allCommentsOnePhoto = comments,
         // errgetAllCommentsForOnePhotoMutation: (state) => state.allCommentsOnePhoto = []
-
-
-
     },
-
 }

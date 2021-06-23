@@ -50,7 +50,7 @@ export const photo = {
         
          async createPhotoReportAction({commit}, data) {
              try {
-                 const report = await photoService.createPhotoReportAction(data.photoUuid, data.message);
+                 const report = await photoService.createPhotoReport(data.photoUuid, data.message);
                  commit('createPhotoReportMutation', report);
                  return Promise.resolve(report);
              } catch (err) {
@@ -85,7 +85,7 @@ export const photo = {
         errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
 
         createPhotoReportMutation:(state, report) => state.photoReport = report,
-        errcreatePhotoReportMutation: (state) => state.photoReport = []
+        errCreatePhotoReportMutation: (state) => state.photoReport = []
         
         // fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
         // errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],

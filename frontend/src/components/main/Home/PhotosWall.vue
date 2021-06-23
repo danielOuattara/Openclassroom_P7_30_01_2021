@@ -1,18 +1,18 @@
 <template>
     <div class="photos-container">
       <h2>Publications</h2>
-      <!-- {{allPhotos}} -->
         <article v-for="photo in allPhotos" :key="photo.uuid" class="photo-bloc">
             <OwnerAvatar v-bind:item="photo.owner"/>
             <OwnerName v-bind:item="photo.owner"/>
             <PhotoTitle v-bind:item="photo.title"/>
             <DateOfPosting v-bind:item="photo.createdAt"/>
             <Photo v-bind:item="photo" />
-            <CommentsToggler v-bind:item="photo.uuid"
+            <CommentsToggler v-bind:item="photo.uuid" 
                              v-bind:comments="photo.comments"/> 
             <!-- <PhotoLikes v-bind:item="photo" /> -->
-
-            <PhotoBtnOptions v-bind:photoOwner="photo.owner"
+            <PhotoBtnOptions v-bind:photoOwner="photo.owner" 
+                             v-bind:photoUuid="photo.uuid"/>
+            <ReportPhotoForm class="photo-report-form"  
                              v-bind:photoUuid="photo.uuid"/>
             <div class="collapse bloc-comment-collapsable" :id="'photo'+photo.uuid">
                 <CommentsWall v-bind:photo="photo"/>
@@ -34,6 +34,7 @@ import Photo         from './../global_components/Photo';
 import CommentsToggler from './../global_components/CommentsToggler';
 // import PhotoLikes    from './../global_components/PhotoLikes';
 import PhotoBtnOptions from './../global_components/PhotoBtnOptions.vue';
+import ReportPhotoForm from './../global_components/ReportPhotoForm.vue'
 import CommentsWall   from './CommentsWall.vue';
 import AddPhotoComment  from '../global_components/AddPhotoComment.vue';
 
@@ -49,6 +50,7 @@ export default {
     CommentsToggler,
     // PhotoLikes,
     PhotoBtnOptions,
+    ReportPhotoForm,
     CommentsWall,
     AddPhotoComment,
   },
@@ -74,10 +76,6 @@ export default {
   created() {
     this.getAllPhotosAction();
   },
-
-  // mounted() {
-  //     this.getAllPhotosAction();
-  //   },
 };
 </script>
 
@@ -91,6 +89,10 @@ h2 {
   border-bottom: 1px solid rgb(199, 199, 199);
   padding-bottom: 1rem;
   margin-bottom: 2rem;
+}
+
+div.photos-container {
+  position: relative;
 }
 article.photo-bloc {
     margin: auto;
@@ -140,6 +142,11 @@ article.photo-bloc {
     margin-bottom: 1rem;
     border-bottom:2px dotted blue;
 }
+
+// .photo-report-form {
+//   z-index: 5!important;
+//   position: absolute;
+// }
 
 /* -------- comment styling */
 .bloc-comment-collapsable {
