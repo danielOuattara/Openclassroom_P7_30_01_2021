@@ -26,7 +26,7 @@ export const photoComments =  {
 
         async deletePhotoCommentAction({commit}, data ) {
             try {
-                const comment = await photoCommentService.deleteOneComment(data.photoUuid, data.commentUuid);
+                const comment = await photoCommentService.deleteOneComment(data.photoUuid, data.commentUuid, data.message);
                 commit('deletePhotoCommentMutation', comment.data);
                 return Promise.resolve(comment.data);
             } catch(err) {
@@ -38,10 +38,10 @@ export const photoComments =  {
         async createCommentReportAction({commit}, data) {
              try {
                  const report = await photoCommentService.createCommentReportAction(data.photoUuid, data.commentUuid, data.message);
-                 commit('createCommentReportMutation', report);
+                 commit('createPhotoCommentReportMutation', report);
                  return Promise.resolve(report);
              } catch (err) {
-                 commit("errCreateCommentReportMutation");
+                 commit("errCreatePhotoCommentReportMutation");
                  return Promise.reject(err); 
              }
          }
@@ -65,8 +65,8 @@ export const photoComments =  {
         deletePhotoCommentMutation: (state) => state.allCommentsForOnePhoto = [],
         errDeletePhotoCommentMutation: (state, comment) => state.allCommentsForOnePhoto = comment,
 
-        createCommentReportMutation:(state, report) => state.CommentReport = report,
-        errcreateCommentReportMutation: (state) => state.CommentReport = []
+        createPhotoCommentReportMutation:(state, report) => state.CommentReport = report,
+        errcreatePhotoCommentReportMutation: (state) => state.CommentReport = []
 
         // getAllCommentsForOnePhotoMutation: (state, comments) => state.allCommentsOnePhoto = comments,
         // errgetAllCommentsForOnePhotoMutation: (state) => state.allCommentsOnePhoto = []

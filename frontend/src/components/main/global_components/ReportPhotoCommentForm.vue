@@ -1,16 +1,16 @@
 <template>
   <!-- Modal -->
-  <div class="modal fade" id="photoReportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="photoCommentReportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Photo report form</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Comment report form</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form name="form" @submit.prevent="reportPhoto" class="photo-report-form">
+          <form name="form" @submit.prevent="reportComment" class="photo-report-form">
             <div class="form-group">
               <label for="aboutMe"> write down your report : </label>
               <textarea  name="aboutMe" 
@@ -52,7 +52,7 @@
 <script>
 import { mapActions } from "vuex";
 export default {
-    props: ['photoUuid'],
+    props: ['photoUuid', 'commentUuid'],
     data() {
         return {
             loading: false,
@@ -72,7 +72,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["createReportPhotoAction", "getAllPhotosAction"]),
+        ...mapActions(["createReportPhotoCommentAction", "getAllPhotosAction"]),
 
         onReset() {
           this.userMessage='';
@@ -81,14 +81,15 @@ export default {
           this.$refs.modalCloser.click();
         },
 
-        async reportPhoto() {
+        async reportComment() {
           try {
               this.message = '';
               this.submitted = true;
               this.loading = true;
               const photoUuid = this.photoUuid;
+              const commentUuid = this.commentUuid;
               const message = this.userMessage
-              const data = {photoUuid, message };
+              const data = {photoUuid, commentUuid, message };
               const response = await this.$store.dispatch("createPhotoReportAction", data);
               this.message = response.data;
               this.successful = true;
@@ -101,19 +102,11 @@ export default {
               this.successful = false;
           }
       },
-
   },
 };
 </script>
 
 <style lang="scss" scoped> 
-.photo-report-form {
-  // z-index: 5!important;
-  // position: absolute;
-  // background: grey;
-  // padding: 3rem 1rem;
-}
-
 .send-report {
   position: absolute;
   right: 2rem;

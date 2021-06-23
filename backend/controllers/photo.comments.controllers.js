@@ -54,7 +54,7 @@ exports.createCommentReport = async (req, res) => {
         if (!photo) {
           return res.status(404).send(" Photo unknown !");
         }
-        const comment = await Photo.findOne( { where: { uuid: req.params.comentUuid } });
+        const comment = await Photo.findOne( { where: { uuid: req.params.commentUuid } });
         if (!comment) {
           return res.status(404).send("Comment unknown !");
         }

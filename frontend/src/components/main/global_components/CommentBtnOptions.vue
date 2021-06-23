@@ -15,7 +15,7 @@
                                 v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"
                                 v-bind:commentUuid="comment.uuid"
                                 v-bind:photoUuid="photoUuid" />
-            <ReportPhotoComment class=" btn-comment-options btn-report-comment"/>
+            <ReportPhotoCommentTrigger class=" btn-comment-options btn-report-comment"/>
         </div>
     </div>
 </template>
@@ -24,14 +24,14 @@
 
 import UpdatePhotoComment from './UpdatePhotoComment.vue';
 import DeletePhotoComment from './DeletePhotoComment.vue';
-import ReportPhotoComment from './ReportPhotoComment.vue';
+import ReportPhotoCommentTrigger from './ReportPhotoCommentTrigger.vue';
 
 export default {
     props: ['comment','photoUuid'],
     components: {
         UpdatePhotoComment,
         DeletePhotoComment,
-        ReportPhotoComment,
+        ReportPhotoCommentTrigger,
     },
     computed: {
         currentUser() {

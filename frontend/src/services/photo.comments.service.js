@@ -18,9 +18,9 @@ class PhotoCommentsService {
         return axios.delete(API_URL + `/${photoUuid}/comments/${commentUuid}`, { headers: authHeader() })
     }
 
-    // createCommentReport(photoUuid, commentUuid, formData) {
-    //     return axios.post(API_URL + `/${photoUuid/commentUuid}/report`, formData, { headers: authHeader() })
-    // }
+    createCommentReport(photoUuid, commentUuid, message) {
+        return axios.post(API_URL + `/${photoUuid/commentUuid}/report`, message, { headers: authHeader() })
+    }
 
 
 

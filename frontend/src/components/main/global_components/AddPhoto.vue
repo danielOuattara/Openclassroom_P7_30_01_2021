@@ -1,5 +1,5 @@
 <template>
-    <section >
+    <section  class="add-photo-section">
         <h2>Add a photo</h2>
         <!-- --------------------------------  Section: Add  Photo-->
         <form name="form" @submit.prevent="addPhoto" class="block-add-photo">
@@ -122,6 +122,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .block-add-photo {
   margin: 2rem 0 3rem;
   border: 1px solid rgb(194, 194, 194);

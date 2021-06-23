@@ -7,6 +7,8 @@
             <CommentContent v-bind:item="comment"/>
             <CommentBtnOptions v-bind:comment="comment"
                                v-bind:photoUuid="photo.uuid" />
+            <ReportPhotoCommentForm v-bind:photoUuid="photo.uuid"
+                                    v-bind:commentUuid="comment.uuid" />
         </div>
     </div>
 </template>
@@ -17,6 +19,7 @@ import OwnerName from './../../main/global_components/OwnerName';
 import DateOfPosting from './../../main/global_components/DateOfPosting';
 import CommentBtnOptions from './../../main/global_components/CommentBtnOptions.vue';
 import CommentContent from './../../main/global_components/CommentContent';
+import ReportPhotoCommentForm from './../../main/global_components/ReportPhotoCommentForm.vue';
 export default {
     name: 'CommentsWall',
     data() {
@@ -28,7 +31,8 @@ export default {
         OwnerName,
         DateOfPosting,
         CommentBtnOptions,
-        CommentContent
+        CommentContent,
+        ReportPhotoCommentForm,
     },
 
     computed: {
