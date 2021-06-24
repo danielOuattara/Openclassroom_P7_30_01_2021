@@ -8,17 +8,17 @@
             Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                <DeletePhoto v-if="photoOwner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                <BtnDeletePhoto v-if="photoOwner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                              class="btn-options-photo btn-delete-photo"
                              v-bind:photoUuid="photoUuid"/>
-                <ReportPhotoTrigger class="btn-options-photo btn-report-photo"/>
+                <BtnReportPhoto class="btn-options-photo btn-report-photo"/>
         </div>
     </div>
 </template>
 
 <script>
-import DeletePhoto from './DeletePhoto';
-import ReportPhotoTrigger from './ReportPhotoTrigger';
+import BtnDeletePhoto from './BtnDeletePhoto';
+import BtnReportPhoto from './BtnReportPhoto';
 export default {
     // props: ['photoOwnerUuid', 'photoUuid'],
     props: {
@@ -35,8 +35,8 @@ export default {
     },
 
     components: {
-        DeletePhoto,
-        ReportPhotoTrigger,
+        BtnDeletePhoto,
+        BtnReportPhoto,
     },
 
     computed: {

@@ -9,7 +9,7 @@
             Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-            <UpdatePhotoComment v-if="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+            <PhotoCommentUpdateTrigger v-if="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                                 class=" btn-comment-options btn-update-comment"  />
             <DeletePhotoComment class=" btn-comment-options btn-delete-comment"
                                 v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"
@@ -22,14 +22,14 @@
 
 <script>
 
-import UpdatePhotoComment from './UpdatePhotoComment.vue';
+import PhotoCommentUpdateTrigger from './PhotoCommentUpdateTrigger.vue';
 import DeletePhotoComment from './DeletePhotoComment.vue';
 import ReportPhotoComment from './ReportPhotoComment.vue';
 
 export default {
     props: ['comment','photoUuid'],
     components: {
-        UpdatePhotoComment,
+        PhotoCommentUpdateTrigger,
         DeletePhotoComment,
         ReportPhotoComment,
     },

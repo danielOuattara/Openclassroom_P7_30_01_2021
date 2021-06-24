@@ -1,3 +1,6 @@
+
+// PHOTO ROUTE
+
 const router = require('express').Router();
 const { authJwt, multer} = require("../middleware");
 
@@ -34,9 +37,9 @@ router.post("/:photoUuid/report", authJwt, controller.createPhotoReport);
 router.post("/:photoUuid/comments", authJwt, controllerComments.createComment);
 router.delete("/:photoUuid/comments/:commentUuid", authJwt, controllerComments.deleteOneComment);
 router.post("/:photoUuid/comments/:commentUuid/report", authJwt, controllerComments.createCommentReport); 
+router.put("/:photoUuid/comments/:commentUuid", authJwt, controllerComments.updateOneComment);
 // router.get("/:photoUuid/comments",  authJwt, controllerComments.getPhotoAllComments);
 // router.get("/:photoUuid/comments/:commentUuid", authJwt, controllerComments.getOneComment);
-// router.put("/:photoUuid/comments/:commentUuid", authJwt, controllerComments.updateOneComment);
 // router.delete("/:photoUuid/comments/",          authJwt, controllerComments.deleteAllCommentsFromOnePhoto);
 // router.delete("/user/:userUuid/comments/",      authJwt, controllerComments.deleteAllCommentsFromOneUser);
 

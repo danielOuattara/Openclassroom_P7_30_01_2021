@@ -4,7 +4,8 @@
             <OwnerAvatar v-bind:item="comment.owner"/>
             <OwnerName v-bind:item="comment.owner"/>
             <DateOfPosting v-bind:item="comment.createdAt"/>
-            <CommentContent v-bind:item="comment"/>
+            <CommentContent v-bind:comment="comment"
+                            v-bind:photoUuid="photo.uuid"/>
             <CommentBtnOptions v-bind:comment="comment"
                                v-bind:photoUuid="photo.uuid" />
             <ReportPhotoCommentForm v-bind:photoUuid="photo.uuid"
@@ -25,7 +26,7 @@ export default {
     data() {
         return{   }
     },
-    props: ['photo', 'commentToggled'], 
+    props: ['photo', ],  //'commentToggled'
     components: {
         OwnerAvatar,
         OwnerName,

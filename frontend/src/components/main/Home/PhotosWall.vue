@@ -7,8 +7,8 @@
             <PhotoTitle v-bind:item="photo.title"/>
             <DateOfPosting v-bind:item="photo.createdAt"/>
             <Photo v-bind:item="photo" />
-            <CommentsToggler v-bind:item="photo.uuid" 
-                             v-bind:comments="photo.comments"/> 
+            <BtnCommentsToggler v-bind:item="photo.uuid" 
+                                v-bind:comments="photo.comments"/> 
             <!-- <PhotoLikes v-bind:item="photo" /> -->
             <PhotoBtnOptions v-bind:photoOwner="photo.owner" 
                              v-bind:photoUuid="photo.uuid"/>
@@ -31,7 +31,7 @@ import OwnerName     from './../global_components/OwnerName.vue';
 import PhotoTitle    from './../global_components/PhotoTitle';
 import DateOfPosting from './../global_components/DateOfPosting';
 import Photo         from './../global_components/Photo';
-import CommentsToggler from './../global_components/CommentsToggler';
+import BtnCommentsToggler from './../global_components/BtnCommentsToggler';
 // import PhotoLikes    from './../global_components/PhotoLikes';
 import PhotoBtnOptions from './../global_components/PhotoBtnOptions.vue';
 import ReportPhotoForm from './../global_components/ReportPhotoForm.vue'
@@ -47,7 +47,7 @@ export default {
     PhotoTitle,
     DateOfPosting,
     Photo,
-    CommentsToggler,
+    BtnCommentsToggler,
     // PhotoLikes,
     PhotoBtnOptions,
     ReportPhotoForm,

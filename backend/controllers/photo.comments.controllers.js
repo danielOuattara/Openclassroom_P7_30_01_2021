@@ -1,4 +1,6 @@
 
+// PHOTO COMMENT CONTROLLER
+
 const db = require("./../models");
 const { User, Photo, Comment, CommentsReports } = require('./../models');
 const Op = db.Sequelize.Op;
@@ -70,6 +72,32 @@ exports.createCommentReport = async (req, res) => {
     }
 }
 
+// -----------------------------------------------------------------------------------------------
+
+exports.updateOneComment = async (req, res) => {
+    console.log(req);
+    try {
+        const photo = await Photo.findOne({ where: {uuid: req.params.photoUuid}})
+        if (!photo) {
+            return res.status(404).send(`Photo not found `)
+        }
+
+        const comment = await Comment.findOne({ where: {uuid: req.params.commentUuid}})
+        if (!comment) {
+            return res.status(404).send(`Comment not found `)
+        }
+        if(comment.ownerId !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
+            return res.status(403).send("Access Denied ! ");  
+        }
+
+        const commentObject = req.body;
+        comment.update(commentObject)
+        res.status(201).send("Comment successfully updated ! ")
+
+    } catch (err) {
+        return  res.status(500).json(err.message)   
+    }
+}
 // ------------------------------------------------------------------------------------------------
 // exports.getPhotoAllComments = (req, res) => {
 //     Photo.findOne({ where: { uuid: req.params.photoUuid } })
@@ -110,22 +138,6 @@ exports.createCommentReport = async (req, res) => {
 
 // ----------------------------------------------------------------------------------------
 
-// exports.updateOneComment = (req, res) => {
-//     const commentObject = {...req.body}
-//     Comment.findOne({ where: {uuid: req.params.commentUuid}})
-//     .then( comment => {
-//         if (!comment) {
-//           return res.status(404).send(`Comment not found `)
-//         }
-//         if(comment.ownerId !== req.userId && !req.userRoles.includes("ROLE_ADMIN")){
-//           return res.status(403).send("Access Denied ! ");  
-//         }
-//         comment.update(commentObject)
-//         .then( () => res.status(201).send("Comment successfully updated ! "))
-//         .catch( err => res.status(401).json(err.message)) 
-//     })
-//     .catch( err => res.status(500).json(err.message))
-// }
 
 
 // ----------------------------------------------------------------------------------------

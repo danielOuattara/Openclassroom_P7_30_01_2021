@@ -93,8 +93,8 @@ export default {
             try{
                 const userUuid = this.currentUser.uuid
                 await this.$store.dispatch('auth/logout', userUuid);
-                localStorage.removeItem("user");
                 this.$router.push('/login');
+                localStorage.removeItem("user");
             } catch (error) {
                     (error.response && error.response.data) || error.message || error.toString();
                 }

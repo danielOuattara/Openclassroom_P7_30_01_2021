@@ -9,38 +9,38 @@
             Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-            <UpdatePhotoComment v-if="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+            <BtnUpdatePhotoComment v-if="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                                 class=" btn-comment-options btn-update-comment"  />
-            <DeletePhotoComment class=" btn-comment-options btn-delete-comment"
+            <BtnDeletePhotoComment class=" btn-comment-options btn-delete-comment"
                                 v-show="comment.owner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"
                                 v-bind:commentUuid="comment.uuid"
                                 v-bind:photoUuid="photoUuid" />
-            <ReportPhotoCommentTrigger class=" btn-comment-options btn-report-comment"/>
+            <BtnReportPhotoComment class=" btn-comment-options btn-report-comment"/>
         </div>
     </div>
 </template>
 
 <script>
 
-import UpdatePhotoComment from './UpdatePhotoComment.vue';
-import DeletePhotoComment from './DeletePhotoComment.vue';
-import ReportPhotoCommentTrigger from './ReportPhotoCommentTrigger.vue';
+import BtnUpdatePhotoComment from './BtnUpdatePhotoComment.vue';
+import BtnDeletePhotoComment from './BtnDeletePhotoComment.vue';
+import BtnReportPhotoComment from './BtnReportPhotoComment.vue';
 
 export default {
     props: ['comment','photoUuid'],
     components: {
-        UpdatePhotoComment,
-        DeletePhotoComment,
-        ReportPhotoCommentTrigger,
+        BtnUpdatePhotoComment,
+        BtnDeletePhotoComment,
+        BtnReportPhotoComment,
     },
     computed: {
         currentUser() {
             return this.$store.state.auth.user;
         },
 
-        received() {
-            return this.props;
-        },
+        // received() {
+        //     return this.props;
+        // },
 
     },
 }

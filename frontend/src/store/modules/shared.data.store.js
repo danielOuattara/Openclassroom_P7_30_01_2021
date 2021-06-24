@@ -1,23 +1,20 @@
 
-// import userService from "../../services/user.service";
-// import authService from '../../services/auth.service';
-
 export const sharedData = {
-    
     state: {
-        // user: {},
+        showCommentUpdate: false,
     },
 
     getters: {
-        // userData:(state) => state.user
+        getShowCommentUpdate:(state) => state.showCommentUpdate,
     },
 
     mutations: {
-        // fetchOneUserMutation: (state, user) => state.user = user,
-        // errorFetchOneUser: (state) => state.user = [],
-
-        // updateUserSuccessMutation: (state, user) => state.user = user,
-        // updateUserFailureMutation: (state) => state.user = {},
+        mutateShowCommentUpdate(state) {
+            return state.showCommentUpdate = !state.showCommentUpdate;
+        },
+        mutateCloseShowCommentUpdate(state) {
+            return state.showCommentUpdate = false;
+        }
     },
 
     actions: {
