@@ -70,6 +70,38 @@ exports.createCommentReport = async (req, res) => {
     }
 }
 
+// ------------------------------------------------------------------------------------
+
+exports.getCommentsReports = async (req, res) => {
+    try {
+        if(!req.userRoles.includes("ROLE_ADMIN")){
+            return res.status(403).json({ Error : "Non Authorized !" })  
+        }
+        const commentsReports = CommentsReports.findAll({ 
+          where: {}, 
+          order: [ ['createdAt', 'ASC'] ],
+          include: [
+            {
+              model: User,
+              as: 'owner',
+            }, 
+            {
+              model: Comment,
+              as: 'comment',
+              include: [ 
+                {
+                  model: User, 
+                  as: 'owner'
+                } 
+              ],
+            }, 
+           ],
+        })
+        return res.status(200).send(commentsReports)
+    } catch(err) {
+      return res.status(403).send(err.message )
+    }
+}
 // -----------------------------------------------------------------------------------------------
 
 exports.updateOneComment = async (req, res) => {

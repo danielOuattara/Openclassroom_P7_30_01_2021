@@ -33,7 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       required: true,
-    }
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },  
   }, {
     sequelize,
     modelName: 'PhotosReports',

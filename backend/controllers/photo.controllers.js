@@ -87,7 +87,6 @@ exports.deleteOnePhoto = async (req, res) => {
 //-----------------------------------------------------------------------------------------
 
 exports.createPhotoReport = async (req, res) => {
-  console.log(req)
     try {
         const photo = await Photo.findOne( { where: { uuid: req.params.photoUuid } });
         if (!photo) {
@@ -100,6 +99,39 @@ exports.createPhotoReport = async (req, res) => {
           message: req.body.message
         })
         return res.status(200).send(` Report successfully registered, thank you !`)
+    } catch(err) {
+      return res.status(403).send(err.message )
+    }
+}
+
+//------------------------------------------------------------------------------------------
+
+exports.getPhotosReports = async (req, res) => {
+    try {
+        if(!req.userRoles.includes("ROLE_ADMIN")){
+            return res.status(403).json({ Error : "Non Authorized !" })  
+        }
+        const photosReports = PhotosReports.findAll({ 
+          where: {}, 
+          order: [ ['createdAt', 'ASC'] ],
+          include: [
+            {
+              model: User,
+              as: 'owner',
+            }, 
+            {
+              model: Photo,
+              as: 'photo',
+              include: [ 
+                {
+                  model: User, 
+                  as: 'owner'
+                } 
+              ],
+            }, 
+           ],
+        })
+        return res.status(200).send(photosReports)
     } catch(err) {
       return res.status(403).send(err.message )
     }

@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     toJSON() {
       return {...this.get(), id: undefined} 
     }
+  }
 
-  };
   CommentsReports.init({
     uuid: {
       type: DataTypes.UUID,
@@ -35,7 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       required: true,
-    }  
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },  
   }, {
     sequelize,
     modelName: 'CommentsReports',

@@ -52,7 +52,7 @@ export default {
       comment: '',
       loading: false,
       message: '',
-      commentSwtich: false,
+      // commentSwtich: false,
     };
   },
 
@@ -76,7 +76,7 @@ export default {
         const photoUuid = this.photoUuid;
         const comment= this.comment
         const data = { photoUuid, comment }
-        this.commentSwtich = false;
+        // this.commentSwtich = false;
         await this.$store.dispatch("addPhotoCommentAction", data);
         this.loading = false;
         this.onCommentReset();
