@@ -32,8 +32,8 @@ export const photo = {
         getOnePhotoMutation: (state, photo) => state.onePhoto = photo,
         errGetOnePhotoMutation: (state) => state.onePhoto = [],
 
-        // fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
-        // errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
+        getUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
+        errGetUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
     },
 
     actions: {
@@ -93,15 +93,15 @@ export const photo = {
             }
         },
 
-        // async fetchUserAllPhotosAction( {commit}, userUuid) {
-        //     try {
-        //         const photos = await photoService.getAllPhotosFromOneUser(userUuid);
-        //         commit('fetchUserAllPhotosMutation', photos.data);
-        //         return await Promise.resolve(photos.data);
-        //     } catch (err) {
-        //         commit("errFetchUserAllPhotosMutation");
-        //         return Promise.reject(err);
-        //     }
-        // },
+        async getUserAllPhotosAction( {commit}, userUuid) {
+            try {
+                const photos = await photoService.getAllPhotosFromOneUser(userUuid);
+                commit('getUserAllPhotosMutation', photos.data);
+                return await Promise.resolve(photos.data);
+            } catch (err) {
+                commit("errGetUserAllPhotosMutation");
+                return Promise.reject(err);
+            }
+        },
     },
 }

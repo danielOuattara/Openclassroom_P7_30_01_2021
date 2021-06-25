@@ -1,4 +1,4 @@
-
+const bcrypt = require("bcryptjs");
 const { User, Photo, Like, Comment } = require('./../models');
 const fs = require("fs");
 
@@ -201,7 +201,7 @@ exports.updateUserBackgroundImage = async (req, res) => {
 
 //--------------------------------------------------------------------------------
 
-exports.updatePassword =  async(req, res) => { 
+exports.updatePassword = async(req, res) => { 
     try {
         const user = await User.findOne({ where: { uuid: req.params.userUuid } })
         if (!user) {

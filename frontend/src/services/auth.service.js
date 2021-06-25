@@ -19,9 +19,8 @@ class AuthService {
             });
     }
 
-    logout(userUuid) {  // TODO:  FUNCTION TO EXPAND
-        return axios.put( API_URL + `logout/${userUuid}`, {userUuid},
-           { headers: authHeader() })
+    logout(userUuid) {  
+        return axios.put( API_URL + `logout/${userUuid}`, {} ,{ headers: authHeader() });
     }
 
     signin(user) {

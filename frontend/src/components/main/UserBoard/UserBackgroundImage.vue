@@ -1,20 +1,17 @@
 <template>
     <section class="wall-background-image">
-        <div class="background-image" v-if="userData.backgroundImage" v-bind:style="{backgroundImage:`url(${userData.backgroundImage})`}"></div>
+        <div class="background-image" v-if="userDataGetters.backgroundImage" v-bind:style="{backgroundImage:`url(${userDataGetters.backgroundImage})`}"></div>
         <div class="background-image" v-else v-bind:style="{'background-image': 'url(' + require('@/assets/images/icon.png') + ')'}"></div>
     </section>    
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 export default {
-  props: {
-      userData: {
-        type: Object,
-        default: () => { 
-          return {}
-        }
-      }
-  },
+
+    computed: {
+      ...mapGetters(['userDataGetters']),
+    }, 
 }
 </script>
 

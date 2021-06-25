@@ -1,14 +1,14 @@
 <template>
     <section class="wall-header" >
-        <UserBackgroundImage v-bind:userData="userData"/>
+        <UserBackgroundImage/>
         <UserPortrait/>
         <UserInfos/>
         <UserSpecialOptions/>
 
         <!-- <UserUpdateAvatar  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                     class=" btn-comment-options btn-update-comment"  /> -->
-        <UserUpdateBackgroundImage  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                                    class=" btn-comment-options btn-update-comment"  />
+        <!-- <UserUpdateBackgroundImage  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                                    class=" btn-comment-options btn-update-comment"  /> -->
     </section>
 </template>
 
@@ -32,7 +32,7 @@ import UserSpecialOptions from './UserSpecialOptions.vue';
     },
 
     computed: {
-      ...mapGetters(['userData']),
+      ...mapGetters(['userDataGetters']),
       currentUser() {
           return this.$store.state.auth.user;
       }, 

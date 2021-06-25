@@ -27,7 +27,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["reportOnePhotoAction", "fetchAllPhotosAction"]),
+        ...mapActions(["reportOnePhotoAction", "getAllPhotosAction"]),
 
         // onFileSelect(event) {
         //   this.selectedFile = event.target.files[0];
@@ -45,7 +45,7 @@ export default {
               this.message = response.data;
               this.successful = true;
               this.loading = false;
-              this.fetchAllPhotosAction();
+              this.getAllPhotosAction();
           } catch(error) {
               this.loading = false;
               this.message = (error.response && error.response.data) || error.message || error.toString();

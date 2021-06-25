@@ -17,9 +17,9 @@ class UserService {
         return axios.get(API_URL + "/adminboard", { headers: authHeader() });
     }
 
-    // getOneUser(userUuid) {
-    //     return axios.get(API_URL + `/${userUuid}`, { headers: authHeader() })
-    // }
+    getOneUser(userUuid) {
+        return axios.get(API_URL + `/${userUuid}`, { headers: authHeader() })
+    }
 
     // getAllUsers() {
     //     return axios.get(API_URL + "/", { headers: authHeader() })
@@ -32,16 +32,15 @@ class UserService {
     //     data.config )
     // }
 
-    // updatePassword(userUuid, data) {
-    // return axios.put(API_URL + `updatepassword/${userUuid}`, { 
-    //         passwordOld: data.passwordOld,
-    //         password: data.password 
-    //     },
-    //     { headers: authHeader()  }
-    // )}
+    updatePassword(userUuid, data) {
+    return axios.put(API_URL + `/updatepassword/${userUuid}`, { 
+            passwordOld: data.passwordOld,
+            password: data.password 
+        },
+        { headers: authHeader()  }
+    )}
 
     // searchUsers() {}  // ## TODO
-
 }
 
 export default new UserService();

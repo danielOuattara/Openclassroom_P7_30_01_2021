@@ -1,21 +1,21 @@
 <template>
     <section class="user-portrait">
-        <img v-if="userData.avatar" 
+        <img v-if="userDataGetters.avatar" 
               class="user-avatar"
-              :src="userData.avatar" 
-              :alt="userData.firstName + ' ' + userData.lastName + ' picture'"
+              :src="userDataGetters.avatar" 
+              :alt="userDataGetters.firstName + ' ' + userDataGetters.lastName + ' picture'"
               data-toggle="modal"
-              :data-target="'#avatar'+ userData.uuid"/>
+              :data-target="'#avatar'+ userDataGetters.uuid"/>
         <img v-else 
               class="user-avatar"
               src="./../../../assets/images/generic-profile_360_360.jpg" 
-              :alt="userData.firstName + ' ' + userData.lastName + ' picture'"
+              :alt="userDataGetters.firstName + ' ' + userDataGetters.lastName + ' picture'"
               data-toggle="modal"
-              :data-target="'#avatar'+ userData.uuid"/>
+              :data-target="'#avatar'+ userDataGetters.uuid"/>
               <font-awesome-icon id="icon-camera-retro" icon="camera-retro" />
 
         <!-- Modal -->
-        <div class="modal fade" :id="'avatar'+userData.uuid" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+        <div class="modal fade" :id="'avatar'+userDataGetters.uuid" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -24,8 +24,8 @@
                         </button>
                     </div>
                     <div class="modal-body photo-modal">
-                          <img :src="userData.avatar" 
-                               :alt='"picture of " + userData.uuid' 
+                          <img :src="userDataGetters.avatar" 
+                               :alt='"picture of " + userDataGetters.uuid' 
                                class="image-modal"/>               
                     </div>
                 </div>
@@ -38,7 +38,7 @@
 import {mapGetters} from 'vuex';
 export default {
     computed: {
-      ...mapGetters(['userData']),
+      ...mapGetters(['userDataGetters']),
     },   
 }
 </script>

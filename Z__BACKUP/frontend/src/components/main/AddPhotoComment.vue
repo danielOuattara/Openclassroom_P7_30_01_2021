@@ -47,7 +47,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([ "addPhotoCommentAction", "fetchAllPhotosAction" ]),
+    ...mapActions([ "addPhotoCommentAction", "getAllPhotosAction" ]),
 
     async addPhotoComment() {   // USING VueX and Services.
       try {
@@ -61,7 +61,7 @@ export default {
         const data = {photoUuid, ...this.comment }
         await this.$store.dispatch("addPhotoCommentAction", data);
         this.loading = false;
-        this.fetchAllPhotosAction();
+        this.getAllPhotosAction();
       } catch (error) {
         this.loading = false;
           (error.response && error.response.data) || error.message || error.toString();

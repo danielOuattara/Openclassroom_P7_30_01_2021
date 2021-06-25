@@ -33,7 +33,7 @@ export default {
     // },
 
     methods: {
-        ...mapActions(["reportPhotoCommentAction", "fetchAllPhotosAction"]),
+        ...mapActions(["reportPhotoCommentAction", "getAllPhotosAction"]),
 
 
         async reportPhotoComment() {
@@ -46,7 +46,7 @@ export default {
               const data= {photoUuid, commentUuid}
               console.table(data)
               const response = await this.$store.dispatch("reportPhotoCommentAction", data);
-              this.fetchAllPhotosAction();
+              this.getAllPhotosAction();
               this.message = response.data;
               this.successful = true;
               this.loading = false;

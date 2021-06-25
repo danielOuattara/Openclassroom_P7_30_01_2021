@@ -64,11 +64,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchAllPhotosAction", "fetchOnePhotoLikesAction"]),
+    ...mapActions(["getAllPhotosAction", "fetchOnePhotoLikesAction"]),
   },
 
   created() {
-    this.fetchAllPhotosAction();
+    this.getAllPhotosAction();
   },
 
 };

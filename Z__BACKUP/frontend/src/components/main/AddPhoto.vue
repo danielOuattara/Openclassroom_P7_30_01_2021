@@ -73,7 +73,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["addOnePhotoAction", "fetchAllPhotosAction"]),
+        ...mapActions(["addOnePhotoAction", "getAllPhotosAction"]),
 
         onFileSelect(event) {
           this.selectedFile = event.target.files[0];
@@ -92,7 +92,7 @@ export default {
               formData.append("image", this.selectedFile, this.selectedFile.name);
               await this.$store.dispatch("addOnePhotoAction", formData);
               this.loading = false;
-              this.fetchAllPhotosAction();
+              this.getAllPhotosAction();
               this.$validator.reset();
               this.photo.title= ''
               this.clearInputFileAfterSubmit();

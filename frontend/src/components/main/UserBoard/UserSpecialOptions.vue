@@ -1,10 +1,11 @@
 <template>
 <section class="special-options">
-    <button @click="updateToggler"  class="user-update-form-collapser btn btn-outline-dark btn-block" 
+    <!-- Update Password drop-down button -->
+    <button @click="updateToggler" class="user-update-form-collapser btn btn-outline-dark btn-block" 
             type="button" 
             data-toggle="collapse" data-target="#password-update" 
             aria-expanded="false" aria-controls="password-update">
-          Update Password me
+        Update Password
             <font-awesome-icon v-if="!updateCollapsed" id="chevron-down" icon="chevron-down" />
             <font-awesome-icon v-if='updateCollapsed' id="chevron-up" icon="chevron-up" />
     </button>
@@ -14,12 +15,12 @@
         </div>
     </div>
 
-
+    <!-- Delete Account drop-down button -->
     <button @click="deleteToggler" class="account-delete-collapser btn btn-outline-danger btn-block" 
             type="button" 
             data-toggle="collapse" data-target="#account-delete" 
             aria-expanded="false" aria-controls="account-delete">
-     Delete account
+        Delete account
             <font-awesome-icon v-if="!deleteCollapsed" id="chevron-down" icon="chevron-down" />
             <font-awesome-icon v-if='deleteCollapsed' id="chevron-up" icon="chevron-up" />
     </button>
@@ -54,10 +55,8 @@ export default {
         },
         deleteToggler() {
             this.deleteCollapsed = !this.deleteCollapsed
-
         }
-    }
-    
+    } 
 }
 </script>
 
@@ -67,6 +66,11 @@ button {
     width: 80%!important;
     margin: auto;
     margin-top: 1rem;
+}
+
+.user-update-password {
+    max-width: 80vw;
+    margin: auto;
 }
 p{
     // border: 1px solid grey;

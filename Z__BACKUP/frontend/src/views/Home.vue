@@ -25,11 +25,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchAllPhotosAction", "fetchOnePhotoLikesAction"]),
+    ...mapActions(["getAllPhotosAction", "fetchOnePhotoLikesAction"]),
   },
 
   mounted() {
-    this.fetchAllPhotosAction();
+    this.getAllPhotosAction();
   },
 
 };

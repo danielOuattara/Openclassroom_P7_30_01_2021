@@ -2,74 +2,65 @@
 <template>
   <section class="user-board">  
     <WallHeader/>
-    <AddPhoto/>
-    <UserPhotosWall class="user-photos"/>
-
+    <!-- <AddPhoto class="add-photo"/> -->
+    <!-- <UserPhotosWall class="user-photos"/> -->
   </section>
 </template>
 
 <script>
-
 import UserService from './../services/user.service.js';
-import {mapGetters, mapActions } from 'vuex';
+import {mapActions } from 'vuex';
 
 import WallHeader from './../components/main/userBoard/WallHeader.vue';
 // import UserUpdateAvatar from './UserUpdateAvatar.vue';
 // import UserUpdateInfos from './UserUpdateInfos.vue';
-import AddPhoto from './../components/main/global_components/AddPhoto.vue';
-import UserPhotosWall from './../components/main/userBoard/UserPhotosWall.vue';
+// import AddPhoto from './../components/main/global_components/AddPhoto.vue';
+// import UserPhotosWall from './../components/main/userBoard/UserPhotosWall.vue';
 export default {
     name: 'UserBoard',
     components: {
       WallHeader,
-      AddPhoto,
-      UserPhotosWall,
+      // AddPhoto,
+      // UserPhotosWall,
       // UserUpdateAvatar ,
       // UserBackgroundImage,
       // UserUpdateInfos,
-
-    },
-    data() {
-        return {
-            // content: '',
-            // photos: '',
-            // user:'',
-         // photos: this.userData.photos,
-            // aboutMeVisible: false,
-        };
-    },
-
-    mounted() {
-      UserService.getUserBoard();
-
-      if (!this.currentUser) {
-        this.$router.push('/login');
-      }
     },
 
     computed: {
-      ...mapGetters(['userData']),
       currentUser() {
           return this.$store.state.auth.user;
       }, 
     },
       
     methods: {
-      ...mapActions(['fetchOneUserAction']),
+      ...mapActions(['getOneUserAction']),
+
       async fetchUser() { 
-        try{ 
+        try { 
             const userUuid = this.currentUser.uuid; 
-            await this.$store.dispatch("fetchOneUserAction", userUuid)
+            await this.$store.dispatch("getOneUserAction", userUuid)
         } catch(error) {
             this.message = (error.response && error.response.data) || error.message || error.toString();
         }
-    },
+      },
     },
 
-    created() {
+    mounted() {
       UserService.getUserBoard()
+      .then( response => {
+          this.content = response.data
+      })
+      .catch( err => {
+        this.content = (err.response && err.response.data) || err.message || err.toString();
+      })
+      
+      if (!this.currentUser) {
+        this.$router.push('/login');
+      }
+
       this.fetchUser();
-    }
+    },
 };
 </script>
 
@@ -78,10 +69,17 @@ export default {
 .user-board{
   margin:auto;
 }
-.block-add-photo{
-    max-width: 90vw;
-    margin: auto;
-    margin-top: 1rem;
+.add-photo{
+  max-width: 80vw;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.user-photos {
+  max-width: 80vw;
+  margin: auto;
+  margin-top: 1rem;
+
 }
 .photos {
   display: block;

@@ -25,7 +25,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["deleteOnePhotoAction", "fetchAllPhotosAction"]),
+        ...mapActions(["deleteOnePhotoAction", "getAllPhotosAction"]),
 
       async deletePhoto() {
           try {
@@ -37,7 +37,7 @@ export default {
               this.message = response.data;
               this.successful = true;
               this.loading = false;
-              await this.fetchAllPhotosAction();
+              await this.getAllPhotosAction();
           } catch(error) {
               this.loading = false;
               this.message = (error.response && error.response.data) || error.message || error.toString();

@@ -54,13 +54,8 @@
 
             <div v-if="currentUser" class="navbar-nav ml-auto">
                 <ul id="navbar-nav" class="navbar-nav">
-                    <!-- <li class="nav-item">
-                        <router-link to="/profile" class="nav-link" >
-                            <font-awesome-icon icon="address-card" /> Profile
-                        </router-link>
-                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link"  href="#" @click.prevent="logOut">
+                        <a class="nav-link" href="#" @click.prevent="logOut">
                             <font-awesome-icon icon="sign-out-alt" />LogOut
                         </a>
                     </li>
@@ -92,8 +87,8 @@ export default {
         async logOut() {
             try{
                 const userUuid = this.currentUser.uuid
-                await this.$store.dispatch('auth/logout', userUuid);
                 this.$router.push('/login');
+                await this.$store.dispatch('auth/logout', userUuid);
                 localStorage.removeItem("user");
             } catch (error) {
                     (error.response && error.response.data) || error.message || error.toString();

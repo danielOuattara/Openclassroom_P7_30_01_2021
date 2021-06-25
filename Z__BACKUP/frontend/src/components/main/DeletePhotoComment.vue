@@ -33,7 +33,7 @@ export default {
     // },
 
     methods: {
-        ...mapActions(["deletePhotoCommentAction", "fetchAllPhotosAction"]),
+        ...mapActions(["deletePhotoCommentAction", "getAllPhotosAction"]),
 
 
         async deletePhotoComment() {
@@ -45,7 +45,7 @@ export default {
               const commentUuid = this.commentUuid;
               const data= {photoUuid, commentUuid}
               const response = await this.$store.dispatch("deletePhotoCommentAction", data);
-              await this.fetchAllPhotosAction();
+              await this.getAllPhotosAction();
               this.message = response.data;
               this.successful = true;
               this.loading = false;

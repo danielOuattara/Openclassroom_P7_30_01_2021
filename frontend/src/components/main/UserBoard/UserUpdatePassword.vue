@@ -5,7 +5,7 @@
                 <label for="passwordOld">Old Password : </label>
                 <input  type="password" 
                         v-validate="'required|min:6|max:40'" 
-                        placeholder="enter the old password "
+                        placeholder="enter your old password "
                         v-model="passwords.passwordOld" 
                         class="form-control" 
                         name="passwordOld"
@@ -18,7 +18,7 @@
             </div>
 
             <div class="form-group">
-                <label for="password">Password : </label>
+                <label for="password"> New password : </label>
                 <input type="password" 
                         placeholder=" enter your new password..."
                         v-model="passwords.password" 
@@ -28,22 +28,22 @@
                         name="password"
                         id="password"/>
 
-                <div   class="alert alert-danger" 
-                        v-if="errors.has('password')" 
-                        role="alert"> new password is required
+                <div class="alert alert-danger" 
+                     v-if="errors.has('password')" 
+                     role="alert"> new password is required
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="passwordConfirm">Confirm password : </label>
+                <label for="passwordConfirm">Confirm new password : </label>
                 <input type="password" 
-                        placeholder=" enter again your new password..."
-                        v-model="passwordConfirm" 
-                        v-validate="'required|min:6|max:40|confirmed:password'" 
-                        data-vv-as="password" 
-                        class="form-control" 
-                        name="passwordConfirm"
-                        id="passwordConfirm"/>
+                       placeholder=" enter again your new password..."
+                       v-model="passwordConfirm" 
+                       v-validate="'required|min:6|max:40|confirmed:password'" 
+                       data-vv-as="password" 
+                       class="form-control" 
+                       name="passwordConfirm"
+                       id="passwordConfirm"/>
 
                 <div   class="alert alert-danger" 
                         v-if="errors.has('passwordConfirm')" 
@@ -52,17 +52,25 @@
             </div>
             
             <div class="form-group">
-                <button class="btn btn-primary btn-block"  :disabled="loading">
+                <button class="btn btn-dark btn-block" 
+                        @click="onReset"> 
+                    Reset 
+                </button>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" 
+                        :disabled="loading">
                     <span v-show="loading" 
                             class="spinner-border spinner-border-sm"></span>
-                    <span class="">Update password</span>
+                    <span class="">Send update
+                        <font-awesome-icon id="icon-paper-plane" icon="paper-plane" />
+                    </span>
                 </button>
-
-                <input type="reset" class="btn btn-success btn-block" value="Reset">
             </div>
         </form>
 
-        <div v-if="message"  class="alert" 
+        <div v-if="message"  class="alert message-zone" 
              :class="successful ? 'alert-success' : 'alert-danger'">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -74,6 +82,7 @@
 
 <script>
 import Password from '../../../models/password';
+import UserService from './../../../services/user.service.js';
 import { mapActions} from "vuex";
 
 export default {
@@ -95,7 +104,12 @@ export default {
     },
 
     methods: {
-        ...mapActions(["fetchOneUserAction"]),
+        ...mapActions(["getOneUserAction"]),
+
+        onReset() {
+          this.$validator.reset();
+          this.passwords = {};
+        },
 
         async updatePassword() {
             try {
@@ -109,15 +123,15 @@ export default {
                 }
                 const userUuid = this.currentUser.uuid;
                 const data = { userUuid, ...this.passwords};
-                const response = await this.$store.dispatch("auth/updatePasswordAction", data);
+                const response = await UserService.updatePassword(userUuid, data)
                 this.successful = true;
                 this.loading = false;
-                this.fetchOneUserAction(userUuid);
+                this.getOneUserAction(userUuid);
                 this.$validator.reset();
                 this.passwordConfirm = '';
                 this.passwords.password = '';
                 this.passwords.passwordOld = '';
-                this.message = response;
+                this.message = response.data;
 
             } catch(error) {
                 this.loading = false;
@@ -129,9 +143,14 @@ export default {
 </script>
 
 <style lan="scss" scoped>
+
 label {
   display: block;
   margin-top: 10px;
+}
+
+.message-zone {
+    font-size: 0.95rem
 }
 
 
