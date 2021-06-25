@@ -13,7 +13,13 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
       },
       message: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        required: true,
+      },
+      status: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

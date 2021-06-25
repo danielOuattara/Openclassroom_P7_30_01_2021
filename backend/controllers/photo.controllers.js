@@ -47,7 +47,7 @@ exports.getAllPhotos = (req, res) => {
         as: 'comments',
         include: [ {model: User, as: 'owner'} ],
         order: [
-          ['createdAt', 'ASC']
+          ['createdAt', 'DESC']
         ]
       }, 
       {
@@ -95,7 +95,7 @@ exports.createPhotoReport = async (req, res) => {
         await PhotosReports.create({
           ownerId: req.userId,
           photoId: photo.id,
-          message: req.body.messages
+          message: req.body.message
         })
         return res.status(200).send(` Report successfully registered, thank you !`)
     } catch(err) {

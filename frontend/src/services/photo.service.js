@@ -18,11 +18,12 @@ class PhotoService {
     }
 
     deleteOnePhoto(photoUuid) {
-        return axios.delete(API_URL + `/${photoUuid}`, { headers: authHeader() })
+        return axios.delete(API_URL + `/${photoUuid}`, { headers: authHeader() });
     }
     
     createPhotoReport(photoUuid, message) {
-        return axios.post(API_URL + `/${photoUuid}/report`, {message}, { headers: authHeader() })
+        console.log(photoUuid, message)
+        return axios.post(API_URL + `/${photoUuid}/report`, {message}, { headers: authHeader() });
     }
 
     getOnePhoto(photoUuid) {
@@ -30,16 +31,16 @@ class PhotoService {
     }
 
     // getAllPhotosFromOneUser(userUuid) {
-    //     return axios.get(API_URL + `/user/${userUuid}`, { headers: authHeader() })
+    //     return axios.get(API_URL + `/user/${userUuid}`, { headers: authHeader() });
     // }
 
 
     // userDeleteAllPhotos() {
-    //     return axios.delete(API_URL + "/", { headers: authHeader() })
+    //     return axios.delete(API_URL + "/", { headers: authHeader() });
     // }
 
     // deleteAllPhotosFromOneUser(userUuid) {
-    //     return axios.delete(API_URL + `/${userUuid}`, { headers: authHeader() })
+    //     return axios.delete(API_URL + `/${userUuid}`, { headers: authHeader() });
     // }
 
     // searchPhotos() {}  // TODO !

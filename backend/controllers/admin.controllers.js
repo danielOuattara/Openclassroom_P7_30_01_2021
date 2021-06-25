@@ -35,43 +35,6 @@ exports.getPhotoReports = async (req, res) => {
     }
 }
 
-
-// exports.getPhotoReports = (req, res) => {
-//   PhotosReports.findAll({
-//     where: {}, 
-//     order: [
-//       ['createdAt', 'DESC']
-//     ],
-//     include: [
-//       {
-//         model: User,
-//         as: 'owner',
-//       }, 
-//       {
-//         model: Comment,
-//         as: 'comments',
-//         include: [ {model: User, as: 'owner'} ],
-//         order: [
-//           ['createdAt', 'ASC']
-//         ]
-//       }, 
-//       {
-//         model: Like,
-//         as: 'likes',
-//         include: [ {model: User, as: 'owner'} ]
-//       },
-//     ],
-
-//   })
-//   .then( photosReports => res.status(200).json(photosReports))
-//   .catch( err => res.status(500).send(err.message));
-// };
-
-
-
-
-
-
 // ----------------------------------------------------------------------------------
 
 exports.getPhotoCommentReports = async (req, res) => {
@@ -83,22 +46,22 @@ exports.getPhotoCommentReports = async (req, res) => {
           where: {}, 
           order: [ ['createdAt', 'ASC'] ],
           include: [
-              {
-                  model: User,
-                  as: 'owner',
-                }, 
             {
-                model: Comment,
-                as: 'comment',
-                include: [ 
-                    {
-                        model: User, 
-                        as: 'owner'
+              model: User,
+              as: 'owner',
+            }, 
+            {
+              model: Comment,
+              as: 'comment',
+              include: [ 
+                {
+                  model: User, 
+                  as: 'owner'
                 } 
-            ],
-        }, 
-    ],
-})
+              ],
+            }, 
+         ],
+        })
 return res.status(200).send(commentsReports)
     } catch(err) {
         return res.status(403).send(err.message )

@@ -37,7 +37,7 @@ app.use(limiter ({
 }))
 
 // ----------------------------------------------------------------------
-db.sequelize.sync(/* {alter:true} */)
+db.sequelize.sync(/* {force:true} */)
 .then(() => {
   console.log('Resync database : success !');
   console.log('   ===  Connected to Groupomania:  localhost 4200 !  === ')

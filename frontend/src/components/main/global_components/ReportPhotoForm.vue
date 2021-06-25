@@ -1,5 +1,5 @@
 <template>
-  <!-- Modal -->
+  <!-- Modal start-->
   <div class="modal fade" id="photoReportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -10,10 +10,12 @@
           </button>
         </div>
         <div class="modal-body">
+
+          <!-- form start -->
           <form name="form" @submit.prevent="reportPhoto" class="photo-report-form">
             <div class="form-group">
               <label for="aboutMe"> write down your report : </label>
-              <textarea  name="aboutMe" 
+              <textarea name="aboutMe" 
                         placeholder="please, write here ..."
                         type="text" 
                         cols="30" rows="2" 
@@ -35,8 +37,10 @@
                   </button>
                 </div>
           </form>
+          <!-- form end -->
+
           <button type="button" ref="modalCloser" @click="onReset" class="btn btn-secondary" data-dismiss="modal"> 
-            Close 
+            Cancel
             <font-awesome-icon id="icon-times-circle" icon="times-circle" />
           </button>
         </div>
@@ -47,6 +51,7 @@
       </div>
     </div>
   </div>
+  <!-- modal end -->
 </template>
 
 <script>
@@ -88,7 +93,7 @@ export default {
               this.loading = true;
               const photoUuid = this.photoUuid;
               const message = this.userMessage
-              const data = {photoUuid, message };
+              const data = { photoUuid, message };
               const response = await this.$store.dispatch("createPhotoReportAction", data);
               this.message = response.data;
               this.successful = true;

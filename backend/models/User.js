@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({Role, Photo, Comment, Like, CommentsReports, PhotosReports}) {
       // define association here
+
       this.belongsToMany(Role, {
         through: "user_roles",
         foreignKey: "userId",
         otherKey: "roleId",
- 
       });
 
       this.hasMany(Photo, { 
@@ -26,21 +26,25 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(Comment, { 
         foreignKey: 'ownerId', 
         as: 'comments',
+        onDelete: 'CASCADE',
       });
 
       this.hasMany(Like, { 
         foreignKey: 'ownerId', 
         as: 'likes',
+        onDelete: 'CASCADE',
       });
 
       this.hasMany(CommentsReports, { 
         foreignKey: 'ownerId', 
         as: 'comments_reports',
+        onDelete: 'CASCADE',
       });
 
       this.hasMany(PhotosReports, { 
         foreignKey: 'ownerId', 
-        as: 'photos_reports',
+        as: 'photosreports',
+        onDelete: 'CASCADE',
       });
 
     }

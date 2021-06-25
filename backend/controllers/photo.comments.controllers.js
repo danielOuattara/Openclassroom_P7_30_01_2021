@@ -15,7 +15,7 @@ exports.createComment = async (req, res) => {
         await Comment.create({
             content: req.body.content, 
             ownerId: req.userId, 
-            photoId: photo.id 
+            photoId: photo.id,
         })
         res.status(200).send(`Comment successfully created !`)
   } catch(err) {

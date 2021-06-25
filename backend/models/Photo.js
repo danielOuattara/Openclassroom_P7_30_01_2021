@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate( { User, Comment, Like, PhotosReports}) {
       // define association here
+
       this.belongsTo( User, {
         foreignKey: "ownerId",
         as: 'owner',
@@ -18,16 +19,19 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(Comment, { 
         foreignKey: 'photoId', 
         as: 'comments',
+        onDelete: 'CASCADE',
       });
 
       this.hasMany(Like, { 
         foreignKey: 'photoId', 
         as: 'likes',
+        onDelete: 'CASCADE',
       });
 
       this.hasMany(PhotosReports, { 
-        foreignKey: 'ownerId', 
-        as: 'photos_reports',
+        foreignKey: 'photoId', 
+        as: 'photosreports',
+        onDelete: 'CASCADE',
       });
     }
 

@@ -1,4 +1,5 @@
 <template>
+    <!-- This button trigger a modal located in ~/global_components/ReportPhotoCommentForm.vue -->
     <button type="button" 
             class="btn btn-outline-dark" 
             data-toggle="modal" data-target="#photoCommentReportModal"
