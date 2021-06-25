@@ -23,7 +23,6 @@ export default {
     min-width: 100vw;
     height: 30vh;
 }
-
 .background-image{
     height: 100%;
     background-size: cover;

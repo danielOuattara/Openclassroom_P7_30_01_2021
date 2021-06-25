@@ -39,7 +39,8 @@ module.exports = (sequelize, DataTypes) => {
 
     content:  {
       type:DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      required: true,
     },
   }, 
   

@@ -29,7 +29,7 @@ import DateOfPosting from '../global_components/DateOfPosting.vue';
 import Photo from '../global_components/Photo.vue';
 import BtnCommentsToggler from '../global_components/BtnCommentsToggler.vue';
 import PhotoBtnOptions from '../global_components/PhotoBtnOptions.vue';
-import CommentsWall from '../Home/CommentsWall.vue';
+import CommentsWall from '../home/CommentsWall.vue';
 import AddPhotoComment from '../global_components/AddPhotoComment.vue';
 
 export default {

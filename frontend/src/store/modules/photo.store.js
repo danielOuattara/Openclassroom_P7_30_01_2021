@@ -7,11 +7,13 @@ export const photo = {
         allPhotos: [ ],
         oneUserPhotos: [ ],
         photoReport: [ ],
+        onePhoto: [],
     },
 
     getters: {
         allPhotos:(state) => state.allPhotos,
         userAllPhotos: (state) => state.oneUserPhotos,
+        getOnePhoto:(state) => state.onePhoto,
     },
 
     actions: {
@@ -57,8 +59,18 @@ export const photo = {
                  commit("errCreatePhotoReportMutation");
                  return Promise.reject(err); 
              }
-         }
+         },
 
+        async getOnePhotoAction( {commit}, photoUuid) {
+            try {
+                const photo = await photoService.getOnePhoto(photoUuid);
+                commit('getOnePhotoMutation', photo.data);
+                return await Promise.resolve(photo.data);
+            } catch (err) {
+                commit("errGetOnePhotoMutation");
+                return Promise.reject(err);
+            }
+        },
 
         // async fetchUserAllPhotosAction( {commit}, userUuid) {
         //     try {
@@ -70,12 +82,10 @@ export const photo = {
         //         return Promise.reject(err);
         //     }
         // },
-        
-        
     },
 
     mutations: {
-        addOnePhotoMutation:(state, photo) => state.allPhotos =photo,
+        addOnePhotoMutation:(state, photo) => state.allPhotos = photo,
         errAddOnePhoto: (state) => state.allPhotos = [],
 
         getAllPhotosMutation: (state, photos) => state.allPhotos = photos,
@@ -85,10 +95,12 @@ export const photo = {
         errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
 
         createPhotoReportMutation:(state, report) => state.photoReport = report,
-        errCreatePhotoReportMutation: (state) => state.photoReport = []
+        errCreatePhotoReportMutation: (state) => state.photoReport = [],
         
+        getOnePhotoMutation: (state, photo) => state.onePhoto = photo,
+        errGetOnePhotoMutation: (state) => state.onePhoto = [],
+
         // fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
         // errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
-
     }
 }

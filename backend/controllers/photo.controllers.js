@@ -105,8 +105,6 @@ exports.createPhotoReport = async (req, res) => {
     }
 }
 
-
-
 //-----------------------------------------------------------------------------------------
 
 // exports.getOnePhoto = (req, res) => {
@@ -138,6 +136,7 @@ exports.createPhotoReport = async (req, res) => {
 //       res.status(200).json(photo)})
 //   .catch( err => res.status(500).json(err.message) )
 // }
+
 //-----------------------------------------------------------------------------------------
 
 // exports.getAllPhotosFromOneUser = (req, res) => {  // USEFUL ???

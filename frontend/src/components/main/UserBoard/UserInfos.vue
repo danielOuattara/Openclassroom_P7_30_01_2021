@@ -11,8 +11,8 @@
         <UserUpdateForm class="user-update-form" v-bind:formToggler="formToggler"
                         v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"/>
 
-        <!-- <UserUpdateInfos   
-                        class=" btn-comment-options btn-update-comment"  /> -->
+        <UserUpdateInfos   
+                        class=" btn-comment-options btn-update-comment"  />
     </section>
 </template>
 
@@ -20,9 +20,11 @@
 import {mapGetters, mapActions} from 'vuex';
 import User from '../../../models/user';
 import UserUpdateForm from './UserUpdateForm.vue';
+import UserUpdateInfos from './UserUpdateInfos.vue';
 export default {
     components: {
         UserUpdateForm,
+        UserUpdateInfos,
 
 },
     computed: {

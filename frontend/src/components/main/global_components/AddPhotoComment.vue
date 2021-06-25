@@ -8,7 +8,7 @@
                        type="text" 
                        cols="30" rows="2" 
                        class="form-control"
-                       v-model="comment.content" 
+                       v-model="comment" 
                        v-validate="'required'" >
             </textarea>
             <div class="alert alert-danger" 
@@ -16,7 +16,7 @@
               An entry is required to post a comment
             </div>
         </div>
-        <div class="form-group post-comment" v-show="comment.content">
+        <div class="form-group post-comment" v-show="comment">
             <button class="btn-post-comment" :disabled="loading" >
               <span v-show="loading" class="spinner-border spinner-border-sm"></span>
               <span class="">
@@ -25,7 +25,7 @@
               </span>
             </button>
             <button @click="onCommentReset" class="reset-comment btn btn-dark" type="button" 
-                    v-show="comment.content">
+                    v-show="comment">
                 Reset
                 <font-awesome-icon id="icon-times-circle-comment" icon="times-circle" />
             </button>
@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import { /* mapGetters, */ mapActions } from "vuex";
+import { /* mapGetters, */ mapActions } from "vuex"; 
 export default {
   name: "AddComments",
   props: ["photoUuid"],
 
   data() {
     return {
-      comment: new Comment(''),
+      comment: '',
       loading: false,
       message: '',
       commentSwtich: false,
@@ -61,9 +61,8 @@ export default {
 
     onCommentReset() {
       this.commentSwitch= false;
-      this.comment.content = "";
+      this.comment = "";
       this.$validator.reset();
-      console.log("Hello")
     },
 
     async addPhotoComment() {   // USING VueX and Services.
@@ -75,7 +74,8 @@ export default {
           return;
         }
         const photoUuid = this.photoUuid;
-        const data = {photoUuid, ...this.comment }
+        const comment= this.comment
+        const data = { photoUuid, comment }
         this.commentSwtich = false;
         await this.$store.dispatch("addPhotoCommentAction", data);
         this.loading = false;

@@ -1,6 +1,4 @@
 
-// PHOTO COMMENT CONTROLLER
-
 const db = require("./../models");
 const { User, Photo, Comment, CommentsReports } = require('./../models');
 const Op = db.Sequelize.Op;

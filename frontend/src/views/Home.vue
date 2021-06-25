@@ -7,7 +7,7 @@
 
 <script>
 import AddPhoto from '../components/main/global_components/AddPhoto.vue';
-import PhotosWall from '../components/main/Home/PhotosWall';
+import PhotosWall from '../components/main/home/PhotosWall';
 export default {
     name: 'Home',
     components: {

@@ -31,7 +31,7 @@ export const photoComments =  {
     actions: {
         async addPhotoCommentAction({commit}, data) {
             try {
-                const comment = await photoCommentService.addPhotoComment(data.photoUuid, data);
+                const comment = await photoCommentService.addPhotoComment(data.photoUuid, data.comment);
                 commit('addPhotoCommentMutation', comment.data);
                 return Promise.resolve(comment.data);
             } catch(err) {

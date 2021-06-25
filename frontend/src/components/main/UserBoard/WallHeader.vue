@@ -1,14 +1,14 @@
 <template>
     <section class="wall-header" >
-         <UserBackgroundImage v-bind:userData="userData"/>
-         <UserPortrait/>
-         <UserInfos/>
-         <UserSpecialOptions/>
+        <UserBackgroundImage v-bind:userData="userData"/>
+        <UserPortrait/>
+        <UserInfos/>
+        <UserSpecialOptions/>
 
-           <!-- <UserUpdateAvatar  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                       class=" btn-comment-options btn-update-comment"  />
-    <UserUpdateBackgroundImage  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                                class=" btn-comment-options btn-update-comment"  /> -->
+        <!-- <UserUpdateAvatar  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                    class=" btn-comment-options btn-update-comment"  /> -->
+        <UserUpdateBackgroundImage  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                                    class=" btn-comment-options btn-update-comment"  />
     </section>
 </template>
 
@@ -17,13 +17,18 @@ import {mapGetters} from 'vuex';
 import UserBackgroundImage from './UserBackgroundImage.vue';
 import UserPortrait from './UserPortrait.vue';
 import UserInfos from './UserInfos.vue';
-import UserSpecialOptions from './UserSpecialOptions.vue'
+import UserSpecialOptions from './UserSpecialOptions.vue';
+// import UserUpdateAvatar from './UserUpdateAvatar.vue';
+// import UserUpdateBackgroundImage from './UserUpdateBackgroundImage.vue';
+
  export default {
     components: {
       UserBackgroundImage,
       UserPortrait,
       UserInfos,
-      UserSpecialOptions
+      UserSpecialOptions,
+    //   UserUpdateAvatar,
+    //   UserUpdateBackgroundImage,
     },
 
     computed: {

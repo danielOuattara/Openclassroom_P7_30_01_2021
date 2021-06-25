@@ -25,10 +25,9 @@ class PhotoService {
         return axios.post(API_URL + `/${photoUuid}/report`, {message}, { headers: authHeader() })
     }
 
-
-    // getOnePhoto(photoUuid) {
-    //     return axios.get(API_URL + `/${photoUuid}`, { headers: authHeader() })
-    // }
+    getOnePhoto(photoUuid) {
+        return axios.get(API_URL + `/${photoUuid}`, { headers: authHeader() });
+    }
 
     // getAllPhotosFromOneUser(userUuid) {
     //     return axios.get(API_URL + `/user/${userUuid}`, { headers: authHeader() })

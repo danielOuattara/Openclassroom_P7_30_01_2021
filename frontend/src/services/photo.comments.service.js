@@ -5,9 +5,9 @@ const API_URL = "http://localhost:4200/api/photos";
 
 class PhotoCommentsService {
 
-    addPhotoComment(photoUuid, data) {
+    addPhotoComment(photoUuid, comment) {
         return axios.post(API_URL + `/${photoUuid}/comments` , 
-            { content: data.content }, 
+            { content: comment }, 
             { headers: authHeader() }
         )
     }

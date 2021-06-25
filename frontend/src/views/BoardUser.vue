@@ -1,10 +1,9 @@
 
 <template>
   <section class="user-board">  
-    Userboard
-    <!-- <WallHeader/> -->
-    <!-- <AddPhoto/> -->
-    <!-- <UserPhotosWall class="user-photos"/> -->
+    <WallHeader/>
+    <AddPhoto/>
+    <UserPhotosWall class="user-photos"/>
 
   </section>
 </template>
@@ -14,17 +13,17 @@
 import UserService from './../services/user.service.js';
 import {mapGetters, mapActions } from 'vuex';
 
-// import WallHeader from './../components/main/UserBoard/WallHeader.vue';
+import WallHeader from './../components/main/userBoard/WallHeader.vue';
 // import UserUpdateAvatar from './UserUpdateAvatar.vue';
 // import UserUpdateInfos from './UserUpdateInfos.vue';
-// import AddPhoto from './../components/main/AddPhoto.vue';
-// import UserPhotosWall from './../components/main/UserBoard/UserPhotosWall.vue';
+import AddPhoto from './../components/main/global_components/AddPhoto.vue';
+import UserPhotosWall from './../components/main/userBoard/UserPhotosWall.vue';
 export default {
     name: 'UserBoard',
     components: {
-      // WallHeader,
-      // AddPhoto,
-      // UserPhotosWall,
+      WallHeader,
+      AddPhoto,
+      UserPhotosWall,
       // UserUpdateAvatar ,
       // UserBackgroundImage,
       // UserUpdateInfos,
@@ -75,6 +74,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.user-board{
+  margin:auto;
+}
 .block-add-photo{
     max-width: 90vw;
     margin: auto;
