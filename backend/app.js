@@ -15,6 +15,7 @@ db.role = require("./models/Role.js")(sequelize, Sequelize);
 const authRoutes    = require('./routes/auth.routes.js')
 const userRoutes    = require('./routes/user.routes.js')
 const photoRoutes   = require('./routes/photo.routes.js')
+const adminRoutes   = require('./routes/admin.routes.js')
 
 app.use(helmet())
 app.use(cors());
@@ -25,7 +26,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}))
@@ -52,9 +52,10 @@ app.get ('/', (req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // routes
-app.use('/api/auths'  , authRoutes )
+app.use('/api/auths' , authRoutes )
 app.use('/api/users' , userRoutes )
 app.use('/api/photos', photoRoutes)
+app.use('/api/admin' , adminRoutes)
 
 module.exports = app;  
 

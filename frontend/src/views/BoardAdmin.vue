@@ -1,29 +1,62 @@
 
 <template>
   <div class="container">
-    <div class="jumbotron">
-      <h3>{{content}}</h3>
-    </div>
+
+
+        <section class="user-report">
+            <button >Click to get photo reports</button>
+            <p>{{this.photosReportsGetters}}</p>
+        </section>
+
+        <section class="user-report">
+            <button >Click to get comments reports</button>
+            <p>{{this.photoCommentsReportsGetters}}</p>
+        </section>
   </div>
 </template>
 
 <script>
-import UserService from './../services/user.service.js';
+import {mapGetters, mapActions } from "vuex";
 export default {
     name: 'BoardAdmin',
     data() {
         return {
-            content: ''
+            content: '',
+            message: ''
         };
     },
 
-    mounted() {
-        UserService.getAdminBoard()
-          .then( response => this.content = response.data ,
-                  error => this.content =  (error.response && error.response.data) || 
-                                            error.message || 
-                                            error.toString()
-          );
+    mounted() {        
+        // this.getPhotosReportsAction();
+        this.getPhotoCommentsReportsAction();
+    },
+
+    computed: {
+        ...mapGetters(["photosReportsGetters", "photoCommentsReportsGetters"]),
+    },
+    
+    methods: {
+        ...mapActions(["getPhotosReportsAction", "getPhotoCommentsReportsAction"]),
+
+        // async getPhotosReports() {
+        //     try {
+        //         await this.$store.dispatch("getPhotosReportsAction");
+                
+        //     } catch (err) {
+        //         // this.loading = false;
+        //         this.message = (err.response && err.response.data) || err.message || err.toString();
+        //     }
+        // },
+
+        // async getPhotoCommentsReports() {
+        //     try {
+        //         await this.$store.dispatch("getPhotoCommentsReportsAction");
+                
+        //     } catch (err) {
+        //         // this.loading = false;
+        //         this.message = (err.response && err.response.data) || err.message || err.toString();
+        //     }
+        // }
     }
 };
 </script>

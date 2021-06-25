@@ -11,9 +11,29 @@ export const photo = {
     },
 
     getters: {
-        allPhotos:(state) => state.allPhotos,
+        allPhotosGetters:(state) => state.allPhotos,
         userAllPhotos: (state) => state.oneUserPhotos,
         getOnePhoto:(state) => state.onePhoto,
+    },
+
+    mutations: {
+        addOnePhotoMutation:(state, photo) => state.allPhotos = photo,
+        errAddOnePhoto: (state) => state.allPhotos = [],
+
+        getAllPhotosMutation: (state, photos) => state.allPhotos = photos,
+        errGetAllPhotosMutation: (state) => state.allPhotos = [],
+
+        deleteOnePhotoMutation:(state) => state.allPhotos = [],
+        errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
+
+        createPhotoReportMutation:(state, report) => state.photoReport = report,
+        errCreatePhotoReportMutation: (state) => state.photoReport = [],
+        
+        getOnePhotoMutation: (state, photo) => state.onePhoto = photo,
+        errGetOnePhotoMutation: (state) => state.onePhoto = [],
+
+        // fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
+        // errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
     },
 
     actions: {
@@ -28,6 +48,7 @@ export const photo = {
                 return Promise.reject(err);
             }
         },
+        
         async getAllPhotosAction( {commit}) {
             try {
                 const allPhotos = await photoService.getAllPhotos();
@@ -83,24 +104,4 @@ export const photo = {
         //     }
         // },
     },
-
-    mutations: {
-        addOnePhotoMutation:(state, photo) => state.allPhotos = photo,
-        errAddOnePhoto: (state) => state.allPhotos = [],
-
-        getAllPhotosMutation: (state, photos) => state.allPhotos = photos,
-        errGetAllPhotosMutation: (state) => state.allPhotos = [],
-
-        deleteOnePhotoMutation:(state) => state.allPhotos = [],
-        errDeleteOnePhotoMutation: (state, photo) => state.allPhotos = photo,
-
-        createPhotoReportMutation:(state, report) => state.photoReport = report,
-        errCreatePhotoReportMutation: (state) => state.photoReport = [],
-        
-        getOnePhotoMutation: (state, photo) => state.onePhoto = photo,
-        errGetOnePhotoMutation: (state) => state.onePhoto = [],
-
-        // fetchUserAllPhotosMutation: (state, photos) => state.oneUserPhotos = photos,
-        // errFetchUserAllPhotosMutation: (state) => state.oneUserPhotos = [],
-    }
 }

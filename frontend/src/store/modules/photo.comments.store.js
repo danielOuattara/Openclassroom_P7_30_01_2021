@@ -51,9 +51,9 @@ export const photoComments =  {
             }
         },
 
-        async createCommentReportAction({commit}, data) {
+        async createPhotoCommentReportAction({commit}, data) {
              try {
-                 const report = await photoCommentService.createCommentReport(data.photoUuid, data.commentUuid, data.message);
+                 const report = await photoCommentService.createPhotoCommentReport(data.photoUuid, data.commentUuid, data.message);
                  commit('createPhotoCommentReportMutation', report);
                  return Promise.resolve(report);
              } catch (err) {

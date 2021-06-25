@@ -1,5 +1,4 @@
-
-// PHOTO ROUTE
+// PHOTO ROUTES
 
 const router = require('express').Router();
 const { authJwt, multer} = require("../middleware");
@@ -44,11 +43,8 @@ router.put("/:photoUuid/comments/:commentUuid", authJwt, controllerComments.upda
 /* Reports  
 --------------- */
 router.post("/:photoUuid/report", authJwt, controller.createPhotoReport); 
-router.get("/photos/reports", authJwt, controller.getPhotosReports); 
-
-router.post("/:photoUuid/comments/:commentUuid/report", authJwt, controllerComments.createCommentReport); 
-router.post("/comments/reports", authJwt, controllerComments.getCommentsReports); 
-
+router.post("/:photoUuid/comments/:commentUuid/report", authJwt, controllerComments.createPhotoCommentReport); 
+ 
 
 
 module.exports = router;

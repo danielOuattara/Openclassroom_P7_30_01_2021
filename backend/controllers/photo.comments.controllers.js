@@ -48,13 +48,14 @@ exports.deleteOneComment = async (req, res) => {
 
 //----------------------------------------------------------------------------------------
 
-exports.createCommentReport = async (req, res) => {
+exports.createPhotoCommentReport = async (req, res) => {
+    console.log(req);
     try {
         const photo = await Photo.findOne( { where: { uuid: req.params.photoUuid } });
         if (!photo) {
           return res.status(404).send(" Photo unknown !");
         }
-        const comment = await Photo.findOne( { where: { uuid: req.params.commentUuid } });
+        const comment = await Comment.findOne( { where: { uuid: req.params.commentUuid } });
         if (!comment) {
           return res.status(404).send("Comment unknown !");
         }
@@ -64,45 +65,13 @@ exports.createCommentReport = async (req, res) => {
           commentId: comment.id,
           message: req.body.message
         })
-        return res.status(200).send(`Report successfully received, thank you !`)
+        return res.status(200).send(`Report on comment successfully received, thank you !`)
     } catch(err) {
       return res.status(403).json(err.message )
     }
 }
 
 // ------------------------------------------------------------------------------------
-
-exports.getCommentsReports = async (req, res) => {
-    try {
-        if(!req.userRoles.includes("ROLE_ADMIN")){
-            return res.status(403).json({ Error : "Non Authorized !" })  
-        }
-        const commentsReports = CommentsReports.findAll({ 
-          where: {}, 
-          order: [ ['createdAt', 'ASC'] ],
-          include: [
-            {
-              model: User,
-              as: 'owner',
-            }, 
-            {
-              model: Comment,
-              as: 'comment',
-              include: [ 
-                {
-                  model: User, 
-                  as: 'owner'
-                } 
-              ],
-            }, 
-           ],
-        })
-        return res.status(200).send(commentsReports)
-    } catch(err) {
-      return res.status(403).send(err.message )
-    }
-}
-// -----------------------------------------------------------------------------------------------
 
 exports.updateOneComment = async (req, res) => {
     console.log(req);

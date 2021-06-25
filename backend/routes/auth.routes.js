@@ -1,5 +1,6 @@
 
 // Authentification routes
+
 const router = require('express').Router();
 const { authJwt, checks } = require("./../middleware");
 const controller = require("./../controllers/auth.controllers.js");

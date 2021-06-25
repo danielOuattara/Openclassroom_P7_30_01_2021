@@ -92,11 +92,10 @@ exports.createPhotoReport = async (req, res) => {
         if (!photo) {
           return res.status(404).json(" Photo unknown !");
         }
-
         await PhotosReports.create({
           ownerId: req.userId,
           photoId: photo.id,
-          message: req.body.message
+          message: req.body.messages
         })
         return res.status(200).send(` Report successfully registered, thank you !`)
     } catch(err) {
@@ -104,38 +103,6 @@ exports.createPhotoReport = async (req, res) => {
     }
 }
 
-//------------------------------------------------------------------------------------------
-
-exports.getPhotosReports = async (req, res) => {
-    try {
-        if(!req.userRoles.includes("ROLE_ADMIN")){
-            return res.status(403).json({ Error : "Non Authorized !" })  
-        }
-        const photosReports = PhotosReports.findAll({ 
-          where: {}, 
-          order: [ ['createdAt', 'ASC'] ],
-          include: [
-            {
-              model: User,
-              as: 'owner',
-            }, 
-            {
-              model: Photo,
-              as: 'photo',
-              include: [ 
-                {
-                  model: User, 
-                  as: 'owner'
-                } 
-              ],
-            }, 
-           ],
-        })
-        return res.status(200).send(photosReports)
-    } catch(err) {
-      return res.status(403).send(err.message )
-    }
-}
 
 //-----------------------------------------------------------------------------------------
 

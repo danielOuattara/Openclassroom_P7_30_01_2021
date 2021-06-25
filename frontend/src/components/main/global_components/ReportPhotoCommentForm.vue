@@ -13,7 +13,7 @@
           <form name="form" @submit.prevent="reportComment" class="photo-report-form">
             <div class="form-group">
               <label for="aboutMe"> write down your report : </label>
-              <textarea  name="aboutMe" 
+              <textarea name="aboutMe" 
                         placeholder="please, write here ..."
                         type="text" 
                         cols="30" rows="2" 
@@ -26,7 +26,7 @@
               </div>
             </div>
                 <div class="form-group">
-                  <button v-show="userMessage.length >=5" class="btn btn-success send-report" :disabled="loading">
+                  <button v-show="userMessage.length >= 5" class="btn btn-success send-report" :disabled="loading">
                     <span v-show="loading" class="spinner-border spinner-border-sm"></span>
                     <span>
                       Sent report 
@@ -63,12 +63,12 @@ export default {
         };
     },
     computed: {
-        currentUser() {
-            return this.$store.state.auth.user;
-        },
-        photo() {
-          return this.props.photoUuid;
-        }
+        // currentUser() {
+        //     return this.$store.state.auth.user;
+        // },
+        // photo() {
+        //   return this.props.photoUuid;
+        // }
     },
 
     methods: {
@@ -90,7 +90,9 @@ export default {
               const commentUuid = this.commentUuid;
               const message = this.userMessage
               const data = {photoUuid, commentUuid, message };
-              const response = await this.$store.dispatch("createPhotoReportAction", data);
+              console.log("Hello");
+              console.log(data);
+              const response = await this.$store.dispatch("createPhotoCommentReportAction", data);
               this.message = response.data;
               this.successful = true;
               this.loading = false;

@@ -1,7 +1,7 @@
 <template>
     <div class="photos-container">
       <h2>Publications</h2>
-        <article v-for="photo in allPhotos" :key="photo.uuid" class="photo-bloc">
+        <article v-for="photo in allPhotosGetters" :key="photo.uuid" class="photo-bloc">
             <OwnerAvatar v-bind:item="photo.owner"/>
             <OwnerName v-bind:item="photo.owner"/>
             <PhotoTitle v-bind:item="photo.title"/>
@@ -41,7 +41,6 @@ import AddPhotoComment  from '../global_components/AddPhotoComment.vue';
 export default {
   name: "PhotosWall",
   components: {
-
     OwnerAvatar,
     OwnerName,
     PhotoTitle,
@@ -62,7 +61,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["allPhotos", /* "likesData" */]),
+    ...mapGetters(["allPhotosGetters", /* "likesData" */]),
     
     currentUser() {
         return this.$store.state.auth.user;

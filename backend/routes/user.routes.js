@@ -1,3 +1,5 @@
+// USER ROUTES
+
 const router = require('express').Router();
 const multer = require("./../middleware/multer.config.js");
 const { authJwt, checks } = require("./../middleware");
