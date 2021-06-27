@@ -3,7 +3,7 @@
         <UserBackgroundImage/>
         <UserPortrait/>
         <UserInfos/>
-        <UserSpecialOptions/>
+        <UserSpecialOptions class="user-special-options"/>
 
         <!-- <UserUpdateAvatar  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                     class=" btn-comment-options btn-update-comment"  /> -->
@@ -104,7 +104,11 @@ import UserSpecialOptions from './UserSpecialOptions.vue';
     margin: auto;
     margin-top: 1rem;
     z-index: 2;
+}
 
+.user-special-options {
+    width: 85%;
+    margin: 2rem auto;
 }
       
 </style>

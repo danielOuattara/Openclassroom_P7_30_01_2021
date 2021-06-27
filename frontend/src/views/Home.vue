@@ -1,24 +1,24 @@
 <template>
     <section class="home">
         <AddPhoto />
-        <PhotosWall/>
+        <HomePhotosWall/>
     </section>
 </template>
 
 <script>
 import AddPhoto from '../components/main/global_components/AddPhoto.vue';
-import PhotosWall from '../components/main/home/PhotosWall';
+import HomePhotosWall from '../components/main/home/HomePhotosWall';
 export default {
     name: 'Home',
     components: {
       AddPhoto,
-      PhotosWall
+      HomePhotosWall
     },
 };
 </script>
 <style lang="scss" scoped>
 section.home{
-    max-width: 90vw;
+    max-width: 85vw;
     margin: auto;
 }
 </style>

@@ -1,6 +1,10 @@
 <template>
-    <section class="user-data">        
-        <font-awesome-icon  @click="updateToggler" id="edit-user-data" icon="edit" />
+    <section class="user-data"> 
+        <span type="button" @click="updateToggler" id="edit-user-data">
+            Edit infos
+            <font-awesome-icon icon="edit" />
+        </span>       
+        
         <div class="user-infos">
             <span class="username-value"><b>Username :</b> {{userDataGetters.username}}  </span>
             <span v-if="userDataGetters.firstName && userDataGetters.lastName" class="name-value">  {{userDataGetters.firstName + ' ' + userDataGetters.lastName}} </span>
@@ -8,24 +12,19 @@
             <span class="email-value"> <b>email :</b> {{userDataGetters.email}} </span>
             <span class="about-me-value"> <b>About me :</b> {{userDataGetters.aboutMe}} </span>
         </div>
-        <UserUpdateForm class="user-update-form" v-bind:formToggler="formToggler"
+        <UserUpdateInfosForm class="user-update-form" v-bind:formToggler="formToggler"
                         v-if="userDataGetters.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"/>
 
-        <UserUpdateInfos   
-                        class=" btn-comment-options btn-update-comment"  />
     </section>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import User from '../../../models/user';
-import UserUpdateForm from './UserUpdateForm.vue';
-import UserUpdateInfos from './UserUpdateInfos.vue';
+import UserUpdateInfosForm from './UserUpdateInfosForm.vue';
 export default {
     components: {
-        UserUpdateForm,
-        UserUpdateInfos,
-
+        UserUpdateInfosForm,
 },
     computed: {
         ...mapGetters(['userDataGetters']),
@@ -71,8 +70,13 @@ export default {
 }
 #edit-user-data{
     position: absolute;
-    right: 3rem;
-    top: 4rem
+    right: 0.5rem;
+    top: 2.5rem;
+    border-bottom: 1px solid grey;
+    padding: 0.35rem 0.70rem;
+    &:hover{
+        background: rgba(255, 0, 0, 0.3);
+    }
 }
 .user-update-form{
     width: 80%;

@@ -23,7 +23,7 @@ exports.getOneUser = (req, res) => {
           model: Photo,
           as: 'photos',
           order: [
-            ['createdAt', 'DESC']
+            ['createdAt', 'ASC']
           ],
           include: [
             { 
@@ -144,8 +144,8 @@ exports.updateUserBackgroundImage = async (req, res) => {
         res.status(201).send("Background Image successfully updated !")
       }
     } catch (err) {
-      return res.status(500).send(err.message) 
-    };
+      return res.status(500).send(err.message);
+    }
   }
   
 // ---------------------------------------------------------------------------------------------------------------
@@ -163,20 +163,20 @@ exports.updateUserBackgroundImage = async (req, res) => {
       const userObject = { avatar: `${req.protocol}://${req.get('host')}/images/avatars/${req.file.filename}` }   
       
       if (!user.avatar) {
-        await user.update(userObject)
-        res.status(201).send("Avatar successfully added !")  
+        await user.update(userObject);
+        res.status(201).send("Avatar successfully added !"); 
       }  
       else {
         const filename = user.avatar.split('/avatars/')[1];
         fs.unlink(`images/avatars/${filename}`, (err) => {
           if(err) throw err;
         });
-        await user.update( userObject)
-        res.status(201).send("Avatar successfully updated !")
+        await user.update( userObject);
+        res.status(201).send("Avatar successfully updated !");
       }
     } catch (err) {
-      return res.status(500).send(err.message) 
-    };
+      return res.status(500).send(err.message); 
+    }
   }
   
 // ---------------------------------------------------------------------------------------------------------------

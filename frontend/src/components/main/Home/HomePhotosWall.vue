@@ -26,15 +26,15 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import OwnerAvatar   from './../global_components/OwnerAvatar.vue';
-import OwnerName     from './../global_components/OwnerName.vue';
+import OwnerAvatar   from '../global_components/OwnerAvatar.vue';
+import OwnerName     from '../global_components/OwnerName.vue';
 import PhotoTitle    from './../global_components/PhotoTitle';
 import DateOfPosting from './../global_components/DateOfPosting';
 import Photo         from './../global_components/Photo';
 import BtnCommentsToggler from './../global_components/BtnCommentsToggler';
 import PhotoLikes    from './../global_components/PhotoLikes';
-import PhotoBtnOptions from './../global_components/PhotoBtnOptions.vue';
-import ReportPhotoForm from './../global_components/ReportPhotoForm.vue'
+import PhotoBtnOptions from '../global_components/PhotoBtnOptions.vue';
+import ReportPhotoForm from '../global_components/ReportPhotoForm.vue'
 import CommentsWall   from './CommentsWall.vue';
 import AddPhotoComment  from '../global_components/AddPhotoComment.vue';
 

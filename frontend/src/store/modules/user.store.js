@@ -1,6 +1,5 @@
 
 import userService from "../../services/user.service";
-// import authService from '../../services/auth.service';
 
 export const user = {
     
@@ -16,8 +15,14 @@ export const user = {
         getOneUserMutation: (state, user) => state.user = user,
         errGetOneUserMutation: (state) => state.user = {},
 
-        // updateUserSuccessMutation: (state, user) => state.user = user,
-        // updateUserFailureMutation: (state) => state.user = {},
+        updateUserInfosMutation: (state, user) => state.user = user,
+        errUpdateUserInfosMutation: (state) => state.user = {},
+
+        updateUserAvatarMutation: (state, user) => state.user = user,
+        errUpdateUserAvatarMutation: (state) => state.user = {},
+
+        updateUserBackgroundImageMutation: (state, user) => state.user = user,
+        errUpdateUserBackgroundImageMutation: (state) => state.user = {},
     },
 
     actions: {
@@ -34,74 +39,43 @@ export const user = {
             }
         },
 
-        // updateUserPasswordAction( {commit}, data) {
-        //     return userService.updateUserPassword(data.userUuid, data)
-        //     .then( response => {
-        //         commit("updateUserPasswordMutation");
-        //         return Promise.resolve(response.data);
-        //         },
-        //         error => {
-        //             commit( "errUpdateUserPasswordMutation");
-        //             return Promise.reject(error);
-        //         }                
-        //     );
-        // }
+        updateUserInfosAction( {commit}, data) {
+            return userService.updateUserInfos(data.userUuid, data)
+            .then( response => {
+                commit("updateUserInfosMutation");
+                return Promise.resolve(response.data);
+                },
+                error => {
+                    commit( "errUpdateUserInfosMutation");
+                    return Promise.reject(error);
+                }                
+            );
+        },
 
+        updateUserAvatarAction( {commit}, data) {
+            return userService.updateUserAvatar(data.userUuid, data)
+            .then( response => {
+                commit("updateUserAvatarMutation");
+                return Promise.resolve(response.data);
+                },
+                error => {
+                    commit( "errUpdateUserAvatarMutation");
+                    return Promise.reject(error);
+                }                
+            );
+        },
 
-        // updateUserAction( {commit}, data) {
-        //     return userService.updateUserInfos(data.userUuid, data)
-        //     .then( response => {
-        //         commit("updateUserSuccessMutation");
-        //         return Promise.resolve(response.data);
-        //         },
-        //         error => {
-        //             commit( "updateUserFailureMutation");
-        //             return Promise.reject(error);
-        //         }                
-        //     );
-        // }
-
-
-        // updateUserAction( {commit}, data) {
-        //     return userService.updateUserInfos(data.userUuid, data)
-        //     .then( response => {
-        //         commit("updateUserSuccessMutation");
-        //         return Promise.resolve(response.data);
-        //         },
-        //         error => {
-        //             commit( "updateUserFailureMutation");
-        //             return Promise.reject(error);
-        //         }                
-        //     );
-        // }
-
-
-        // updateUserAction( {commit}, data) {
-        //     return userService.updateUserInfos(data.userUuid, data)
-        //     .then( response => {
-        //         commit("updateUserSuccessMutation");
-        //         return Promise.resolve(response.data);
-        //         },
-        //         error => {
-        //             commit( "updateUserFailureMutation");
-        //             return Promise.reject(error);
-        //         }                
-        //     );
-        // }
-
-
-        // updateUserAction( {commit}, data) {
-        //     return userService.updateUserInfos(data.userUuid, data)
-        //     .then( response => {
-        //         commit("updateUserSuccessMutation");
-        //         return Promise.resolve(response.data);
-        //         },
-        //         error => {
-        //             commit( "updateUserFailureMutation");
-        //             return Promise.reject(error);
-        //         }                
-        //     );
-        // }
+        updateUserBackgroundImageAction( {commit}, data) {
+            return userService.updateUserBackgroundImage(data.userUuid, data)
+            .then( response => {
+                commit("updateUserBackgroundImageMutation");
+                return Promise.resolve(response.data);
+                },
+                error => {
+                    commit( "errUpdateUserBackgroundImageMutation");
+                    return Promise.reject(error);
+                }                
+            );
+        }
     },
-
 }

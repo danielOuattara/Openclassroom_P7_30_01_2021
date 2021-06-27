@@ -6,7 +6,7 @@
 <script>
 import { mapActions } from "vuex";
 export default {
-    props: ['photoUuid'],
+    props: ['photoUuid',"ownerUuid"],
     data() {
         return {
             loading: false,
@@ -17,7 +17,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["deleteOnePhotoAction", "getAllPhotosAction"]),
+        ...mapActions(["deleteOnePhotoAction", "getAllPhotosAction","getOneUserAction"]),
 
       async deletePhoto() {
           try {
@@ -29,7 +29,8 @@ export default {
               this.message = response.data;
               this.successful = true;
               this.loading = false;
-              await this.getAllPhotosAction();
+              this.getAllPhotosAction();
+              this.getOneUserAction(this.ownerUuid);
           } catch(error) {
               this.loading = false;
               this.message = (error.response && error.response.data) || error.message || error.toString();

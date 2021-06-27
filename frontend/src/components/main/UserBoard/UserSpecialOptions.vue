@@ -68,7 +68,7 @@ button {
     margin-top: 1rem;
 }
 
-.user-update-password {
+.user-update-password, .user-delete-account {
     max-width: 80vw;
     margin: auto;
 }

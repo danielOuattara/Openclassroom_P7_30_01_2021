@@ -8,10 +8,12 @@
             Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                <BtnDeletePhoto v-if="photoOwner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                             class="btn-options-photo btn-delete-photo"
-                             v-bind:photoUuid="photoUuid"/>
-                <BtnReportPhoto class="btn-options-photo btn-report-photo"/>
+                <BtnDeletePhoto v-if="ownerUuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                                class="btn-options-photo btn-delete-photo"
+                                v-bind:photoUuid="photoUuid"
+                                v-bind:ownerUuid="ownerUuid"/>
+                <BtnReportPhoto v-if="ownerUuid != currentUser.uuid"
+                                class="btn-options-photo btn-report-photo"/>
         </div>
     </div>
 </template>
@@ -26,12 +28,16 @@ export default {
             type: String,
             default: ''
         },
-        photoOwner: {
-            type: Object,
-            default: () => { 
-            return {} 
-            }
+        ownerUuid: {
+            type: String,
+            default: ''
         },
+        // photoOwner: {
+        //     type: Object,
+        //     default: () => { 
+        //     return {} 
+        //     }
+        // },
     },
 
     components: {

@@ -44,9 +44,9 @@ exports.getAllPhotos = (req, res) => {
       {
         model: Comment,
         as: 'comments',
-        // order: [
-        //   ['createdAt', '']
-        // ],
+        order: [
+          ['createdAt', 'ASC']
+        ],
         include: [ 
           {
             model: User, 

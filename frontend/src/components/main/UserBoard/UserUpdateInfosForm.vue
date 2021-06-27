@@ -4,27 +4,27 @@
             <form name="form" @submit.prevent="userUpdate">
                 <div class="form-group">
                     <label for="firstName">Firstname : </label>
-                    <input  type="text" 
-                            placeholder="enter your firstname ..."
-                            v-model="user.firstName" 
-                            class="form-control" 
-                            name="firstName"/>
-                    <div    class="alert alert-danger" 
-                            v-if="errors.has('firstname')" 
-                            role="alert"> Error with firstname !
+                    <input type="text" 
+                           placeholder="enter your firstname ..."
+                           v-model="user.firstName" 
+                           class="form-control" 
+                           name="firstName"/>
+                    <div   class="alert alert-danger" 
+                           v-if="errors.has('firstname')" 
+                           role="alert"> Error with firstname !
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="lastName">Lastname : </label>
-                    <input  type="text" 
-                            placeholder="enter your lastname ..."
-                            v-model="user.lastName" 
-                            class="form-control" 
-                            name="lastName"/>
-                    <div    class="alert alert-danger" 
-                            v-if="errors.has('lastname')" 
-                            role="alert"> Error with lastname !
+                    <input type="text" 
+                           placeholder="enter your lastname ..."
+                           v-model="user.lastName" 
+                           class="form-control" 
+                           name="lastName"/>
+                    <div class="alert alert-danger" 
+                         v-if="errors.has('lastname')" 
+                         role="alert"> Error with lastname !
                     </div>
                 </div>
 
@@ -114,7 +114,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["updateUserAction"]),
+        ...mapActions(["updateUserInfosAction", "getOneUserAction"]),
 
         onFileSelect(event) {
             this.selectedFile = event.target.files[0];
@@ -132,9 +132,6 @@ export default {
                 }
                 const userUuid = this.currentUser.uuid;
                 const formData = new FormData();
-                const config = {
-                        header: { "Content-Type": "multipart/form-data" }
-                };
 
                 if( this.user.firstName) {
                     formData.append("firstName", this.user.firstName);
@@ -151,10 +148,11 @@ export default {
                 if( this.user.username) {
                     formData.append("userName", this.user.username);
                 }        
-                const data = { userUuid, formData, config }
-                const response = await this.$store.dispatch("updateUserAction", data);
+                const data = { userUuid, formData }
+                const response = await this.$store.dispatch("updateUserInfosAction", data);
                 this.message = response;
-                await this.$store.dispatch("fetchOneUserAction", userUuid)
+                // await this.$store.dispatch("getOneUserAction", userUuid)
+                this.getOneUserAction(userUuid);
                 this.successful = true;
                 this.loading = false;
 

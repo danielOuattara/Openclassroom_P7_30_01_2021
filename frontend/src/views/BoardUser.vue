@@ -67,12 +67,11 @@ export default {
 }
 .add-photo{
   max-width: 80vw;
-  margin: auto;
-  margin-top: 1rem;
+  margin: 1rem auto;
 }
 
 .user-photos {
-  max-width: 80vw;
+  max-width: 85vw;
   margin: auto;
   margin-top: 1rem;
   // margin-top: 2rem;

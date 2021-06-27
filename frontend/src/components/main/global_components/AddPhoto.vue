@@ -81,9 +81,14 @@ export default {
             fileSelected: false,
         };
     },
+    computed: {
+      currentUser() {
+          return this.$store.state.auth.user;
+      }, 
+    },
 
     methods: {
-        ...mapActions(["addOnePhotoAction", "getAllPhotosAction"]),
+        ...mapActions(["addOnePhotoAction", "getAllPhotosAction","getOneUserAction"]),
 
         onFileSelect(event) {
           this.selectedFile = event.target.files[0];
@@ -111,6 +116,7 @@ export default {
                 await this.$store.dispatch("addOnePhotoAction", formData);
                 this.loading = false;
                 this.getAllPhotosAction();
+                this.getOneUserAction(this.currentUser.uuid);
                 this.onReset();
             } catch(error) {
                 this.loading = false;
@@ -124,7 +130,7 @@ export default {
 <style lang="scss" scoped>
 
 .block-add-photo {
-  margin: 2rem 0 3rem;
+  margin: 1rem 0 3rem;
   border: 1px solid rgb(194, 194, 194);
   padding: 1rem;
   border-radius: 10px;

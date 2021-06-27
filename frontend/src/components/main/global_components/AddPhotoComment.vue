@@ -45,7 +45,7 @@
 import { /* mapGetters, */ mapActions } from "vuex"; 
 export default {
   name: "AddComments",
-  props: ["photoUuid"],
+  props: ["photoUuid","ownerUuid"],
 
   data() {
     return {
@@ -57,7 +57,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([ "addPhotoCommentAction", "getAllPhotosAction" ]),
+    ...mapActions([ "addPhotoCommentAction", "getAllPhotosAction","getOneUserAction" ]),
 
     onCommentReset() {
       this.commentSwitch= false;
@@ -65,7 +65,7 @@ export default {
       this.$validator.reset();
     },
 
-    async addPhotoComment() {   // USING VueX and Services.
+    async addPhotoComment() { 
       try {
         this.loading = true;
         const isValid = await this.$validator.validateAll();
@@ -81,6 +81,10 @@ export default {
         this.loading = false;
         this.onCommentReset();
         this.getAllPhotosAction();
+        if (this.ownerUuid) {
+          this.getOneUserAction(this.ownerUuid);
+        }
+
       } catch (error) {
         this.loading = false;
           (error.response && error.response.data) || error.message || error.toString();
