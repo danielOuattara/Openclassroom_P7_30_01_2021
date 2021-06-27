@@ -1,8 +1,10 @@
 <template>
     <section class="user-data"> 
         <span type="button" @click="updateToggler" id="edit-user-data">
-            Edit infos
             <font-awesome-icon icon="edit" />
+            Edit infos
+            <font-awesome-icon v-if="!formToggler" id="chevron-down" icon="chevron-down" />
+            <font-awesome-icon v-if='formToggler' id="chevron-up" icon="chevron-up" />
         </span>       
         
         <div class="user-infos">
@@ -14,7 +16,6 @@
         </div>
         <UserUpdateInfosForm class="user-update-form" v-bind:formToggler="formToggler"
                         v-if="userDataGetters.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"/>
-
     </section>
 </template>
 
@@ -60,7 +61,6 @@ export default {
             this.selectedFile = event.target.files[0];
         },
     }
-    
 }
 </script>
 
@@ -70,12 +70,15 @@ export default {
 }
 #edit-user-data{
     position: absolute;
+    font-size: 0.90rem;
     right: 0.5rem;
     top: 2.5rem;
     border-bottom: 1px solid grey;
-    padding: 0.35rem 0.70rem;
+    padding: 0.3rem 0.50rem;
     &:hover{
-        background: rgba(255, 0, 0, 0.3);
+        background: rgb(100, 100, 100);
+        color:white;
+        border-radius: 0.25rem ;
     }
 }
 .user-update-form{

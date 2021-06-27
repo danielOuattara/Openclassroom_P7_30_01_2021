@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block"  :disabled="loading">
+                    <button class="btn btn-primary btn-block" :disabled="loading">
                         <span v-show="loading" 
                                 class="spinner-border spinner-border-sm"></span>
                         <span class="">Update profile <font-awesome-icon id="icon-paper-plane-user-data" icon="paper-plane" /></span>
@@ -146,15 +146,14 @@ export default {
                     formData.append("aboutMe", this.user.aboutMe);
                 }
                 if( this.user.username) {
-                    formData.append("userName", this.user.username);
+                    formData.append("username", this.user.username);
                 }        
                 const data = { userUuid, formData }
                 const response = await this.$store.dispatch("updateUserInfosAction", data);
-                this.message = response;
-                // await this.$store.dispatch("getOneUserAction", userUuid)
                 this.getOneUserAction(userUuid);
                 this.successful = true;
                 this.loading = false;
+                this.message = response;
 
             } catch(error) {
                 this.loading = false;

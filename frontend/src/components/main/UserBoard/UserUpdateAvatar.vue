@@ -1,74 +1,19 @@
 <template>
-    <div class="user-update-form" v-if="formToggler">
+    <!-- <div class="user-update-form" v-if="formToggler">
         <h2>Update your profile</h2>
-            <form name="form" @submit.prevent="userUpdate">
+            <form name="form" @submit.prevent="userUpdateAvatar">
                 <div class="form-group">
-                    <label for="firstName">Firstname : </label>
-                    <input  type="text" 
-                            placeholder="enter your firstname ..."
-                            v-model="user.firstName" 
+                    <label for="useravatar">Avatar: </label>
+                    <input  type="file" 
                             class="form-control" 
-                            name="firstName"/>
-                    <div    class="alert alert-danger" 
-                            v-if="errors.has('firstname')" 
-                            role="alert"> Error with firstname !
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="lastName">Lastname : </label>
-                    <input  type="text" 
-                            placeholder="enter your lastname ..."
-                            v-model="user.lastName" 
-                            class="form-control" 
-                            name="lastName"/>
-                    <div    class="alert alert-danger" 
-                            v-if="errors.has('lastname')" 
-                            role="alert"> Error with lastname !
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="username">Username : </label>
-                    <input  type="text" 
-                            placeholder="enter your username ..."
-                            v-model="user.username" 
-                            class="form-control" 
+                            ref="file"
+                            @change="changeAvatar"
                             name="username"/>
                     <div    class="alert alert-danger" 
                             v-if="errors.has('username')" 
                             role="alert"> Error with username !
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="email">Email : </label>
-                    <input  type="email" 
-                            placeholder="enter email ..."
-                            v-model="user.email" 
-                            class="form-control" 
-                            name="email"/>
-                    <div    class="alert alert-danger" 
-                            v-if="errors.has('email')" 
-                            role="alert"> email must be valid
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="aboutMe">About you : </label>
-                    <textarea  name="aboutMe" 
-                               placeholder="what about you ?"
-                               type="text" 
-                               cols="30" rows="2" 
-                               class="form-control"
-                               v-model="user.aboutMe">
-                    </textarea>
-                    <div class="alert alert-danger" 
-                        v-if="errors.has('aboutMe')" 
-                        role="alert"> Error with about me
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <button class="btn btn-primary btn-block"  :disabled="loading">
                         <span v-show="loading" 
@@ -77,127 +22,133 @@
                     </button>
                 </div>
             </form>
-            <div v-if="message" 
-                class="alert" 
-                :class="successful ? 'alert-success' : 'alert-danger'">{{message}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-    </div>
+    </div> -->
+
+    <!-- <div class="hello">
+        <input type="file" accept="image/*" class="hidden" ref="file" @change="change" style="display:none">
+        <button @click="browse" >Browse Image</button>
+        <img :src="avatarSelected" alt="avatar">
+  </div> -->
+  <div></div>
 </template>
 
 <script>
-import { mapActions} from "vuex";
-import User from '../../../models/user';
+// import { mapActions} from "vuex";
 export default {
-    name: "Login",
-    props:['formToggler'],
+    // props:['formToggler'],
+    props: {
+    value: File,
+  }, 
     data() {
         return {
-            user: new User("", "", "", "", "", "", ""),
-            loading: false,
-            submitted: false,
-            successful: false,
-            selectedFile: '',
-            message: '',
+            // loading: false,
+            // submitted: false,
+            // successful: false,
+            // selectedFile: '',
+            // fileSelected: false,
+            // message: '',
+            avatarSelected: null,
         };
     },
-    computed: {
-        loggedIn() {
-            return this.$store.state.auth.status.loggedIn;
-        },
+    // computed: {
+    //     loggedIn() {
+    //         return this.$store.state.auth.status.loggedIn;
+    //     },
 
-        currentUser() {
-            return this.$store.state.auth.user;
-        },
-    },
+    //     currentUser() {
+    //         return this.$store.state.auth.user;
+    //     },
+    // },
 
     methods: {
-        ...mapActions(["updateUserInfosAction"]),
-
-        onFileSelect(event) {
-            this.selectedFile = event.target.files[0];
+        browse() {
+            this.$refs.file.click()
         },
 
-        async userUpdate() {
-            try {
-                this.message = '';
-                this.submitted = true;
-                this.loading = true;
-                const isValid = await this.$validator.validateAll();
-                if (!isValid) {
-                    this.loading = false;
-                    return;
-                }
-                const userUuid = this.currentUser.uuid;
-                const formData = new FormData();
-                const config = {
-                        header: { "Content-Type": "multipart/form-data" }
-                };
+      change(event) {
+        this.$emit('input', event.target.files[0]);
+        let reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0])
+        reader.onload = (event) => {
+            this.avatarSelected = event.target.result;
+        }
 
-                if( this.user.firstName) {
-                    formData.append("firstName", this.user.firstName);
-                }
-                if( this.user.lastName) {
-                    formData.append("lastName", this.user.lastName);
-                }
-                if( this.user.email) {
-                    formData.append("email", this.user.email);
-                }
-                if( this.user.aboutMe) {
-                    formData.append("aboutMe", this.user.aboutMe);
-                }
-                if( this.user.username) {
-                    formData.append("userName", this.user.username);
-                }        
-                const data = { userUuid, formData, config }
-                const response = await this.$store.dispatch("updateUserInfosAction", data);
-                this.message = response;
-                await this.$store.dispatch("getOneUserAction", userUuid)
-                this.successful = true;
-                this.loading = false;
+    }
+        // ...mapActions(["updateUserAvatarAction", "getOneUserAction"]),
 
-            } catch(error) {
-                this.loading = false;
-                this.message = (error.response && error.response.data) || error.message || error.toString();
-           }
-        },
+        // onFileSelect(event) {
+        //     this.selectedFile = event.target.files[0];
+        //     this.fileSelected = !this.fileSelected;
+        // },
+
+        // onReset() {
+        //   this.selectedFile = "";
+        //   this.fileSelected= false;
+        //   this.photo.title = "";
+        //   this.$validator.reset();
+        // },
+
+        // async userUpdateAvatar() {
+        //     try {
+        //         this.message = '';
+        //         this.submitted = true;
+        //         this.loading = true;
+        //         const isValid = await this.$validator.validateAll();
+        //         if (!isValid) {
+        //             this.loading = false;
+        //             return;
+        //         }
+        //         const userUuid = this.currentUser.uuid;
+        //         const formData = new FormData();
+        //         const config = {
+        //                 header: { "Content-Type": "multipart/form-data" }
+        //         };
+        //         formData.append("image", this.selectedFile, this.selectedFile.name);
+        //         const data = { userUuid, formData, config }
+
+        //         const response = await this.$store.dispatch("updateUserAvatarAction", data);
+        //         this.message = response;
+        //         this.getOneUserAction(userUuid)
+        //         this.successful = true;
+        //         this.loading = false;
+
+        //     } catch(error) {
+        //         this.loading = false;
+        //         this.message = (error.response && error.response.data) || error.message || error.toString();
+        //    }
+        // },
     }
 };
 </script>
 
 <style lang="scss" scoped>
+// h2 {
+//     font-size: 1.5rem;
+//     padding: .25rem;
+//     margin: 1rem 0 2rem 0;
+//     border-bottom: 2px solid grey;
+// }
+// label {
+// //   display: block;
+// //   margin: 1rem 0;
 
-h2 {
-    font-size: 1.5rem;
-    padding: .25rem;
-    margin: 1rem 0 2rem 0;
-    border-bottom: 2px solid grey;
-}
-label {
-//   display: block;
-//   margin: 1rem 0;
+// }
 
-}
+// .btn-send-form {
+//     font-size: 20px;
+//     display: inline;
+//     margin: 0 2rem;
+//     padding: 0.25rem 2rem;
+//     // margin: auto;
+//     border-bottom: 2px dotted grey;
+//     &:hover{
+//         border-bottom: none;
+//         background: rgba(255, 0, 0, 0.392);
+//         border-radius: 0.5rem;
+//     }
+// }
 
-.btn-send-form {
-    font-size: 20px;
-    display: inline;
-    margin: 0 2rem;
-    padding: 0.25rem 2rem;
-    // margin: auto;
-    border-bottom: 2px dotted grey;
-    &:hover{
-        border-bottom: none;
-        background: rgba(255, 0, 0, 0.392);
-        border-radius: 0.5rem;
-    }
-}
-
-#icon-paper-plane-user-data{
-  margin-left: 1rem;
-}
-
-
+// #icon-paper-plane-user-data{
+//   margin-left: 1rem;
+// }
 </style>

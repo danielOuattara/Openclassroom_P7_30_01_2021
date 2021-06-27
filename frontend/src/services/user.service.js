@@ -32,6 +32,19 @@ class UserService {
         data.config )
     }
 
+    updateUserAvatar(userUuid, data) {
+        return axios.put(API_URL + `/avatar/${userUuid}`, 
+        data.formData,  
+        { headers: authHeader() }, 
+        data.config )
+    }
+    updateUserBackgroundImage(userUuid, data) {
+        return axios.put(API_URL + `/backgroundimage/${userUuid}`, 
+        data.formData,  
+        { headers: authHeader() }, 
+        data.config )
+    }
+
     updatePassword(userUuid, data) {
     return axios.put(API_URL + `/updatepassword/${userUuid}`, { 
             passwordOld: data.passwordOld,

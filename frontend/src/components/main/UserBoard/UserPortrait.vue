@@ -48,7 +48,7 @@ export default {
   padding-bottom: 1rem;
   max-width: 20vw; 
   position: absolute;
-  top: 9rem;
+  top: 7rem;
   left: 40%;
 //   border-radius: 50% ;
   cursor: pointer;

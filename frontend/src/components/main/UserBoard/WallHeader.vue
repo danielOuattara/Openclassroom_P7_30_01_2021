@@ -5,10 +5,10 @@
         <UserInfos/>
         <UserSpecialOptions class="user-special-options"/>
 
-        <!-- <UserUpdateAvatar  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                    class=" btn-comment-options btn-update-comment"  /> -->
-        <!-- <UserUpdateBackgroundImage  v-if="userData.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                                    class=" btn-comment-options btn-update-comment"  /> -->
+        <UserUpdateAvatar  v-if="userDataGetters.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                           class=" btn-comment-options btn-update-comment"  />
+        <UserUpdateBackgroundImage  v-if="userDataGetters.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                                    class=" btn-comment-options btn-update-comment"  />
     </section>
 </template>
 
@@ -18,8 +18,8 @@ import UserBackgroundImage from './UserBackgroundImage.vue';
 import UserPortrait from './UserPortrait.vue';
 import UserInfos from './UserInfos.vue';
 import UserSpecialOptions from './UserSpecialOptions.vue';
-// import UserUpdateAvatar from './UserUpdateAvatar.vue';
-// import UserUpdateBackgroundImage from './UserUpdateBackgroundImage.vue';
+import UserUpdateAvatar from './UserUpdateAvatar.vue';
+import UserUpdateBackgroundImage from './UserUpdateBackgroundImage.vue';
 
  export default {
     components: {
@@ -27,8 +27,8 @@ import UserSpecialOptions from './UserSpecialOptions.vue';
       UserPortrait,
       UserInfos,
       UserSpecialOptions,
-    //   UserUpdateAvatar,
-    //   UserUpdateBackgroundImage,
+      UserUpdateAvatar,
+      UserUpdateBackgroundImage,
     },
 
     computed: {

@@ -10,11 +10,11 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faUserShield, faHistory, faCommentAlt,faEllipsisV,
          faAddressCard, faCalendarAlt, faClock, faThumbsUp, faThumbsDown, faEdit, faCameraRetro, faPaperPlane, 
-         faChevronDown, faChevronUp, faCheckCircle, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
+         faChevronDown, faChevronUp, faCheckCircle, faTimesCircle, faUserCircle, faImage, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 
 library.add( faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faUserShield, faHistory, faCommentAlt,faEllipsisV, 
              faCameraRetro, faAddressCard, faCalendarAlt, faClock, faThumbsUp, faThumbsDown, faEdit, faPaperPlane, 
-             faChevronDown,faChevronUp, faCheckCircle, faTimesCircle);
+             faChevronDown,faChevronUp, faCheckCircle, faTimesCircle, faUserCircle, faImage, faPlusCircle);
 
 Vue.config.productionTip = false;
 Vue.use(VeeValidate);

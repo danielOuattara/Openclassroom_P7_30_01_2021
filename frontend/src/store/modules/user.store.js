@@ -39,43 +39,37 @@ export const user = {
             }
         },
 
-        updateUserInfosAction( {commit}, data) {
-            return userService.updateUserInfos(data.userUuid, data)
-            .then( response => {
+        async updateUserInfosAction( {commit}, data) {
+            try {
+                const user = await userService.updateUserInfos(data.userUuid, data)
                 commit("updateUserInfosMutation");
-                return Promise.resolve(response.data);
-                },
-                error => {
-                    commit( "errUpdateUserInfosMutation");
-                    return Promise.reject(error);
-                }                
-            );
+                return Promise.resolve(user.data);
+            } catch (err) {
+                commit( "errUpdateUserInfosMutation");
+                return Promise.reject(err);
+            }
         },
 
-        updateUserAvatarAction( {commit}, data) {
-            return userService.updateUserAvatar(data.userUuid, data)
-            .then( response => {
+        async updateUserAvatarAction( {commit}, data) {
+            try {
+                const user = await userService.updateUserAvatar(data.userUuid, data)
                 commit("updateUserAvatarMutation");
-                return Promise.resolve(response.data);
-                },
-                error => {
-                    commit( "errUpdateUserAvatarMutation");
-                    return Promise.reject(error);
-                }                
-            );
+                return Promise.resolve(user.data);
+            } catch (err) {
+                commit( "errUpdateUserAvatarMutation");
+                return Promise.reject(err);
+            }
         },
 
-        updateUserBackgroundImageAction( {commit}, data) {
-            return userService.updateUserBackgroundImage(data.userUuid, data)
-            .then( response => {
+        async updateUserBackgroundImageAction( {commit}, data) {
+            try {
+                const user = await userService.updateUserBackgroundImage(data.userUuid, data)
                 commit("updateUserBackgroundImageMutation");
-                return Promise.resolve(response.data);
-                },
-                error => {
-                    commit( "errUpdateUserBackgroundImageMutation");
-                    return Promise.reject(error);
-                }                
-            );
+                return Promise.resolve(user.data);
+            } catch(err) {
+                commit( "errUpdateUserBackgroundImageMutation");
+                return Promise.reject(err);
+            }
         }
     },
 }
