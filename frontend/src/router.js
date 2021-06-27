@@ -13,7 +13,6 @@ export const router = new Router({
     { path: '/home'    , name: ''         , component: Home                                   },
     { path: '/login'   , name: ''         , component: Login                                  },
     { path: '/signin'  , name: ''         , component: Signin                                 },
-    // { path: '/profile' , name: 'profile'  , component: () => import('./views/Profile.vue')    },
     { path: '/admin'   , name: 'admin'    , component: () => import('./views/BoardAdmin.vue') },
     { path: '/user'    , name: 'user'     , component: () => import('./views/BoardUser.vue')  },
     { path: '/gtu'     , name: 'gtu'      , component: () => import('./views/GTU.vue')        },
@@ -27,7 +26,7 @@ export const router = new Router({
  */
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/signin'  /*, '/home' */, '/gtu', '/help-center'];
+    const publicPages = ['/login', '/signin', '/gtu', '/help-center'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 

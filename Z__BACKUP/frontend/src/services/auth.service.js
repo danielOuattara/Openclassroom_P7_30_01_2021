@@ -29,10 +29,9 @@ class AuthService {
             });
     }
 
-    logout(userUuid) {  // TODO:  FUNCTION TO EXPAND
+    logout(userUuid) { 
         return axios.put( API_URL + `logout/${userUuid}`, {userUuid},
            { headers: authHeader() })
-        // localStorage.removeItem("user");
     }
 
     signin(user) {

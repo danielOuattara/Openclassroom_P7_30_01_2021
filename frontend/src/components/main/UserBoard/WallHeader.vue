@@ -1,5 +1,5 @@
 <template>
-    <section class="wall-header" >
+    <section class="wall-header">
         <UserBackgroundImage/>
         <UserPortrait/>
         <UserInfos/>

@@ -33,7 +33,6 @@ exports.addPhoto = async (req, res)=> {
 
 exports.getAllPhotos = (req, res) => {
   Photo.findAll({
-    where: {}, 
     order: [
       ['createdAt', 'DESC']
     ],
@@ -45,15 +44,25 @@ exports.getAllPhotos = (req, res) => {
       {
         model: Comment,
         as: 'comments',
-        include: [ {model: User, as: 'owner'} ],
-        order: [
-          ['createdAt', 'DESC']
-        ]
+        // order: [
+        //   ['createdAt', '']
+        // ],
+        include: [ 
+          {
+            model: User, 
+            as: 'owner'
+          } 
+        ],
       }, 
       {
         model: Like,
         as: 'likes',
-        include: [ {model: User, as: 'owner'} ]
+        include: [ 
+          {
+            model: User, 
+            as: 'owner'
+          } 
+        ]
       },
     ],
 

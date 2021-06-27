@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Like from '../../models/comment.js';
+import Like from './../../../models/like.js';
 export default {
     props: ['item'],
     data() {
@@ -133,14 +133,12 @@ export default {
               }
           }
       },
-
     },
 
     mounted() {
       this.countingLikes();
       this.countingDisLikes();
     }, 
-
 }
 
 </script>

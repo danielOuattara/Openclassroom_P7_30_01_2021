@@ -9,7 +9,7 @@
             <Photo v-bind:item="photo" />
             <BtnCommentsToggler v-bind:item="photo.uuid" 
                                 v-bind:comments="photo.comments"/> 
-            <!-- <PhotoLikes v-bind:item="photo" /> -->
+            <PhotoLikes v-bind:item="photo" />
             <PhotoBtnOptions v-bind:photoOwner="photo.owner" 
                              v-bind:photoUuid="photo.uuid"/>
             <ReportPhotoForm class="photo-report-form"  
@@ -32,7 +32,7 @@ import PhotoTitle    from './../global_components/PhotoTitle';
 import DateOfPosting from './../global_components/DateOfPosting';
 import Photo         from './../global_components/Photo';
 import BtnCommentsToggler from './../global_components/BtnCommentsToggler';
-// import PhotoLikes    from './../global_components/PhotoLikes';
+import PhotoLikes    from './../global_components/PhotoLikes';
 import PhotoBtnOptions from './../global_components/PhotoBtnOptions.vue';
 import ReportPhotoForm from './../global_components/ReportPhotoForm.vue'
 import CommentsWall   from './CommentsWall.vue';
@@ -47,7 +47,7 @@ export default {
     DateOfPosting,
     Photo,
     BtnCommentsToggler,
-    // PhotoLikes,
+    PhotoLikes,
     PhotoBtnOptions,
     ReportPhotoForm,
     CommentsWall,

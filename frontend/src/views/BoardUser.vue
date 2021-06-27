@@ -2,29 +2,25 @@
 <template>
   <section class="user-board">  
     <WallHeader/>
-    <!-- <AddPhoto class="add-photo"/> -->
-    <!-- <UserPhotosWall class="user-photos"/> -->
+    <AddPhoto class="add-photo"/>
+    <UserPhotosWall class="user-photos"/>
   </section>
 </template>
 
 <script>
-import UserService from './../services/user.service.js';
+// import UserService from './../services/user.service.js';
 import {mapActions } from 'vuex';
 
 import WallHeader from './../components/main/userBoard/WallHeader.vue';
-// import UserUpdateAvatar from './UserUpdateAvatar.vue';
-// import UserUpdateInfos from './UserUpdateInfos.vue';
-// import AddPhoto from './../components/main/global_components/AddPhoto.vue';
-// import UserPhotosWall from './../components/main/userBoard/UserPhotosWall.vue';
+import AddPhoto from './../components/main/global_components/AddPhoto.vue';
+import UserPhotosWall from './../components/main/userBoard/UserPhotosWall.vue';
+
 export default {
     name: 'UserBoard',
     components: {
       WallHeader,
-      // AddPhoto,
-      // UserPhotosWall,
-      // UserUpdateAvatar ,
-      // UserBackgroundImage,
-      // UserUpdateInfos,
+      AddPhoto,
+      UserPhotosWall,
     },
 
     computed: {
@@ -47,13 +43,13 @@ export default {
     },
 
     mounted() {
-      UserService.getUserBoard()
-      .then( response => {
-          this.content = response.data
-      })
-      .catch( err => {
-        this.content = (err.response && err.response.data) || err.message || err.toString();
-      })
+      // UserService.getUserBoard()
+      // .then( response => {
+      //     this.content = response.data
+      // })
+      // .catch( err => {
+      //   this.content = (err.response && err.response.data) || err.message || err.toString();
+      // })
       
       if (!this.currentUser) {
         this.$router.push('/login');
@@ -79,6 +75,8 @@ export default {
   max-width: 80vw;
   margin: auto;
   margin-top: 1rem;
+  // margin-top: 2rem;
+  padding-top: 1rem;
 
 }
 .photos {
@@ -237,11 +235,7 @@ export default {
 
 
 .user-photos {
-  width: 90%;
-  margin: auto;
-  margin-top: 2rem;
-  border-top: 1px solid grey; 
-  padding-top: 1rem;
+
 }
 
 
