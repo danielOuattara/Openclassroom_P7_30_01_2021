@@ -17,12 +17,6 @@ export const user = {
 
         updateUserInfosMutation: (state, user) => state.user = user,
         errUpdateUserInfosMutation: (state) => state.user = {},
-
-        updateUserAvatarMutation: (state, user) => state.user = user,
-        errUpdateUserAvatarMutation: (state) => state.user = {},
-
-        updateUserBackgroundImageMutation: (state, user) => state.user = user,
-        errUpdateUserBackgroundImageMutation: (state) => state.user = {},
     },
 
     actions: {
@@ -49,27 +43,5 @@ export const user = {
                 return Promise.reject(err);
             }
         },
-
-        async updateUserAvatarAction( {commit}, data) {
-            try {
-                const user = await userService.updateUserAvatar(data.userUuid, data)
-                commit("updateUserAvatarMutation");
-                return Promise.resolve(user.data);
-            } catch (err) {
-                commit( "errUpdateUserAvatarMutation");
-                return Promise.reject(err);
-            }
-        },
-
-        async updateUserBackgroundImageAction( {commit}, data) {
-            try {
-                const user = await userService.updateUserBackgroundImage(data.userUuid, data)
-                commit("updateUserBackgroundImageMutation");
-                return Promise.resolve(user.data);
-            } catch(err) {
-                commit( "errUpdateUserBackgroundImageMutation");
-                return Promise.reject(err);
-            }
-        }
     },
 }
