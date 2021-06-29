@@ -64,6 +64,9 @@ export default {
 
 .user-board{
   margin:auto;
+      @media screen and (min-width: 650px) {
+        max-width: 650px;
+    }
 }
 .add-photo{
   max-width: 80vw;
@@ -76,6 +79,7 @@ export default {
   margin-top: 1rem;
   // margin-top: 2rem;
   padding-top: 1rem;
+  
 
 }
 .photos {
@@ -205,7 +209,6 @@ export default {
  #password-update {
   grid-row: 12   ;
   grid-column:  1 / span 2 ;
-  
 }
 
 .account-delete-collapser {
@@ -232,10 +235,6 @@ export default {
   grid-column:  1 / span 2 ;
 }
 
-
-.user-photos {
-
-}
 
 
 

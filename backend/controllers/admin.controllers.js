@@ -4,7 +4,6 @@ const { User, Photo, Comment, PhotosReports, CommentsReports } = require('./../m
 // ------------------------------------------------------------------------------
 
 exports.getPhotoReports = async (req, res) => {
-//   console.log(req);
     try {
         if(!req.userRoles.includes("ROLE_ADMIN")){
             return res.status(403).json({ Error : "Non Authorized !" })  

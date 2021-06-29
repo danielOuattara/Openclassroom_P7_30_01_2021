@@ -1,35 +1,36 @@
 
 <template>
- 
         <section class="user-report">
-            <button @click="getPhotosReports" >Click to get photo reports</button>
-            <!-- <p>{{this.photosReportsGetters}}</p> -->
-            <div v-for="report, index in photosReportsGetters" :key="index" class="report-container">
+            <button @click="getPhotoCommentsReports">Click to get comments reports</button>
+            <p>{{this.photoCommentsReportsGetters}}</p>
+                        <div v-for="report, index in photoCommentsReportsGetters" :key="index" class="report-container">
                 <div class="sender infos">
                     <h2> Report sender</h2>
-                    <p> id: {{report.ownerId}}</p>
+                    <!-- <p> id: {{report.ownerId}}</p>
                     <p> firstName: {{report.owner.firstName}}</p>
                     <p> lastName: {{report.owner.lastName}}</p>
                     <p> email : {{report.owner.email}}</p>
-                    <p></p>
+                    <p></p> -->
                     <p></p>
                     <p></p>
                 </div>
-                <div class="photo infos" >
+
+                <div class="comment infos" >
                     <h2>Photo reported</h2>
-                    <p>photo.id : {{report.photoId}}</p>
+                    <!-- <p>photo.id : {{report.photoId}}</p>
                     <p>{{report.message}}</p>
                     <p>{{report.status}}</p>
                     <p>{{report.createdAt}}</p>
                     <p>{{report.photoId}}</p>
-                     <img :src="report.owner.avatar" alt="owner avatar" style="max-width: 15%">
+                     <img :src="report.owner.avatar" alt="owner avatar" style="max-width: 15%"> -->
                 </div>
+
                 <div class="target-person infos">
                     <h2>Photo owner infos</h2>
-                    <p> id: {{report.photo.ownerId}}</p>
+                    <!-- <p> id: {{report.photo.ownerId}}</p>
                     <p>firstName: {{report.photo.owner.firstName}}</p>
                     <p>lastName: {{report.photo.owner.lastName}}</p>
-                    <p>email:  {{report.photo.owner.email}}</p>
+                    <p>email:  {{report.photo.owner.email}}</p> -->
                 </div>
             </div>
         </section>
@@ -39,16 +40,9 @@
 // import UserService from './../services/user.service.js';
 import {mapGetters, mapActions } from "vuex";
 export default {
-    name: 'BoardAdmin',
-    data() {
-        return {
-            content: '',
-            message: ''
-        };
-    },
-
+    name: 'PhotoCommentsReports',
     mounted() {        
-        this.getPhotosReportsAction(); // automatic action
+        this.getPhotoCommentsReportsAction(); // automatic action
         //   UserService.getAdminBoard()
         //   .then( response => {
         //     this.content = response.data
@@ -62,36 +56,28 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["photosReportsGetters"]),
+        ...mapGetters(["photoCommentsReportsGetters"]),
         currentUser() {
             return this.$store.state.auth.user;
         }
     },
     
     methods: {
-        ...mapActions(["getPhotosReportsAction"]),
+        ...mapActions(["getPhotoCommentsReportsAction"]),
 
-        async getPhotosReports() { // manual action to get reports
+        async getPhotoCommentsReports() { // manual action to get reports
             try {
-                await this.$store.dispatch("getPhotosReportsAction");
+                await this.$store.dispatch("getPhotoCommentsReportsAction");
                 
             } catch (err) {
                 this.message = (err.response && err.response.data) || err.message || err.toString();
             }
-        },
+        }
     }
 };
 </script>
 
 <style lang="scss" scoped>
-.admin-board {
-    max-width: 85vw;
-    margin: auto;
-    // @media screen and (min-width: 740px) {
-    //     //  max-width: 60%;
-    // }
-}
-
 .report-container {
     display: flex;
     border: 1px solid grey;

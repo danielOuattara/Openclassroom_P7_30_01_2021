@@ -95,12 +95,14 @@ article.photo-bloc {
     grid-gap: 0.15rem;
 }
 
-
 .bloc-avatar {
     grid-row: 1 / span 2;
     grid-column: 1 / span 2;
     margin-right: 8px;
     background: white;
+        @media screen and (min-width: 650px) {
+        max-width: 90px;
+    }
 }
 .bloc-owner-name {
     grid-row: 1 / span 1;
@@ -132,17 +134,11 @@ article.photo-bloc {
     border-bottom:2px dotted blue;
 }
 
-// .photo-report-form {
-//   z-index: 5!important;
-//   position: absolute;
-// }
-
 /* -------- comment styling */
 .bloc-comment-collapsable {
     grid-row: 8 ;
     grid-column: 1 / span 6;
 }
-
 
 .bloc-new-comment { /* STDBY */
     grid-row: 8 / span 4;
@@ -155,58 +151,5 @@ article.photo-bloc {
     grid-column: 1 / span 6;
     // border: 1px solid red;
 }
- 
 
-// .dropdown-menu{
-//     // width: 50vw;
-//     height: auto;
-//     // border: 1px solid green;
-//     &:hover {
-//         border: 1px solid grey;
-//     }
-// }
-
-// .dropdown-toggle {
-//       font-size: 12px;
-//       &:hover {
-//           background: grey;
-//           color: white;
-//       }
-// }
-
-// .btn-comment {
-//     font-size: 12px;
-//     // margin-right: 20px;
-//     border-style: none;
-//     border-radius: 5px;
-//     padding: 3px 12px;
-//     background: rgb(255, 255, 255);
-//     font-weight: 600;
-//     &:hover {
-//         background: rgb(100, 100, 100);
-//         color: white
-//     }
-// }
-
-
-
-
-/* ---  END Grid Item */
-
-/* styling photo-posts */
-
-// .bloc {
-  // border: 1px solid grey;
-  // padding: 5px;
-  // margin-bottom: 5px;
-  // border-radius: 5px;
-// }
-
-// @media screen and (min-width: 760px) {
-//   .photo-bloc {
-//     display: flex;
-//     flex-direction: column;
-//     flex-wrap: wrap;
-//   }
-// }
 </style>

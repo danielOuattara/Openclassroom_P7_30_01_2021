@@ -47,6 +47,10 @@ import UserUpdateBackgroundImage from './UserUpdateBackgroundImage.vue';
     min-height: 60vh;
     border-bottom: 1px solid grey;
     padding-bottom: 2rem;
+    @media screen and (min-width: 650px) {
+        max-width: 650px;
+        margin: auto;
+    }
 
 }
 

@@ -55,7 +55,7 @@ export default {
 
 <style lang="scss">
 .wall-background-image{
-    min-width: 100vw;
+    min-width: 100%;
     height: 30vh;
 }
 .background-image{

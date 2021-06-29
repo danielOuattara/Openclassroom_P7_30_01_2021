@@ -16,10 +16,14 @@ export default {
     },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 section.home{
     max-width: 85vw;
     margin: auto;
+    @media screen and (min-width: 650px) {
+        max-width: 650px;
+    }
 }
+
 </style>
 

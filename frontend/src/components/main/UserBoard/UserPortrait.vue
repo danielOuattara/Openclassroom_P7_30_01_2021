@@ -12,7 +12,6 @@
               :alt="userDataGetters.firstName + ' ' + userDataGetters.lastName + ' picture'"
               data-toggle="modal"
               :data-target="'#avatar'+ userDataGetters.uuid"/>
-              <font-awesome-icon id="icon-camera-retro" icon="camera-retro" />
 
         <!-- Modal -->
         <div class="modal fade" :id="'avatar'+userDataGetters.uuid" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
@@ -48,8 +47,13 @@ export default {
   padding-bottom: 1rem;
   max-width: 20vw; 
   position: absolute;
-  top: 7rem;
+  top: 10rem;
   left: 40%;
+  @media screen and (min-width: 650px) {
+        max-width: 100px;
+        margin: auto;
+        top: 9rem
+    }
 //   border-radius: 50% ;
   cursor: pointer;
 }
