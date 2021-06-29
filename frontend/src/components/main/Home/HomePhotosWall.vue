@@ -57,11 +57,19 @@ export default {
   data() {
     return {
       commentToggled: false,
+      users: [],
+      searchUSer: '',
     };
   },
 
   computed: {
     ...mapGetters(["allPhotosGetters", /* "likesData" */]),
+
+    filteredUser() {
+      return this.users.filter( user => {
+        return user.firstName.match(this.userSearch) || user.lastName.match(this.userSearch)
+      })
+    },
     
     currentUser() {
         return this.$store.state.auth.user;
