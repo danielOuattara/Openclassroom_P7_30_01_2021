@@ -1,5 +1,5 @@
 <template>
-    <div id="app-globale">
+    <div id="app">
         <Header class="header"/>
         <Main class="main"/>
         <Footer class="footer" v-if="loggedIn" />
@@ -31,7 +31,7 @@ export default {
     padding: 0;
     box-sizing: border-box;
 }
-#app-globale {
+#app {
     min-height: 100vh;
     width: 100%;
     background: rgb(240, 240, 240);

@@ -1,14 +1,13 @@
 
 <template>
-<div>
-    <h2>All blog article</h2>
-    <input type="text" name="searchTitle" v-model="search" placeholder="Search by blog title..."/>
-        <div class="single-blog" v-for="item, index in filteredBlogs" :key="index"> 
-            <h2> {{ item.title | to-upperCase }}</h2>
-            <article> {{ item.body | snippet}}</article>
-        </div>
+<div id="search-photo">
+    <h2>Search by photo title: </h2>
+    <input type="text" name="searchPhoto" v-model="search" 
+           placeholder="Search photo by title..."/>
+    <div class="single-photo" v-for="photo, index in filteredPhotos" :key="index"> 
+        <span v-if="search.length>0">{{photo.title}}</span>
+    </div>
 </div>
-
 </template>
 
 <script>
@@ -16,17 +15,17 @@ import photoService from './../../../services/photo.service.js';
 export default {
     data() {
         return {
-        photo: [],
-        search: '',
+            photos: [],
+            search: '',
         };
     },
 
     computed: {
 
-        filteredPhoto() {
-        return this.photos.filter( photo => {
-            return photo.title.match(this.search)
-        })
+        filteredPhotos() {
+            return this.photos.filter( photo => {
+                return photo.title.match(this.search)
+            })
         },
         
         currentUser() {
@@ -36,9 +35,9 @@ export default {
 
     created() {
         photoService.getAllPhotos()
-        .then( data => {
-        this.photos = data;
-        console.log(data)
+        .then( res => {
+        this.photos = res.data;
+        console.log(res.data)
         })
         .catch(err=> { console.log(err.message)})
     },

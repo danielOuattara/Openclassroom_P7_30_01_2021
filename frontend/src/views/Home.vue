@@ -1,20 +1,24 @@
 <template>
     <section class="home">
-        <AddPhoto />
-        <HomePhotosWall/>
         <SearchUser/>
         <SearchPhoto/>
+        <AddPhoto />
+        <HomePhotosWall/>
     </section>
 </template>
 
 <script>
 import AddPhoto from '../components/main/global_components/AddPhoto.vue';
 import HomePhotosWall from '../components/main/home/HomePhotosWall';
+import SearchUser from './../components/main/home/SearchUser.vue';
+import SearchPhoto from './../components/main/home/SearchPhoto.vue';
 export default {
     name: 'Home',
     components: {
       AddPhoto,
-      HomePhotosWall
+      HomePhotosWall,
+      SearchUser,
+      SearchPhoto
     },
 };
 </script>

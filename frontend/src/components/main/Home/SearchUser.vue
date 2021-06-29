@@ -1,12 +1,13 @@
 
 <template>
-<div>
-    <h2>All blog article</h2>
-    <input type="text" name="searchTitle" v-model="search" placeholder="Search by blog title..."/>
-        <div class="single-blog" v-for="item, index in filteredBlogs" :key="index"> 
-            <h2> {{ item.title | to-upperCase }}</h2>
-            <article> {{ item.body | snippet}}</article>
-        </div>
+<div id="search-user">
+    <h2>Search user</h2>
+    <input type="text" name="searchUser" v-model="search" 
+           placeholder="search by firstName or lastName..."/>
+    <div class="single-user" v-for="user, index in filteredUsers" :key="index"> 
+        <span v-if="search.length>0"> {{ user.firstName}}</span>
+        <span v-if="search.length>0"> {{ user.lastName}}</span>
+    </div>
 </div>
 
 </template>
@@ -16,17 +17,17 @@ import userService from './../../../services/user.service.js';
 export default {
     data() {
         return {
-        users: [],
-        searchUSer: '',
+            users: [],
+            search: '',
         };
     },
 
     computed: {
 
-        filteredUser() {
-        return this.users.filter( user => {
-            return user.firstName.match(this.userSearch) || user.lastName.match(this.userSearch)
-        })
+        filteredUsers() {
+            return this.users.filter( user => {
+                return user.firstName.match(this.search)
+            })
         },
         
         currentUser() {
@@ -36,9 +37,9 @@ export default {
 
     created() {
         userService.getAllUsers()
-        .then( data => {
-        this.users = data;
-        console.log(data)
+        .then( res => {
+        this.users = res.data;
+        console.log(res.data)
         })
         .catch(err=> { console.log(err.message)})
     },

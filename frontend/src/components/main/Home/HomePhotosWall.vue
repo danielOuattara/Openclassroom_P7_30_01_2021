@@ -20,8 +20,6 @@
             </div>
         </article>
     </div>
-
-
 </template>
 
 <script>
