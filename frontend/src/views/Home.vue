@@ -2,6 +2,8 @@
     <section class="home">
         <AddPhoto />
         <HomePhotosWall/>
+        <SearchUser/>
+        <SearchPhoto/>
     </section>
 </template>
 
