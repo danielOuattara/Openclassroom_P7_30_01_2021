@@ -39,4 +39,7 @@ The frontend is built with Vue2, VueX, Vue Router.
 - follow VueJS instructions on the terminal windows
 - done
 
+### Admin account creation in Frontend
+- use  <b> 1_superRolePassword! </b> as authorization password
+
 ### Any question ? 
