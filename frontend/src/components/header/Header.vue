@@ -1,18 +1,20 @@
 <template>
 <header id="header">
     <nav id="navbar-main" class=" _upper-nav navbar navbar-expand-md navbar-dark bg-dark main-nav">
-        <a class="navbar-brand" tabindex="0" @click.prevent>
+        <a class="navbar-brand" tabindex="0" role="button" @click.prevent>
             <router-link to="/home">
                 <img src="./../../assets/images/image_Groupomania/icon-left-font-monochrome-white.svg" 
                     style="width:200px" 
-                    alt=" image logo Groupomania"
+                    alt="image logo Groupomania"
                     id="image-logo"
-                    tabindex="0"/>
+                    tabindex="0"
+                    role="button"
+                    aria-role="button"/>
             </router-link>
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" aria-label>
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon" aria-label="menu"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="collapsibleNavbar">

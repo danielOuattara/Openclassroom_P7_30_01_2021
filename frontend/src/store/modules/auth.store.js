@@ -39,8 +39,8 @@ export const auth =  {
            })
         },
 
-        signin( {commit}, user) {
-            return AuthService.signin(user)
+        signin( {commit}, data) {
+            return AuthService.signin(data)
             .then( response => {
                 commit("signinSuccess");
                 return Promise.resolve(response.data);

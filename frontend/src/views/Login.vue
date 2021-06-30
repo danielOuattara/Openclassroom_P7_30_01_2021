@@ -12,6 +12,8 @@
                             v-model="user.emailOrUsername" 
                             v-validate="'required'" 
                             class="form-control" 
+                            aria-label='input'
+                            id="emailOrUsername"
                             name="emailOrUsername"/>
 
                     <div    class="alert alert-danger" 
@@ -26,6 +28,7 @@
                            v-model="user.password" 
                            v-validate="'required'" 
                            class="form-control" 
+                           id="password"
                            name="password"/>
 
                     <div   class="alert alert-danger" 
@@ -40,7 +43,7 @@
                             :disabled="loading">
                         <span v-show="loading" 
                               class="spinner-border spinner-border-sm"></span>
-                        <span class="">Login</span>
+                        <span class="login" style="font-size:1.5rem">Login</span>
                     </button>
                 </div>
                 <div class="form-group">
@@ -116,25 +119,28 @@ export default {
         handleSessionExpiration() {
             const timeToExpiration = parseInt(this.currentUser.exp.slice(0,1)) * 3600000; // hour(s) to ms
             // const timeToExpiration = parseInt(this.currentUser.exp.slice(0,1)) * 5000; // hour(s) to ms
-            setTimeout( this.logout , timeToExpiration );
+            // const beforeTimeToExpiration= timeToExpiration -1000;
+            // setTimeout( this.$router.push("/login") , beforeTimeToExpiration );
+            setTimeout( this.logout, timeToExpiration );
         },
 
         async logout() {
             try{
                 const userUuid = this.currentUser.uuid
+                this.$router.push('/login');
                 await this.$store.dispatch('auth/logout', userUuid);
                 localStorage.removeItem("user");
-                this.$router.push('/login');
             } catch (error) {
                 // localStorage.removeItem("user");
                 (error.response && error.response.data) || error.message || error.toString();
             }
         },
+    },
 
+    // mounted() {
+    //     this.handleSessionExpiration()
+    // }
 
-
-
-    }
 };
 </script>
 
@@ -180,7 +186,8 @@ label {
 
 #nav-link {
     text-align: right;
-    color:#23923d
+    color:#1b7430;
+    font-size: 1.2rem
 }
 .form-check {
     margin:20px 0;

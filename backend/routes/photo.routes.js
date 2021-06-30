@@ -19,13 +19,12 @@ router.delete("/:photoUuid", authJwt, controller.deleteOnePhoto);
 // router.get("/user/:userUuid",  authJwt, controller.getAllPhotosFromOneUser); // USEFULL ???
 // router.delete("/",  authJwt, controller.userDeleteAllPhotos);
 // router.delete("/user/:userUuid",  authJwt, controller.deleteAllPhotosFromOneUser);
-// router.get("/search/:photoUuid",  authJwt, controller.getOnePhoto); // TODO
 
 
 /*Likes 
 -----------------*/
-// router.post("/:photoUuid/likes", authJwt, controllerLikes.photoLikes);
-// router.get("/:photoUuid/likes" , authJwt, controllerLikes.photoLikesCounting);
+router.post("/:photoUuid/likes", authJwt, controllerLikes.photoLikes);
+router.get("/:photoUuid/likes" , authJwt, controllerLikes.photoLikesCounting);
 
 
 /* Comments
@@ -34,6 +33,7 @@ router.post("/:photoUuid/comments", authJwt, controllerComments.createComment);
 router.delete("/:photoUuid/comments/:commentUuid", authJwt, controllerComments.deleteOneComment);
 
 router.put("/:photoUuid/comments/:commentUuid", authJwt, controllerComments.updateOneComment);
+
 // router.get("/:photoUuid/comments",  authJwt, controllerComments.getPhotoAllComments);
 // router.get("/:photoUuid/comments/:commentUuid", authJwt, controllerComments.getOneComment);
 // router.delete("/:photoUuid/comments/",          authJwt, controllerComments.deleteAllCommentsFromOnePhoto);

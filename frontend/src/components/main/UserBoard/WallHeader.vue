@@ -3,12 +3,15 @@
         <UserBackgroundImage/>
         <UserPortrait/>
         <UserInfos/>
+        <div class="image-updater">
+            <UserUpdateAvatar  v-if="userDataGetters.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                               class="update-avatar"  />
+            <UserUpdateBackgroundImage  v-if="userDataGetters.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                                        class="update-background-image"  />
+        </div>
+
         <UserSpecialOptions class="user-special-options"/>
 
-        <UserUpdateAvatar  v-if="userDataGetters.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                           class=" btn-comment-options btn-update-comment"  />
-        <UserUpdateBackgroundImage  v-if="userDataGetters.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
-                                    class=" btn-comment-options btn-update-comment"  />
     </section>
 </template>
 
@@ -95,6 +98,32 @@ import UserUpdateBackgroundImage from './UserUpdateBackgroundImage.vue';
     grid-row: 4 ;
     grid-column: 1 ;
     font-size: 0.95rem;
+}
+
+.image-updater {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.update-avatar {
+    margin-top: 1rem;
+    display: inline-block;
+    border-bottom: 1px solid grey;
+    padding: 0.5rem 1.5rem;
+    &:hover {
+        color: white;
+        background: grey;
+    }
+}
+.update-background-image {
+    margin-top: 1rem;
+    display: inline-block;
+    border-bottom: 1px solid grey;
+    padding: 0.5rem 1rem ;
+    &:hover {
+        color: white;
+        background: grey;
+    }
 }
 
 #password-update {

@@ -72,10 +72,14 @@ button {
     max-width: 80vw;
     margin: auto;
 }
-p{
-    // border: 1px solid grey;
-    // padding: 0.5rem;
-    // margin: 1rem 0 0 1rem ;
+
+.account-delete-collapser{
+color: rgb(184, 0, 0);
+
+    &:hover {
+        color: white;
+        background: rgb(184, 0, 0);
+    }
 }
 
 #chevron-down, #chevron-up{

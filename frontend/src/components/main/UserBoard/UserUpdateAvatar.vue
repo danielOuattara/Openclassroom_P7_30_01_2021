@@ -7,7 +7,7 @@
                    ref="avatar"
                    style="display:none" />
 
-            <span type="button" 
+            <span type="button" aria-role="button" tabindex="0" role="button"
                   @click="$refs.avatar.click()"> avatar
                 <font-awesome-icon v-if="!fileSelected" id="icon-update-avatar" icon="user-circle"/> 
             </span>

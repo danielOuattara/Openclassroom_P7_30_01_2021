@@ -42,7 +42,7 @@ db.sequelize.sync( /*{force:true}*/)
   console.log('Resync database : success !');
   console.log('   ===  Connected to Groupomania:  localhost 4200 !  === ')
 })
-.catch( err=> res.status(500).send( {message: err.message}));
+.catch( err=> console.log(err.message));
 // -----------------------------------------------------------------------
 
 app.get ('/', (req, res, next) => {

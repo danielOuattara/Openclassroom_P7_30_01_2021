@@ -7,7 +7,7 @@
                    ref="backgroundImage"
                    style="display:none" />
 
-            <span type="button" 
+            <span type="button" aria-role="button" tabindex="0" role="button"
                   @click="$refs.backgroundImage.click()"> background
                 <font-awesome-icon v-if="!fileSelected" id="icon-update-background" icon="image"/> 
             </span>

@@ -1,6 +1,6 @@
 <template>
     <section class="user-data"> 
-        <span type="button" @click="updateToggler" id="edit-user-data">
+        <span type="button"  aria-role="button" tabindex="0" role="button" @click="updateToggler" id="edit-user-data">
             <font-awesome-icon icon="edit" />
             Edit infos
             <font-awesome-icon v-if="!formToggler" id="chevron-down" icon="chevron-down" />

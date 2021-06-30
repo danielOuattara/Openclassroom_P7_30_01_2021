@@ -52,14 +52,7 @@
             </div>
             
             <div class="form-group">
-                <button class="btn btn-dark btn-block" 
-                        @click="onReset"> 
-                    Reset 
-                </button>
-            </div>
-
-            <div class="form-group">
-                <button class="btn btn-primary btn-block" 
+                <button class=" btn-update-password btn btn-primary btn-block" 
                         :disabled="loading">
                     <span v-show="loading" 
                             class="spinner-border spinner-border-sm"></span>
@@ -68,6 +61,7 @@
                     </span>
                 </button>
             </div>
+            <input type="reset" @click="onReset" class=" btn-reset-update btn btn-outline-primary btn-block" aria-label="Reset" value="Reset">
         </form>
 
         <div v-if="message"  class="alert message-zone" 
@@ -151,6 +145,18 @@ label {
 
 .message-zone {
     font-size: 0.95rem
+}
+
+.btn-update-password {
+    background: blue;
+}
+
+.btn-reset-update {
+    color: blue;
+    &:hover {
+        background: blue;
+        color: white;
+    }
 }
 
 

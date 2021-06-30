@@ -10,7 +10,7 @@ import {mapGetters, mapActions} from 'vuex';
 export default {
 
     computed: {
-        ...mapGetters(['userDataGetters', ]),
+        ...mapGetters(['userDataGetters']),
     }, 
 
     methods: {

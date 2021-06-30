@@ -3,6 +3,9 @@
           type="button" 
           data-toggle="collapse" 
           :data-target="'#photo'+item" 
+          aria-role=button
+          tabindex="0"
+          role="button"
           aria-expanded="false" :aria-controls="'photo'+item"
           @click="onCommentToggleClick"> 
         Comments :
@@ -40,5 +43,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 
 </style>

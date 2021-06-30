@@ -1,8 +1,8 @@
 <template>
     <section class="home">
+        <AddPhoto />
         <SearchUser/>
         <SearchPhoto/>
-        <AddPhoto />
         <HomePhotosWall/>
     </section>
 </template>

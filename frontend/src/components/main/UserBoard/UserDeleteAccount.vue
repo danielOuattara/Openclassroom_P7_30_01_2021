@@ -4,12 +4,12 @@
             <div class="form-group">
                 <label for="password">Password : </label>
                 <input type="password" 
+                        v-validate="'required|min:6|max:40'" 
                         placeholder="enter your password..."
                         v-model="user.password" 
-                        v-validate="'required|min:6|max:40'" 
                         class="form-control" 
-                        ref="password"
-                        name="password"/>
+                        name="password"
+                        id="password"/>
                 <div   class="alert alert-danger"  v-if="errors.has('password')" 
                         role="alert"> The current password is required !
                 </div>
@@ -22,7 +22,7 @@
                     </span>
                 </button>
             </div>
-            <input type="reset" class="btn btn-outline-info btn-block" value="Reset">
+            <input type="reset" @click="onReset" class=" btn-reset-update btn btn-outline-info btn-block" aria-label="Reset" value="Reset">
             <div class="form-group">
             <div v-if="message" 
                 class="alert" 
@@ -58,8 +58,12 @@ export default {
     }, 
 
     methods: { 
+        onReset() {
+          this.$validator.reset();
+          this.password ="";
+        },
 
-         async deleteUserAccount() {
+        async deleteUserAccount() {
             try {
                 this.message = '';
                 this.submitted = true;
@@ -108,5 +112,13 @@ label {
 .modal-body {
     font-size: 2.5vh;
     color: rgb(136, 8, 8); 
+}
+
+.btn-reset-update {
+    color: blue;
+    &:hover {
+        background: blue;
+        color: white
+    }
 }
 </style>

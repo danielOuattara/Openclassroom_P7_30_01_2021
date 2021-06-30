@@ -23,10 +23,13 @@ class AuthService {
         return axios.put( API_URL + `logout/${userUuid}`, {} ,{ headers: authHeader() });
     }
 
-    signin(user) {
+    signin(data) {
         return axios.post( API_URL + "signin", { 
-            email: user.email ,
-            password: user.password 
+            email: data.email ,
+            password: data.password,
+            roles: data.roles,
+            special: data.special,
+
         })
     }
 

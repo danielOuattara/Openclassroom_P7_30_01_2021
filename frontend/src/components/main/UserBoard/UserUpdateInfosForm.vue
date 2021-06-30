@@ -8,7 +8,8 @@
                            placeholder="enter your firstname ..."
                            v-model="user.firstName" 
                            class="form-control" 
-                           name="firstName"/>
+                           name="firstName"
+                           id="firstName"/>
                     <div   class="alert alert-danger" 
                            v-if="errors.has('firstname')" 
                            role="alert"> Error with firstname !
@@ -21,7 +22,8 @@
                            placeholder="enter your lastname ..."
                            v-model="user.lastName" 
                            class="form-control" 
-                           name="lastName"/>
+                           name="lastName"
+                           id="lastName"/>
                     <div class="alert alert-danger" 
                          v-if="errors.has('lastname')" 
                          role="alert"> Error with lastname !
@@ -34,7 +36,8 @@
                             placeholder="enter your username ..."
                             v-model="user.username" 
                             class="form-control" 
-                            name="username"/>
+                            name="username"
+                            id="username"/>
                     <div    class="alert alert-danger" 
                             v-if="errors.has('username')" 
                             role="alert"> Error with username !
@@ -47,7 +50,8 @@
                             placeholder="enter email ..."
                             v-model="user.email" 
                             class="form-control" 
-                            name="email"/>
+                            name="email"
+                            id="email"/>
                     <div    class="alert alert-danger" 
                             v-if="errors.has('email')" 
                             role="alert"> email must be valid
@@ -61,6 +65,7 @@
                                type="text" 
                                cols="30" rows="2" 
                                class="form-control"
+                               id="aboutMe"
                                v-model="user.aboutMe">
                     </textarea>
                     <div class="alert alert-danger" 
@@ -70,7 +75,8 @@
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block" :disabled="loading">
+                    <button class="btn btn-primary btn-block" :disabled="loading"
+                            style="backgroundColor:blue">
                         <span v-show="loading" 
                                 class="spinner-border spinner-border-sm"></span>
                         <span class="">Update profile <font-awesome-icon id="icon-paper-plane-user-data" icon="paper-plane" /></span>
@@ -89,6 +95,7 @@
 
 <script>
 import { mapActions} from "vuex";
+import userService from './../../../services/user.service.js'
 import User from '../../../models/user';
 export default {
     name: "Login",
@@ -149,11 +156,12 @@ export default {
                     formData.append("username", this.user.username);
                 }        
                 const data = { userUuid, formData }
-                const response = await this.$store.dispatch("updateUserInfosAction", data);
+                // const response = await this.$store.dispatch("updateUserInfosAction", data);
+                const response = await userService.updateUserInfos(userUuid, data);
                 this.getOneUserAction(userUuid);
                 this.successful = true;
                 this.loading = false;
-                this.message = response;
+                this.message = response.data;
 
             } catch(error) {
                 this.loading = false;

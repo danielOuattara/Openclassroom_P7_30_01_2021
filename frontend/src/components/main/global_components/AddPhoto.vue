@@ -11,6 +11,7 @@
                        v-model="photo.title"
                        class="form-control" 
                        ref="title" 
+                       id="title"
                        name="title"/>
                 <div class="alert alert-danger" 
                      v-if="errors.has('title')" role="alert">
@@ -23,7 +24,8 @@
                        id="image-label" 
                        @click="$refs.imageFile.click()"
                        type="button"
-                       class= "btn btn-primary btn-block"> 
+                       class= "btn btn-primary btn-block"
+                       style="background:blue"> 
                     <span v-if="!fileSelected">Click to choose a photo </span>
                     <span v-if="fileSelected" id="photo-is-selected"> Photo Selected</span>
                     

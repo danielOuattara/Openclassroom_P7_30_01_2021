@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 //--------------------------------------------------------------------------
 
 exports.signin =  async (req, res) => {
+    console.log(req)
     try {
         const hash = await bcrypt.hash(req.body.password, 11);
         const user = await User.create({ email: req.body.email, password: hash })
@@ -66,7 +67,7 @@ exports.login = async (req, res) => {
                 userRoles: [...authorities],
             },
             config.secret,
-            {expiresIn:'2h'}
+            {expiresIn:'4h'}
         );
         await user.update({token});
 
@@ -74,7 +75,7 @@ exports.login = async (req, res) => {
             accessToken: token, 
             uuid:  user.uuid,
             roles: authorities,
-            exp: '2h'
+            exp: '4h'
         });
     } catch(err) {
         return res.status(401).send(err.message);
@@ -105,7 +106,6 @@ exports.logout = async (req, res) => {
 //-------------------------------------------------------------------------------------------------
 
 exports.signout = async (req, res) => { 
-    console.log(req);
     try {
         const user = await User.findOne({ where: { uuid: req.params.userUuid } })
         if (!user) {

@@ -115,123 +115,123 @@ exports.createPhotoReport = async (req, res) => {
 
 //-----------------------------------------------------------------------------------------
 
-// exports.getOnePhoto = (req, res) => {
-//   Photo.findOne({
-//     where: { uuid: req.params.photoUuid },
-//     include: [
-//       {
-//         model: Comment,
-//         as: 'comments',
-//         include: [{model: User, as: 'owner'}],
-//         order: [
-//             ['createdAt', 'DESC']
-//         ],
-//       }, 
-//       {
-//         model: Like,
-//         as: 'likes',
-//         include: [{model: User, as: 'owner'}],
-//         order: [
-//             ['createdAt', 'DESC']
-//         ],
-//       },
-//     ],
-//   })
-//   .then( photo =>  {
-//       if (!photo) {
-//           return res.status(404).json("Photo unknown !");
-//       }
-//       res.status(200).json(photo)})
-//   .catch( err => res.status(500).json(err.message) )
-// }
+exports.getOnePhoto = (req, res) => {
+  Photo.findOne({
+    where: { uuid: req.params.photoUuid },
+    include: [
+      {
+        model: Comment,
+        as: 'comments',
+        include: [{model: User, as: 'owner'}],
+        order: [
+            ['createdAt', 'DESC']
+        ],
+      }, 
+      {
+        model: Like,
+        as: 'likes',
+        include: [{model: User, as: 'owner'}],
+        order: [
+            ['createdAt', 'DESC']
+        ],
+      },
+    ],
+  })
+  .then( photo =>  {
+      if (!photo) {
+          return res.status(404).json("Photo unknown !");
+      }
+      res.status(200).json(photo)})
+  .catch( err => res.status(500).json(err.message) )
+}
 
 //-----------------------------------------------------------------------------------------
 
-// exports.getAllPhotosFromOneUser = (req, res) => {  // USEFUL ???
-//     User.findOne({ where: { uuid: req.params.userUuid } })
-//     .then( user => {
-//         if (!user) {
-//             return res.status(404).json("User unknown !");        
-//         }
-//         Photo.findAll({
-//           where: { ownerId: user.id },
-//           order: [
-//               ['createdAt', 'DESC']
-//           ],
-//           include: [
-//             {
-//               model: Comment,
-//               as: 'comments',
-//               include: [{model: User, as: 'owner'}],
-//               order: [
-//                   ['createdAt', 'DESC']
-//               ],
-//             }, 
-//             {
-//               model: Like,
-//               as: 'likes',
-//               include: [{model: User, as: 'owner'}],
-//               order: [
-//                   ['createdAt', 'DESC']
-//               ],
-//             },
-//           ],
-//         })
-//         .then( photos =>  {
-//             if (!photos) {
-//               return res.status(404).send("No photo(s) found !");
-//             }
-//             res.status(200).json(photos)});
-//     })
-//     .catch( err => {
-//       return res.status(500).json(err.message)
-//     })
-// }
+exports.getAllPhotosFromOneUser = (req, res) => {  // USEFUL ???
+    User.findOne({ where: { uuid: req.params.userUuid } })
+    .then( user => {
+        if (!user) {
+            return res.status(404).json("User unknown !");        
+        }
+        Photo.findAll({
+          where: { ownerId: user.id },
+          order: [
+              ['createdAt', 'DESC']
+          ],
+          include: [
+            {
+              model: Comment,
+              as: 'comments',
+              include: [{model: User, as: 'owner'}],
+              order: [
+                  ['createdAt', 'DESC']
+              ],
+            }, 
+            {
+              model: Like,
+              as: 'likes',
+              include: [{model: User, as: 'owner'}],
+              order: [
+                  ['createdAt', 'DESC']
+              ],
+            },
+          ],
+        })
+        .then( photos =>  {
+            if (!photos) {
+              return res.status(404).send("No photo(s) found !");
+            }
+            res.status(200).json(photos)});
+    })
+    .catch( err => {
+      return res.status(500).json(err.message)
+    })
+}
 
 
 // -----------------------------------------------------------------------------------------
 
-// exports.userDeleteAllPhotos = async (req, res) => {
-//     try {
-//         const photos = await Photo.findAll({ where: { ownerId: req.userId } });
-//         if (photos.length === 0) {
-//             return res.status(404).send("You have no photos");
-//         }
-//         photos.forEach( async photo => {
-//             let photoName = photo.imageUrl.split('/photos/')[1];
-//             fs.unlink(`images/photos/${photoName}`, (err) => {
-//               if(err) throw err;
-//             })
-//             await photo.destroy()
-//             res.json(`All your ${photos.length} photo(s) were successfully deleted`)
-//           })
-//     } catch(err) {
-//         res.status(500).send(err.message) 
-//     }
-// }
+exports.userDeleteAllPhotos = async (req, res) => {
+    try {
+        const photos = await Photo.findAll({ where: { ownerId: req.userId } });
+        if (photos.length === 0) {
+            return res.status(404).send("You have no photos");
+        }
+        photos.forEach( async photo => {
+            let photoName = photo.imageUrl.split('/photos/')[1];
+            fs.unlink(`images/photos/${photoName}`, (err) => {
+              if(err) throw err;
+            })
+            await photo.destroy()
+            res.json(`All your ${photos.length} photo(s) were successfully deleted`)
+          })
+    } catch(err) {
+        res.status(500).send(err.message) 
+    }
+}
 
 // ----------------------------------------------------------------------------------------------
 
-// exports.deleteAllPhotosFromOneUser = async (req, res) => {
-//     try {
-//       const user = await User.findOne( {where: { uuid: req.params.userUuid}})
-//       if(!user) {
-//           return res.status(404).send(`User not found`);
-//       }
-//       if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")) {
-//           return res.status(403).json( {error: "Access Denied ! " });
-//       } 
-//       const num = await Photo.destroy({
-//           where: { ownerId: user.id},
-//           truncate: false,      
-//           })
-//       if (num === 0) {
-//           return res.status(404).send(`No photo found for this user`);
-//       } 
-//       res.status(201).send(`${num} photo(s) successfully deleted `);
+exports.deleteAllPhotosFromOneUser = async (req, res) => {
+    try {
+      const user = await User.findOne( {where: { uuid: req.params.userUuid}})
+      if(!user) {
+          return res.status(404).send(`User not found`);
+      }
+      if(user.id !== req.userId && !req.userRoles.includes("ROLE_ADMIN")) {
+          return res.status(403).json( {error: "Access Denied ! " });
+      } 
+      const num = await Photo.destroy({
+          where: { ownerId: user.id},
+          truncate: false,      
+          })
+      if (num === 0) {
+          return res.status(404).send(`No photo found for this user`);
+      } 
+      res.status(201).send(`${num} photo(s) successfully deleted `);
     
-//     } catch(err) {
-//         res.status(500).json(err.message) 
-//     }
-// }
+    } catch(err) {
+        res.status(500).json(err.message) 
+    }
+}
 

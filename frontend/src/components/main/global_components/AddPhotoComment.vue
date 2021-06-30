@@ -9,6 +9,7 @@
                        cols="30" rows="2" 
                        class="form-control"
                        v-model="comment" 
+                       id="value"
                        v-validate="'required'" >
             </textarea>
             <div class="alert alert-danger" 

@@ -156,7 +156,7 @@ export default {
     font-size: 1rem;
     border-style: none;
     // border-radius: 5px;
-    color: grey;
+    color: rgb(58, 58, 58);
     margin:  10px 0.5rem;
     padding: 0.1rem 0.55rem;
 }

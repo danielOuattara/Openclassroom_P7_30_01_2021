@@ -13,6 +13,7 @@
                            placeholder=" enter your email ..."
                            v-model="user.email"  
                            class="form-control" 
+                           id="email"
                            name="email"/>
 
                     <div    v-if="submitted && errors.has('email')" 
@@ -28,7 +29,8 @@
                            v-model="user.password" 
                            v-validate="'required|min:6|max:40'"  
                            class="form-control" 
-                           name="password" />
+                           name="password"
+                           id="password" />
                     
                     <div  v-if="submitted && errors.has('password')" 
                           class="alert alert-danger">
@@ -64,7 +66,7 @@
                              :disabled="loading">
                         <span v-show="loading" 
                               class="spinner-border spinner-border-sm"></span>
-                        <span class="">Signin</span>
+                        <span class="signin">Signin</span>
                     </button>
                 </div>
         </form>
@@ -190,10 +192,14 @@ label {
 .btn-success {
     font-size: 22px!important
 }
-
+.signin {
+    font-size:1.5rem;
+}
 #nav-link {
     // margin-top: 10px;
     text-align: right;
+    font-size: 1.25rem;
+    color: blue
 }
 
 .form-check {

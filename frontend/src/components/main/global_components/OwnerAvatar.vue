@@ -26,6 +26,9 @@ export default {
 
 <style lang="scss" scoped>
 .bloc-avatar {
-  max-width: 10vw;
+  max-width: 8vw;
+  @media screen and (min-width: 650px) {
+        max-width: 40px;
+    }
 }
 </style>

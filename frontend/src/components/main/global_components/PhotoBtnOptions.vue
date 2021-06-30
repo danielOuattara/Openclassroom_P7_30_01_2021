@@ -8,7 +8,7 @@
             Options
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                <BtnDeletePhoto v-if="ownerUuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
+                <BtnDeletePhoto v-if="photoOwner.uuid == currentUser.uuid || currentUser.roles.includes('ROLE_ADMIN')"  
                                 class="btn-options-photo btn-delete-photo"
                                 v-bind:photoUuid="photoUuid"
                                 v-bind:ownerUuid="ownerUuid"/>
@@ -32,12 +32,12 @@ export default {
             type: String,
             default: ''
         },
-        // photoOwner: {
-        //     type: Object,
-        //     default: () => { 
-        //     return {} 
-        //     }
-        // },
+        photoOwner: {
+            type: Object,
+            default: () => { 
+            return {} 
+            }
+        },
     },
 
     components: {
