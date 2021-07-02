@@ -1,7 +1,7 @@
 ## Openclassroom_P7_30_01_2021
 
 This is the last project from Openclassrooms training program: Web Developer.
-The goal here is to built a full stack application for socializing amongst co-workers
+The goal is to build a full stack application for socializing amongst co-workers
 in the firm Groupomania.
 
 ### But ...
